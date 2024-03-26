@@ -5,6 +5,7 @@ import 'package:quiz/data/quiz1.dart';
 import 'package:quiz/data/quiz_data.dart';
 
 import '../data/quiz2.dart';
+import '../models/quiz_quiz.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({
@@ -21,6 +22,8 @@ class QuizScreen extends StatefulWidget {
 class _QuestionsScreenState extends State<QuizScreen> {
   int questionIndex = 0;
   TextEditingController _controller = TextEditingController();
+  String tempAnswer = "";
+  int selectedIndex = 10;
 
   void nextQuestion(String answer) {
     setState(() {
@@ -38,7 +41,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var currentQuestion = quiz1[questionIndex];
+    var currentQuestion;
     if(widget.quizNumber == 1) {
       currentQuestion = quiz1[questionIndex];
     }
@@ -56,7 +59,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
             currentQuestion.question,
             textAlign: TextAlign.center,
             style: GoogleFonts.lato(
-              color: const Color.fromARGB(255, 255, 153, 245),
+              color: Colors.black,
               fontSize: 24,
             ),
           ),
@@ -64,12 +67,15 @@ class _QuestionsScreenState extends State<QuizScreen> {
           const SizedBox(
             height: 30,
           ),
-          if(currentQuestion.answers[0] != 'textField') ...currentQuestion.getShuffledAnswers().map(
+          if(currentQuestion.answers[0] != 'textField') ...currentQuestion.answers.asMap().entries.map(
                 (answer) => AnswerButton(
-              answerText: answer,
+              answerText: answer.value,
               onTap: () {
-                nextQuestion(answer);
-              }, color: Colors.grey,
+                setState(() {
+                  selectedIndex = answer.key;
+                  tempAnswer = answer.value;
+                });
+              }, color: selectedIndex == answer.key ? Colors.blue : const Color(0x053052FF),
             ),
           ),
           if(currentQuestion.answers[0] == 'textField')
@@ -78,11 +84,21 @@ class _QuestionsScreenState extends State<QuizScreen> {
               labelText: 'Enter your text',
               border: OutlineInputBorder(),
             ),),
-          if(currentQuestion.answers[0] == 'textField')
+            SizedBox(
+              height: 30,
+            ),
             AnswerButton(
               answerText: 'Next Question',
               onTap: () {
-                nextQuestion(_controller.text);
+                setState(() {
+                  if(currentQuestion.answers[0] == 'textField'){
+                    nextQuestion(_controller.text);
+                  }
+                  else{
+                    nextQuestion(tempAnswer);
+                  }
+                  selectedIndex = 10;
+                });
               }, color: Colors.grey,
             ),
         ],

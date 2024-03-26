@@ -6,8 +6,8 @@ class QuestionAnswers extends StatelessWidget {
 
   @override
   build(context) {
-    Color correctColor = Color.fromARGB(255, 117, 216, 161);
-    Color incorrectColor = Color.fromARGB(255, 228, 124, 157);
+    Color correctColor = Color.fromARGB(255, 21, 192, 97);
+    Color incorrectColor = Color.fromARGB(255, 252, 102, 148);
 
     return SizedBox(
       height: 300,
@@ -44,7 +44,7 @@ class QuestionAnswers extends StatelessWidget {
                       Text(
                         item['question'] as String,
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),

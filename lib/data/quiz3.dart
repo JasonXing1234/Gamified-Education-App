@@ -1,6 +1,6 @@
 import 'package:quiz/models/quiz_question.dart';
 
-const questions = [
+const quiz3 = [
   QuizQuestion(
     'You are helping someone decide whether or not to accept a friend request. ' + '\n'
         'They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.',

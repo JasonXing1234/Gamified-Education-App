@@ -1,6 +1,6 @@
 import 'package:quiz/models/quiz_question.dart';
 
-const questions = [
+const quiz5 = [
   QuizQuestion(
     'If you wanted to, would it be appropriate to have have more than one account on Instagram?',
     'Does your friend know this person offline?',

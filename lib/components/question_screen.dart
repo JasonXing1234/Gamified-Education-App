@@ -122,7 +122,6 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                       selectedIndex = answer.key;
                       tempAnswer = answer.value;
                     });
-
                   },
                 ),
               ),

@@ -4,8 +4,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz/components/question_screen.dart';
 import 'package:quiz/components/quiz-screen.dart';
 import 'package:quiz/components/result_screen.dart';
+import 'package:quiz/data/quiz3.dart';
+import 'package:quiz/data/quiz4.dart';
 import 'package:quiz/start_screen.dart';
 import 'package:quiz/data/quiz_data.dart';
+
+import '../data/quiz1.dart';
+import '../data/quiz2.dart';
+import '../data/quiz5.dart';
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
@@ -19,6 +25,7 @@ class Quiz extends StatefulWidget {
 class _QuizState extends State<Quiz> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String activeScreen = 'start-screen';
+  int resultNumber = 0;
   void changeScreen1() {
     setState(() {
       activeScreen = 'question-screen';
@@ -82,6 +89,56 @@ class _QuizState extends State<Quiz> {
       answers.add(answer);
       if (questions.length == answers.length) {
         activeScreen = 'result-screen';
+      }
+    });
+  }
+
+  void recordAnswer1(String answer) {
+    setState(() {
+      answers.add(answer);
+      if (quiz1.length == answers.length) {
+        activeScreen = 'result-screen';
+        resultNumber = 1;
+      }
+    });
+  }
+
+  void recordAnswer2(String answer) {
+    setState(() {
+      answers.add(answer);
+      if (quiz2.length == answers.length) {
+        activeScreen = 'result-screen';
+        resultNumber = 2;
+      }
+    });
+  }
+
+  void recordAnswer3(String answer) {
+    setState(() {
+      answers.add(answer);
+      if (quiz3.length == answers.length) {
+        activeScreen = 'result-screen';
+        resultNumber = 3;
+      }
+    });
+  }
+
+  void recordAnswer4(String answer) {
+    setState(() {
+      answers.add(answer);
+      if (quiz4.length == answers.length) {
+        activeScreen = 'result-screen';
+        resultNumber = 4;
+      }
+    });
+  }
+
+  void recordAnswer5(String answer) {
+    setState(() {
+      answers.add(answer);
+      if (quiz5.length == answers.length) {
+        activeScreen = 'result-screen';
+        resultNumber = 5;
       }
     });
   }
@@ -151,13 +208,14 @@ class _QuizState extends State<Quiz> {
       screen = QuestionsScreen(onSelectAnswer: recordAnswer, quizNumber: 9,);
     }
     else if (activeScreen == 'quiz-screen1') {
-      screen = QuizScreen(onSelectAnswer: recordAnswer, quizNumber: 1,);
+      screen = QuizScreen(onSelectAnswer: recordAnswer1, quizNumber: 1,);
     }
     else if (activeScreen == 'quiz-screen2') {
-      screen = QuizScreen(onSelectAnswer: recordAnswer, quizNumber: 2,);
+      screen = QuizScreen(onSelectAnswer: recordAnswer2, quizNumber: 2,);
     }
     else if (activeScreen == 'result-screen') {
       screen = ResultScreen(
+        number: resultNumber,
         answers: answers,
         restartQuiz: restartQuiz,
       );
@@ -180,7 +238,7 @@ class _QuizState extends State<Quiz> {
                     foregroundColor: Colors.white,
                   ),
                   icon: const Icon(Icons.arrow_right_alt),
-                  label: const Text("quiz 1"),
+                  label: const Text("Social Norms"),
                 ),
                 OutlinedButton.icon(
                   onPressed: (){
@@ -194,7 +252,7 @@ class _QuizState extends State<Quiz> {
                     foregroundColor: Colors.white,
                   ),
                   icon: const Icon(Icons.arrow_right_alt),
-                  label: const Text("quiz 2"),
+                  label: const Text("Settings"),
                 ),
                 OutlinedButton.icon(
                   onPressed: (){
@@ -208,7 +266,7 @@ class _QuizState extends State<Quiz> {
                     foregroundColor: Colors.white,
                   ),
                   icon: const Icon(Icons.arrow_right_alt),
-                  label: const Text("quiz 3"),
+                  label: const Text("Fake profiles"),
                 ),
                 OutlinedButton.icon(
                   onPressed: (){
@@ -222,7 +280,7 @@ class _QuizState extends State<Quiz> {
                     foregroundColor: Colors.white,
                   ),
                   icon: const Icon(Icons.arrow_right_alt),
-                  label: const Text("quiz 4"),
+                  label: const Text("Social tags"),
                 ),
                 OutlinedButton.icon(
                   onPressed: (){
@@ -236,7 +294,7 @@ class _QuizState extends State<Quiz> {
                     foregroundColor: Colors.white,
                   ),
                   icon: const Icon(Icons.arrow_right_alt),
-                  label: const Text("quiz 5"),
+                  label: const Text("Appropriate interactions"),
                 ),
               ],
             ),
@@ -380,7 +438,7 @@ class _QuizState extends State<Quiz> {
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Colors.white,
+                Color(0x986BF567),
                 Colors.white,
               ],
               begin: Alignment.topCenter,
