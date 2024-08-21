@@ -6,6 +6,7 @@ import 'package:quiz/data/quiz_data.dart';
 
 import '../data/quiz2.dart';
 import '../models/quiz_quiz.dart';
+import 'next_button/next_button.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({
@@ -80,27 +81,27 @@ class _QuestionsScreenState extends State<QuizScreen> {
           ),
           if(currentQuestion.answers[0] == 'textField')
             TextFormField(controller: _controller,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Enter your text',
               border: OutlineInputBorder(),
             ),),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
-            AnswerButton(
-              answerText: 'Next Question',
-              onTap: () {
-                setState(() {
-                  if(currentQuestion.answers[0] == 'textField'){
-                    nextQuestion(_controller.text);
-                  }
-                  else{
-                    nextQuestion(tempAnswer);
-                  }
-                  selectedIndex = 10;
-                });
-              }, color: Colors.grey,
-            ),
+          NextButton(
+            onTap: () {
+              setState(() {
+                if(currentQuestion.answers[0] == 'textField'){
+                  nextQuestion(_controller.text);
+                }
+                else{
+                  nextQuestion(tempAnswer);
+                }
+                selectedIndex = 10;
+              });
+              },
+            disabled: false,
+          ),
         ],
       ),
     ));
