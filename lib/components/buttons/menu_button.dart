@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../styles/app_colors.dart';
+
 class MenuButton extends StatelessWidget {
   const MenuButton({
     super.key,
@@ -7,8 +9,7 @@ class MenuButton extends StatelessWidget {
 
   final IconData menuIcon = Icons.menu;
 
-  final Color royalBlue = const Color(0xff2E83E8);
-  final Color grey = const Color(0xff939393);
+  final AppColors appColors = const AppColors();
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class MenuButton extends StatelessWidget {
     return IconButton(
       icon: Icon(
         menuIcon,
-        color: royalBlue,
+        color: appColors.royalBlue,
         size: 40,
       ),
       onPressed: () {

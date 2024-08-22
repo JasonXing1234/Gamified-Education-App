@@ -1,15 +1,6 @@
 import 'package:flutter/material.dart';
 
-
-// How does this work?
-// class SoundButtonListener extends ChangeNotifier {
-//   var muted = false;
-//
-//   void toggleSound() {
-//     muted = !muted;
-//     notifyListeners();
-//   }
-// }
+import '../../styles/app_colors.dart';
 
 class SoundButton extends StatefulWidget {
   const SoundButton({super.key});
@@ -20,8 +11,7 @@ class SoundButton extends StatefulWidget {
 
 class SoundButtonState extends State<SoundButton> {
 
-  final Color royalBlue = const Color(0xff2E83E8);
-  final Color grey = const Color(0xff939393);
+  final AppColors appColors = AppColors();
 
   bool isMuted = false;
 
@@ -39,7 +29,7 @@ class SoundButtonState extends State<SoundButton> {
     return IconButton(
       icon: Icon(
         isMuted ? Icons.volume_mute : Icons.volume_up,
-        color: royalBlue,
+        color: appColors.royalBlue,
         size: 40,
       ),
       onPressed: () {

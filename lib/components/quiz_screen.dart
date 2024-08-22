@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
 import 'package:quiz/components/buttons/menu_button.dart';
 import 'package:quiz/components/buttons/sound_button.dart';
 import 'package:quiz/data/quiz1.dart';
 import 'package:quiz/data/quiz_data.dart';
+import 'package:quiz/styles/app_colors.dart';
 
 import '../data/quiz2.dart';
 import '../models/quiz_quiz.dart';
 import 'buttons/next_button.dart';
 import 'text_box/text_box.dart';
 
+import 'package:quiz/styles/text_styles.dart';
+
 class QuizScreen extends StatefulWidget {
   const QuizScreen({
     super.key,
-    required this.onSelectAnswer, required this.quizNumber,
+    required this.onSelectAnswer,
+    required this.quizNumber,
   });
 
   final void Function(String answer) onSelectAnswer;
@@ -30,8 +33,11 @@ class _QuestionsScreenState extends State<QuizScreen> {
   String tempAnswer = "";
   int selectedIndex = 10;
 
-  final Color royalBlue = const Color(0xff2E83E8);
-  final Color grey = const Color(0xff939393);
+  // final Color royalBlue = const Color(0xff2E83E8);
+  // final Color grey = const Color(0xff939393);
+
+  final AppTextStyles textStyles = AppTextStyles();
+  final AppColors appColors = const AppColors();
 
   void nextQuestion(String answer) {
     setState(() {
@@ -50,17 +56,26 @@ class _QuestionsScreenState extends State<QuizScreen> {
   @override
   Widget build(BuildContext context) {
     var currentQuestion;
+
+    var quizName = "QUIZ";
+
     if(widget.quizNumber == 1) {
       currentQuestion = quiz1[questionIndex];
+      quizName = "QUIZ: SOCIAL MEDIA NORMS";
     }
     else if(widget.quizNumber == 2) {
       currentQuestion = quiz2[questionIndex];
+      quizName = "QUIZ: SETTINGS";
     }
 
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(''),
+        centerTitle: true,
+        title: Text(
+          quizName,
+          style: textStyles.heading1,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: Container(
@@ -117,7 +132,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
                       selectedIndex = answer.key;
                       tempAnswer = answer.value;
                     });
-                  }, color: selectedIndex == answer.key ? royalBlue : grey,
+                  }, color: selectedIndex == answer.key ? appColors.royalBlue : appColors.grey,
                 ),
               ),
               if(currentQuestion.answers[0] == 'textField')

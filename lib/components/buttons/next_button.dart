@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../styles/app_colors.dart';
+import '../../styles/text_styles.dart';
+
 class NextButton extends StatelessWidget {
 
-  const NextButton({
+  NextButton({
     super.key,
     required this.disabled,
     required this.onTap,
@@ -14,25 +17,20 @@ class NextButton extends StatelessWidget {
 
   // Style Variables
   final double borderRadius = 10;
-  final Color royalBlue = const Color(0xff2E83E8);
-  final Color grey = const Color(0xff939393);
+
+  final AppTextStyles textStyles = AppTextStyles();
+  final AppColors appColors = const AppColors();
 
   @override
   Widget build(context) {
     Color color;
 
     if (disabled) {
-      color = grey;
+      color = appColors.grey;
     }
     else {
-      color = royalBlue;
+      color = appColors.royalBlue;
     }
-
-    // Font and Color
-    final theme = Theme.of(context);
-    final fontStyle = theme.textTheme.bodyLarge!.copyWith(
-      color: theme.colorScheme.onPrimary,
-    );
 
     return ElevatedButton(
       onPressed: onTap,
@@ -47,7 +45,7 @@ class NextButton extends StatelessWidget {
       ),
       child: Text(
         buttonText,
-        style: fontStyle,
+        style: textStyles.bodyTextWhite,
         textAlign: TextAlign.center,
       ),
     );
