@@ -37,7 +37,8 @@ class NextButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        //padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10), // Padding for text and border
+        fixedSize: const Size(150, 50),
         backgroundColor: color,
         foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(

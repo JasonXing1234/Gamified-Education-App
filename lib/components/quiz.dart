@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz/components/question_screen.dart';
-import 'package:quiz/components/quiz-screen.dart';
+import 'package:quiz/components/quiz_screen.dart';
 import 'package:quiz/components/result_screen.dart';
 import 'package:quiz/data/quiz3.dart';
 import 'package:quiz/data/quiz4.dart';
