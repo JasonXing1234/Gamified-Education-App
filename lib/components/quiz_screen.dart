@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:quiz/components/answer_button.dart';
+import 'package:quiz/components/buttons/answer_button.dart';
 import 'package:quiz/components/buttons/menu_button.dart';
 import 'package:quiz/components/buttons/sound_button.dart';
 import 'package:quiz/data/quiz1.dart';
@@ -9,6 +9,7 @@ import 'package:quiz/data/quiz_data.dart';
 import '../data/quiz2.dart';
 import '../models/quiz_quiz.dart';
 import 'buttons/next_button.dart';
+import 'text_box/text_box.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({
@@ -61,10 +62,11 @@ class _QuestionsScreenState extends State<QuizScreen> {
       appBar: AppBar(
         title: Text(''),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: Container(
         color: Colors.white,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Row(
             children: [
               const Expanded(
@@ -102,14 +104,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                currentQuestion.question,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.lato(
-                  color: Colors.black,
-                  fontSize: 24,
-                ),
-              ),
+              TextBox(currentQuestion: currentQuestion),
               currentQuestion.photo == 'no' ? SizedBox.shrink() : Image.asset(currentQuestion.photo),
               const SizedBox(
                 height: 30,
@@ -122,7 +117,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
                       selectedIndex = answer.key;
                       tempAnswer = answer.value;
                     });
-                  }, color: selectedIndex == answer.key ? Colors.blue : const Color(0x053052FF),
+                  }, color: selectedIndex == answer.key ? royalBlue : grey,
                 ),
               ),
               if(currentQuestion.answers[0] == 'textField')
@@ -141,3 +136,4 @@ class _QuestionsScreenState extends State<QuizScreen> {
     );
   }
 }
+
