@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz/components/answer_button.dart';
+import 'package:quiz/components/buttons/menu_button.dart';
+import 'package:quiz/components/buttons/sound_button.dart';
 import 'package:quiz/data/quiz1.dart';
 import 'package:quiz/data/quiz_data.dart';
 
 import '../data/quiz2.dart';
 import '../models/quiz_quiz.dart';
-import 'next_button/next_button.dart';
+import 'buttons/next_button.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({
@@ -65,29 +67,11 @@ class _QuestionsScreenState extends State<QuizScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
           child: Row(
             children: [
-              Expanded(
-                child: IconButton(
-                  icon: Icon(
-                    Icons.menu,
-                    color: royalBlue,
-                    size: 40,
-                  ),
-                  onPressed: () {
-                    //print("Open up menu");
-                  },
-                ),
+              const Expanded(
+                child: MenuButton(),
               ),
-              Expanded(
-                child: IconButton(
-                  icon: Icon(
-                    Icons.volume_up,
-                    color: royalBlue,
-                    size: 40,
-                  ),
-                  onPressed: () {
-                    //print("Mute or Unmute");
-                  },
-                ),
+              const Expanded(
+                child: SoundButton(),
               ),
               Expanded(
                 child: NextButton(
@@ -155,6 +139,5 @@ class _QuestionsScreenState extends State<QuizScreen> {
         )
       ),
     );
-
   }
 }

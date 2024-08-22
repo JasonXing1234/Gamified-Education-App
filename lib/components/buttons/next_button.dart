@@ -18,7 +18,7 @@ class NextButton extends StatelessWidget {
   final Color grey = const Color(0xff939393);
 
   @override
-  build(context) {
+  Widget build(context) {
     Color color;
 
     if (disabled) {
