@@ -81,9 +81,9 @@ class ResultScreen extends StatelessWidget {
               style: TextButton.styleFrom(
                 foregroundColor: Colors.black,
               ),
-              icon: const Icon(Icons.restart_alt),
+              icon: const Icon(Icons.home),
               label: const Text(
-                "Restart Quiz",
+                "Return to Home Screen",
                 style: TextStyle(
                   fontSize: 16,
                 ),
