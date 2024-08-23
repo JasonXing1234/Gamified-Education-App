@@ -9,14 +9,17 @@ class NextButton extends StatelessWidget {
     super.key,
     required this.disabled,
     required this.onTap,
+    this.buttonText = "NEXT",
   });
 
   final bool disabled;
-  final String buttonText = "NEXT";
   final void Function() onTap;
 
+  String buttonText;
+
+
   // Style Variables
-  final double borderRadius = 10;
+  final double borderRadius = 15;
 
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
@@ -45,7 +48,7 @@ class NextButton extends StatelessWidget {
       ),
       child: Text(
         buttonText,
-        style: textStyles.bodyTextWhite,
+        style: textStyles.mediumBodyTextWhite,
         textAlign: TextAlign.center,
       ),
     );

@@ -16,7 +16,7 @@ class QuestionAnswers extends StatelessWidget {
   @override
   build(context) {
     return SizedBox(
-      height: 300,
+      //height: 300,
       child: SingleChildScrollView(
         child: Column(
           children: summary.map((item) {
@@ -50,16 +50,16 @@ class QuestionAnswers extends StatelessWidget {
                       ),
                       Text(
                         item['user_answer'] as String,
-                        style: TextStyle(
-                          fontSize: fontSize,
-                          color: isCorrect ? appColors.green : appColors.red,
+                        style: textStyles.bodyTextCustom(
+                            isCorrect ? appColors.green : appColors.red,
+                            fontSize
                         ),
                       ),
                       Text(
                         item['correct_answer'] as String,
-                        style: TextStyle(
-                          fontSize: fontSize,
-                          color: appColors.green,
+                        style: textStyles.bodyTextCustom(
+                            appColors.green,
+                            fontSize
                         ),
                       ),
                     ],

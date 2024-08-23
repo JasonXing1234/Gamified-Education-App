@@ -150,7 +150,7 @@ class _QuizState extends State<Quiz> {
     });
   }
 
-  void restartQuiz() {
+  void returnHomeAndResetQuiz() {
     setState(() {
       activeScreen = 'start-screen';
       answers = [];
@@ -224,7 +224,7 @@ class _QuizState extends State<Quiz> {
       screen = ResultScreen(
         number: resultNumber,
         answers: answers,
-        restartQuiz: restartQuiz,
+        restartQuiz: returnHomeAndResetQuiz,
       );
     }
     return Scaffold(
