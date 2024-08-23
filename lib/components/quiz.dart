@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:quiz/components/question_screen.dart';
-import 'package:quiz/components/quiz_screen.dart';
+import 'package:quiz/components/practice/practice_screen.dart';
+import 'package:quiz/components/quiz/quiz_screen.dart';
 import 'package:quiz/components/result_screen.dart';
 import 'package:quiz/data/quiz3.dart';
 import 'package:quiz/data/quiz4.dart';
 import 'package:quiz/start_screen.dart';
 import 'package:quiz/data/quiz_data.dart';
 
-import '../data/quiz1.dart';
-import '../data/quiz2.dart';
+import 'quiz/quiz_questions/quiz1.dart';
+import 'quiz/quiz_questions/quiz2.dart';
 import '../data/quiz5.dart';
 import '../styles/app_colors.dart';
 import '../styles/text_styles.dart';
@@ -197,31 +197,31 @@ class _QuizState extends State<Quiz> {
       ),
     );
     if (activeScreen == 'question-screen') {
-      screen = QuestionsScreen(onSelectAnswer: recordAnswer, quizNumber: 1,);
+      screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 1,);
     }
     else if (activeScreen == 'question-screen2') {
-      screen = QuestionsScreen(onSelectAnswer: recordAnswer, quizNumber: 2,);
+      screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 2,);
     }
     else if (activeScreen == 'question-screen3') {
-      screen = QuestionsScreen(onSelectAnswer: recordAnswer, quizNumber: 3,);
+      screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 3,);
     }
     else if (activeScreen == 'question-screen4') {
-      screen = QuestionsScreen(onSelectAnswer: recordAnswer, quizNumber: 4,);
+      screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 4,);
     }
     else if (activeScreen == 'question-screen5') {
-      screen = QuestionsScreen(onSelectAnswer: recordAnswer, quizNumber: 5,);
+      screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 5,);
     }
     else if (activeScreen == 'question-screen6') {
-      screen = QuestionsScreen(onSelectAnswer: recordAnswer, quizNumber: 6,);
+      screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 6,);
     }
     else if (activeScreen == 'question-screen7') {
-      screen = QuestionsScreen(onSelectAnswer: recordAnswer, quizNumber: 7,);
+      screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 7,);
     }
     else if (activeScreen == 'question-screen8') {
-      screen = QuestionsScreen(onSelectAnswer: recordAnswer, quizNumber: 8,);
+      screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 8,);
     }
     else if (activeScreen == 'question-screen9') {
-      screen = QuestionsScreen(onSelectAnswer: recordAnswer, quizNumber: 9,);
+      screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 9,);
     }
     else if (activeScreen == 'quiz-screen1') {
       screen = QuizScreen(onSelectAnswer: recordAnswer1, quizNumber: 1,);

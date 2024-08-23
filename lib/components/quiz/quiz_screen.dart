@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
 import 'package:quiz/components/buttons/menu_button.dart';
 import 'package:quiz/components/buttons/sound_button.dart';
-import 'package:quiz/data/quiz1.dart';
+import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/data/quiz_data.dart';
 import 'package:quiz/styles/app_colors.dart';
 
-import '../data/quiz2.dart';
-import '../models/quiz_quiz.dart';
-import 'buttons/next_button.dart';
-import 'text_box/text_box.dart';
+import 'quiz_questions/quiz2.dart';
+import '../../models/quiz_quiz.dart';
+import '../buttons/next_button.dart';
+import '../text_box/text_box.dart';
 
 import 'package:quiz/styles/text_styles.dart';
 
@@ -139,7 +139,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
                     border: OutlineInputBorder(),
                   ),),
               const SizedBox(
-                height: 30,
+                height: 60,
               ),
             ],
           ),

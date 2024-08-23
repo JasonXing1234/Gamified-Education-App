@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/components/question_answers.dart';
-import 'package:quiz/data/quiz1.dart';
+import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/data/quiz_data.dart';
 
-import '../data/quiz2.dart';
+import 'quiz/quiz_questions/quiz2.dart';
 import '../data/quiz3.dart';
 import '../data/quiz4.dart';
 import '../data/quiz5.dart';

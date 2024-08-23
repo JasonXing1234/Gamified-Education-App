@@ -3,23 +3,23 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
 import 'package:quiz/data/quiz_data.dart';
 
-import '../data/quiz_data2.dart';
-import '../data/quiz_data3.dart';
-import '../data/quiz_data4.dart';
-import '../data/quiz_data5.dart';
-import '../data/quiz_data6.dart';
-import '../data/quiz_data7.dart';
-import '../data/quiz_data8.dart';
-import '../data/quiz_sum.dart';
-import '../styles/app_colors.dart';
-import '../styles/text_styles.dart';
-import 'buttons/menu_button.dart';
-import 'buttons/next_button.dart';
-import 'buttons/sound_button.dart';
-import 'text_box/text_box.dart';
+import '../../data/quiz_data2.dart';
+import '../../data/quiz_data3.dart';
+import '../../data/quiz_data4.dart';
+import '../../data/quiz_data5.dart';
+import '../../data/quiz_data6.dart';
+import '../../data/quiz_data7.dart';
+import '../../data/quiz_data8.dart';
+import '../../data/quiz_sum.dart';
+import '../../styles/app_colors.dart';
+import '../../styles/text_styles.dart';
+import '../buttons/menu_button.dart';
+import '../buttons/next_button.dart';
+import '../buttons/sound_button.dart';
+import '../text_box/text_box.dart';
 
-class QuestionsScreen extends StatefulWidget {
-  const QuestionsScreen({
+class PracticeScreen extends StatefulWidget {
+  const PracticeScreen({
     super.key,
     required this.onSelectAnswer, required this.quizNumber,
 
@@ -28,10 +28,10 @@ class QuestionsScreen extends StatefulWidget {
   final int quizNumber;
 
   @override
-  State<QuestionsScreen> createState() => _QuestionsScreenState();
+  State<PracticeScreen> createState() => _PracticeScreenState();
 }
 
-class _QuestionsScreenState extends State<QuestionsScreen> {
+class _PracticeScreenState extends State<PracticeScreen> {
   bool isCorrect = true;
   int questionIndex = 0;
   String tempAnswer = "";
