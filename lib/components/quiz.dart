@@ -173,7 +173,13 @@ class _QuizState extends State<Quiz> {
               foregroundColor: Colors.white,
             ),
             icon: const Icon(Icons.arrow_right_alt),
-            label: const Text("Start Practice"),
+            label: Text(
+                "Start Practice",
+                style: textStyles.bodyTextWhite,
+            ),
+          ),
+          const SizedBox(
+            height: 40,
           ),
           OutlinedButton.icon(
             onPressed: (){_scaffoldKey.currentState?.openEndDrawer();},
@@ -182,7 +188,10 @@ class _QuizState extends State<Quiz> {
               foregroundColor: Colors.white,
             ),
             icon: const Icon(Icons.arrow_right_alt),
-            label: const Text("Start Quiz"),
+            label: Text(
+                "Start Quiz",
+                style: textStyles.bodyTextWhite,
+            ),
           ),
         ],
       ),
