@@ -16,6 +16,18 @@ class AppTextStyles {
     fontWeight: FontWeight.normal,
   );
 
+  final TextStyle mediumBodyText = GoogleFonts.openSans(
+    color: Colors.black,
+    fontSize: 20,
+    fontWeight: FontWeight.normal,
+  );
+
+  final TextStyle smallBodyText = GoogleFonts.openSans(
+    color: Colors.black,
+    fontSize: 16,
+    fontWeight: FontWeight.normal,
+  );
+
   final TextStyle bodyTextWhite = GoogleFonts.openSans(
     color: Colors.white,
     fontSize: 24,

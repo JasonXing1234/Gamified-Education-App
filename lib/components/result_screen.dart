@@ -7,6 +7,8 @@ import '../data/quiz2.dart';
 import '../data/quiz3.dart';
 import '../data/quiz4.dart';
 import '../data/quiz5.dart';
+import '../styles/app_colors.dart';
+import '../styles/text_styles.dart';
 
 class ResultScreen extends StatelessWidget {
   ResultScreen({super.key, required this.answers, required this.restartQuiz, required this.number});
@@ -14,6 +16,7 @@ class ResultScreen extends StatelessWidget {
   final void Function() restartQuiz;
   final int number;
 
+  final AppTextStyles textStyles = AppTextStyles();
 
   List<Map<String, Object>> getSummaryData() {
     final List<Map<String, Object>> summary = [];
@@ -62,11 +65,7 @@ class ResultScreen extends StatelessWidget {
           children: [
             Text(
               "You answered $numCorrectAnswers of $numTotalAnswers questions correctly!",
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
+              style: textStyles.heading1,
               textAlign: TextAlign.center,
             ),
             const SizedBox(
@@ -82,11 +81,9 @@ class ResultScreen extends StatelessWidget {
                 foregroundColor: Colors.black,
               ),
               icon: const Icon(Icons.home),
-              label: const Text(
+              label: Text(
                 "Return to Home Screen",
-                style: TextStyle(
-                  fontSize: 16,
-                ),
+                style: textStyles.smallBodyText,
               ),
             ),
           ],

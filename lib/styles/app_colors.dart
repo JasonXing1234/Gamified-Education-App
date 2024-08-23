@@ -5,4 +5,10 @@ class AppColors {
 
   final Color royalBlue = const Color(0xff2E83E8);
   final Color grey = const Color(0xff939393);
+
+  final Color green = const Color(0xff74A159);
+  final Color red = const Color(0xffB72512);
+
+
+
 }

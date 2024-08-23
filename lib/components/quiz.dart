@@ -12,6 +12,8 @@ import 'package:quiz/data/quiz_data.dart';
 import '../data/quiz1.dart';
 import '../data/quiz2.dart';
 import '../data/quiz5.dart';
+import '../styles/app_colors.dart';
+import '../styles/text_styles.dart';
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
@@ -26,6 +28,11 @@ class _QuizState extends State<Quiz> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String activeScreen = 'start-screen';
   int resultNumber = 0;
+
+  final AppTextStyles textStyles = AppTextStyles();
+  final AppColors appColors = const AppColors();
+
+
   void changeScreen1() {
     setState(() {
       activeScreen = 'question-screen';
@@ -162,7 +169,7 @@ class _QuizState extends State<Quiz> {
           OutlinedButton.icon(
             onPressed: (){_scaffoldKey.currentState?.openDrawer();},
             style: OutlinedButton.styleFrom(
-              backgroundColor: Colors.deepPurple,
+              backgroundColor: appColors.royalBlue,
               foregroundColor: Colors.white,
             ),
             icon: const Icon(Icons.arrow_right_alt),
@@ -171,7 +178,7 @@ class _QuizState extends State<Quiz> {
           OutlinedButton.icon(
             onPressed: (){_scaffoldKey.currentState?.openEndDrawer();},
             style: OutlinedButton.styleFrom(
-              backgroundColor: Colors.deepPurple,
+              backgroundColor: appColors.royalBlue,
               foregroundColor: Colors.white,
             ),
             icon: const Icon(Icons.arrow_right_alt),
@@ -234,7 +241,7 @@ class _QuizState extends State<Quiz> {
                     Navigator.of(context).pop();
                   },
                   style: OutlinedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
+                    backgroundColor: appColors.royalBlue,
                     foregroundColor: Colors.white,
                   ),
                   icon: const Icon(Icons.arrow_right_alt),
@@ -248,7 +255,7 @@ class _QuizState extends State<Quiz> {
                     Navigator.of(context).pop();
                   },
                   style: OutlinedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
+                    backgroundColor: appColors.royalBlue,
                     foregroundColor: Colors.white,
                   ),
                   icon: const Icon(Icons.arrow_right_alt),
@@ -262,7 +269,7 @@ class _QuizState extends State<Quiz> {
                     Navigator.of(context).pop();
                   },
                   style: OutlinedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
+                    backgroundColor: appColors.royalBlue,
                     foregroundColor: Colors.white,
                   ),
                   icon: const Icon(Icons.arrow_right_alt),
@@ -276,7 +283,7 @@ class _QuizState extends State<Quiz> {
                     Navigator.of(context).pop();
                   },
                   style: OutlinedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
+                    backgroundColor: appColors.royalBlue,
                     foregroundColor: Colors.white,
                   ),
                   icon: const Icon(Icons.arrow_right_alt),
@@ -290,7 +297,7 @@ class _QuizState extends State<Quiz> {
                     Navigator.of(context).pop();
                   },
                   style: OutlinedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
+                    backgroundColor: appColors.royalBlue,
                     foregroundColor: Colors.white,
                   ),
                   icon: const Icon(Icons.arrow_right_alt),
@@ -309,7 +316,7 @@ class _QuizState extends State<Quiz> {
                           changeScreen9();
                         },
                         style: OutlinedButton.styleFrom(
-                          backgroundColor: Colors.deepPurple,
+                          backgroundColor: appColors.royalBlue,
                           foregroundColor: Colors.white,
                         ),
                         icon: const Icon(Icons.arrow_right_alt),
@@ -323,7 +330,7 @@ class _QuizState extends State<Quiz> {
                             Navigator.of(context).pop();
                           },
                           style: OutlinedButton.styleFrom(
-                            backgroundColor: Colors.deepPurple,
+                            backgroundColor: appColors.royalBlue,
                             foregroundColor: Colors.white,
                           ),
                           icon: const Icon(Icons.arrow_right_alt),
@@ -339,7 +346,7 @@ class _QuizState extends State<Quiz> {
                         },
 
                         style: OutlinedButton.styleFrom(
-                          backgroundColor: Colors.deepPurple,
+                          backgroundColor: appColors.royalBlue,
                           foregroundColor: Colors.white,
                         ),
                         icon: const Icon(Icons.arrow_right_alt),
@@ -353,7 +360,7 @@ class _QuizState extends State<Quiz> {
                           Navigator.of(context).pop();
                         },
                         style: OutlinedButton.styleFrom(
-                          backgroundColor: Colors.deepPurple,
+                          backgroundColor: appColors.royalBlue,
                           foregroundColor: Colors.white,
                         ),
                         icon: const Icon(Icons.arrow_right_alt),
@@ -367,7 +374,7 @@ class _QuizState extends State<Quiz> {
                           Navigator.of(context).pop();
                         },
                         style: OutlinedButton.styleFrom(
-                          backgroundColor: Colors.deepPurple,
+                          backgroundColor: appColors.royalBlue,
                           foregroundColor: Colors.white,
                         ),
                         icon: const Icon(Icons.arrow_right_alt),
@@ -381,7 +388,7 @@ class _QuizState extends State<Quiz> {
                           Navigator.of(context).pop();
                         },
                         style: OutlinedButton.styleFrom(
-                          backgroundColor: Colors.deepPurple,
+                          backgroundColor: appColors.royalBlue,
                           foregroundColor: Colors.white,
                         ),
                         icon: const Icon(Icons.arrow_right_alt),
@@ -395,7 +402,7 @@ class _QuizState extends State<Quiz> {
                           Navigator.of(context).pop();
                         },
                         style: OutlinedButton.styleFrom(
-                          backgroundColor: Colors.deepPurple,
+                          backgroundColor: appColors.royalBlue,
                           foregroundColor: Colors.white,
                         ),
                         icon: const Icon(Icons.arrow_right_alt),
@@ -409,7 +416,7 @@ class _QuizState extends State<Quiz> {
                           Navigator.of(context).pop();
                         },
                         style: OutlinedButton.styleFrom(
-                          backgroundColor: Colors.deepPurple,
+                          backgroundColor: appColors.royalBlue,
                           foregroundColor: Colors.white,
                         ),
                         icon: const Icon(Icons.arrow_right_alt),
@@ -423,7 +430,7 @@ class _QuizState extends State<Quiz> {
                           Navigator.of(context).pop();
                         },
                         style: OutlinedButton.styleFrom(
-                          backgroundColor: Colors.deepPurple,
+                          backgroundColor: appColors.royalBlue,
                           foregroundColor: Colors.white,
                         ),
                         icon: const Icon(Icons.arrow_right_alt),
@@ -436,14 +443,15 @@ class _QuizState extends State<Quiz> {
         body: Container(
           width: double.infinity,
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0x986BF567),
-                Colors.white,
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
+            color: Colors.white,
+            // gradient: LinearGradient(
+            //   colors: [
+            //     Color(0x986BF567),
+            //     Colors.white,
+            //   ],
+            //   begin: Alignment.topCenter,
+            //   end: Alignment.bottomCenter,
+            // ),
           ),
           child: screen,
         ),

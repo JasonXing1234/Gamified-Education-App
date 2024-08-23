@@ -33,9 +33,6 @@ class _QuestionsScreenState extends State<QuizScreen> {
   String tempAnswer = "";
   int selectedIndex = 10;
 
-  // final Color royalBlue = const Color(0xff2E83E8);
-  // final Color grey = const Color(0xff939393);
-
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
 

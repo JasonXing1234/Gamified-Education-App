@@ -14,7 +14,7 @@ const quiz1 = [
   ),
   QuizQuiz(
     'You see George Clooney\'s (celebrity) account on Instagram. The account has a blue checkmark (shown above) next to it. What type of account is this? ',
-    'assets/images/blue.png',
+    'assets/images/verifiedSymbol.png',
     [
       'Personal Account',
       'Alternate Personal Account (finista)',
