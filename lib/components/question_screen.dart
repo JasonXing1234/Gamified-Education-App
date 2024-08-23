@@ -16,6 +16,7 @@ import '../styles/text_styles.dart';
 import 'buttons/menu_button.dart';
 import 'buttons/next_button.dart';
 import 'buttons/sound_button.dart';
+import 'text_box/text_box.dart';
 
 class QuestionsScreen extends StatefulWidget {
   const QuestionsScreen({
@@ -83,6 +84,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
     }
     else if(widget.quizNumber == 9) {
       currentQuestion = questionSum[questionIndex];
+      practiceName = "PRACTICE: FAKE PROFILES";
     }
 
 
@@ -141,14 +143,14 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  counter == 2 ? Text(
-                    'You answered incorrectly twice in a row. Please review slide 9 of the course materials to better understand this concept.',
-                    textAlign: TextAlign.left,
-                    style: textStyles.bodyText,
-                  ) : Text(
-                    currentQuestion.text,
-                    textAlign: TextAlign.left,
-                    style: textStyles.bodyText,
+                  counter == 2 ? TextBox(
+                      currentQuestion: "You answered incorrectly twice in a row. Please review slide 9 of the course materials to better understand this concept.",
+                      color: appColors.red
+                  ) : TextBox(
+                      currentQuestion: currentQuestion,
+                  ),
+                  const SizedBox(
+                    height: 30,
                   ),
                   currentQuestion.photo == 'no' ? SizedBox.shrink() : Image.asset(currentQuestion.photo),
                   const SizedBox(
@@ -159,10 +161,14 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                     textAlign: TextAlign.left,
                     style: textStyles.bodyTextCustom(appColors.red, 24),
                   ) : SizedBox.shrink(),
-                  counter == 2 ? SizedBox.shrink() : Text(
-                    currentQuestion.question,
-                    textAlign: TextAlign.left,
-                    style: textStyles.bodyText,
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  counter == 2 ? SizedBox.shrink() : TextBox(
+                    currentQuestion: currentQuestion,
+                  ),
+                  const SizedBox(
+                    height: 30,
                   ),
                   ...currentQuestion.answers.asMap().entries.map(
                         (answer) => counter == 2 ? SizedBox.shrink() : AnswerButton(
@@ -177,7 +183,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                         ),
                       ),
                   const SizedBox(
-                    height: 30,
+                    height: 60,
                   ),
                 ],
               ),
