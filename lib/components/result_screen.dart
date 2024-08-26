@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quiz/components/question_answers.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/data/quiz_data.dart';
+import 'package:quiz/models/question.dart';
 
 import 'quiz/quiz_questions/quiz2.dart';
 import 'quiz/quiz_questions/quiz3.dart';
@@ -28,8 +29,22 @@ class ResultScreen extends StatelessWidget {
     // TODO: How should multiple answers and text field answers be formatted?
     // TODO: Some quizzes have multiple question types
 
-
     for (int i = 0; i < userAnswers.length; i++) {
+      // if multiple options create a string with all the options?
+
+      // TODO: This doesn't work for checking the users response, bc it's a string comparison
+      // TODO: Also you can't pick multiple options right now
+      String specialAnswers = "";
+      if (quizNumber == 4) {
+        // Social Tags questions -> Multiple Answers Question
+        List<String> correctAnswers = quiz4[i].correctAnswers;
+        String separator = "";
+        for (int j = 0; j < correctAnswers.length; j++) {
+          specialAnswers = specialAnswers + separator + correctAnswers[j];
+          separator = ", ";
+        }
+      }
+
       summary.add({
         'index': i,
         'question':
@@ -40,16 +55,16 @@ class ResultScreen extends StatelessWidget {
           quizNumber == 4 ? quiz4[i].context : // Social Tags Quiz
           quizNumber == 5 ? quiz5[i].question :
           quizNumber == 6 ? quiz6[i].question :
-          questions[i].answers[0],
+          questions[i].answerOptions[0],
         'correct_answer':
-            quizNumber == 0 ? questions[i].answers[0] :
-            quizNumber == 1 ? quiz1[i].answers[quiz1[i].correctAnswerIndex] :
-            quizNumber == 2 ? quiz2[i].answers[0] :
-            quizNumber == 3 ? quiz3[i].answers[quiz3[i].correctAnswerIndex] :
-            quizNumber == 4 ? quiz4[i].answers[0] :
-            quizNumber == 5 ? quiz5[i].answers[quiz5[i].correctAnswerIndex] :
-            quizNumber == 6 ? quiz6[i].answers[quiz6[i].correctAnswerIndex] :
-            questions[i].answers[0],
+            quizNumber == 0 ? questions[i].answerOptions[0] :
+            quizNumber == 1 ? quiz1[i].answerOptions[quiz1[i].correctAnswer] :
+            quizNumber == 2 ? quiz2[i].answerOptions[0] :
+            quizNumber == 3 ? quiz3[i].answerOptions[quiz3[i].correctAnswer] :
+            quizNumber == 4 ? specialAnswers :
+            quizNumber == 5 ? quiz5[i].answerOptions[quiz5[i].correctAnswer] :
+            quizNumber == 6 ? quiz6[i].answerOptions[quiz6[i].correctAnswer] :
+            questions[i].answerOptions[0],
         'user_answer': userAnswers[i],
       });
     }

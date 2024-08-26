@@ -118,7 +118,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
                 child: NextButton(
                   onTap: () {
                     setState(() {
-                      if(currentQuestion.answers[0] == 'textField'){
+                      if(currentQuestion.answerOptions[0] == 'textField'){
                         nextQuestion(_controller.text);
                       }
                       else{
@@ -150,7 +150,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
               const SizedBox(
                 height: 30,
               ),
-              if(currentQuestion.answers[0] != 'textField') ...currentQuestion.answers.asMap().entries.map(
+              if(currentQuestion.answerOptions[0] != 'textField') ...currentQuestion.answerOptions.asMap().entries.map(
                     (answer) => AnswerButton(
                   answerText: answer.value,
                   onTap: () {
@@ -161,7 +161,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
                   }, color: selectedIndex == answer.key ? appColors.royalBlue : appColors.grey,
                 ),
               ),
-              if(currentQuestion.answers[0] == 'textField')
+              if(currentQuestion.answerOptions[0] == 'textField')
                 TextFormField(controller: _controller,
                   decoration: const InputDecoration(
                     labelText: 'Enter your text',

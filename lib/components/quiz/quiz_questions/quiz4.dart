@@ -18,7 +18,7 @@ const quiz4 = [
       "Community Helpers",
       "Strangers"
     ],
-    [],
+    ["In-Person Friends",],
   ),
   MultipleAnswersQuestion(
     "Amber is in your science class and she always seems to have the answers to the questions asked by your teacher. You never see Amber outside of class. What social tag(s) apply to Amber?",
@@ -35,7 +35,7 @@ const quiz4 = [
       "Community Helpers",
       "Strangers"
     ],
-    [],
+    ["School Peers", "Acquaintances",],
   ),
   MultipleAnswersQuestion(
     "Andrew works with you at McDonalds. He taught you everything you know about flipping patties. While talking at work you discovered he loves playing chess just like you do! Ever since you learned about his passion, you’ve been playing chess and eating Wendy’s every weekend.",

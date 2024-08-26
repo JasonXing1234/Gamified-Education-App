@@ -30,7 +30,7 @@ const quiz2 = [
     ],
     0,
   ),
-  TextFieldQuestion(
+  MultipleAnswersQuestion(
     'no',
     'Why would you want to limit who can tag you in posts, stories, and comments?',
     'no',
@@ -39,7 +39,7 @@ const quiz2 = [
     ],
     [],
   ),
-  TextFieldQuestion(
+  MultipleAnswersQuestion(
     'no',
     'Why would you want to block another user?',
     'no',
@@ -100,7 +100,7 @@ const quiz2 = [
     ],
     0,
   ),
-  TextFieldQuestion(
+  MultipleAnswersQuestion(
     'no',
     'On Instagram, why would you want to limit who can reply to your story? ',
     'no',
@@ -109,7 +109,7 @@ const quiz2 = [
     ],
     [],
   ),
-  TextFieldQuestion(
+  MultipleAnswersQuestion(
     'no',
     'On Instagram, why would you want to adjust where messages go (e.g., to the chat inbox or the message requests)?',
     'no',
@@ -118,7 +118,7 @@ const quiz2 = [
     ],
     [],
   ),
-  TextFieldQuestion(
+  MultipleAnswersQuestion(
     'no',
     'On Instagram, why would you want to set your social media account to private? ',
     'no',

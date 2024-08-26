@@ -113,7 +113,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
                   child: NextButton(
                     onTap: () {
                       setState(() {
-                        if(currentQuestion.answers[0] == tempAnswer || counter == 2){
+                        if(currentQuestion.answerOptions[0] == tempAnswer || counter == 2){
                           isCorrect = true;
                           counter = 0;
                           nextQuestion(tempAnswer);
@@ -170,7 +170,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
                   const SizedBox(
                     height: 30,
                   ),
-                  ...currentQuestion.answers.asMap().entries.map(
+                  ...currentQuestion.answerOptions.asMap().entries.map(
                         (answer) => counter == 2 ? SizedBox.shrink() : AnswerButton(
                           color: selectedIndex == answer.key ? appColors.royalBlue : appColors.grey,
                           answerText: answer.value,
