@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quiz/styles/app_colors.dart';
+import 'package:quiz/styles/text_styles.dart';
 
 class StartScreen extends StatelessWidget {
-  final void Function() changeScreen;
-  const StartScreen(this.changeScreen, {super.key});
+  StartScreen(this.changeScreen, {super.key});
 
+  final void Function() changeScreen;
+
+  final AppTextStyles textStyles = AppTextStyles();
+  final AppColors appColors = const AppColors();
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +20,7 @@ class StartScreen extends StatelessWidget {
           Image.asset(
             'assets/images/quiz-logo.png',
             width: 300,
-            color: const Color.fromARGB(135, 255, 255, 255),
+            color: appColors.grey,
           ),
           const SizedBox(
             height: 40,
@@ -33,11 +38,14 @@ class StartScreen extends StatelessWidget {
           OutlinedButton.icon(
             onPressed: null,
             style: OutlinedButton.styleFrom(
-              backgroundColor: Colors.deepPurple,
-              foregroundColor: Color(0x98F1D6FF),
+              backgroundColor: appColors.royalBlue,
+              foregroundColor: Colors.white,
             ),
             icon: const Icon(Icons.arrow_right_alt),
-            label: const Text("Start Quiz"),
+            label: Text(
+                "Start Quiz",
+                style: textStyles.bodyTextWhite,
+            ),
           ),
         ],
       ),

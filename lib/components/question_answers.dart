@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 
+import '../styles/app_colors.dart';
+import '../styles/text_styles.dart';
+
 class QuestionAnswers extends StatelessWidget {
   QuestionAnswers(this.summary, {super.key});
   final List<Map<String, Object>> summary;
 
+
+  final AppTextStyles textStyles = AppTextStyles();
+  final AppColors appColors = const AppColors();
+
+  final double fontSize = 16;
+
   @override
   build(context) {
-    Color correctColor = Color.fromARGB(255, 21, 192, 97);
-    Color incorrectColor = Color.fromARGB(255, 252, 102, 148);
-
     return SizedBox(
-      height: 300,
+      //height: 300,
       child: SingleChildScrollView(
         child: Column(
           children: summary.map((item) {
@@ -22,15 +28,12 @@ class QuestionAnswers extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                      color: isCorrect ? correctColor : incorrectColor,
+                      color: isCorrect ? appColors.green : appColors.red,
                       borderRadius: BorderRadius.circular(20)),
                   child: Center(
                     child: Text(
                       ((item['index'] as int) + 1).toString(),
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: textStyles.bodyTextWhite,
                     ),
                   ),
                 ),
@@ -43,24 +46,20 @@ class QuestionAnswers extends StatelessWidget {
                       ),
                       Text(
                         item['question'] as String,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: textStyles.mediumBodyText,
                       ),
                       Text(
                         item['user_answer'] as String,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: isCorrect ? correctColor : incorrectColor,
+                        style: textStyles.bodyTextCustom(
+                            isCorrect ? appColors.green : appColors.red,
+                            fontSize
                         ),
                       ),
                       Text(
                         item['correct_answer'] as String,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: correctColor,
+                        style: textStyles.bodyTextCustom(
+                            appColors.green,
+                            fontSize
                         ),
                       ),
                     ],
