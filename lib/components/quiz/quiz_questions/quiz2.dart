@@ -1,6 +1,6 @@
 import 'package:quiz/models/quiz_question.dart';
 
-import '../models/quiz_quiz.dart';
+import '../../../models/quiz_quiz.dart';
 
 const quiz2 = [
   QuizQuiz(
