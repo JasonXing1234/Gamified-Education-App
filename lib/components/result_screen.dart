@@ -27,7 +27,7 @@ class ResultScreen extends StatelessWidget {
     for (int i = 0; i < answers.length; i++) {
       summary.add({
         'index': i,
-        'question': questions[i].text,
+        'question': questions[i].context,
         'correct_answer': number == 0 ? questions[i].answers[0] : number == 1 ? quiz1[i].answers[0] : number == 2 ? quiz2[i].answers[0]
         : number == 3 ? quiz3[i].answers[0] : number == 4 ? quiz4[i].answers[0] : number == 5 ? quiz5[i].answers[0] : questions[i].answers[0],
         'user_answer': answers[i],

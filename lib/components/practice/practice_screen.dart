@@ -147,7 +147,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
                       currentQuestion: "You answered incorrectly twice in a row. Please review slide 9 of the course materials to better understand this concept.",
                       color: appColors.red
                   ) : TextBox(
-                      currentQuestion: currentQuestion,
+                      currentQuestion: currentQuestion.context,
                   ),
                   const SizedBox(
                     height: 30,

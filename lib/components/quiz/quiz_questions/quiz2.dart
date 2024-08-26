@@ -3,7 +3,8 @@ import 'package:quiz/models/quiz_question.dart';
 import '../../../models/quiz_quiz.dart';
 
 const quiz2 = [
-  QuizQuiz(
+  QuizQuestion(
+    'no',
     'What does this setting do? Choose from this options',
     'assets/images/blocking.png',
     [
@@ -14,7 +15,8 @@ const quiz2 = [
       'Updates where your message go'
     ],
   ),
-  QuizQuiz(
+  QuizQuestion(
+    'no',
     'What does this setting do? Choose from these options: ',
     'assets/images/posts.png',
     [
@@ -25,21 +27,24 @@ const quiz2 = [
       'Updates where your message go'
     ],
   ),
-  QuizQuiz(
+  QuizQuestion(
+    'no',
     'Why would you want to limit who can tag you in posts, stories, and comments?',
     'no',
     [
       'textField'
     ],
   ),
-  QuizQuiz(
+  QuizQuestion(
+    'no',
     'Why would you want to block another user?',
     'no',
     [
       'textField'
     ],
   ),
-  QuizQuiz(
+  QuizQuestion(
+    'no',
     'What does this setting do? Choose from these options: ',
     'no',
     [
@@ -50,7 +55,8 @@ const quiz2 = [
       'Updates where your message go'
     ],
   ),
-  QuizQuiz(
+  QuizQuestion(
+    'no',
     'You have an account on Instagram where you post photos of yourself and friends. What type of account is this? ',
     'no',
     [
@@ -61,7 +67,8 @@ const quiz2 = [
       'Top/Interest Account'
     ],
   ),
-  QuizQuiz(
+  QuizQuestion(
+    'no',
     'What does this setting do? Choose from these options: ',
     'assets/images/messageControls.png',
     [
@@ -72,7 +79,8 @@ const quiz2 = [
       'Top/Interest Account'
     ],
   ),
-  QuizQuiz(
+  QuizQuestion(
+    'no',
     'What does this setting do? Choose from these options: ',
     'assets/images/mentions.png',
     [
@@ -83,21 +91,24 @@ const quiz2 = [
       'Top/Interest Account'
     ],
   ),
-  QuizQuiz(
+  QuizQuestion(
+    'no',
     'On Instagram, why would you want to limit who can reply to your story? ',
     'no',
     [
       'textField'
     ],
   ),
-  QuizQuiz(
+  QuizQuestion(
+    'no',
     'On Instagram, why would you want to adjust where messages go (e.g., to the chat inbox or the message requests)?',
     'no',
     [
       'textField'
     ],
   ),
-  QuizQuiz(
+  QuizQuestion(
+    'no',
     'On Instagram, why would you want to set your social media account to private? ',
     'no',
     [

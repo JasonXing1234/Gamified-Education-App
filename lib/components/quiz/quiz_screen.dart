@@ -4,6 +4,7 @@ import 'package:quiz/components/buttons/menu_button.dart';
 import 'package:quiz/components/buttons/sound_button.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/data/quiz_data.dart';
+import 'package:quiz/models/quiz_question.dart';
 import 'package:quiz/styles/app_colors.dart';
 
 import 'quiz_questions/quiz2.dart';
@@ -52,7 +53,8 @@ class _QuestionsScreenState extends State<QuizScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var currentQuestion;
+    // TODO: Update to specifically name the class?
+    QuizQuestion currentQuestion;
 
     var quizName = "QUIZ";
 
@@ -63,6 +65,9 @@ class _QuestionsScreenState extends State<QuizScreen> {
     else if(widget.quizNumber == 2) {
       currentQuestion = quiz2[questionIndex];
       quizName = "QUIZ: SETTINGS";
+    }
+    else {
+      currentQuestion = const QuizQuestion("none", "none", "no", []);
     }
 
 
@@ -116,6 +121,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              currentQuestion.context == "no" ? SizedBox.shrink() : TextBox(currentQuestion: currentQuestion.context),
               TextBox(currentQuestion: currentQuestion),
               currentQuestion.photo == 'no' ? SizedBox.shrink() : Image.asset(currentQuestion.photo),
               const SizedBox(

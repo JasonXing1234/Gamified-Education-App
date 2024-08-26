@@ -3,7 +3,8 @@ import 'package:quiz/models/quiz_question.dart';
 import '../../../models/quiz_quiz.dart';
 
 const quiz1 = [
-  QuizQuiz(
+  QuizQuestion(
+    'no',
     'If you wanted to, would it be appropriate to have have more than one account on Instagram?',
     'no',
     [
@@ -12,7 +13,8 @@ const quiz1 = [
       "I don't know"
     ],
   ),
-  QuizQuiz(
+  QuizQuestion(
+    'no',
     'You see George Clooney\'s (celebrity) account on Instagram. The account has a blue checkmark (shown above) next to it. What type of account is this? ',
     'assets/images/verifiedSymbol.png',
     [
@@ -23,7 +25,8 @@ const quiz1 = [
       'Top/Interest Account'
     ],
   ),
-  QuizQuiz(
+  QuizQuestion(
+    'no',
     'Your cousin created a second Instagram account just for their closest friends to follow. What type of account is this? ',
     'no',
     [
@@ -34,7 +37,8 @@ const quiz1 = [
       'Top/Interest Account'
     ],
   ),
-  QuizQuiz(
+  QuizQuestion(
+    'no',
     'You see the Target (store) account on Instagram. What type of account is this? ',
     'no',
     [
@@ -45,7 +49,8 @@ const quiz1 = [
       'Top/Interest Account'
     ],
   ),
-  QuizQuiz(
+  QuizQuestion(
+    'no',
     'You see an account on Instagram which only posts about Animal Crossing. What type of account is this? ',
     'no',
     [
@@ -56,7 +61,8 @@ const quiz1 = [
       'Top/Interest Account'
     ],
   ),
-  QuizQuiz(
+  QuizQuestion(
+    'no',
     'You have an account on Instagram where you post photos of yourself and friends. What type of account is this? ',
     'no',
     [
@@ -67,7 +73,8 @@ const quiz1 = [
       'Top/Interest Account'
     ],
   ),
-  QuizQuiz(
+  QuizQuestion(
+    'no',
     'If you wanted to, would it be appropriate to have have more than one account on Facebook?',
     'no',
     [
@@ -76,7 +83,8 @@ const quiz1 = [
       'I don\'t know'
     ],
   ),
-  QuizQuiz(
+  QuizQuestion(
+    'no',
     '(Fill in the blank) You can join a ___ where you can talk about your favorite video game with other Facebook users',
     'no',
     [
@@ -85,7 +93,8 @@ const quiz1 = [
       'Page'
     ],
   ),
-  QuizQuiz(
+  QuizQuestion(
+    'no',
     '(Fill in the blank) Your mom sent you a friend request on Facebook. Her account is ___.',
     'no',
     [
@@ -94,7 +103,8 @@ const quiz1 = [
       'Page'
     ],
   ),
-  QuizQuiz(
+  QuizQuestion(
+    'no',
     '(Fill in the blank) Your favorite actor has a ____ where they post photos from behind the scenes of their show. ',
     'no',
     [

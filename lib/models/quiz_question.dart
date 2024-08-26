@@ -1,7 +1,9 @@
-class QuizQuestion {
-  const QuizQuestion(this.text, this.question, this.photo, this.answers);
+// Class for Holding Question Data
 
-  final String text;
+class QuizQuestion {
+  const QuizQuestion(this.context, this.question, this.photo, this.answers);
+
+  final String context;
   final String question;
   final List<String> answers;
   final String photo;
