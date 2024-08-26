@@ -3,12 +3,15 @@ import 'package:quiz/components/buttons/answer_button.dart';
 import 'package:quiz/components/buttons/menu_button.dart';
 import 'package:quiz/components/buttons/sound_button.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
-import 'package:quiz/data/quiz_data.dart';
 import 'package:quiz/models/quiz_question.dart';
 import 'package:quiz/styles/app_colors.dart';
 
 import 'quiz_questions/quiz2.dart';
-import '../../models/quiz_quiz.dart';
+import 'quiz_questions/quiz3.dart';
+import 'quiz_questions/quiz4.dart';
+import 'quiz_questions/quiz5.dart';
+import 'quiz_questions/quiz6.dart';
+
 import '../buttons/next_button.dart';
 import '../text_box/text_box.dart';
 
@@ -65,6 +68,23 @@ class _QuestionsScreenState extends State<QuizScreen> {
     else if(widget.quizNumber == 2) {
       currentQuestion = quiz2[questionIndex];
       quizName = "QUIZ: SETTINGS";
+    }
+    else if(widget.quizNumber == 3) {
+      currentQuestion = quiz3[questionIndex];
+      quizName = "QUIZ: FAKE PROFILES";
+    }
+    else if(widget.quizNumber == 4) {
+      print("Quiz 4");
+      currentQuestion = quiz4[questionIndex];
+      quizName = "QUIZ: SOCIAL TAGS";
+    }
+    else if(widget.quizNumber == 5) {
+      currentQuestion = quiz5[questionIndex];
+      quizName = "QUIZ: APPROPRIATE INTERACTIONS";
+    }
+    else if(widget.quizNumber == 6) {
+      currentQuestion = quiz6[questionIndex];
+      quizName = "QUIZ: SOCIAL MEDIA VS REALITY";
     }
     else {
       currentQuestion = const QuizQuestion("none", "none", "no", []);

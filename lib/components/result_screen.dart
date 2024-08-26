@@ -4,9 +4,9 @@ import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/data/quiz_data.dart';
 
 import 'quiz/quiz_questions/quiz2.dart';
-import '../data/quiz3.dart';
-import '../data/quiz4.dart';
-import '../data/quiz5.dart';
+import 'quiz/quiz_questions/quiz3.dart';
+import 'quiz/quiz_questions/quiz4.dart';
+import 'quiz/quiz_questions/quiz5.dart';
 import '../styles/app_colors.dart';
 import '../styles/text_styles.dart';
 import 'buttons/menu_button.dart';

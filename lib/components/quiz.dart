@@ -4,14 +4,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz/components/practice/practice_screen.dart';
 import 'package:quiz/components/quiz/quiz_screen.dart';
 import 'package:quiz/components/result_screen.dart';
-import 'package:quiz/data/quiz3.dart';
-import 'package:quiz/data/quiz4.dart';
+import 'package:quiz/components/quiz/quiz_questions/quiz3.dart';
+import 'package:quiz/components/quiz/quiz_questions/quiz4.dart';
 import 'package:quiz/start_screen.dart';
 import 'package:quiz/data/quiz_data.dart';
 
 import 'quiz/quiz_questions/quiz1.dart';
 import 'quiz/quiz_questions/quiz2.dart';
-import '../data/quiz5.dart';
+import 'quiz/quiz_questions/quiz5.dart';
 import '../styles/app_colors.dart';
 import '../styles/text_styles.dart';
 
@@ -87,6 +87,30 @@ class _QuizState extends State<Quiz> {
   void quizScreen2() {
     setState(() {
       activeScreen = 'quiz-screen2';
+    });
+  }
+
+  void quizScreen3() {
+    setState(() {
+      activeScreen = 'quiz-screen3';
+    });
+  }
+
+  void quizScreen4() {
+    setState(() {
+      activeScreen = 'quiz-screen4';
+    });
+  }
+
+  void quizScreen5() {
+    setState(() {
+      activeScreen = 'quiz-screen5';
+    });
+  }
+
+  void quizScreen6() {
+    setState(() {
+      activeScreen = 'quiz-screen6';
     });
   }
 
@@ -229,6 +253,19 @@ class _QuizState extends State<Quiz> {
     else if (activeScreen == 'quiz-screen2') {
       screen = QuizScreen(onSelectAnswer: recordAnswer2, quizNumber: 2,);
     }
+    else if (activeScreen == 'quiz-screen3') {
+      screen = QuizScreen(onSelectAnswer: recordAnswer3, quizNumber: 3,);
+    }
+    else if (activeScreen == 'quiz-screen4') {
+      screen = QuizScreen(onSelectAnswer: recordAnswer4, quizNumber: 4,);
+    }
+    else if (activeScreen == 'quiz-screen5') {
+      screen = QuizScreen(onSelectAnswer: recordAnswer5, quizNumber: 5,);
+    }
+    // TODO Add recordAnswer6
+    // else if (activeScreen == 'quiz-screen6') {
+    //   screen = QuizScreen(onSelectAnswer: recordAnswer6, quizNumber: 6,);
+    // }
     else if (activeScreen == 'result-screen') {
       screen = ResultScreen(
         number: resultNumber,
@@ -273,7 +310,7 @@ class _QuizState extends State<Quiz> {
                 OutlinedButton.icon(
                   onPressed: (){
                     setState(() {
-                      quizScreen2();
+                      quizScreen3();
                     });
                     Navigator.of(context).pop();
                   },
@@ -287,7 +324,7 @@ class _QuizState extends State<Quiz> {
                 OutlinedButton.icon(
                   onPressed: (){
                     setState(() {
-                      quizScreen2();
+                      quizScreen4();
                     });
                     Navigator.of(context).pop();
                   },
@@ -301,7 +338,7 @@ class _QuizState extends State<Quiz> {
                 OutlinedButton.icon(
                   onPressed: (){
                     setState(() {
-                      quizScreen2();
+                      quizScreen5();
                     });
                     Navigator.of(context).pop();
                   },
