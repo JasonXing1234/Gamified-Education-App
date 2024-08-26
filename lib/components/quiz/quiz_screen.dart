@@ -3,7 +3,7 @@ import 'package:quiz/components/buttons/answer_button.dart';
 import 'package:quiz/components/buttons/menu_button.dart';
 import 'package:quiz/components/buttons/sound_button.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
-import 'package:quiz/models/quiz_question.dart';
+import 'package:quiz/models/question.dart';
 import 'package:quiz/styles/app_colors.dart';
 
 import 'quiz_questions/quiz2.dart';
@@ -56,8 +56,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Update to specifically name the class?
-    QuizQuestion currentQuestion;
+    Question currentQuestion;
 
     var quizName = "QUIZ";
 
@@ -87,16 +86,19 @@ class _QuestionsScreenState extends State<QuizScreen> {
       quizName = "QUIZ: SOCIAL MEDIA VS REALITY";
     }
     else {
-      currentQuestion = const QuizQuestion("none", "none", "no", []);
+      currentQuestion = const Question("none", "none", "no", []);
     }
 
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          quizName,
-          style: textStyles.heading1,
+        title: Padding(
+          padding: const EdgeInsets.only(top: 30.0), // Adjust the top padding of title
+          child: Text(
+            quizName,
+            style: textStyles.heading1,
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
@@ -142,6 +144,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               currentQuestion.context == "no" ? SizedBox.shrink() : TextBox(currentQuestion: currentQuestion.context),
+              currentQuestion.context == "no" ? SizedBox.shrink() : const SizedBox(height: 20), // Add an extra space between context & question box
               TextBox(currentQuestion: currentQuestion),
               currentQuestion.photo == 'no' ? SizedBox.shrink() : Image.asset(currentQuestion.photo),
               const SizedBox(

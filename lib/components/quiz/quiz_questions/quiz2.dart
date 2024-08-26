@@ -1,9 +1,10 @@
-import 'package:quiz/models/quiz_question.dart';
+import 'package:quiz/models/question.dart';
 
-import '../../../models/quiz_quiz.dart';
+// TODO: Put in correct answers
+// TODO: Not sure how to do the text field questions
 
 const quiz2 = [
-  QuizQuestion(
+  SingleAnswerQuestion(
     'no',
     'What does this setting do? Choose from this options',
     'assets/images/blocking.png',
@@ -14,8 +15,9 @@ const quiz2 = [
       'Allows you to block other users',
       'Updates where your message go'
     ],
+    0,
   ),
-  QuizQuestion(
+  SingleAnswerQuestion(
     'no',
     'What does this setting do? Choose from these options: ',
     'assets/images/posts.png',
@@ -26,24 +28,27 @@ const quiz2 = [
       'Allows you to block other users',
       'Updates where your message go'
     ],
+    0,
   ),
-  QuizQuestion(
+  TextFieldQuestion(
     'no',
     'Why would you want to limit who can tag you in posts, stories, and comments?',
     'no',
     [
       'textField'
     ],
+    [],
   ),
-  QuizQuestion(
+  TextFieldQuestion(
     'no',
     'Why would you want to block another user?',
     'no',
     [
       'textField'
     ],
+    [],
   ),
-  QuizQuestion(
+  SingleAnswerQuestion(
     'no',
     'What does this setting do? Choose from these options: ',
     'no',
@@ -54,8 +59,9 @@ const quiz2 = [
       'Allows you to block other users',
       'Updates where your message go'
     ],
+    0,
   ),
-  QuizQuestion(
+  SingleAnswerQuestion(
     'no',
     'You have an account on Instagram where you post photos of yourself and friends. What type of account is this? ',
     'no',
@@ -66,8 +72,9 @@ const quiz2 = [
       'Verified Celebrity or Influencer Account',
       'Top/Interest Account'
     ],
+    0,
   ),
-  QuizQuestion(
+  SingleAnswerQuestion(
     'no',
     'What does this setting do? Choose from these options: ',
     'assets/images/messageControls.png',
@@ -78,8 +85,9 @@ const quiz2 = [
       'Verified Celebrity or Influencer Account',
       'Top/Interest Account'
     ],
+    0,
   ),
-  QuizQuestion(
+  SingleAnswerQuestion(
     'no',
     'What does this setting do? Choose from these options: ',
     'assets/images/mentions.png',
@@ -90,29 +98,33 @@ const quiz2 = [
       'Verified Celebrity or Influencer Account',
       'Top/Interest Account'
     ],
+    0,
   ),
-  QuizQuestion(
+  TextFieldQuestion(
     'no',
     'On Instagram, why would you want to limit who can reply to your story? ',
     'no',
     [
       'textField'
     ],
+    [],
   ),
-  QuizQuestion(
+  TextFieldQuestion(
     'no',
     'On Instagram, why would you want to adjust where messages go (e.g., to the chat inbox or the message requests)?',
     'no',
     [
       'textField'
     ],
+    [],
   ),
-  QuizQuestion(
+  TextFieldQuestion(
     'no',
     'On Instagram, why would you want to set your social media account to private? ',
     'no',
     [
       'textField'
     ],
+    [],
   ),
 ];

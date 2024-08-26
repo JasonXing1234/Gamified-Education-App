@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiz/models/quiz_question.dart';
+import 'package:quiz/models/question.dart';
 import 'package:quiz/models/quiz_quiz.dart';
 
 import '../../styles/text_styles.dart';
@@ -30,7 +30,7 @@ class TextBox extends StatelessWidget {
     if(currentQuestion is String) {
       text = currentQuestion;
     }
-    else if (currentQuestion is QuizQuiz || currentQuestion is QuizQuestion) {
+    else if (currentQuestion is QuizQuiz || currentQuestion is Question) {
       text = currentQuestion.question;
     }
 

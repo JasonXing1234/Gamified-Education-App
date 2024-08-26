@@ -1,7 +1,9 @@
-import 'package:quiz/models/quiz_question.dart';
+import 'package:quiz/models/question.dart';
+
+// TODO check anwsers
 
 const quiz6 = [
-  QuizQuestion(
+  SingleAnswerQuestion(
     "no",
     "The pictures that I see on social media are always real.",
     "no",
@@ -9,8 +11,9 @@ const quiz6 = [
       "True",
       "False",
     ],
+    1,
   ),
-  QuizQuestion(
+  SingleAnswerQuestion(
     "no",
     "If someone is smiling in a social media picture, that means they really are happy.",
     "no",
@@ -18,8 +21,9 @@ const quiz6 = [
       "True",
       "False",
     ],
+    1,
   ),
-  QuizQuestion(
+  SingleAnswerQuestion(
     "no",
     "It's possible for someone to edit how they look in photos.",
     "no",
@@ -27,8 +31,9 @@ const quiz6 = [
       "True",
       "False",
     ],
+    0,
   ),
-  QuizQuestion(
+  SingleAnswerQuestion(
     "no",
     "People can post false information on social media.",
     "no",
@@ -36,8 +41,9 @@ const quiz6 = [
       "True",
       "False",
     ],
+    0,
   ),
-  QuizQuestion(
+  SingleAnswerQuestion(
     "no",
     "People always spread misinformation on purpose",
     "no",
@@ -45,8 +51,9 @@ const quiz6 = [
       "True",
       "False",
     ],
+    1,
   ),
-  QuizQuestion(
+  SingleAnswerQuestion(
     "no",
     "What should you do before re-posting news that you read on social media? (Select all that apply)",
     "no",
@@ -55,5 +62,6 @@ const quiz6 = [
       "Do nothing; automatically repost it",
       "Ask yourself about whether it seems real"
     ],
+    2,
   ),
 ];

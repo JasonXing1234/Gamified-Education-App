@@ -1,7 +1,7 @@
-import 'package:quiz/models/quiz_question.dart';
+import 'package:quiz/models/question.dart';
 
 const questions2 = [
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person.',
     'Does your friend know this person offline?',
     'assets/images/img_2.png',
@@ -10,7 +10,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person.',
     'Does the account have a profile picture and does your friend think it matches what they look like in person?',
     'assets/images/img_2.png',
@@ -19,7 +19,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.',
     'Is this your friend\'s first connection request from this person?',
     'assets/images/img_2.png',
@@ -28,7 +28,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person. ',
     'Does the profile have more than 50 friends and less than 2000 friends?',
     'assets/images/img_2.png',
@@ -37,7 +37,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person. ',
     'Does your friend has 5 or more mutual friends with this account? ',
     'assets/images/img_2.png',
@@ -46,7 +46,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'This is what you know about the account so far.'
         'Does your friend know this person offline? : No'
         'Does the account have a profile picture and does your friend think it matches what they look like in person? : No'
@@ -62,7 +62,7 @@ const questions2 = [
       'By calling updateState()The account is most likely real. You can choose to accept the request.',
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does not match the person they know. This is the first connection request they have received from this person.',
     'Does your friend know this person offline?',
     'assets/images/img_3.png',
@@ -71,7 +71,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does not match the person they know. This is the first connection request they have received from this person.',
     'Does the account have a profile picture and does your friend think it matches what they look like in person?',
     'assets/images/img_3.png',
@@ -80,7 +80,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does not match the person they know. This is the first connection request they have received from this person.',
     'Is this your friend\'s first connection request from this person?',
     'assets/images/img_3.png',
@@ -89,7 +89,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does not match the person they know. This is the first connection request they have received from this person.',
     'Does the profile have more than 50 friends and less than 2000 friends?',
     'assets/images/img_3.png',
@@ -98,7 +98,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does not match the person they know. This is the first connection request they have received from this person.',
     'Does your friend has 5 or more mutual friends with this account? ',
     'assets/images/img_3.png',
@@ -107,7 +107,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'This is what you know about the account so far.'
         'Does your friend know this person offline? : Yes'
         'Does the account have a profile picture and does your friend think it matches what they look like in person? : No'
@@ -123,7 +123,7 @@ const questions2 = [
       'By calling updateState()The account is most likely real. You can choose to accept the request.',
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. ' + '\n'
         'They have not met this person offline. This is not the first connection request they have received from this person.',
     'Does your friend know this person offline?',
@@ -133,7 +133,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. ' + '\n'
         'They have not met this person offline. This is not the first connection request they have received from this person.',
     'Does the account have a profile picture and does your friend think it matches what they look like in person?',
@@ -143,7 +143,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. ' + '\n'
         'They have not met this person offline. This is not the first connection request they have received from this person.',
     'Is this your friend\'s first connection request from this person?',
@@ -153,7 +153,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. ' + '\n'
         'They have not met this person offline. This is not the first connection request they have received from this person.',
     'Does the profile have more than 50 friends and less than 2000 friends?',
@@ -163,7 +163,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. ' + '\n'
         'They have not met this person offline. This is not the first connection request they have received from this person.',
     'Does your friend has 5 or more mutual friends with this account? ',
@@ -173,7 +173,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'This is what you know about the account so far.'
         'Does your friend know this person offline? : No'
         'Does the account have a profile picture and does your friend think it matches what they look like in person? : No'
@@ -189,7 +189,7 @@ const questions2 = [
       'By calling updateState()The account is most likely real. You can choose to accept the request.',
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. ' + '\n'
         'They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.',
     'Does your friend know this person offline?',
@@ -199,7 +199,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. ' + '\n'
         'They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.',
     'Does the account have a profile picture and does your friend think it matches what they look like in person?',
@@ -209,7 +209,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. ' + '\n'
         'They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.',
     'Is this your friend\'s first connection request from this person?',
@@ -219,7 +219,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. ' + '\n'
         'They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.',
     'Does the profile have more than 50 friends and less than 2000 friends?',
@@ -229,7 +229,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. ' + '\n'
         'They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.',
     'Does your friend has 5 or more mutual friends with this account? ',
@@ -239,7 +239,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'This is what you know about the account so far.'
         'Does your friend know this person offline? : Yes'
         'Does the account have a profile picture and does your friend think it matches what they look like in person? : Yes'
@@ -255,7 +255,7 @@ const questions2 = [
       'By calling updateState()The account is most likely real. You can choose to accept the request.',
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. ' + '\n'
         'They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.',
     'Does your friend know this person offline?',
@@ -265,7 +265,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.',
     'Does the account have a profile picture and does your friend think it matches what they look like in person?',
     'assets/images/img_6.png',
@@ -274,7 +274,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.',
     'Is this your friend\'s first connection request from this person?',
     'assets/images/img_6.png',
@@ -283,7 +283,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.',
     'Does the profile have more than 50 friends and less than 2000 friends?',
     'assets/images/img_6.png',
@@ -292,7 +292,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.',
     'Does your friend has 5 or more mutual friends with this account? ',
     'assets/images/img_6.png',
@@ -301,7 +301,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'This is what you know about the account so far.'
         'Does your friend know this person offline? : Yes'
         'Does the account have a profile picture and does your friend think it matches what they look like in person? : No'
@@ -317,7 +317,7 @@ const questions2 = [
       'By calling updateState()The account is most likely real. You can choose to accept the request.',
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.',
     'Does your friend know this person offline?',
     'assets/images/img_7.png',
@@ -326,7 +326,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.',
     'Does the account have a profile picture and does your friend think it matches what they look like in person?',
     'assets/images/img_7.png',
@@ -335,7 +335,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.',
     'Is this your friend\'s first connection request from this person?',
     'assets/images/img_7.png',
@@ -344,7 +344,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.',
     'Does the profile have more than 50 friends and less than 2000 friends?',
     'assets/images/img_7.png',
@@ -353,7 +353,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.',
     'Does your friend has 5 or more mutual friends with this account? ',
     'assets/images/img_7.png',
@@ -362,7 +362,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'This is what you know about the account so far.'
         'Does your friend know this person offline? : Yes'
         'Does the account have a profile picture and does your friend think it matches what they look like in person? : Yes'
@@ -378,7 +378,7 @@ const questions2 = [
       'By calling updateState()The account is most likely real. You can choose to accept the request.',
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person.',
     'Does your friend know this person offline?',
     'assets/images/img_8.png',
@@ -387,7 +387,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person.',
     'Does the account have a profile picture and does your friend think it matches what they look like in person?',
     'assets/images/img_8.png',
@@ -396,7 +396,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person.',
     'Is this your friend\'s first connection request from this person?',
     'assets/images/img_8.png',
@@ -405,7 +405,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person.',
     'Does the profile have more than 50 friends and less than 2000 friends?',
     'assets/images/img_8.png',
@@ -414,7 +414,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person.',
     'Does your friend has 5 or more mutual friends with this account? ',
     'assets/images/img_8.png',
@@ -423,7 +423,7 @@ const questions2 = [
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'This is what you know about the account so far.'
         'Does your friend know this person offline? : No'
         'Does the account have a profile picture and does your friend think it matches what they look like in person? : No'

@@ -4,14 +4,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz/components/practice/practice_screen.dart';
 import 'package:quiz/components/quiz/quiz_screen.dart';
 import 'package:quiz/components/result_screen.dart';
-import 'package:quiz/components/quiz/quiz_questions/quiz3.dart';
-import 'package:quiz/components/quiz/quiz_questions/quiz4.dart';
 import 'package:quiz/start_screen.dart';
 import 'package:quiz/data/quiz_data.dart';
 
 import 'quiz/quiz_questions/quiz1.dart';
 import 'quiz/quiz_questions/quiz2.dart';
+import 'quiz/quiz_questions/quiz3.dart';
+import 'quiz/quiz_questions/quiz4.dart';
 import 'quiz/quiz_questions/quiz5.dart';
+import 'quiz/quiz_questions/quiz6.dart';
 import '../styles/app_colors.dart';
 import '../styles/text_styles.dart';
 
@@ -174,6 +175,16 @@ class _QuizState extends State<Quiz> {
     });
   }
 
+  void recordAnswer6(String answer) {
+    setState(() {
+      answers.add(answer);
+      if (quiz6.length == answers.length) {
+        activeScreen = 'result-screen';
+        resultNumber = 6;
+      }
+    });
+  }
+
   void returnHomeAndResetQuiz() {
     setState(() {
       activeScreen = 'start-screen';
@@ -262,14 +273,13 @@ class _QuizState extends State<Quiz> {
     else if (activeScreen == 'quiz-screen5') {
       screen = QuizScreen(onSelectAnswer: recordAnswer5, quizNumber: 5,);
     }
-    // TODO Add recordAnswer6
-    // else if (activeScreen == 'quiz-screen6') {
-    //   screen = QuizScreen(onSelectAnswer: recordAnswer6, quizNumber: 6,);
-    // }
+    else if (activeScreen == 'quiz-screen6') {
+      screen = QuizScreen(onSelectAnswer: recordAnswer6, quizNumber: 6,);
+    }
     else if (activeScreen == 'result-screen') {
       screen = ResultScreen(
-        number: resultNumber,
-        answers: answers,
+        quizNumber: resultNumber,
+        userAnswers: answers,
         restartQuiz: returnHomeAndResetQuiz,
       );
     }
@@ -348,6 +358,20 @@ class _QuizState extends State<Quiz> {
                   ),
                   icon: const Icon(Icons.arrow_right_alt),
                   label: const Text("Appropriate interactions"),
+                ),
+                OutlinedButton.icon(
+                  onPressed: (){
+                    setState(() {
+                      quizScreen6();
+                    });
+                    Navigator.of(context).pop();
+                  },
+                  style: OutlinedButton.styleFrom(
+                    backgroundColor: appColors.royalBlue,
+                    foregroundColor: Colors.white,
+                  ),
+                  icon: const Icon(Icons.arrow_right_alt),
+                  label: const Text("Social Media vs Reality"),
                 ),
               ],
             ),
