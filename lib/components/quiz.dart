@@ -5,7 +5,7 @@ import 'package:quiz/components/practice/practice_screen.dart';
 import 'package:quiz/components/quiz/quiz_screen.dart';
 import 'package:quiz/components/result_screen.dart';
 import 'package:quiz/start_screen.dart';
-import 'package:quiz/data/quiz_data.dart';
+import 'package:quiz/data/fake_profiles_practice_1.dart';
 
 import 'quiz/quiz_questions/quiz1.dart';
 import 'quiz/quiz_questions/quiz2.dart';

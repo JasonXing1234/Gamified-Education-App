@@ -1,7 +1,5 @@
 import 'package:quiz/models/question.dart';
 
-//TODO Put in correct answers
-
 const quiz5 = [
   SingleAnswerQuestion(
     "no",
@@ -11,7 +9,7 @@ const quiz5 = [
       "Yes",
       "No",
     ],
-    0,
+    "Yes",
   ),
   SingleAnswerQuestion(
     "no",
@@ -21,7 +19,7 @@ const quiz5 = [
       "Yes",
       "No",
     ],
-    0,
+    "No",
   ),
   SingleAnswerQuestion(
     "no",
@@ -31,7 +29,7 @@ const quiz5 = [
       "Yes",
       "No",
     ],
-    0,
+    "No",
   ),
   SingleAnswerQuestion(
     "no",
@@ -41,7 +39,7 @@ const quiz5 = [
       "Yes",
       "No",
     ],
-    0,
+    "No",
   ),
   SingleAnswerQuestion(
     "no",
@@ -51,7 +49,7 @@ const quiz5 = [
       "Yes",
       "No",
     ],
-    0,
+    "No",
   ),
   SingleAnswerQuestion(
     "no",
@@ -61,7 +59,7 @@ const quiz5 = [
       "Yes",
       "No",
     ],
-    0,
+    "No",
   ),
   SingleAnswerQuestion(
     "no",
@@ -71,7 +69,7 @@ const quiz5 = [
       "Yes",
       "No",
     ],
-    0,
+    "Yes",
   ),
   SingleAnswerQuestion(
     "no",
@@ -81,7 +79,7 @@ const quiz5 = [
       "Yes",
       "No",
     ],
-    0,
+    "No",
   ),
   SingleAnswerQuestion(
     "no",
@@ -91,7 +89,7 @@ const quiz5 = [
       "Yes",
       "No",
     ],
-    0,
+    "No",
   ),
 
 ];

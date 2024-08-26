@@ -19,8 +19,7 @@ class Question {
 class SingleAnswerQuestion extends Question {
   const SingleAnswerQuestion(super.context, super.question, super.photo, super.answerOptions, this.correctAnswer);
 
-  // Corresponding Index from answer options the correct answer
-  final int correctAnswer;
+  final String correctAnswer;
 
 }
 

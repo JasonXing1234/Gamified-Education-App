@@ -1,7 +1,5 @@
 import 'package:quiz/models/question.dart';
 
-// TODO check anwsers
-
 const quiz6 = [
   SingleAnswerQuestion(
     "no",
@@ -11,7 +9,7 @@ const quiz6 = [
       "True",
       "False",
     ],
-    1,
+    "False",
   ),
   SingleAnswerQuestion(
     "no",
@@ -21,7 +19,7 @@ const quiz6 = [
       "True",
       "False",
     ],
-    1,
+    "False",
   ),
   SingleAnswerQuestion(
     "no",
@@ -31,7 +29,7 @@ const quiz6 = [
       "True",
       "False",
     ],
-    0,
+    "True",
   ),
   SingleAnswerQuestion(
     "no",
@@ -41,7 +39,7 @@ const quiz6 = [
       "True",
       "False",
     ],
-    0,
+    "True",
   ),
   SingleAnswerQuestion(
     "no",
@@ -51,17 +49,18 @@ const quiz6 = [
       "True",
       "False",
     ],
-    1,
+    "False",
   ),
-  SingleAnswerQuestion(
+  MultipleAnswersQuestion(
     "no",
     "What should you do before re-posting news that you read on social media? (Select all that apply)",
     "no",
     [
+      "Look it up",
       "Be cautious",
       "Do nothing; automatically repost it",
       "Ask yourself about whether it seems real"
     ],
-    2,
+    ["Look it up", "Be cautious", "Ask yourself about whether it seems real",],
   ),
 ];

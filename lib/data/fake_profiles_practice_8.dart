@@ -4,7 +4,7 @@ const questions8 = [
   Question(
     'You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person.',
     'Does your friend know this person offline?',
-    'assets/images/img_8.png',
+    'assets/images/fb_profile_8.png',
     [
       'Yes',
       'No'
@@ -13,7 +13,7 @@ const questions8 = [
   Question(
     'You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person.',
     'Does the account have a profile picture and does your friend think it matches what they look like in person?',
-    'assets/images/img_8.png',
+    'assets/images/fb_profile_8.png',
     [
       'Yes',
       'No'
@@ -22,7 +22,7 @@ const questions8 = [
   Question(
     'You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person.',
     'Is this your friend\'s first connection request from this person?',
-    'assets/images/img_8.png',
+    'assets/images/fb_profile_8.png',
     [
       'Yes',
       'No'
@@ -31,7 +31,7 @@ const questions8 = [
   Question(
     'You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person.',
     'Does the profile have more than 50 friends and less than 2000 friends?',
-    'assets/images/img_8.png',
+    'assets/images/fb_profile_8.png',
     [
       'Yes',
       'No'
@@ -40,7 +40,7 @@ const questions8 = [
   Question(
     'You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person.',
     'Does your friend has 5 or more mutual friends with this account? ',
-    'assets/images/img_8.png',
+    'assets/images/fb_profile_8.png',
     [
       'Yes',
       'No'

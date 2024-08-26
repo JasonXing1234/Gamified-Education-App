@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/components/question_answers.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
-import 'package:quiz/data/quiz_data.dart';
+import 'package:quiz/data/fake_profiles_practice_1.dart';
 import 'package:quiz/models/question.dart';
 
 import 'quiz/quiz_questions/quiz2.dart';
@@ -58,12 +58,12 @@ class ResultScreen extends StatelessWidget {
           questions[i].answerOptions[0],
         'correct_answer':
             quizNumber == 0 ? questions[i].answerOptions[0] :
-            quizNumber == 1 ? quiz1[i].answerOptions[quiz1[i].correctAnswer] :
+            quizNumber == 1 ? quiz1[i].correctAnswer :
             quizNumber == 2 ? quiz2[i].answerOptions[0] :
-            quizNumber == 3 ? quiz3[i].answerOptions[quiz3[i].correctAnswer] :
+            quizNumber == 3 ? quiz3[i].correctAnswer :
             quizNumber == 4 ? specialAnswers :
-            quizNumber == 5 ? quiz5[i].answerOptions[quiz5[i].correctAnswer] :
-            quizNumber == 6 ? quiz6[i].answerOptions[quiz6[i].correctAnswer] :
+            quizNumber == 5 ? quiz5[i].correctAnswer :
+            quizNumber == 6 ? quiz6[i].answerOptions[0] :
             questions[i].answerOptions[0],
         'user_answer': userAnswers[i],
       });

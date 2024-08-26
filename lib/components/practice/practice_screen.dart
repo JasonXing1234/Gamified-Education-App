@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
-import 'package:quiz/data/quiz_data.dart';
+import 'package:quiz/data/fake_profiles_practice_1.dart';
 
-import '../../data/quiz_data2.dart';
-import '../../data/quiz_data3.dart';
-import '../../data/quiz_data4.dart';
-import '../../data/quiz_data5.dart';
-import '../../data/quiz_data6.dart';
-import '../../data/quiz_data7.dart';
-import '../../data/quiz_data8.dart';
-import '../../data/quiz_sum.dart';
+import '../../data/fake_profiles_practice_2.dart';
+import '../../data/fake_profiles_practice_3.dart';
+import '../../data/fake_profiles_practice_4.dart';
+import '../../data/fake_profiles_practice_5.dart';
+import '../../data/fake_profiles_practice_6.dart';
+import '../../data/fake_profiles_practice_7.dart';
+import '../../data/fake_profiles_practice_8.dart';
+import '../../data/fake_profiles_practice_all.dart';
 import '../../styles/app_colors.dart';
 import '../../styles/text_styles.dart';
 import '../buttons/menu_button.dart';
