@@ -198,6 +198,53 @@ class _QuizState extends State<Quiz> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 5),
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                border: Border.all(color: appColors.royalBlue, width: 5.0),
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "Points",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "0",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: 25,
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "Lessons", // TODO: Lessons or activities
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "0/6",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+
           const SizedBox(
             height: 40,
           ),
@@ -231,6 +278,7 @@ class _QuizState extends State<Quiz> {
         ],
       ),
     );
+
     if (activeScreen == 'question-screen') {
       screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 1,);
     }
