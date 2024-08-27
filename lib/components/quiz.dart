@@ -368,6 +368,7 @@ class _QuizState extends State<Quiz> {
       print("DEBUG: Set Reading Screen 1");
       // TODO Screen is not being set properly in this instance, why?
       // TODO: Error is happening earlier, I think?
+      // screen = QuizScreen(onSelectAnswer: recordAnswer1, quizNumber: 1,);
       screen = const ReadingsScreen(readingNumber: 1);
       print("DEBUG: Open Reading Screen 1");
     }
