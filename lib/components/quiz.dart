@@ -39,6 +39,9 @@ class _QuizState extends State<Quiz> {
     setState(() {
       activeScreen = 'reading-screen1';
     });
+
+    print("DEBUG: Reading Screen 1 is active");
+    print("DEBUG: " + activeScreen);
   }
 
   void changeScreen1() {
@@ -288,7 +291,7 @@ class _QuizState extends State<Quiz> {
                   ),
                   ElevatedButton(
                     onPressed: (){
-
+                      //TODO: Add code
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10), // Padding for text and border
@@ -362,9 +365,12 @@ class _QuizState extends State<Quiz> {
     );
 
     if (activeScreen == 'reading-screen1') {
-      screen = const ReadingsScreen(readingNumber: 1,);
+      print("DEBUG: Set Reading Screen 1");
+      // TODO Screen is not being set properly in this instance, why?
+      // TODO: Error is happening earlier, I think?
+      screen = const ReadingsScreen(readingNumber: 1);
+      print("DEBUG: Open Reading Screen 1");
     }
-
     else if (activeScreen == 'question-screen') {
       screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 1,);
     }
@@ -417,6 +423,7 @@ class _QuizState extends State<Quiz> {
         restartQuiz: returnHomeAndResetQuiz,
       );
     }
+
     return Scaffold(
         key: _scaffoldKey,
         endDrawer: Drawer(

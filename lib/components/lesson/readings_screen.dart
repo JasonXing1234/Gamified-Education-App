@@ -45,103 +45,112 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ReadingPage currentReadingPage;
-    var lessonName = "LESSON";
-
-    if(widget.readingNumber == 1) {
-      currentReadingPage = reading1[readingPageIndex];
-      lessonName = "SOCIAL MEDIA NORMS";
-    }
-    else if(widget.readingNumber == 2) {
-      currentReadingPage = reading1[readingPageIndex];
-      lessonName = "SETTINGS";
-    }
-    else if(widget.readingNumber == 3) {
-      currentReadingPage = reading1[readingPageIndex];
-      lessonName = "FAKE PROFILES";
-    }
-    else if(widget.readingNumber == 4) {
-      currentReadingPage = reading1[readingPageIndex];
-      lessonName = "SOCIAL TAGS";
-    }
-    else if(widget.readingNumber == 5) {
-      currentReadingPage = reading1[readingPageIndex];
-      lessonName = "APPROPRIATE INTERACTIONS";
-    }
-    else if(widget.readingNumber == 6) {
-      currentReadingPage = reading1[readingPageIndex];
-      lessonName = "SOCIAL MEDIA VS REALITY";
-    }
-    else {
-      currentReadingPage = const ReadingPage("none", [], "no");
-    }
-
-    //print('Current readingPageIndex: $readingPageIndex');
-
-
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Padding(
-          padding: const EdgeInsets.only(top: 30.0), // Adjust the top padding of title
-          child: Text(
-            lessonName,
-            style: textStyles.heading1,
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: Container(
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Row(
-            children: [
-              const Expanded(
-                child: MenuButton(),
-              ),
-              const Expanded(
-                child: SoundButton(),
-              ),
-              Expanded(
-                child: NextButton(
-                  onTap: () {
-                    setState(() {
-
-                    });
-                  },
-                  disabled: false,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-
-      body: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(40),
-            width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  currentReadingPage.title,
-                ),
-                TextBox(
-                  currentText: currentReadingPage.text[0], // TODO: Show each text box for lesson
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                const SizedBox(
-                  height: 60,
-                ),
-              ],
-            ),
-          )
+      body: Center(
+        child: Text("Hello, World!"),
       ),
     );
   }
 }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     ReadingPage currentReadingPage;
+//     var lessonName = "LESSON";
+//
+//     if(widget.readingNumber == 1) {
+//       currentReadingPage = reading1[readingPageIndex];
+//       lessonName = "SOCIAL MEDIA NORMS";
+//     }
+//     else if(widget.readingNumber == 2) {
+//       currentReadingPage = reading1[readingPageIndex];
+//       lessonName = "SETTINGS";
+//     }
+//     else if(widget.readingNumber == 3) {
+//       currentReadingPage = reading1[readingPageIndex];
+//       lessonName = "FAKE PROFILES";
+//     }
+//     else if(widget.readingNumber == 4) {
+//       currentReadingPage = reading1[readingPageIndex];
+//       lessonName = "SOCIAL TAGS";
+//     }
+//     else if(widget.readingNumber == 5) {
+//       currentReadingPage = reading1[readingPageIndex];
+//       lessonName = "APPROPRIATE INTERACTIONS";
+//     }
+//     else if(widget.readingNumber == 6) {
+//       currentReadingPage = reading1[readingPageIndex];
+//       lessonName = "SOCIAL MEDIA VS REALITY";
+//     }
+//     else {
+//       currentReadingPage = const ReadingPage("none", [], "no");
+//     }
+//
+//     //print('Current readingPageIndex: $readingPageIndex');
+//
+//     return Scaffold(
+//       appBar: AppBar(
+//         centerTitle: true,
+//         title: Padding(
+//           padding: const EdgeInsets.only(top: 30.0), // Adjust the top padding of title
+//           child: Text(
+//             lessonName,
+//             style: textStyles.heading1,
+//           ),
+//         ),
+//       ),
+//       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+//       floatingActionButton: Container(
+//         color: Colors.white,
+//         child: Padding(
+//           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+//           child: Row(
+//             children: [
+//               const Expanded(
+//                 child: MenuButton(),
+//               ),
+//               const Expanded(
+//                 child: SoundButton(),
+//               ),
+//               Expanded(
+//                 child: NextButton(
+//                   onTap: () {
+//                     setState(() {
+//
+//                     });
+//                   },
+//                   disabled: false,
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//
+//       body: SingleChildScrollView(
+//           child: Container(
+//             padding: const EdgeInsets.all(40),
+//             width: double.infinity,
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.stretch,
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: [
+//                 Text(
+//                   currentReadingPage.title,
+//                 ),
+//                 TextBox(
+//                   currentText: currentReadingPage.text[0], // TODO: Show each text box for lesson
+//                 ),
+//                 const SizedBox(
+//                   height: 30,
+//                 ),
+//                 const SizedBox(
+//                   height: 60,
+//                 ),
+//               ],
+//             ),
+//           )
+//       ),
+//     );
+//   }
+// }
