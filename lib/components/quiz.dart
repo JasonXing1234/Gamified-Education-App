@@ -34,7 +34,6 @@ class _QuizState extends State<Quiz> {
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
 
-
   void readingScreen1() {
     setState(() {
       activeScreen = 'reading-screen1';
@@ -358,7 +357,7 @@ class _QuizState extends State<Quiz> {
               foregroundColor: Colors.white,
             ),
             icon: const Icon(Icons.arrow_right_alt),
-            label: const Text("Social Norms Reading"),
+            label: const Text("Social Norms"),
           ),
         ],
       ),
