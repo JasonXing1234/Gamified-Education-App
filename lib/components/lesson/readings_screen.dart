@@ -1,36 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:quiz/components/lesson/reading_page.dart';
+import 'package:quiz/components/lesson/readings/reading1.dart';
 
 import '../../styles/app_colors.dart';
 import '../../styles/text_styles.dart';
 import '../buttons/menu_button.dart';
 import '../buttons/next_button.dart';
 import '../buttons/sound_button.dart';
+import '../text_box/text_box.dart';
 
-class LessonScreen extends StatefulWidget {
-  const LessonScreen({
+
+class ReadingsScreen extends StatefulWidget {
+  const ReadingsScreen({
     super.key,
-    required this.lessonNumber,
+    required this.readingNumber,
   });
 
-  final int lessonNumber;
+  final int readingNumber;
 
   @override
-  State<LessonScreen> createState() => _LessonScreenState();
+  State<ReadingsScreen> createState() => _ReadingsScreenState();
 }
 
 
-class _LessonScreenState extends State<LessonScreen> {
-  int slideIndex = 0;
+class _ReadingsScreenState extends State<ReadingsScreen> {
+  int readingPageIndex = 0;
   TextEditingController _controller = TextEditingController();
-  String tempAnswer = "";
-  int selectedIndex = 10;
 
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
 
-  void nextQuestion(String answer) {
+  void nextReadingPage(String answer) {
     setState(() {
-      slideIndex++;
+      readingPageIndex++;
       //_controller.dispose();
     });
   }
@@ -43,17 +45,49 @@ class _LessonScreenState extends State<LessonScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var currentText = "Lesson material...";
-
+    ReadingPage currentReadingPage;
     var lessonName = "LESSON";
+
+    if(widget.readingNumber == 1) {
+      currentReadingPage = reading1[readingPageIndex];
+      lessonName = "SOCIAL MEDIA NORMS";
+    }
+    else if(widget.readingNumber == 2) {
+      currentReadingPage = reading1[readingPageIndex];
+      lessonName = "SETTINGS";
+    }
+    else if(widget.readingNumber == 3) {
+      currentReadingPage = reading1[readingPageIndex];
+      lessonName = "FAKE PROFILES";
+    }
+    else if(widget.readingNumber == 4) {
+      currentReadingPage = reading1[readingPageIndex];
+      lessonName = "SOCIAL TAGS";
+    }
+    else if(widget.readingNumber == 5) {
+      currentReadingPage = reading1[readingPageIndex];
+      lessonName = "APPROPRIATE INTERACTIONS";
+    }
+    else if(widget.readingNumber == 6) {
+      currentReadingPage = reading1[readingPageIndex];
+      lessonName = "SOCIAL MEDIA VS REALITY";
+    }
+    else {
+      currentReadingPage = const ReadingPage("none", [], "no");
+    }
+
+    //print('Current readingPageIndex: $readingPageIndex');
 
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          lessonName,
-          style: textStyles.heading1,
+        title: Padding(
+          padding: const EdgeInsets.only(top: 30.0), // Adjust the top padding of title
+          child: Text(
+            lessonName,
+            style: textStyles.heading1,
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
@@ -92,6 +126,12 @@ class _LessonScreenState extends State<LessonScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text(
+                  currentReadingPage.title,
+                ),
+                TextBox(
+                  currentText: currentReadingPage.text[0], // TODO: Show each text box for lesson
+                ),
                 const SizedBox(
                   height: 30,
                 ),

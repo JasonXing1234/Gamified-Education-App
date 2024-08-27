@@ -144,10 +144,10 @@ class _PracticeScreenState extends State<PracticeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   counter == 2 ? TextBox(
-                      currentQuestion: "You answered incorrectly twice in a row. Please review slide 9 of the course materials to better understand this concept.",
+                      currentText: "You answered incorrectly twice in a row. Please review slide 9 of the course materials to better understand this concept.",
                       color: appColors.red
                   ) : TextBox(
-                      currentQuestion: currentQuestion.context,
+                      currentText: currentQuestion.context,
                   ),
                   const SizedBox(
                     height: 30,
@@ -165,7 +165,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
                     height: 15,
                   ),
                   counter == 2 ? SizedBox.shrink() : TextBox(
-                    currentQuestion: currentQuestion,
+                    currentText: currentQuestion,
                   ),
                   const SizedBox(
                     height: 30,

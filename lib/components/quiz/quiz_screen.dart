@@ -73,7 +73,6 @@ class _QuestionsScreenState extends State<QuizScreen> {
       quizName = "QUIZ: FAKE PROFILES";
     }
     else if(widget.quizNumber == 4) {
-      print("Quiz 4");
       currentQuestion = quiz4[questionIndex];
       quizName = "QUIZ: SOCIAL TAGS";
     }
@@ -143,9 +142,9 @@ class _QuestionsScreenState extends State<QuizScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              currentQuestion.context == "no" ? SizedBox.shrink() : TextBox(currentQuestion: currentQuestion.context),
+              currentQuestion.context == "no" ? SizedBox.shrink() : TextBox(currentText: currentQuestion.context),
               currentQuestion.context == "no" ? SizedBox.shrink() : const SizedBox(height: 20), // Add an extra space between context & question box
-              TextBox(currentQuestion: currentQuestion),
+              TextBox(currentText: currentQuestion),
               currentQuestion.photo == 'no' ? SizedBox.shrink() : Image.asset(currentQuestion.photo),
               const SizedBox(
                 height: 30,

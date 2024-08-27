@@ -1,8 +1,5 @@
 import '../../../models/question.dart';
 
-// TODO check correct answers
-
-
 const quiz1 = [
   SingleAnswerQuestion(
     "no",

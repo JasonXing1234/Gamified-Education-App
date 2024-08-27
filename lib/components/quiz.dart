@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quiz/components/lesson/readings_screen.dart';
 import 'package:quiz/components/practice/practice_screen.dart';
 import 'package:quiz/components/quiz/quiz_screen.dart';
 import 'package:quiz/components/result_screen.dart';
@@ -33,6 +34,12 @@ class _QuizState extends State<Quiz> {
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
 
+
+  void readingScreen1() {
+    setState(() {
+      activeScreen = 'reading-screen1';
+    });
+  }
 
   void changeScreen1() {
     setState(() {
@@ -204,10 +211,10 @@ class _QuizState extends State<Quiz> {
               padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 5),
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
-                border: Border.all(color: appColors.royalBlue, width: 5.0),
-                borderRadius: BorderRadius.circular(12.0),
+                border: Border.all(color: Colors.black, width: 3.0),
+                borderRadius: BorderRadius.circular(20.0),
               ),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Column(
@@ -215,27 +222,27 @@ class _QuizState extends State<Quiz> {
                     children: [
                       Text(
                         "Points",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: textStyles.mediumBodyText,
                       ),
-                      Text(
+                       Text(
                         "0",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: textStyles.mediumBodyText,
                       ),
                     ],
                   ),
-                  SizedBox(
-                    width: 25,
+                  const SizedBox(
+                    width: 50,
                   ),
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
                         "Lessons", // TODO: Lessons or activities
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: textStyles.mediumBodyText,
                       ),
                       Text(
                         "0/6",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: textStyles.mediumBodyText,
                       ),
                     ],
                   ),
@@ -243,7 +250,65 @@ class _QuizState extends State<Quiz> {
               ),
             ),
           ),
+          const SizedBox(
+            height: 20,
+          ),
+          Padding(
+              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+              decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  border: Border.all(color: Colors.black, width: 3.0),
+                  borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: Row(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center, // Vertical Alignment
+                    crossAxisAlignment: CrossAxisAlignment.start, // Aligns children to the left
+                    children: [
+                      Text(
+                        "Current Lesson",
+                        textAlign: TextAlign.left,
+                        style: textStyles.mediumBodyText,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Social Media Norms",
+                        textAlign: TextAlign.left,
+                        style: textStyles.smallBodyText,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  ElevatedButton(
+                    onPressed: (){
 
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10), // Padding for text and border
+                      //fixedSize: const Size(150, 50),
+                      backgroundColor: appColors.royalBlue,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    child: Text(
+                      "PREP",
+                      style: textStyles.mediumBodyTextWhite,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
 
           const SizedBox(
             height: 40,
@@ -275,11 +340,32 @@ class _QuizState extends State<Quiz> {
                 style: textStyles.bodyTextWhite,
             ),
           ),
+          const SizedBox(
+            height: 40,
+          ),
+          OutlinedButton.icon(
+            onPressed: (){
+              setState(() {
+                readingScreen1();
+              });
+              Navigator.of(context).pop();
+            },
+            style: OutlinedButton.styleFrom(
+              backgroundColor: appColors.royalBlue,
+              foregroundColor: Colors.white,
+            ),
+            icon: const Icon(Icons.arrow_right_alt),
+            label: const Text("Social Norms Reading"),
+          ),
         ],
       ),
     );
 
-    if (activeScreen == 'question-screen') {
+    if (activeScreen == 'reading-screen1') {
+      screen = const ReadingsScreen(readingNumber: 1,);
+    }
+
+    else if (activeScreen == 'question-screen') {
       screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 1,);
     }
     else if (activeScreen == 'question-screen2') {
