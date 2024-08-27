@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz/SignIn.dart';
 import 'package:quiz/components/quiz.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -9,6 +10,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(MaterialApp(
-    home: Quiz(),
+    home: SignInPage(),
   ),);
 }

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,6 +10,7 @@ import 'package:quiz/data/quiz4.dart';
 import 'package:quiz/start_screen.dart';
 import 'package:quiz/data/quiz_data.dart';
 
+import '../SignIn.dart';
 import 'quiz/quiz_questions/quiz1.dart';
 import 'quiz/quiz_questions/quiz2.dart';
 import '../data/quiz5.dart';
@@ -311,6 +313,16 @@ class _QuizState extends State<Quiz> {
                   ),
                   icon: const Icon(Icons.arrow_right_alt),
                   label: const Text("Appropriate interactions"),
+                ),
+                IconButton(
+                  icon: Icon(Icons.logout),
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
+                    // Navigate back to the Sign-In page after signing out
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => SignInPage()),
+                    );
+                  },
                 ),
               ],
             ),
