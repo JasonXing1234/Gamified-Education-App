@@ -35,9 +35,7 @@ class _QuizState extends State<Quiz> {
   final AppColors appColors = const AppColors();
 
   void readingScreen1() {
-    setState(() {
-      activeScreen = 'reading-screen1';
-    });
+    activeScreen = 'reading-screen1';
 
     print("DEBUG: Reading Screen 1 is active");
     print("DEBUG: " + activeScreen);
@@ -347,10 +345,12 @@ class _QuizState extends State<Quiz> {
           ),
           OutlinedButton.icon(
             onPressed: (){
-              setState(() {
-                readingScreen1();
-              });
-              Navigator.of(context).pop();
+              //readingScreen1();
+              //Navigator.of(context).pop();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ReadingsScreen(readingNumber: 1,)),
+              );
             },
             style: OutlinedButton.styleFrom(
               backgroundColor: appColors.royalBlue,
@@ -368,7 +368,12 @@ class _QuizState extends State<Quiz> {
       // TODO Screen is not being set properly in this instance, why?
       // TODO: Error is happening earlier, I think?
       // screen = QuizScreen(onSelectAnswer: recordAnswer1, quizNumber: 1,);
-      screen = const ReadingsScreen(readingNumber: 1);
+      //screen = const ReadingsScreen(readingNumber: 1);
+      /*Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ReadingsScreen(readingNumber: 1,)),
+      );*/
+      screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 1,);
       print("DEBUG: Open Reading Screen 1");
     }
     else if (activeScreen == 'question-screen') {
