@@ -40,6 +40,12 @@ class AppTextStyles {
     fontWeight: FontWeight.normal,
   );
 
+  final TextStyle smallBodyTextWhite = GoogleFonts.openSans(
+    color: Colors.white,
+    fontSize: 16,
+    fontWeight: FontWeight.normal,
+  );
+
   final TextStyle caption = GoogleFonts.openSans(
     color: Color(0xff939393),
     fontSize: 12,

@@ -8,6 +8,7 @@ import '../../styles/text_styles.dart';
 import '../buttons/menu_button.dart';
 import '../buttons/next_button.dart';
 import '../buttons/sound_button.dart';
+import '../lesson/lesson_screen.dart';
 import '../text_box/text_box.dart';
 
 
@@ -117,6 +118,10 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                       if (readingPageIndex == readingPages.length -1) { // Zero indexing
                         // Already on last page
                         // TODO: Return home?
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: widget.readingNumber)),
+                              (route) => false, // This removes all previous routes
+                        );
                       }
                       else {
                         nextReadingPage();
@@ -159,9 +164,9 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                     const SizedBox(
                       height: 30,
                     ),
-                    const SizedBox(
-                      height: 60,
-                    ),
+                    // const SizedBox(
+                    //   height: 60,
+                    // ),
                   ],
                 ),
               )

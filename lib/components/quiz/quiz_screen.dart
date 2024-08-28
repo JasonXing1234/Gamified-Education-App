@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
 import 'package:quiz/components/buttons/menu_button.dart';
 import 'package:quiz/components/buttons/sound_button.dart';
+import 'package:quiz/components/lesson/lesson_screen.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/components/question.dart';
 import 'package:quiz/styles/app_colors.dart';
@@ -41,14 +42,6 @@ class _QuestionsScreenState extends State<QuizScreen> {
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
 
-  void nextQuestion(String answer) {
-    setState(() {
-      questionIndex++;
-      //_controller.dispose();
-    });
-    widget.onSelectAnswer(answer);
-  }
-
   void dispose() {
     // Dispose the controller when the widget is disposed
     _controller.dispose();
@@ -60,6 +53,8 @@ class _QuestionsScreenState extends State<QuizScreen> {
     List<Question> quizQuestions;
 
     Question currentQuestion;
+
+
 
     var quizName = "QUIZ";
 
@@ -98,9 +93,21 @@ class _QuestionsScreenState extends State<QuizScreen> {
       currentQuestion = const Question("no", "none", "no", ["none"]);
     }
 
+    void nextQuestion(String answer) {
+      setState(() {
+        if (questionIndex < quizQuestions.length - 1) {
+          questionIndex++;
+        }
+        //_controller.dispose();
+      });
+      widget.onSelectAnswer(answer);
+    }
+
+    Widget screen;
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: true,
         title: Padding(
           padding: const EdgeInsets.only(top: 30.0), // Adjust the top padding of title
@@ -127,13 +134,24 @@ class _QuestionsScreenState extends State<QuizScreen> {
                 child: NextButton(
                   onTap: () {
                     setState(() {
-                      if(currentQuestion.answerOptions[0] == 'textField'){
-                        nextQuestion(_controller.text);
-                      }
-                      else{
-                        nextQuestion(tempAnswer);
-                      }
-                      selectedIndex = 10;
+                      
+                      // if (questionIndex == quizQuestions.length -1) { // Zero indexing
+                      //   // Already on last page
+                      //   Navigator.of(context).pop();
+                      //   // Navigator.of(context).pushAndRemoveUntil(
+                      //   //   MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: widget.quizNumber)),
+                      //   //       (route) => false, // This removes all previous routes
+                      //   // );
+                      // }
+                      // else {
+                        if(currentQuestion.answerOptions[0] == 'textField'){
+                          nextQuestion(_controller.text);
+                        }
+                        else{
+                          nextQuestion(tempAnswer);
+                        }
+                        selectedIndex = 10;
+                      // }
                     });
                   },
                   disabled: false,

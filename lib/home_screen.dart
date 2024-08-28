@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/components/lesson/lesson.dart';
+import 'package:quiz/components/lesson/lesson_screen.dart';
+import 'package:quiz/components/lesson/lessons.dart';
 
 import 'package:quiz/components/reading/readings_screen.dart';
 import 'package:quiz/components/practice/practice_screen.dart';
 import 'package:quiz/components/quiz/quiz_screen.dart';
 import 'package:quiz/components/result_screen.dart';
 import 'package:quiz/components/practice/practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
+
+import 'package:quiz/components/lesson/lessons.dart';
 
 import 'components/quiz/quiz_questions/quiz1.dart';
 import 'components/quiz/quiz_questions/quiz2.dart';
@@ -208,7 +212,7 @@ class _HomeState extends State<Home> {
           Padding(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
             child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 5),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 5),
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
                 border: Border.all(color: Colors.black, width: 3.0),
@@ -220,14 +224,9 @@ class _HomeState extends State<Home> {
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        "Points",
-                        style: textStyles.mediumBodyText,
-                      ),
-                       Text(
-                        "0",
-                        style: textStyles.mediumBodyText,
-                      ),
+                      Icon( Icons.stars, color: appColors.yellow, size: 60,),
+                      Text("Stars", style: textStyles.mediumBodyText,),
+                      Text("0", style: textStyles.mediumBodyText,),
                     ],
                   ),
                   const SizedBox(
@@ -236,14 +235,12 @@ class _HomeState extends State<Home> {
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      Icon( Icons.menu_book_rounded, color: appColors.green, size: 60),
                       Text(
-                        "Lessons", // TODO: Lessons or activities
+                        "Lessons", // TODO: Lessons or activities? Activities=quiz, practice, reading
                         style: textStyles.mediumBodyText,
                       ),
-                      Text(
-                        "0/6",
-                        style: textStyles.mediumBodyText,
-                      ),
+                      Text("0/6", style: textStyles.mediumBodyText,),
                     ],
                   ),
                 ],
@@ -365,7 +362,7 @@ class _HomeState extends State<Home> {
             onPressed: (){
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const Lesson(lessonTitle: "Social Media Norms")),
+                MaterialPageRoute(builder: (context) => const LessonScreen(lessonNumber: 1)),
               );
             },
             style: OutlinedButton.styleFrom(
@@ -379,17 +376,9 @@ class _HomeState extends State<Home> {
       ),
     );
 
-    // if (activeScreen == 'reading-screen1') {
-    //   // TODO Screen is not being set properly in this instance, why?
-    //   // TODO: Something about incorrect or missing context during the build function?
-    //   // TODO: Navigator seems to work
-    //   // screen = QuizScreen(onSelectAnswer: recordAnswer1, quizNumber: 1,);
-    //   screen = ReadingsScreen(readingNumber: 1);
-    //   // Navigator.push(
-    //   //   context,
-    //   //   MaterialPageRoute(builder: (context) => ReadingsScreen(readingNumber: 1,)),
-    //   // );
-    // }
+    if (activeScreen == 'reading-screen1') {
+      screen = ReadingsScreen(readingNumber: 1,);
+    }
     if (activeScreen == 'question-screen') {
       // TODO: Why does this work, but for lesson & reading buttons I can't get this method working?
       screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 1,);
@@ -450,6 +439,20 @@ class _HomeState extends State<Home> {
           child: SafeArea(
             child: Column(
               children: <Widget>[
+                // OutlinedButton.icon(
+                //   onPressed: (){
+                //     setState(() {
+                //       readingScreen1();
+                //     });
+                //     Navigator.of(context).pop();
+                //   },
+                //   style: OutlinedButton.styleFrom(
+                //     backgroundColor: appColors.royalBlue,
+                //     foregroundColor: Colors.white,
+                //   ),
+                //   icon: const Icon(Icons.arrow_right_alt),
+                //   label: const Text("Social Norms Reading"),
+                // ),
                 OutlinedButton.icon(
                   onPressed: (){
                     setState(() {
