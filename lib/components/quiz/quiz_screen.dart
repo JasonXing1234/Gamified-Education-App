@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
 import 'package:quiz/components/buttons/menu_button.dart';
 import 'package:quiz/components/buttons/sound_button.dart';
-import 'package:quiz/components/lesson/lesson_screen.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/components/question.dart';
 import 'package:quiz/styles/app_colors.dart';
@@ -54,8 +53,6 @@ class _QuestionsScreenState extends State<QuizScreen> {
 
     Question currentQuestion;
 
-
-
     var quizName = "QUIZ";
 
     if(widget.quizNumber == 1) {
@@ -103,8 +100,6 @@ class _QuestionsScreenState extends State<QuizScreen> {
       widget.onSelectAnswer(answer);
     }
 
-    Widget screen;
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -134,16 +129,6 @@ class _QuestionsScreenState extends State<QuizScreen> {
                 child: NextButton(
                   onTap: () {
                     setState(() {
-                      
-                      // if (questionIndex == quizQuestions.length -1) { // Zero indexing
-                      //   // Already on last page
-                      //   Navigator.of(context).pop();
-                      //   // Navigator.of(context).pushAndRemoveUntil(
-                      //   //   MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: widget.quizNumber)),
-                      //   //       (route) => false, // This removes all previous routes
-                      //   // );
-                      // }
-                      // else {
                         if(currentQuestion.answerOptions[0] == 'textField'){
                           nextQuestion(_controller.text);
                         }

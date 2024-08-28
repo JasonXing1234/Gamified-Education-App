@@ -376,11 +376,7 @@ class _HomeState extends State<Home> {
       ),
     );
 
-    if (activeScreen == 'reading-screen1') {
-      screen = ReadingsScreen(readingNumber: 1,);
-    }
     if (activeScreen == 'question-screen') {
-      // TODO: Why does this work, but for lesson & reading buttons I can't get this method working?
       screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 1,);
     }
     else if (activeScreen == 'question-screen2') {
