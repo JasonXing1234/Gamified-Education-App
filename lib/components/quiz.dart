@@ -6,7 +6,7 @@ import 'package:quiz/components/practice/practice_screen.dart';
 import 'package:quiz/components/quiz/quiz_screen.dart';
 import 'package:quiz/components/result_screen.dart';
 import 'package:quiz/start_screen.dart';
-import 'package:quiz/data/fake_profiles_practice_1.dart';
+import 'package:quiz/components/practice/practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
 
 import 'quiz/quiz_questions/quiz1.dart';
 import 'quiz/quiz_questions/quiz2.dart';
@@ -367,13 +367,14 @@ class _QuizState extends State<Quiz> {
       print("DEBUG: Set Reading Screen 1");
       // TODO Screen is not being set properly in this instance, why?
       // TODO: Error is happening earlier, I think?
+      // TODO: Something about incorrect or missing context during the build function?
       // screen = QuizScreen(onSelectAnswer: recordAnswer1, quizNumber: 1,);
       //screen = const ReadingsScreen(readingNumber: 1);
-      /*Navigator.push(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => ReadingsScreen(readingNumber: 1,)),
-      );*/
-      screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 1,);
+      );
+      //screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 1,);
       print("DEBUG: Open Reading Screen 1");
     }
     else if (activeScreen == 'question-screen') {

@@ -1,4 +1,4 @@
-import 'package:quiz/models/question.dart';
+import 'package:quiz/components/question.dart';
 
 // TODO: Put in correct answers
 // TODO: Not sure how to do the text field questions

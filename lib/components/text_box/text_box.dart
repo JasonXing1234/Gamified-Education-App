@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiz/models/question.dart';
+import 'package:quiz/components/question.dart';
 
 import '../../styles/text_styles.dart';
 

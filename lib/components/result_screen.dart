@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/components/question_answers.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
-import 'package:quiz/data/fake_profiles_practice_1.dart';
-import 'package:quiz/models/question.dart';
+import 'package:quiz/components/practice/practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
+import 'package:quiz/components/question.dart';
 
 import 'quiz/quiz_questions/quiz2.dart';
 import 'quiz/quiz_questions/quiz3.dart';

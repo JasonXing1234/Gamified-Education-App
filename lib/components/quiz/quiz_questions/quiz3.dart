@@ -1,4 +1,4 @@
-import "package:quiz/models/question.dart";
+import "package:quiz/components/question.dart";
 
 // TODO: Hopefully these are the right answers
 

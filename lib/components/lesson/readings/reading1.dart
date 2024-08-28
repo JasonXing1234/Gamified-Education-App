@@ -1,5 +1,5 @@
 
-import 'package:quiz/models/question.dart';
+import 'package:quiz/components/question.dart';
 
 import '../reading_page.dart';
 

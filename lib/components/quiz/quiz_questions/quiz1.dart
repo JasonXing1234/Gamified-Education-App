@@ -1,4 +1,4 @@
-import '../../../models/question.dart';
+import '../../question.dart';
 
 const quiz1 = [
   SingleAnswerQuestion(
