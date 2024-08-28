@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quiz/components/lesson/reading_page.dart';
-import 'package:quiz/components/lesson/readings/reading1.dart';
+import 'package:quiz/components/reading/reading_page.dart';
+import 'package:quiz/components/reading/readings/reading1.dart';
 import 'package:quiz/components/progress_bar.dart';
 
 import '../../styles/app_colors.dart';
@@ -85,35 +85,6 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
       currentReadingPage = const ReadingPage("none", ["none"], "no");
     }
 
-    // if(widget.readingNumber == 1) {
-    //   currentReadingPage = reading1[readingPageIndex];
-    //   lessonName = "SOCIAL MEDIA NORMS";
-    // }
-    // else if(widget.readingNumber == 2) {
-    //   currentReadingPage = reading1[readingPageIndex];
-    //   lessonName = "SETTINGS";
-    // }
-    // else if(widget.readingNumber == 3) {
-    //   currentReadingPage = reading1[readingPageIndex];
-    //   lessonName = "FAKE PROFILES";
-    // }
-    // else if(widget.readingNumber == 4) {
-    //   currentReadingPage = reading1[readingPageIndex];
-    //   lessonName = "SOCIAL TAGS";
-    // }
-    // else if(widget.readingNumber == 5) {
-    //   currentReadingPage = reading1[readingPageIndex];
-    //   lessonName = "APPROPRIATE INTERACTIONS";
-    // }
-    // else if(widget.readingNumber == 6) {
-    //   currentReadingPage = reading1[readingPageIndex];
-    //   lessonName = "SOCIAL MEDIA VS REALITY";
-    // }
-    // else {
-    //   currentReadingPage = const ReadingPage("none", [], "no");
-    // }
-
-    //print('Current readingPageIndex: $readingPageIndex');
 
     return Scaffold(
       appBar: AppBar(

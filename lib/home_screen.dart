@@ -1,32 +1,32 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:quiz/components/lesson/readings_screen.dart';
+import 'package:quiz/components/lesson/lesson.dart';
+
+import 'package:quiz/components/reading/readings_screen.dart';
 import 'package:quiz/components/practice/practice_screen.dart';
 import 'package:quiz/components/quiz/quiz_screen.dart';
 import 'package:quiz/components/result_screen.dart';
-import 'package:quiz/start_screen.dart';
 import 'package:quiz/components/practice/practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
 
-import 'quiz/quiz_questions/quiz1.dart';
-import 'quiz/quiz_questions/quiz2.dart';
-import 'quiz/quiz_questions/quiz3.dart';
-import 'quiz/quiz_questions/quiz4.dart';
-import 'quiz/quiz_questions/quiz5.dart';
-import 'quiz/quiz_questions/quiz6.dart';
-import '../styles/app_colors.dart';
-import '../styles/text_styles.dart';
+import 'components/quiz/quiz_questions/quiz1.dart';
+import 'components/quiz/quiz_questions/quiz2.dart';
+import 'components/quiz/quiz_questions/quiz3.dart';
+import 'components/quiz/quiz_questions/quiz4.dart';
+import 'components/quiz/quiz_questions/quiz5.dart';
+import 'components/quiz/quiz_questions/quiz6.dart';
 
-class Quiz extends StatefulWidget {
-  const Quiz({super.key});
+import 'styles/app_colors.dart';
+import 'styles/text_styles.dart';
+
+class Home extends StatefulWidget {
+  const Home({super.key});
 
   @override
-  State<Quiz> createState() {
-    return _QuizState();
+  State<Home> createState() {
+    return _HomeState();
   }
 }
 
-class _QuizState extends State<Quiz> {
+class _HomeState extends State<Home> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String activeScreen = 'start-screen';
   int resultNumber = 0;
@@ -34,11 +34,11 @@ class _QuizState extends State<Quiz> {
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
 
-  void readingScreen1() {
-    activeScreen = 'reading-screen1';
 
-    print("DEBUG: Reading Screen 1 is active");
-    print("DEBUG: " + activeScreen);
+  void readingScreen1() {
+    setState(() {
+      activeScreen = 'reading-screen1';
+    });
   }
 
   void changeScreen1() {
@@ -345,8 +345,10 @@ class _QuizState extends State<Quiz> {
           ),
           OutlinedButton.icon(
             onPressed: (){
-              //readingScreen1();
-              //Navigator.of(context).pop();
+              // setState(() {
+              //   readingScreen1();
+              // });
+              // Navigator.of(context).pop();
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => ReadingsScreen(readingNumber: 1,)),
@@ -357,27 +359,39 @@ class _QuizState extends State<Quiz> {
               foregroundColor: Colors.white,
             ),
             icon: const Icon(Icons.arrow_right_alt),
-            label: const Text("Social Norms"),
+            label: const Text("Social Norms Reading"),
+          ),
+          OutlinedButton.icon(
+            onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Lesson(lessonTitle: "Social Media Norms")),
+              );
+            },
+            style: OutlinedButton.styleFrom(
+              backgroundColor: appColors.royalBlue,
+              foregroundColor: Colors.white,
+            ),
+            icon: const Icon(Icons.arrow_right_alt),
+            label: const Text("Social Norms Lesson"),
           ),
         ],
       ),
     );
 
-    if (activeScreen == 'reading-screen1') {
-      print("DEBUG: Set Reading Screen 1");
-      // TODO Screen is not being set properly in this instance, why?
-      // TODO: Error is happening earlier, I think?
-      // TODO: Something about incorrect or missing context during the build function?
-      // screen = QuizScreen(onSelectAnswer: recordAnswer1, quizNumber: 1,);
-      //screen = const ReadingsScreen(readingNumber: 1);
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => ReadingsScreen(readingNumber: 1,)),
-      );
-      //screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 1,);
-      print("DEBUG: Open Reading Screen 1");
-    }
-    else if (activeScreen == 'question-screen') {
+    // if (activeScreen == 'reading-screen1') {
+    //   // TODO Screen is not being set properly in this instance, why?
+    //   // TODO: Something about incorrect or missing context during the build function?
+    //   // TODO: Navigator seems to work
+    //   // screen = QuizScreen(onSelectAnswer: recordAnswer1, quizNumber: 1,);
+    //   screen = ReadingsScreen(readingNumber: 1);
+    //   // Navigator.push(
+    //   //   context,
+    //   //   MaterialPageRoute(builder: (context) => ReadingsScreen(readingNumber: 1,)),
+    //   // );
+    // }
+    if (activeScreen == 'question-screen') {
+      // TODO: Why does this work, but for lesson & reading buttons I can't get this method working?
       screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 1,);
     }
     else if (activeScreen == 'question-screen2') {
