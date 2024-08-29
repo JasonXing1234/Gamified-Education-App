@@ -285,7 +285,7 @@ class _HomeState extends State<Home> {
                   ),
                   ElevatedButton(
                     onPressed: (){
-                      //TODO: Add code
+                      //TODO: Add code to update what is the next lesson for the user
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10), // Padding for text and border
@@ -306,59 +306,45 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
-
           const SizedBox(
             height: 40,
           ),
           OutlinedButton.icon(
+            label: Text(
+              "Start Practice",
+              style: textStyles.bodyTextWhite,
+            ),
             onPressed: (){_scaffoldKey.currentState?.openDrawer();},
             style: OutlinedButton.styleFrom(
               backgroundColor: appColors.royalBlue,
               foregroundColor: Colors.white,
             ),
             icon: const Icon(Icons.arrow_right_alt),
-            label: Text(
-                "Start Practice",
-                style: textStyles.bodyTextWhite,
-            ),
           ),
           const SizedBox(
             height: 40,
           ),
           OutlinedButton.icon(
+            label: Text(
+              "Start Quiz",
+              style: textStyles.bodyTextWhite,
+            ),
             onPressed: (){_scaffoldKey.currentState?.openEndDrawer();},
             style: OutlinedButton.styleFrom(
               backgroundColor: appColors.royalBlue,
               foregroundColor: Colors.white,
             ),
             icon: const Icon(Icons.arrow_right_alt),
-            label: Text(
-                "Start Quiz",
-                style: textStyles.bodyTextWhite,
-            ),
           ),
           const SizedBox(
             height: 40,
           ),
           OutlinedButton.icon(
-            onPressed: (){
-              // setState(() {
-              //   readingScreen1();
-              // });
-              // Navigator.of(context).pop();
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ReadingsScreen(readingNumber: 1,)),
-              );
-            },
-            style: OutlinedButton.styleFrom(
-              backgroundColor: appColors.royalBlue,
-              foregroundColor: Colors.white,
-            ),
             icon: const Icon(Icons.arrow_right_alt),
-            label: const Text("Social Norms Reading"),
-          ),
-          OutlinedButton.icon(
+            label: Text(
+              "Social Norms Lesson",
+              style: textStyles.bodyTextWhite,
+            ),
             onPressed: (){
               Navigator.push(
                 context,
@@ -369,8 +355,6 @@ class _HomeState extends State<Home> {
               backgroundColor: appColors.royalBlue,
               foregroundColor: Colors.white,
             ),
-            icon: const Icon(Icons.arrow_right_alt),
-            label: const Text("Social Norms Lesson"),
           ),
         ],
       ),

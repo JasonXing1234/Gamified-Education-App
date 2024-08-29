@@ -28,7 +28,31 @@ class _LessonScreenState extends State<LessonScreen> {
   Widget build(BuildContext context) {
 
     // Readings and quizzes start with 1, but lessons start at 0
-    final Lesson lesson = lessons[widget.lessonNumber - 1];
+    // Lesson lesson = lessons[widget.lessonNumber - 1];
+    Lesson lesson;
+
+    if (widget.lessonNumber == 1) {
+      lesson = socialMediaNorms;
+    }
+    else if (widget.lessonNumber == 2) {
+      lesson = settings;
+    }
+    else if (widget.lessonNumber == 3) {
+      lesson = fakeProfiles;
+    }
+    else if (widget.lessonNumber == 4) {
+      lesson = socialTags;
+    }
+    else if (widget.lessonNumber == 5) {
+      lesson = appropriateInteractions;
+    }
+    else if (widget.lessonNumber == 6) {
+      lesson = socialMediaVSReality;
+    }
+    else {
+      lesson = Lesson("LESSON", [], 0);
+    }
+
 
     return Scaffold(
         appBar: AppBar(
@@ -51,7 +75,7 @@ class _LessonScreenState extends State<LessonScreen> {
               ),
               Row(
                 children: [
-                  Image.asset(lesson.getCurrentPhoto()),
+                  lesson.getCurrentPhoto() == "no" ? const SizedBox.shrink() : Image.asset(lesson.getCurrentPhoto()),
                 ],
               ),
               const SizedBox(

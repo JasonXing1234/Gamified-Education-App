@@ -1,14 +1,14 @@
 
 import 'lesson.dart';
 
-var lessons = [
-  socialMediaNorms,
-  settings,
-  fakeProfiles,
-  socialTags,
-  appropriateInteractions,
-  socialMediaVSReality,
-];
+// var lessons = [
+//   socialMediaNorms,
+//   settings,
+//   fakeProfiles,
+//   socialTags,
+//   appropriateInteractions,
+//   socialMediaVSReality,
+// ];
 
 Lesson socialMediaNorms = Lesson(
     "SOCIAL MEDIA NORMS",

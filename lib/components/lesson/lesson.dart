@@ -10,6 +10,11 @@ class Lesson {
   }
 
   String getCurrentPhoto() {
+
+    if (characterPhotos.isEmpty) {
+      return "no";
+    }
+
     return characterPhotos[currentPhotoIndex];
   }
 
