@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:quiz/components/lesson/lesson.dart';
+import 'package:quiz/components/lesson/lesson_dashboard.dart';
 import 'package:quiz/components/lesson/lesson_screen.dart';
-import 'package:quiz/components/lesson/lessons.dart';
+import 'package:quiz/components/lesson/all_lessons.dart';
 
-import 'package:quiz/components/reading/readings_screen.dart';
 import 'package:quiz/components/practice/practice_screen.dart';
 import 'package:quiz/components/quiz/quiz_screen.dart';
 import 'package:quiz/components/result_screen.dart';
 import 'package:quiz/components/practice/practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
-
-import 'package:quiz/components/lesson/lessons.dart';
 
 import 'components/quiz/quiz_questions/quiz1.dart';
 import 'components/quiz/quiz_questions/quiz2.dart';
@@ -205,10 +202,15 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(context) {
-    Widget screen = Center(
+    Widget screen = SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const SizedBox(
+            height: 40,
+          ),
+
+          // User Stats Box
           Padding(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
             child: Container(
@@ -250,6 +252,8 @@ class _HomeState extends State<Home> {
           const SizedBox(
             height: 20,
           ),
+
+          // Current Activity and Lesson Shortcut
           Padding(
               padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
             child: Container(
@@ -309,6 +313,42 @@ class _HomeState extends State<Home> {
           const SizedBox(
             height: 40,
           ),
+
+
+          // Social Media Norms Lesson
+          GestureDetector(
+            child: LessonDashboard(lesson: socialMediaNorms),
+            onTap: () {
+              // Navigate to the Social Media Norms Lesson
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LessonScreen(lessonNumber: 1)),
+              );
+            },
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+
+          // Settings Lesson
+          GestureDetector(
+            child: LessonDashboard(lesson: settings),
+            onTap: () {
+              // Navigate to the Social Media Norms Lesson
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LessonScreen(lessonNumber: 2)),
+              );
+            },
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+
+
+
+
+          // Start Practice
           OutlinedButton.icon(
             label: Text(
               "Start Practice",
@@ -324,6 +364,8 @@ class _HomeState extends State<Home> {
           const SizedBox(
             height: 40,
           ),
+
+          // Start Quiz
           OutlinedButton.icon(
             label: Text(
               "Start Quiz",
@@ -338,23 +380,6 @@ class _HomeState extends State<Home> {
           ),
           const SizedBox(
             height: 40,
-          ),
-          OutlinedButton.icon(
-            icon: const Icon(Icons.arrow_right_alt),
-            label: Text(
-              "Social Norms Lesson",
-              style: textStyles.bodyTextWhite,
-            ),
-            onPressed: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const LessonScreen(lessonNumber: 1)),
-              );
-            },
-            style: OutlinedButton.styleFrom(
-              backgroundColor: appColors.royalBlue,
-              foregroundColor: Colors.white,
-            ),
           ),
         ],
       ),

@@ -6,7 +6,7 @@ import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/components/question.dart';
 import 'package:quiz/styles/app_colors.dart';
 
-import '../progress_bar.dart';
+import '../progress_bar/progress_bar.dart';
 import 'quiz_questions/quiz2.dart';
 import 'quiz_questions/quiz3.dart';
 import 'quiz_questions/quiz4.dart';
@@ -102,7 +102,6 @@ class _QuestionsScreenState extends State<QuizScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         centerTitle: true,
         title: Padding(
           padding: const EdgeInsets.only(top: 30.0), // Adjust the top padding of title

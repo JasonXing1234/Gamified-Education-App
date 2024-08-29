@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/components/quiz_results_screen.dart';
 import 'package:quiz/components/lesson/lesson.dart';
-import 'package:quiz/components/lesson/lessons.dart';
+import 'package:quiz/components/lesson/all_lessons.dart';
 import 'package:quiz/components/reading/readings_screen.dart';
 import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
@@ -76,6 +76,7 @@ class _LessonScreenState extends State<LessonScreen> {
               Row(
                 children: [
                   lesson.getCurrentPhoto() == "no" ? const SizedBox.shrink() : Image.asset(lesson.getCurrentPhoto()),
+                  // TODO: Add stats and ability to change character's name
                 ],
               ),
               const SizedBox(

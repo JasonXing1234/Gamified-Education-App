@@ -53,11 +53,19 @@ class AppTextStyles {
   );
 
 
-  TextStyle bodyTextCustom(Color color, double size) {
+  TextStyle customBodyText(Color color, double size) {
     return GoogleFonts.openSans(
       color: color,
       fontSize: size,
       fontWeight: FontWeight.normal,
+    );
+  }
+
+  TextStyle customText(Color color, double size, FontWeight weight) {
+    return GoogleFonts.openSans(
+      color: color,
+      fontSize: size,
+      fontWeight: weight,
     );
   }
 

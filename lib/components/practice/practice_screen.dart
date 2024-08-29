@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
-import 'package:quiz/components/progress_bar.dart';
+import 'package:quiz/components/progress_bar/progress_bar.dart';
 
 import '../question.dart';
 import 'practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
@@ -178,7 +178,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
                     counter == 2 ? SizedBox.shrink() : isCorrect == false ? Text(
                       'The answer was incorrect. Please try again.',
                       textAlign: TextAlign.left,
-                      style: textStyles.bodyTextCustom(appColors.red, 24),
+                      style: textStyles.customBodyText(appColors.red, 24),
                     ) : SizedBox.shrink(),
                     const SizedBox(
                       height: 15,

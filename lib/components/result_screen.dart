@@ -109,7 +109,6 @@ class ResultScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
           centerTitle: true,
           title: Text(
             quizName,

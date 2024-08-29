@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/components/reading/reading_page.dart';
 import 'package:quiz/components/reading/readings/reading1.dart';
-import 'package:quiz/components/progress_bar.dart';
+import 'package:quiz/components/progress_bar/progress_bar.dart';
 
 import '../../styles/app_colors.dart';
 import '../../styles/text_styles.dart';

@@ -48,7 +48,7 @@ class TextBox extends StatelessWidget {
           Text(
             text,
             textAlign: TextAlign.left,
-            style: textStyles.bodyTextCustom(color, 24),
+            style: textStyles.customBodyText(color, 24),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),

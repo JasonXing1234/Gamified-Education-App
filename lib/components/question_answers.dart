@@ -49,14 +49,14 @@ class QuestionAnswers extends StatelessWidget {
                       ),
                       Text(
                         item['user_answer'] as String,
-                        style: textStyles.bodyTextCustom(
+                        style: textStyles.customBodyText(
                             isCorrect ? appColors.green : appColors.red,
                             fontSize
                         ),
                       ),
                       Text(
                         item['correct_answer'] as String,
-                        style: textStyles.bodyTextCustom(
+                        style: textStyles.customBodyText(
                             appColors.green,
                             fontSize
                         ),
