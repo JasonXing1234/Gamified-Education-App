@@ -17,10 +17,6 @@ import 'components/quiz/quiz_questions/quiz5.dart';
 import 'components/quiz/quiz_questions/quiz6.dart';
 
 import '../SignIn.dart';
-import 'HalfCircleBar.dart';
-import 'quiz/quiz_questions/quiz1.dart';
-import 'quiz/quiz_questions/quiz2.dart';
-import '../data/quiz5.dart';
 import '../styles/app_colors.dart';
 import '../styles/text_styles.dart';
 // >>>>>>> dev:lib/components/quiz.dart
@@ -392,7 +388,7 @@ class _HomeState extends State<Home> {
             height: 40,
           ),
           SizedBox(height: 150),
-          Center(
+          /*Center(
             child: Stack(
               alignment: Alignment.center,
               children: [
@@ -408,7 +404,7 @@ class _HomeState extends State<Home> {
                 ),
               ],
             ),
-          ),
+          ),*/
         ],
       ),
     );
