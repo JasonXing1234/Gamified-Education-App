@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quiz/components/reading/reading_page.dart';
 import 'package:quiz/components/reading/readings/reading1.dart';
 import 'package:quiz/components/progress_bar/progress_bar.dart';
+import 'package:quiz/components/reading/readings/reading2.dart';
 
 import '../../styles/app_colors.dart';
 import '../../styles/text_styles.dart';
@@ -35,7 +36,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
   void nextReadingPage() {
     setState(() {
       readingPageIndex++;
-      //_controller.dispose();
+      // _controller.dispose();
     });
   }
 
@@ -56,7 +57,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
       lessonName = "SOCIAL MEDIA NORMS";
     }
     else if(widget.readingNumber == 2) {
-      readingPages = reading1;
+      readingPages = reading2;
       lessonName = "SETTINGS";
     }
     else if(widget.readingNumber == 3) {
@@ -156,17 +157,27 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
-                    TextBox(
-                      currentText: currentReadingPage.text[0], // TODO: Show each text box for lesson
-                    ),
+
+                    currentReadingPage.text.isNotEmpty ? Container(child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: currentReadingPage.text.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10.0), // Adjust the padding as needed
+                          child: TextBox(currentText: currentReadingPage.text[index]),
+                        );
+                      },
+                    )) : TextBox(currentText: "Click next"),
                     const SizedBox(
                       height: 30,
                     ),
-                    // const SizedBox(
-                    //   height: 60,
-                    // ),
+                    currentReadingPage.photo == "no" ? const SizedBox.shrink() : Image.asset(currentReadingPage.photo),
+                    const SizedBox(
+                      height: 60,
+                    ),
                   ],
                 ),
               )

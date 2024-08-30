@@ -115,7 +115,7 @@ class _LessonScreenState extends State<LessonScreen> {
                     },
                   ),
                   ActivityButton(
-                    text: "PLAY", // Play is practice
+                    text: "DRILL", // Drill is practice
                     onTap:
                         (){
                       Navigator.push(

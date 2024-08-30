@@ -17,7 +17,7 @@ const reading1 = [
       "When you follow the norms of social media, you may have a better experience.",
       "People expect you to use social media a certain way. If you don't follow the norm, others may be confused or upset.",
     ],
-    "no",
+    "assets/lesson_images/social_media_norms_images/computer.png",
   ),
   ReadingPage(
     "PLATFORMS",
@@ -92,7 +92,7 @@ const reading1 = [
       "These are the accounts you automatically have when you sign up for Facebook.",
       "You are able to see what others post and they can see what you post",
     ],
-    "no",
+    "assets/lesson_images/social_media_norms_images/facebook_personal.png",
   ),
   ReadingPage(
     "FACEBOOK 'FRIENDS'",
@@ -100,7 +100,7 @@ const reading1 = [
       "Just because Facebook calls it a 'Friend' does not mean that all of your Facebook 'Friends' are truly your friend.",
       "When other users send ‘Friend’ requests, they aren’t asking to be your real-life friend. They are just asking to connect with you on Facebook.",
     ],
-    "no",
+    "assets/lesson_images/social_media_norms_images/facebook_personal.png",
   ),
   ReadingPage(
     "WHY CREATE A PERSONAL FACEBOOK?",
@@ -108,7 +108,7 @@ const reading1 = [
       "Someone may create a user account to connect with their Friends over social media.",
       "They can post about what is going on in their lives."
     ],
-    "no",
+    "assets/lesson_images/social_media_norms_images/facebook_personal.png",
   ),
   ReadingPage(
     "FACEBOOK GROUP",
@@ -117,28 +117,28 @@ const reading1 = [
       "These people do not have to be on your 'Friend' list.",
       "You are able to see what others post and they can see what you post.",
     ],
-    "no",
+    "assets/lesson_images/social_media_norms_images/facebook_group.png",
   ),
   ReadingPage(
     "WHY CREATE A GROUP",
     [
       "Someone may create a group to have a place to discuss something they are interested in with others. Groups tend to be interactive."
     ],
-    "no",
+    "assets/lesson_images/social_media_norms_images/facebook_group.png",
   ),
   ReadingPage(
     "FACEBOOK PAGE",
     [
       "These accounts are normally about a business or interest. They are less interactive.",
     ],
-    "no",
+    "assets/lesson_images/social_media_norms_images/facebook_page.png",
   ),
   ReadingPage(
     "WHY CREATE A PAGE?",
     [
       "Someone may create a page to share information about events and news. People don’t often comment on the posts."
     ],
-    "no",
+    "assets/lesson_images/social_media_norms_images/facebook_page.png",
   ),
   ReadingPage(
     "REMEMBER",
@@ -155,7 +155,7 @@ const reading1 = [
       "These are the accounts you automatically have when you sign up for Instagram.",
       "You are able to see what others post and others can see what you post.",
     ],
-    "no",
+    "assets/lesson_images/social_media_norms_images/instagram_personal.png",
   ),
   ReadingPage(
     "WHY CREATE A PERSONAL INSTAGRAM?",
@@ -163,35 +163,35 @@ const reading1 = [
       "So that they can post about themselves and their lives for their friends to see.",
       "Also, so that they can follow their friends and other accounts which interest them.",
     ],
-    "no",
+    "assets/lesson_images/social_media_norms_images/instagram_personal.png",
   ),
   ReadingPage(
     "ALTERNATE PERSONAL (FINSTA)",
     [
       "These are accounts which are typically used by individuals to post things that they only want certain people to see",
     ],
-    "no",
+    "assets/lesson_images/social_media_norms_images/instagram_finsta.png",
   ),
   ReadingPage(
     "WHY CREATE A FINSTA?",
     [
       "So that they can post about themselves and their lives for a limited number of friends to see."
     ],
-    "no",
+    "assets/lesson_images/social_media_norms_images/instagram_finsta.png",
   ),
   ReadingPage(
     "BUSINESS ACCOUNTS",
     [
       "These are accounts which are typically used to post images of promotionals or products which are for sale",
     ],
-    "no",
+    "assets/lesson_images/social_media_norms_images/instagram_business.png",
   ),
   ReadingPage(
     "WHY CREATE A BUSINESS ACCOUNT?",
     [
       "Someone (or a company) would use a business profile when they want to advertise their products which are for sale",
     ],
-    "no",
+    "assets/lesson_images/social_media_norms_images/instagram_business.png",
   ),
   ReadingPage(
     "VERIFIED CELEBRITY & INFLUENCER",
@@ -205,21 +205,21 @@ const reading1 = [
     [
       "A celebrity or influencer uses these accounts to post about their lives. They may promote products or themselves.",
     ],
-    "assets/images/verifiedSymbol.png",
+    "assets/lesson_images/social_media_norms_images/instagram_influencer.png",
   ),
   ReadingPage(
     "TOPIC / INTEREST ACCOUNT",
     [
       "These are accounts which post about certain topics or interests. These include meme accounts, fan accounts, etc."
     ],
-    "no",
+    "assets/lesson_images/social_media_norms_images/instagram_topic.png",
   ),
   ReadingPage(
     "WHY CREATE A TOPIC ACCOUNT?",
     [
       "Someone may use a topic/interest account to post exclusively about things which they are interested in.",
     ],
-    "no",
+    "assets/lesson_images/social_media_norms_images/instagram_topic.png",
   ),
   ReadingPage(
     "REMEMBER",
