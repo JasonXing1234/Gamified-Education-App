@@ -289,12 +289,12 @@ class _HomeState extends State<Home> {
                       Text(
                         "Social Media Norms",
                         textAlign: TextAlign.left,
-                        style: textStyles.smallBodyText,
+                        style: textStyles.caption,
                       ),
                     ],
                   ),
                   const SizedBox(
-                    width: 30,
+                    width: 20,
                   ),
                   ElevatedButton(
                     onPressed: (){
@@ -331,7 +331,7 @@ class _HomeState extends State<Home> {
               // Navigate to the Social Media Norms Lesson
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const LessonScreen(lessonNumber: 1)),
+                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: socialMediaNorms.lessonNumber)),
               );
             },
           ),
@@ -346,7 +346,22 @@ class _HomeState extends State<Home> {
               // Navigate to the Social Media Norms Lesson
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const LessonScreen(lessonNumber: 2)),
+                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: settings.lessonNumber)),
+              );
+            },
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+
+          // Fake Profile Lesson
+          GestureDetector(
+            child: LessonDashboard(lesson: fakeProfiles),
+            onTap: () {
+              // Navigate to the Social Media Norms Lesson
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: fakeProfiles.lessonNumber)),
               );
             },
           ),

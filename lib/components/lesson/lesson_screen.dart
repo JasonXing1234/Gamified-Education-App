@@ -3,6 +3,7 @@ import 'package:quiz/components/quiz_results_screen.dart';
 import 'package:quiz/components/lesson/lesson.dart';
 import 'package:quiz/components/lesson/all_lessons.dart';
 import 'package:quiz/components/reading/readings_screen.dart';
+import 'package:quiz/components/rewards/all_characters.dart';
 import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
 
@@ -31,26 +32,26 @@ class _LessonScreenState extends State<LessonScreen> {
     // Lesson lesson = lessons[widget.lessonNumber - 1];
     Lesson lesson;
 
-    if (widget.lessonNumber == 1) {
+    if (widget.lessonNumber == socialMediaNorms.lessonNumber) {
       lesson = socialMediaNorms;
     }
-    else if (widget.lessonNumber == 2) {
+    else if (widget.lessonNumber == settings.lessonNumber) {
       lesson = settings;
     }
-    else if (widget.lessonNumber == 3) {
+    else if (widget.lessonNumber == fakeProfiles.lessonNumber) {
       lesson = fakeProfiles;
     }
-    else if (widget.lessonNumber == 4) {
+    else if (widget.lessonNumber == socialTags.lessonNumber) {
       lesson = socialTags;
     }
-    else if (widget.lessonNumber == 5) {
+    else if (widget.lessonNumber == appropriateInteractions.lessonNumber) {
       lesson = appropriateInteractions;
     }
-    else if (widget.lessonNumber == 6) {
+    else if (widget.lessonNumber == socialMediaVSReality.lessonNumber) {
       lesson = socialMediaVSReality;
     }
     else {
-      lesson = Lesson("LESSON", [], 0);
+      lesson = Lesson("LESSON", lockedCharacter, 0);
     }
 
 
@@ -73,12 +74,9 @@ class _LessonScreenState extends State<LessonScreen> {
               const SizedBox(
                 height: 20,
               ),
-              Row(
-                children: [
-                  lesson.getCurrentPhoto() == "no" ? const SizedBox.shrink() : Image.asset(lesson.getCurrentPhoto()),
-                  // TODO: Add stats and ability to change character's name
-                ],
-              ),
+
+              StatsNotebook(lesson: lesson, textStyles: textStyles),
+
               const SizedBox(
                 height: 20,
               ),
@@ -150,6 +148,57 @@ class _LessonScreenState extends State<LessonScreen> {
             ],
           ),
         ),
+    );
+  }
+}
+
+class StatsNotebook extends StatelessWidget {
+  const StatsNotebook({
+    super.key,
+    required this.lesson,
+    required this.textStyles,
+  });
+
+  final Lesson lesson;
+  final AppTextStyles textStyles;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 375,
+      height: 200,
+      child: GridView.extent(
+        maxCrossAxisExtent: 300, // Max width of character and notebook
+        mainAxisSpacing: 1, // Space between rows
+        crossAxisSpacing: 1, // Space between columns
+        children: [
+          lesson.getCurrentPhoto() == "no" ? const SizedBox.shrink() : Image.asset(lesson.getCurrentPhoto()),
+          Stack(
+              children: [
+                Image.asset("assets/images/notebook_v1.png"),
+                Center(
+                    child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 2),
+                        child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 10,),
+                          Text(lesson.character.name, style: textStyles.caption,),
+                          const SizedBox(height: 5,),
+                          Text("Phase: ${lesson.character.currentPhase.name}", style: textStyles.caption,),
+                          const SizedBox(height: 5,),
+                          Text("Weight: ${lesson.character.stats[lesson.character.currentPhase]?["weight"]}", style: textStyles.caption,),
+                          const SizedBox(height: 5,),
+                          Text("Height: ${lesson.character.stats[lesson.character.currentPhase]?["height"]}", style: textStyles.caption,),
+                        ],
+                      ),
+                    ),
+                ),
+              ]
+          ),
+        ],
+      ),
     );
   }
 }
