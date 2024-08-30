@@ -1,32 +1,42 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:quiz/components/lesson/lesson_dashboard.dart';
+import 'package:quiz/components/lesson/lesson_screen.dart';
+import 'package:quiz/components/lesson/all_lessons.dart';
+
 import 'package:quiz/components/practice/practice_screen.dart';
 import 'package:quiz/components/quiz/quiz_screen.dart';
 import 'package:quiz/components/result_screen.dart';
-import 'package:quiz/data/quiz3.dart';
-import 'package:quiz/data/quiz4.dart';
-import 'package:quiz/start_screen.dart';
-import 'package:quiz/data/quiz_data.dart';
+import 'package:quiz/components/practice/practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
+
+import 'components/quiz/quiz_questions/quiz1.dart';
+import 'components/quiz/quiz_questions/quiz2.dart';
+import 'components/quiz/quiz_questions/quiz3.dart';
+import 'components/quiz/quiz_questions/quiz4.dart';
+import 'components/quiz/quiz_questions/quiz5.dart';
+import 'components/quiz/quiz_questions/quiz6.dart';
 
 import '../SignIn.dart';
-import 'quiz/quiz_questions/quiz1.dart';
-import 'quiz/quiz_questions/quiz2.dart';
-import '../data/quiz5.dart';
+// import 'quiz/quiz_questions/quiz1.dart';
+// import 'quiz/quiz_questions/quiz2.dart';
+// import '../data/quiz5.dart';
 import '../styles/app_colors.dart';
 import '../styles/text_styles.dart';
+// >>>>>>> dev:lib/components/quiz.dart
 
-class Quiz extends StatefulWidget {
-  const Quiz({super.key});
+import 'styles/app_colors.dart';
+import 'styles/text_styles.dart';
+
+class Home extends StatefulWidget {
+  const Home({super.key});
 
   @override
-  State<Quiz> createState() {
-    return _QuizState();
+  State<Home> createState() {
+    return _HomeState();
   }
 }
 
-class _QuizState extends State<Quiz> {
+class _HomeState extends State<Home> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String activeScreen = 'start-screen';
   int resultNumber = 0;
@@ -34,6 +44,12 @@ class _QuizState extends State<Quiz> {
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
 
+
+  void readingScreen1() {
+    setState(() {
+      activeScreen = 'reading-screen1';
+    });
+  }
 
   void changeScreen1() {
     setState(() {
@@ -89,6 +105,30 @@ class _QuizState extends State<Quiz> {
   void quizScreen2() {
     setState(() {
       activeScreen = 'quiz-screen2';
+    });
+  }
+
+  void quizScreen3() {
+    setState(() {
+      activeScreen = 'quiz-screen3';
+    });
+  }
+
+  void quizScreen4() {
+    setState(() {
+      activeScreen = 'quiz-screen4';
+    });
+  }
+
+  void quizScreen5() {
+    setState(() {
+      activeScreen = 'quiz-screen5';
+    });
+  }
+
+  void quizScreen6() {
+    setState(() {
+      activeScreen = 'quiz-screen6';
     });
   }
 
@@ -152,6 +192,16 @@ class _QuizState extends State<Quiz> {
     });
   }
 
+  void recordAnswer6(String answer) {
+    setState(() {
+      answers.add(answer);
+      if (quiz6.length == answers.length) {
+        activeScreen = 'result-screen';
+        resultNumber = 6;
+      }
+    });
+  }
+
   void returnHomeAndResetQuiz() {
     setState(() {
       activeScreen = 'start-screen';
@@ -161,43 +211,189 @@ class _QuizState extends State<Quiz> {
 
   @override
   Widget build(context) {
-    Widget screen = Center(
+    Widget screen = SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(
             height: 40,
           ),
+
+          // User Stats Box
+          Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 5),
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                border: Border.all(color: Colors.black, width: 3.0),
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon( Icons.stars, color: appColors.yellow, size: 60,),
+                      Text("Stars", style: textStyles.mediumBodyText,),
+                      Text("0", style: textStyles.mediumBodyText,),
+                    ],
+                  ),
+                  const SizedBox(
+                    width: 50,
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon( Icons.menu_book_rounded, color: appColors.green, size: 60),
+                      Text(
+                        "Lessons", // TODO: Lessons or activities? Activities=quiz, practice, reading
+                        style: textStyles.mediumBodyText,
+                      ),
+                      Text("0/6", style: textStyles.mediumBodyText,),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+
+          // Current Activity and Lesson Shortcut
+          Padding(
+              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+              decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  border: Border.all(color: Colors.black, width: 3.0),
+                  borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: Row(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center, // Vertical Alignment
+                    crossAxisAlignment: CrossAxisAlignment.start, // Aligns children to the left
+                    children: [
+                      Text(
+                        "Current Lesson",
+                        textAlign: TextAlign.left,
+                        style: textStyles.mediumBodyText,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Social Media Norms",
+                        textAlign: TextAlign.left,
+                        style: textStyles.smallBodyText,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  ElevatedButton(
+                    onPressed: (){
+                      //TODO: Add code to update what is the next lesson for the user
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10), // Padding for text and border
+                      //fixedSize: const Size(150, 50),
+                      backgroundColor: appColors.royalBlue,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    child: Text(
+                      "PREP",
+                      style: textStyles.mediumBodyTextWhite,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+
+
+          // Social Media Norms Lesson
+          GestureDetector(
+            child: LessonDashboard(lesson: socialMediaNorms),
+            onTap: () {
+              // Navigate to the Social Media Norms Lesson
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LessonScreen(lessonNumber: 1)),
+              );
+            },
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+
+          // Settings Lesson
+          GestureDetector(
+            child: LessonDashboard(lesson: settings),
+            onTap: () {
+              // Navigate to the Social Media Norms Lesson
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LessonScreen(lessonNumber: 2)),
+              );
+            },
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+
+
+
+
+          // Start Practice
           OutlinedButton.icon(
+            label: Text(
+              "Start Practice",
+              style: textStyles.bodyTextWhite,
+            ),
             onPressed: (){_scaffoldKey.currentState?.openDrawer();},
             style: OutlinedButton.styleFrom(
               backgroundColor: appColors.royalBlue,
               foregroundColor: Colors.white,
             ),
             icon: const Icon(Icons.arrow_right_alt),
-            label: Text(
-                "Start Practice",
-                style: textStyles.bodyTextWhite,
-            ),
           ),
           const SizedBox(
             height: 40,
           ),
+
+          // Start Quiz
           OutlinedButton.icon(
+            label: Text(
+              "Start Quiz",
+              style: textStyles.bodyTextWhite,
+            ),
             onPressed: (){_scaffoldKey.currentState?.openEndDrawer();},
             style: OutlinedButton.styleFrom(
               backgroundColor: appColors.royalBlue,
               foregroundColor: Colors.white,
             ),
             icon: const Icon(Icons.arrow_right_alt),
-            label: Text(
-                "Start Quiz",
-                style: textStyles.bodyTextWhite,
-            ),
+          ),
+          const SizedBox(
+            height: 40,
           ),
         ],
       ),
     );
+
     if (activeScreen == 'question-screen') {
       screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 1,);
     }
@@ -231,19 +427,46 @@ class _QuizState extends State<Quiz> {
     else if (activeScreen == 'quiz-screen2') {
       screen = QuizScreen(onSelectAnswer: recordAnswer2, quizNumber: 2,);
     }
+    else if (activeScreen == 'quiz-screen3') {
+      screen = QuizScreen(onSelectAnswer: recordAnswer3, quizNumber: 3,);
+    }
+    else if (activeScreen == 'quiz-screen4') {
+      screen = QuizScreen(onSelectAnswer: recordAnswer4, quizNumber: 4,);
+    }
+    else if (activeScreen == 'quiz-screen5') {
+      screen = QuizScreen(onSelectAnswer: recordAnswer5, quizNumber: 5,);
+    }
+    else if (activeScreen == 'quiz-screen6') {
+      screen = QuizScreen(onSelectAnswer: recordAnswer6, quizNumber: 6,);
+    }
     else if (activeScreen == 'result-screen') {
       screen = ResultScreen(
-        number: resultNumber,
-        answers: answers,
+        quizNumber: resultNumber,
+        userAnswers: answers,
         restartQuiz: returnHomeAndResetQuiz,
       );
     }
+
     return Scaffold(
         key: _scaffoldKey,
         endDrawer: Drawer(
           child: SafeArea(
             child: Column(
               children: <Widget>[
+                // OutlinedButton.icon(
+                //   onPressed: (){
+                //     setState(() {
+                //       readingScreen1();
+                //     });
+                //     Navigator.of(context).pop();
+                //   },
+                //   style: OutlinedButton.styleFrom(
+                //     backgroundColor: appColors.royalBlue,
+                //     foregroundColor: Colors.white,
+                //   ),
+                //   icon: const Icon(Icons.arrow_right_alt),
+                //   label: const Text("Social Norms Reading"),
+                // ),
                 OutlinedButton.icon(
                   onPressed: (){
                     setState(() {
@@ -275,7 +498,7 @@ class _QuizState extends State<Quiz> {
                 OutlinedButton.icon(
                   onPressed: (){
                     setState(() {
-                      quizScreen2();
+                      quizScreen3();
                     });
                     Navigator.of(context).pop();
                   },
@@ -289,7 +512,7 @@ class _QuizState extends State<Quiz> {
                 OutlinedButton.icon(
                   onPressed: (){
                     setState(() {
-                      quizScreen2();
+                      quizScreen4();
                     });
                     Navigator.of(context).pop();
                   },
@@ -303,7 +526,7 @@ class _QuizState extends State<Quiz> {
                 OutlinedButton.icon(
                   onPressed: (){
                     setState(() {
-                      quizScreen2();
+                      quizScreen5();
                     });
                     Navigator.of(context).pop();
                   },
@@ -314,8 +537,22 @@ class _QuizState extends State<Quiz> {
                   icon: const Icon(Icons.arrow_right_alt),
                   label: const Text("Appropriate interactions"),
                 ),
+                OutlinedButton.icon(
+                  onPressed: (){
+                    setState(() {
+                      quizScreen6();
+                    });
+                    Navigator.of(context).pop();
+                  },
+                  style: OutlinedButton.styleFrom(
+                    backgroundColor: appColors.royalBlue,
+                    foregroundColor: Colors.white,
+                  ),
+                  icon: const Icon(Icons.arrow_right_alt),
+                  label: const Text("Social Media vs Reality"),
+                ),
                 IconButton(
-                  icon: Icon(Icons.logout),
+                  icon: const Icon(Icons.logout),
                   onPressed: () async {
                     await FirebaseAuth.instance.signOut();
                     // Navigate back to the Sign-In page after signing out

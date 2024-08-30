@@ -7,7 +7,6 @@ class QuestionAnswers extends StatelessWidget {
   QuestionAnswers(this.summary, {super.key});
   final List<Map<String, Object>> summary;
 
-
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
 
@@ -24,7 +23,7 @@ class QuestionAnswers extends StatelessWidget {
             return Row(
               children: [
                 Container(
-                  margin: EdgeInsets.only(right: 20),
+                  margin: const EdgeInsets.only(right: 20),
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
@@ -50,14 +49,14 @@ class QuestionAnswers extends StatelessWidget {
                       ),
                       Text(
                         item['user_answer'] as String,
-                        style: textStyles.bodyTextCustom(
+                        style: textStyles.customBodyText(
                             isCorrect ? appColors.green : appColors.red,
                             fontSize
                         ),
                       ),
                       Text(
                         item['correct_answer'] as String,
-                        style: textStyles.bodyTextCustom(
+                        style: textStyles.customBodyText(
                             appColors.green,
                             fontSize
                         ),

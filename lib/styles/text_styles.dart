@@ -40,6 +40,12 @@ class AppTextStyles {
     fontWeight: FontWeight.normal,
   );
 
+  final TextStyle smallBodyTextWhite = GoogleFonts.openSans(
+    color: Colors.white,
+    fontSize: 16,
+    fontWeight: FontWeight.normal,
+  );
+
   final TextStyle caption = GoogleFonts.openSans(
     color: Color(0xff939393),
     fontSize: 12,
@@ -47,11 +53,19 @@ class AppTextStyles {
   );
 
 
-  TextStyle bodyTextCustom(Color color, double size) {
+  TextStyle customBodyText(Color color, double size) {
     return GoogleFonts.openSans(
       color: color,
       fontSize: size,
       fontWeight: FontWeight.normal,
+    );
+  }
+
+  TextStyle customText(Color color, double size, FontWeight weight) {
+    return GoogleFonts.openSans(
+      color: color,
+      fontSize: size,
+      fontWeight: weight,
     );
   }
 

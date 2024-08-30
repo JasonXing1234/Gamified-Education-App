@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/components/question_answers.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
-import 'package:quiz/data/quiz_data.dart';
+import 'package:quiz/components/practice/practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
+import 'package:quiz/components/question.dart';
 
 import 'quiz/quiz_questions/quiz2.dart';
-import '../data/quiz3.dart';
-import '../data/quiz4.dart';
-import '../data/quiz5.dart';
+import 'quiz/quiz_questions/quiz3.dart';
+import 'quiz/quiz_questions/quiz4.dart';
+import 'quiz/quiz_questions/quiz5.dart';
+import 'quiz/quiz_questions/quiz6.dart';
 import '../styles/app_colors.dart';
 import '../styles/text_styles.dart';
 import 'buttons/menu_button.dart';
@@ -14,23 +16,56 @@ import 'buttons/next_button.dart';
 import 'buttons/sound_button.dart';
 
 class ResultScreen extends StatelessWidget {
-  ResultScreen({super.key, required this.answers, required this.restartQuiz, required this.number});
-  final List<String> answers;
+  ResultScreen({super.key, required this.userAnswers, required this.restartQuiz, required this.quizNumber});
+  final List<String> userAnswers;
   final void Function() restartQuiz;
-  final int number;
+  final int quizNumber;
 
   final AppTextStyles textStyles = AppTextStyles();
 
   List<Map<String, Object>> getSummaryData() {
     final List<Map<String, Object>> summary = [];
 
-    for (int i = 0; i < answers.length; i++) {
+    // TODO: How should multiple answers and text field answers be formatted?
+    // TODO: Some quizzes have multiple question types
+
+    for (int i = 0; i < userAnswers.length; i++) {
+      // if multiple options create a string with all the options?
+
+      // TODO: This doesn't work for checking the users response, bc it's a string comparison
+      // TODO: Also you can't pick multiple options right now
+      String specialAnswers = "";
+      if (quizNumber == 4) {
+        // Social Tags questions -> Multiple Answers Question
+        List<String> correctAnswers = quiz4[i].correctAnswers;
+        String separator = "";
+        for (int j = 0; j < correctAnswers.length; j++) {
+          specialAnswers = specialAnswers + separator + correctAnswers[j];
+          separator = ", ";
+        }
+      }
+
       summary.add({
         'index': i,
-        'question': questions[i].text,
-        'correct_answer': number == 0 ? questions[i].answers[0] : number == 1 ? quiz1[i].answers[0] : number == 2 ? quiz2[i].answers[0]
-        : number == 3 ? quiz3[i].answers[0] : number == 4 ? quiz4[i].answers[0] : number == 5 ? quiz5[i].answers[0] : questions[i].answers[0],
-        'user_answer': answers[i],
+        'question':
+          quizNumber == 0 ? questions[i].context :
+          quizNumber == 1 ? quiz1[i].question :
+          quizNumber == 2 ? quiz2[i].question :
+          quizNumber == 3 ? quiz3[i].context : // Fake Profiles Quiz
+          quizNumber == 4 ? quiz4[i].context : // Social Tags Quiz
+          quizNumber == 5 ? quiz5[i].question :
+          quizNumber == 6 ? quiz6[i].question :
+          questions[i].answerOptions[0],
+        'correct_answer':
+            quizNumber == 0 ? questions[i].answerOptions[0] :
+            quizNumber == 1 ? quiz1[i].correctAnswer :
+            quizNumber == 2 ? quiz2[i].answerOptions[0] :
+            quizNumber == 3 ? quiz3[i].correctAnswer :
+            quizNumber == 4 ? specialAnswers :
+            quizNumber == 5 ? quiz5[i].correctAnswer :
+            quizNumber == 6 ? quiz6[i].answerOptions[0] :
+            questions[i].answerOptions[0],
+        'user_answer': userAnswers[i],
       });
     }
 
@@ -44,22 +79,29 @@ class ResultScreen extends StatelessWidget {
 
     var quizName = "QUIZ";
 
-    if (number == 1){
+    if (quizNumber == 1){
       numTotalAnswers = quiz1.length;
       quizName = "QUIZ: SOCIAL MEDIA NORMS";
     }
-    else if (number == 2){
+    else if (quizNumber == 2){
       numTotalAnswers = quiz2.length;
       quizName = "QUIZ: SETTINGS";
     }
-    else if (number == 3){
+    else if (quizNumber == 3){
       numTotalAnswers = quiz3.length;
+      quizName = "QUIZ: FAKE PROFILES";
     }
-    else if (number == 4){
+    else if (quizNumber == 4){
       numTotalAnswers = quiz4.length;
+      quizName = "QUIZ: SOCIAL TAGS";
     }
-    else if (number == 5){
+    else if (quizNumber == 5){
       numTotalAnswers = quiz5.length;
+      quizName = "QUIZ: APPROPRIATE INTERACTIONS";
+    }
+    else if (quizNumber == 6){
+      numTotalAnswers = quiz5.length;
+      quizName = "QUIZ: SOCIAL MEDIA VS REALITY";
     }
     final int numCorrectAnswers = summary
         .where((element) => element['correct_answer'] == element['user_answer'])
