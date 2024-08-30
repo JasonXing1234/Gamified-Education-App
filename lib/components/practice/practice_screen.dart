@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
-import 'package:quiz/data/quiz_data.dart';
+import 'package:quiz/components/progress_bar/progress_bar.dart';
 
-import '../../data/quiz_data2.dart';
-import '../../data/quiz_data3.dart';
-import '../../data/quiz_data4.dart';
-import '../../data/quiz_data5.dart';
-import '../../data/quiz_data6.dart';
-import '../../data/quiz_data7.dart';
-import '../../data/quiz_data8.dart';
-import '../../data/quiz_sum.dart';
+import '../question.dart';
+import 'practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
+import 'practice_questions/fake_profile_practice/fake_profiles_practice_2.dart';
+import 'practice_questions/fake_profile_practice/fake_profiles_practice_3.dart';
+import 'practice_questions/fake_profile_practice/fake_profiles_practice_4.dart';
+import 'practice_questions/fake_profile_practice/fake_profiles_practice_5.dart';
+import 'practice_questions/fake_profile_practice/fake_profiles_practice_6.dart';
+import 'practice_questions/fake_profile_practice/fake_profiles_practice_7.dart';
+import 'practice_questions/fake_profile_practice/fake_profiles_practice_8.dart';
+import 'practice_questions/fake_profile_practice/fake_profiles_practice_all.dart';
+
 import '../../styles/app_colors.dart';
 import '../../styles/text_styles.dart';
+
 import '../buttons/menu_button.dart';
 import '../buttons/next_button.dart';
 import '../buttons/sound_button.dart';
 import '../text_box/text_box.dart';
+
 
 class PracticeScreen extends StatefulWidget {
   const PracticeScreen({
@@ -52,39 +56,49 @@ class _PracticeScreenState extends State<PracticeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    var currentQuestion = questionSum[questionIndex];
+    List<Question> practiceQuestions;
+    Question currentQuestion;
     var practiceName = "PRACTICE";
 
     if(widget.quizNumber == 1) {
-      currentQuestion = questions[questionIndex];
+      practiceQuestions = questions;
       practiceName = "PRACTICE: SOCIAL MEDIA NORMS";
     }
     else if(widget.quizNumber == 2) {
-      currentQuestion = questions2[questionIndex];
+      practiceQuestions = questions2;
       practiceName = "PRACTICE: SETTINGS";
     }
     else if(widget.quizNumber == 3) {
-      currentQuestion = questions3[questionIndex];
+      practiceQuestions = questions3;
     }
     else if(widget.quizNumber == 4) {
-      currentQuestion = questions4[questionIndex];
+      practiceQuestions = questions4;
     }
     else if(widget.quizNumber == 5) {
-      currentQuestion = questions5[questionIndex];
+      practiceQuestions = questions5;
     }
     else if(widget.quizNumber == 6) {
-      currentQuestion = questions6[questionIndex];
+      practiceQuestions = questions6;
     }
     else if(widget.quizNumber == 7) {
-      currentQuestion = questions7[questionIndex];
+      practiceQuestions = questions7;
     }
     else if(widget.quizNumber == 8) {
-      currentQuestion = questions8[questionIndex];
+      practiceQuestions = questions8;
     }
     else if(widget.quizNumber == 9) {
-      currentQuestion = questionSum[questionIndex];
+      practiceQuestions = questionSum;
       practiceName = "PRACTICE: FAKE PROFILES";
+    }
+    else {
+      practiceQuestions = [];
+    }
+
+    if (practiceQuestions.isNotEmpty) {
+      currentQuestion = practiceQuestions[questionIndex];
+    }
+    else {
+      currentQuestion = const Question("no", "none", "no", ["none"]);
     }
 
 
@@ -113,7 +127,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
                   child: NextButton(
                     onTap: () {
                       setState(() {
-                        if(currentQuestion.answers[0] == tempAnswer || counter == 2){
+                        if(currentQuestion.answerOptions[0] == tempAnswer || counter == 2){
                           isCorrect = true;
                           counter = 0;
                           nextQuestion(tempAnswer);
@@ -135,60 +149,72 @@ class _PracticeScreenState extends State<PracticeScreen> {
           ),
         ),
 
-        body: SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.all(40),
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  counter == 2 ? TextBox(
-                      currentQuestion: "You answered incorrectly twice in a row. Please review slide 9 of the course materials to better understand this concept.",
-                      color: appColors.red
-                  ) : TextBox(
-                      currentQuestion: currentQuestion,
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  currentQuestion.photo == 'no' ? SizedBox.shrink() : Image.asset(currentQuestion.photo),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  counter == 2 ? SizedBox.shrink() : isCorrect == false ? Text(
-                    'The answer was incorrect. Please try again.',
-                    textAlign: TextAlign.left,
-                    style: textStyles.bodyTextCustom(appColors.red, 24),
-                  ) : SizedBox.shrink(),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  counter == 2 ? SizedBox.shrink() : TextBox(
-                    currentQuestion: currentQuestion,
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  ...currentQuestion.answers.asMap().entries.map(
-                        (answer) => counter == 2 ? SizedBox.shrink() : AnswerButton(
-                          color: selectedIndex == answer.key ? appColors.royalBlue : appColors.grey,
-                          answerText: answer.value,
-                          onTap: () {
-                            setState(() {
-                              selectedIndex = answer.key;
-                              tempAnswer = answer.value;
-                            });
-                          },
-                        ),
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.all(40),
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    counter == 2 ? TextBox(
+                        currentText: "You answered incorrectly twice in a row. Please review slide 9 of the course materials to better understand this concept.",
+                        color: appColors.red
+                    ) : TextBox(
+                      currentText: currentQuestion.context,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    currentQuestion.photo == 'no' ? SizedBox.shrink() : Image.asset(currentQuestion.photo),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    counter == 2 ? SizedBox.shrink() : isCorrect == false ? Text(
+                      'The answer was incorrect. Please try again.',
+                      textAlign: TextAlign.left,
+                      style: textStyles.customBodyText(appColors.red, 24),
+                    ) : SizedBox.shrink(),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    counter == 2 ? SizedBox.shrink() : TextBox(
+                      currentText: currentQuestion,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    ...currentQuestion.answerOptions.asMap().entries.map(
+                          (answer) => counter == 2 ? SizedBox.shrink() : AnswerButton(
+                        color: selectedIndex == answer.key ? appColors.royalBlue : appColors.grey,
+                        answerText: answer.value,
+                        onTap: () {
+                          setState(() {
+                            selectedIndex = answer.key;
+                            tempAnswer = answer.value;
+                          });
+                        },
                       ),
-                  const SizedBox(
-                    height: 60,
-                  ),
-                ],
+                    ),
+                    const SizedBox(
+                      height: 60,
+                    ),
+                  ],
+                ),
               ),
             ),
-        ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+              color: Colors.white,
+              child: ProgressBar(pageIndex: questionIndex, pageList: practiceQuestions),
+            )
+          ],
+        )
     );
   }
 }

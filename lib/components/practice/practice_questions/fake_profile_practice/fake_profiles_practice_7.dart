@@ -1,52 +1,52 @@
-import 'package:quiz/models/quiz_question.dart';
+import 'package:quiz/components/question.dart';
 
 const questions7 = [
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.',
     'Does your friend know this person offline?',
-    'assets/images/img_7.png',
+    'assets/images/fb_profile_7.png',
     [
       'Yes',
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.',
     'Does the account have a profile picture and does your friend think it matches what they look like in person?',
-    'assets/images/img_7.png',
+    'assets/images/fb_profile_7.png',
     [
       'Yes',
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.',
     'Is this your friend\'s first connection request from this person?',
-    'assets/images/img_7.png',
+    'assets/images/fb_profile_7.png',
     [
       'Yes',
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.',
     'Does the profile have more than 50 friends and less than 2000 friends?',
-    'assets/images/img_7.png',
+    'assets/images/fb_profile_7.png',
     [
       'Yes',
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.',
     'Does your friend has 5 or more mutual friends with this account? ',
-    'assets/images/img_7.png',
+    'assets/images/fb_profile_7.png',
     [
       'Yes',
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'This is what you know about the account so far.'
     'Does your friend know this person offline? : Yes'
     'Does the account have a profile picture and does your friend think it matches what they look like in person? : Yes'
@@ -62,52 +62,52 @@ const questions7 = [
       'By calling updateState()The account is most likely real. You can choose to accept the request.',
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person.',
     'Does your friend know this person offline?',
-    'assets/images/img_8.png',
+    'assets/images/fb_profile_8.png',
     [
       'Yes',
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person.',
     'Does the account have a profile picture and does your friend think it matches what they look like in person?',
-    'assets/images/img_8.png',
+    'assets/images/fb_profile_8.png',
     [
       'Yes',
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person.',
     'Is this your friend\'s first connection request from this person?',
-    'assets/images/img_8.png',
+    'assets/images/fb_profile_8.png',
     [
       'Yes',
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person.',
     'Does the profile have more than 50 friends and less than 2000 friends?',
-    'assets/images/img_8.png',
+    'assets/images/fb_profile_8.png',
     [
       'Yes',
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person.',
     'Does your friend has 5 or more mutual friends with this account? ',
-    'assets/images/img_8.png',
+    'assets/images/fb_profile_8.png',
     [
       'Yes',
       'No'
     ],
   ),
-  QuizQuestion(
+  Question(
     'This is what you know about the account so far.'
         'Does your friend know this person offline? : No'
         'Does the account have a profile picture and does your friend think it matches what they look like in person? : No'

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'components/quiz.dart';
+import 'home_screen.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -23,7 +23,7 @@ class _SignUpPageState extends State<SignUpPage> {
         password: _passwordController.text,
       );
       Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => Quiz()),
+        MaterialPageRoute(builder: (context) => Home()),
       );
       // Navigate to home screen or other page
     } catch (e) {

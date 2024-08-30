@@ -65,6 +65,8 @@ flutter:
   assets:
     - lib/styles/
     - assets/images/
+    - assets/character_images/
+    - assets/character_images/orange_dragon/
     - assets/images/quiz-logo.png
   #   - images/a_dot_ham.jpeg
 

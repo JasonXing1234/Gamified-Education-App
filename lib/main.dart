@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:quiz/home_screen.dart';
 import 'package:quiz/SignIn.dart';
-import 'package:quiz/components/quiz.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -9,7 +9,13 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MaterialApp(
-    home: SignInPage(),
-  ),);
+
+  runApp(const MaterialApp(
+    home: Home(),
+  ));
+
+  // TODO: Switch back to this later, setting home has screen to run for faster UI building
+  // runApp(MaterialApp(
+  //   home: SignInPage(),
+  // ));
 }
