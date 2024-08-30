@@ -11,6 +11,7 @@ import 'package:quiz/start_screen.dart';
 import 'package:quiz/data/quiz_data.dart';
 
 import '../SignIn.dart';
+import 'HalfCircleBar.dart';
 import 'quiz/quiz_questions/quiz1.dart';
 import 'quiz/quiz_questions/quiz2.dart';
 import '../data/quiz5.dart';
@@ -193,6 +194,24 @@ class _QuizState extends State<Quiz> {
             label: Text(
                 "Start Quiz",
                 style: textStyles.bodyTextWhite,
+            ),
+          ),
+          SizedBox(height: 150),
+          Center(
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                // Half-circle bars
+                CustomPaint(
+                  size: Size(200, 0), // Width and height of the half-circle
+                  painter: HalfCircleBarsPainter(),
+                ),
+                // Centered image
+                CircleAvatar(
+                  radius: 45.0, // Radius of the image circle
+                  backgroundImage: AssetImage('assets/images/img_10.png'),
+                ),
+              ],
             ),
           ),
         ],
