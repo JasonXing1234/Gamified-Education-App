@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/components/lesson/lesson_dashboard.dart';
 import 'package:quiz/components/lesson/lesson_screen.dart';
@@ -14,6 +15,14 @@ import 'components/quiz/quiz_questions/quiz3.dart';
 import 'components/quiz/quiz_questions/quiz4.dart';
 import 'components/quiz/quiz_questions/quiz5.dart';
 import 'components/quiz/quiz_questions/quiz6.dart';
+
+import '../SignIn.dart';
+// import 'quiz/quiz_questions/quiz1.dart';
+// import 'quiz/quiz_questions/quiz2.dart';
+// import '../data/quiz5.dart';
+import '../styles/app_colors.dart';
+import '../styles/text_styles.dart';
+// >>>>>>> dev:lib/components/quiz.dart
 
 import 'styles/app_colors.dart';
 import 'styles/text_styles.dart';
@@ -541,6 +550,16 @@ class _HomeState extends State<Home> {
                   ),
                   icon: const Icon(Icons.arrow_right_alt),
                   label: const Text("Social Media vs Reality"),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.logout),
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
+                    // Navigate back to the Sign-In page after signing out
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => SignInPage()),
+                    );
+                  },
                 ),
               ],
             ),

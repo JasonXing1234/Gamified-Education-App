@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "777953306823",
+    "project_id": "educationapp-26842",
+    "storage_bucket": "educationapp-26842.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777953306823:android:18842aacc31dbdf40736e2",
+        "android_client_info": {
+          "package_name": "com.example.quiz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOm5LMUQgWmiE69lqJLj3rVIlbwaUjbkU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
