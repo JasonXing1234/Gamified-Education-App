@@ -126,6 +126,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
               ),
               Expanded(
                 child: NextButton(
+                  buttonText: questionIndex == quizQuestions.length -1 ? "SUBMIT" : "NEXT",
                   onTap: () {
                     setState(() {
                         if(currentQuestion.answerOptions[0] == 'textField'){

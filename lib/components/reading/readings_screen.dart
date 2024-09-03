@@ -114,15 +114,12 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
               ),
               Expanded(
                 child: NextButton(
+                  buttonText: readingPageIndex == readingPages.length -1 ? "FINISH" : "NEXT",
                   onTap: () {
                     setState(() {
                       if (readingPageIndex == readingPages.length -1) { // Zero indexing
                         // Already on last page
-                        // TODO: Return home?
-                        Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: widget.readingNumber)),
-                              (route) => false, // This removes all previous routes
-                        );
+                        Navigator.of(context).pop();
                       }
                       else {
                         nextReadingPage();

@@ -175,7 +175,7 @@ class StatsNotebook extends StatelessWidget {
           lesson.getCurrentPhoto() == "no" ? const SizedBox.shrink() : Image.asset(lesson.getCurrentPhoto()),
           Stack(
               children: [
-                Image.asset("assets/images/notebook_v1.png"),
+                Image.asset("assets/images/notebook_v2.png"),
                 Center(
                     child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 2),
