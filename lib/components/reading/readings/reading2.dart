@@ -2,8 +2,6 @@ import '../reading_page.dart';
 
 // Settings
 
-// TODO: Finish getting all slides in
-
 // TODO: Some of these slides have questions on them are those questions for users to answer or questions to present a topic?
 
 const reading2 = [
