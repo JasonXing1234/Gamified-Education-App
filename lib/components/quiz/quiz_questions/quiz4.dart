@@ -15,7 +15,7 @@ const quiz4 = [
       "Bosses and Teachers",
       "Online Friends",
       "Acquaintances",
-      "Community Helpers",
+      "Community Helper",
       "Strangers"
     ],
     ["In-Person Friends",],
@@ -32,7 +32,7 @@ const quiz4 = [
       "Bosses and Teachers",
       "Online Friends",
       "Acquaintances",
-      "Community Helpers",
+      "Community Helper",
       "Strangers"
     ],
     ["School Peers", "Acquaintances",],
@@ -49,7 +49,7 @@ const quiz4 = [
       "Bosses and Teachers",
       "Online Friends",
       "Acquaintances",
-      "Community Helpers",
+      "Community Helper",
       "Strangers"
     ],
     [],
@@ -66,7 +66,7 @@ const quiz4 = [
       "Bosses and Teachers",
       "Online Friends",
       "Acquaintances",
-      "Community Helpers",
+      "Community Helper",
       "Strangers"
     ],
     [],
@@ -83,7 +83,7 @@ const quiz4 = [
       "Bosses and Teachers",
       "Online Friends",
       "Acquaintances",
-      "Community Helpers",
+      "Community Helper",
       "Strangers"
     ],
     [],
@@ -100,7 +100,7 @@ const quiz4 = [
       "Bosses and Teachers",
       "Online Friends",
       "Acquaintances",
-      "Community Helpers",
+      "Community Helper",
       "Strangers"
     ],
     [],
@@ -117,7 +117,7 @@ const quiz4 = [
       "Bosses and Teachers",
       "Online Friends",
       "Acquaintances",
-      "Community Helpers",
+      "Community Helper",
       "Strangers"
     ],
     [],
@@ -134,7 +134,7 @@ const quiz4 = [
       "Bosses and Teachers",
       "Online Friends",
       "Acquaintances",
-      "Community Helpers",
+      "Community Helper",
       "Strangers"
     ],
     [],
@@ -151,7 +151,7 @@ const quiz4 = [
       "Bosses and Teachers",
       "Online Friends",
       "Acquaintances",
-      "Community Helpers",
+      "Community Helper",
       "Strangers"
     ],
     [],
@@ -168,7 +168,7 @@ const quiz4 = [
       "Bosses and Teachers",
       "Online Friends",
       "Acquaintances",
-      "Community Helpers",
+      "Community Helper",
       "Strangers"
     ],
     [],
@@ -185,7 +185,7 @@ const quiz4 = [
       "Bosses and Teachers",
       "Online Friends",
       "Acquaintances",
-      "Community Helpers",
+      "Community Helper",
       "Strangers"
     ],
     [],
@@ -202,7 +202,7 @@ const quiz4 = [
       "Bosses and Teachers",
       "Online Friends",
       "Acquaintances",
-      "Community Helpers",
+      "Community Helper",
       "Strangers"
     ],
     [],

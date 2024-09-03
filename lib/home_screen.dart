@@ -369,9 +369,24 @@ class _HomeState extends State<Home> {
             height: 40,
           ),
 
+          // Social Tags Lesson
+          GestureDetector(
+            child: LessonDashboard(lesson: socialTags),
+            onTap: () {
+              // Navigate to the Social Media Norms Lesson
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: socialTags.lessonNumber)),
+              );
+            },
+          ),
+          const SizedBox(
+            height: 40,
+          ),
 
 
 
+          // TODO: Delete these buttons later
           // Start Practice
           OutlinedButton.icon(
             label: Text(

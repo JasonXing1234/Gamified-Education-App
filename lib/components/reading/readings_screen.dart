@@ -4,6 +4,9 @@ import 'package:quiz/components/reading/readings/reading1.dart';
 import 'package:quiz/components/progress_bar/progress_bar.dart';
 import 'package:quiz/components/reading/readings/reading2.dart';
 import 'package:quiz/components/reading/readings/reading3.dart';
+import 'package:quiz/components/reading/readings/reading4.dart';
+import 'package:quiz/components/reading/readings/reading5.dart';
+import 'package:quiz/components/reading/readings/reading6.dart';
 
 import '../../styles/app_colors.dart';
 import '../../styles/text_styles.dart';
@@ -66,15 +69,15 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
       lessonName = "FAKE PROFILES";
     }
     else if(widget.readingNumber == 4) {
-      readingPages = reading1;
+      readingPages = reading4;
       lessonName = "SOCIAL TAGS";
     }
     else if(widget.readingNumber == 5) {
-      readingPages = reading1;
+      readingPages = reading5;
       lessonName = "APPROPRIATE INTERACTIONS";
     }
     else if(widget.readingNumber == 6) {
-      readingPages = reading1;
+      readingPages = reading6;
       lessonName = "SOCIAL MEDIA VS REALITY";
     }
     else {
