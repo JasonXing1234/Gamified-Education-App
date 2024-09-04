@@ -38,6 +38,9 @@ class _QuestionsScreenState extends State<QuizScreen> {
   String tempAnswer = "";
   int selectedIndex = 10;
 
+  //For multiple answer options
+  List<String> selectedAnswers = [];
+
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
 
@@ -167,7 +170,9 @@ class _QuestionsScreenState extends State<QuizScreen> {
                     const SizedBox(
                       height: 30,
                     ),
-                    if(currentQuestion.answerOptions[0] != 'textField') ...currentQuestion.answerOptions.asMap().entries.map(
+
+                    // Answer option Questions
+                    if (currentQuestion is SingleAnswerQuestion) ...currentQuestion.answerOptions.asMap().entries.map(
                           (answer) => AnswerButton(
                         answerText: answer.value,
                         onTap: () {
@@ -178,6 +183,27 @@ class _QuestionsScreenState extends State<QuizScreen> {
                         }, color: selectedIndex == answer.key ? appColors.royalBlue : appColors.grey,
                       ),
                     ),
+
+                    if (currentQuestion is MultipleAnswersQuestion)
+                      if(currentQuestion.answerOptions[0] != 'textField') ...currentQuestion.answerOptions.asMap().entries.map(
+                          (answer) => AnswerButton(
+                        answerText: answer.value,
+                        onTap: () {
+                          setState(() {
+                            selectedIndex = answer.key;
+                            tempAnswer = answer.value;
+
+                            if (selectedAnswers.contains(answer.value)) {
+                              selectedAnswers.remove(answer.value); // Deselect if already selected
+                            } else {
+                              selectedAnswers.add(answer.value); // Select if not already selected
+                            }
+
+                          });
+                        }, color: selectedAnswers.contains(answer.value) ? appColors.royalBlue : appColors.grey,
+                      ),
+                    ),
+
                     if(currentQuestion.answerOptions[0] == 'textField')
                       TextFormField(controller: _controller,
                         decoration: const InputDecoration(

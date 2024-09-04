@@ -160,25 +160,28 @@ const reading4 = [
     ],
     "no",
   ),
-  // MultipleAnswersQuestion(
-  //   "Your favorite teacher from school",
-  //   "What social tag(s) apply this person?",
-  //   "no",
-  //   [
-  //     "In-Person Friends",
-  //     "School Peers",
-  //     "Personal Service Providers",
-  //     "Work Peers",
-  //     "Bosses and Teachers",
-  //     "Online Friends",
-  //     "Acquaintances",
-  //     "Community Helper",
-  //     "Strangers"
-  //   ],
-  //   [
-  //     "Bosses and Teachers",
-  //   ],
-  // ),
+  ReadingMultipleAnswersQuestion(
+    "QUESTION",
+    [
+      "Your favorite teacher from school",
+      "What social tag(s) apply this person?"
+    ],
+    "no",
+    [
+      "In-Person Friend",
+      "School Peer",
+      "Personal Service Provider",
+      "Work Peer",
+      "Boss / Teacher",
+      "Online Friend",
+      "Acquaintance",
+      "Community Helper",
+      "Stranger"
+    ],
+    [
+      "Boss / Teacher",
+    ],
+  ),
   // MultipleAnswersQuestion(
   //   "Your father who is a police officer",
   //   "What social tag(s) apply this person?",
@@ -186,15 +189,15 @@ const reading4 = [
   //   [
   //     "Close Family",
   //     "Distant Family",
-  //     "In-Person Friends",
-  //     "School Peers",
-  //     "Personal Service Providers",
-  //     "Work Peers",
-  //     "Bosses and Teachers",
-  //     "Online Friends",
-  //     "Acquaintances",
+  //     "In-Person Friend",
+  //     "School Peer",
+  //     "Personal Service Provider",
+  //     "Work Peer",
+  //     "Boss / Teacher",
+  //     "Online Friend",
+  //     "Acquaintance",
   //     "Community Helper",
-  //     "Strangers"
+  //     "Stranger"
   //   ],
   //   [
   //     "Close Family",
@@ -208,15 +211,15 @@ const reading4 = [
   //   [
   //     "Close Family",
   //     "Distant Family",
-  //     "In-Person Friends",
-  //     "School Peers",
-  //     "Personal Service Providers",
-  //     "Work Peers",
-  //     "Bosses and Teachers",
-  //     "Online Friends",
-  //     "Acquaintances",
+  //     "In-Person Friend",
+  //     "School Peer",
+  //     "Personal Service Provider",
+  //     "Work Peer",
+  //     "Boss / Teacher",
+  //     "Online Friend",
+  //     "Acquaintance",
   //     "Community Helper",
-  //     "Strangers"
+  //     "Stranger"
   //   ],
   //   [
   //     "Stranger",

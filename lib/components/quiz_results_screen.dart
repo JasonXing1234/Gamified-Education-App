@@ -40,10 +40,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     setState(() {
       answers = [];
       Navigator.of(context).pop();
-      // Navigator.of(context).pushAndRemoveUntil(
-      //   MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: widget.lessonNumber)),
-      //       (route) => false, // This removes all previous routes
-      // );
     });
   }
 

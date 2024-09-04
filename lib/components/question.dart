@@ -3,13 +3,14 @@
 class Question {
   const Question(this.context, this.question, this.photo, this.answerOptions);
 
+  // final String title = ""; // Title for questions will always be empty, but parameter is needed to mix reading pages and questions pages
   final String context;
   final String question;
   final List<String> answerOptions;
   final String photo;
 
   List<String> getShuffledAnswers() {
-    final shuffledAnswers = List.of(this.answerOptions);
+    final shuffledAnswers = List.of(answerOptions);
     shuffledAnswers.shuffle();
     return shuffledAnswers;
   }

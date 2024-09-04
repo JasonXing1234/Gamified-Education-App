@@ -24,24 +24,28 @@ const reading3 = [
     ],
     "no",
   ),
-  // MultipleAnswersQuestion(
-  //     "no",
-  //     "Why is creating a fake profile wrong?",
-  //     "no",
-  //     [
-  //       "textField"
-  //     ],
-  //     [],
-  // ),
-  // MultipleAnswersQuestion(
-  //     "no",
-  //     "How do you feel about how simple it is to make a fake profile?",
-  //     "no",
-  //     [
-  //       "textField"
-  //     ],
-  //     [],
-  // ),
+  ReadingMultipleAnswersQuestion(
+    "QUESTION",
+    [
+      "Why is creating a fake profile wrong?",
+    ],
+    "no",
+    [
+      "textField",
+    ],
+    [],
+  ),
+  ReadingMultipleAnswersQuestion(
+    "QUESTION",
+    [
+      "How do you feel about how simple it is to make a fake profile?",
+    ],
+    "no",
+    [
+      "textField",
+    ],
+    [],
+  ),
   ReadingPage(
     "SPOT A FAKE PROFILE",
     [

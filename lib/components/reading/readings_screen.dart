@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz/components/buttons/answer_button.dart';
 import 'package:quiz/components/reading/reading_page.dart';
 import 'package:quiz/components/reading/readings/reading1.dart';
 import 'package:quiz/components/progress_bar/progress_bar.dart';
@@ -32,12 +33,21 @@ class ReadingsScreen extends StatefulWidget {
 
 class _ReadingsScreenState extends State<ReadingsScreen> {
   int readingPageIndex = 0;
-  TextEditingController _controller = TextEditingController();
+
+  final TextEditingController _controller = TextEditingController();
+
+  int selectedAnswerIndex = 10; // For answer options for single correct answer
+  String selectedAnswerValue = "";
+
+  // For answer options for multiple correct answers
+  List<String> selectedAnswers = [];
+
 
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
 
-  void nextReadingPage() {
+  // TODO: Set up answers with readings
+  void nextReadingPage([String answer = ""]) {
     setState(() {
       readingPageIndex++;
       // _controller.dispose();
@@ -126,7 +136,15 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                         Navigator.of(context).pop();
                       }
                       else {
-                        nextReadingPage();
+                        if (currentReadingPage is ReadingMultipleAnswersQuestion) {
+                          if (currentReadingPage.answerOptions[0] == "textField") {
+                            // Add a controller text to get access to the answer
+                            nextReadingPage(_controller.text);
+                          }
+                        }
+                        else {
+                          nextReadingPage();
+                        }
                       }
 
                     });
@@ -175,6 +193,37 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                     const SizedBox(
                       height: 30,
                     ),
+
+                    // Text field question
+                    if (currentReadingPage is ReadingMultipleAnswersQuestion)
+                      if (currentReadingPage.answerOptions[0] == 'textField')
+                        TextFormField(controller: _controller,
+                          decoration: const InputDecoration(
+                            labelText: 'Enter your text',
+                            border: OutlineInputBorder(),
+                          ),),
+
+                    // Select multiple answer options
+                    if (currentReadingPage is ReadingMultipleAnswersQuestion)
+                      if(currentReadingPage.answerOptions[0] != 'textField') ...currentReadingPage.answerOptions.asMap().entries.map(
+                            (answer) => AnswerButton(
+                          answerText: answer.value,
+                          onTap: () {
+                            setState(() {
+                              if (selectedAnswers.contains(answer.value)) {
+                                selectedAnswers.remove(answer.value); // Deselect if already selected
+                              } else {
+                                selectedAnswers.add(answer.value); // Select if not already selected
+                              }
+                            });
+                          }, color: selectedAnswers.contains(answer.value) ? appColors.royalBlue : appColors.grey,
+                        ),
+                      ),
+
+                    const SizedBox(
+                      height: 30,
+                    ),
+
                     currentReadingPage.photo == "no" ? const SizedBox.shrink() : Image.asset(currentReadingPage.photo),
                     const SizedBox(
                       height: 60,
