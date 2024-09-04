@@ -147,6 +147,10 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                         }
                       }
 
+                      // Clear Answers for next question
+                      selectedAnswerIndex = 10;
+                      selectedAnswers = [];
+
                     });
                   },
                   disabled: false,

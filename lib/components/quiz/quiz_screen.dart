@@ -138,7 +138,10 @@ class _QuestionsScreenState extends State<QuizScreen> {
                         else{
                           nextQuestion(tempAnswer);
                         }
+                        // Clear answers for next question
                         selectedIndex = 10;
+                        selectedAnswers = [];
+
                       // }
                     });
                   },
