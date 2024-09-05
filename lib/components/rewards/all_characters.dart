@@ -29,8 +29,8 @@ final Character orangeDragon = Character(
     },
     {
       Phase.adult: "assets/character_images/orange_dragon/orange_dragon_adult.png",
-      Phase.teen: "assets/character_images/orange_dragon/orange_dragon_adult.png",
-      Phase.baby: "assets/character_images/orange_dragon/orange_dragon_adult.png",
+      Phase.teen: "assets/character_images/orange_dragon/orange_dragon_teen.png",
+      Phase.baby: "assets/character_images/orange_dragon/orange_dragon_baby.png",
       Phase.egg: "assets/character_images/orange_dragon/orange_dragon_adult.png",
     },
     Phase.adult,

@@ -7,6 +7,8 @@ import 'package:quiz/components/rewards/all_characters.dart';
 import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
 
+import '../rewards/character.dart';
+
 class LessonScreen extends StatefulWidget {
   const LessonScreen({
     super.key,
@@ -24,6 +26,12 @@ class _LessonScreenState extends State<LessonScreen> {
 
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
+
+
+  String getPhase(Lesson lesson, Phase phase) {
+
+    return lesson.character.photos[phase] ?? "assets/images/lock.png";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,77 +78,121 @@ class _LessonScreenState extends State<LessonScreen> {
           padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
           child: Column(
             children: [
-              // Row of image and stats
               const SizedBox(
                 height: 20,
               ),
 
-              StatsNotebook(lesson: lesson, textStyles: textStyles),
-
-              const SizedBox(
-                height: 20,
-              ),
-              // row of buttons for Pre-quiz, readings, post-quiz, practice
+              // row of buttons for Pre-quiz, readings, post-quiz
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ActivityButton(
-                    text: "PREP",
-                    onTap:
-                        (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ReadingsScreen(readingNumber: widget.lessonNumber)),
-                      );
-                    },
+                  Column(
+                    children: [
+                      ActivityButton(
+                        text: "PREP",
+                        onTap:
+                            (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ReadingsScreen(readingNumber: widget.lessonNumber)),
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      ImageBox(imageName: lesson.character.photos[Phase.baby] ?? "assets/images/lock.png"),
+                    ],
                   ),
-                  ActivityButton(
-                    text: "READ",
-                    onTap:
-                        (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ReadingsScreen(readingNumber: widget.lessonNumber)),
-                      );
-                    },
+
+                  Column(
+                    children: [
+                      ActivityButton(
+                        text: "READ",
+                        onTap:
+                            (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ReadingsScreen(readingNumber: widget.lessonNumber)),
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      ImageBox(imageName: lesson.character.photos[Phase.teen] ?? "assets/images/lock.png"),
+                    ],
                   ),
-                  ActivityButton(
-                    text: "QUIZ",
-                    onTap:
-                        (){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => QuizResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "quiz-screen",))
-                      );
-                    },
-                  ),
-                  ActivityButton(
-                    text: "DRILL", // Drill is practice
-                    onTap:
-                        (){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => QuizResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "quiz-screen",))
-                      );
-                    },
+
+                  Column(
+                    children: [
+                      ActivityButton(
+                        text: "QUIZ",
+                        onTap:
+                            (){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => QuizResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "quiz-screen",))
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      ImageBox(imageName: lesson.character.photos[Phase.adult] ?? "assets/images/lock.png"),
+                    ],
                   ),
                 ],
               ),
+
               const SizedBox(
                 height: 20,
+              ),
+
+              // Row of image and stats
+              StatsNotebook(lesson: lesson, textStyles: textStyles),
+
+              // Text(
+              //   "Name: Norbert", //TODO: Set up user data for name of creature & way to edit name
+              //   style: textStyles.bodyText,
+              // ),
+              const SizedBox(
+                height: 15,
+              ),
+
+              ActivityButton(
+                text: "PRACTICE & EARN STARS", // Drill is practice
+                onTap:
+                    (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => QuizResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "quiz-screen",))
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+
+              Text(
+                "You currently have ${0} Stars", //TODO: Set up user data for number of stars
+                style: textStyles.bodyText,
+              ),
+              const SizedBox(
+                height: 5,
               ),
 
               // Scrollable Accessory List
               SizedBox(
-                height: 350, // Set a fixed height for the GridView
+                height: 275, // Set a fixed height for the GridView
                 width: 350,
                 child: GridView.extent(
                   maxCrossAxisExtent: 100, // Max width of each tile
-                  mainAxisSpacing: 7, // Space between rows
-                  crossAxisSpacing: 7, // Space between columns
+                  mainAxisSpacing: 10, // Space between rows
+                  crossAxisSpacing: 10, // Space between columns
                   children: List.generate(20, (index) {
                     return const Center(
-                      child: Accessory(imageName: "assets/character_images/sunglasses.png"),
+                      child: ImageBox(imageName: "assets/character_images/sunglasses.png"),
                     );
                   }),
                 ),
@@ -203,8 +255,8 @@ class StatsNotebook extends StatelessWidget {
   }
 }
 
-class Accessory extends StatelessWidget {
-  const Accessory({
+class ImageBox extends StatelessWidget {
+  const ImageBox({
     super.key,
     required this.imageName,
   });
