@@ -44,19 +44,16 @@ class _QuestionsScreenState extends State<QuizScreen> {
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
 
-  void dispose() {
-    // Dispose the controller when the widget is disposed
-    _controller.dispose();
-    super.dispose();
-  }
+  final ScrollController _scrollController = ScrollController();
+
+  List<Question> quizQuestions = [];
+  String quizName = "QUIZ";
+
 
   @override
-  Widget build(BuildContext context) {
-    List<Question> quizQuestions;
-
-    Question currentQuestion;
-
-    var quizName = "QUIZ";
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScrollEnd);
 
     if(widget.quizNumber == 1) {
       quizQuestions = quiz1;
@@ -85,22 +82,59 @@ class _QuestionsScreenState extends State<QuizScreen> {
     else {
       quizQuestions = [];
     }
+  }
+
+  void _onScrollEnd() {
+    if (!_scrollController.position.isScrollingNotifier.value) {
+      // Get the current scroll offset
+      double offset = _scrollController.offset;
+
+      // Define the height of each "screen"
+      double screenHeight = MediaQuery.of(context).size.height;
+
+      // Find the nearest "screen" to snap to
+      int targetPage = (offset / screenHeight).round();
+
+      // Scroll to that "screen"
+      _scrollController.animateTo(
+        targetPage * screenHeight,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+
+  void dispose() {
+    // Dispose the controller when the widget is disposed
+    _controller.dispose();
+    _scrollController.removeListener(_onScrollEnd);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+
+  void nextQuestion(String answer) {
+    setState(() {
+      if (questionIndex < quizQuestions.length - 1) {
+        questionIndex++;
+      }
+      //_controller.dispose();
+    });
+    widget.onSelectAnswer(answer);
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+
+    Question currentQuestion;
 
     if (quizQuestions.isNotEmpty) {
       currentQuestion = quizQuestions[questionIndex];
     }
     else {
       currentQuestion = const Question("no", "none", "no", ["none"]);
-    }
-
-    void nextQuestion(String answer) {
-      setState(() {
-        if (questionIndex < quizQuestions.length - 1) {
-          questionIndex++;
-        }
-        //_controller.dispose();
-      });
-      widget.onSelectAnswer(answer);
     }
 
     return Scaffold(
@@ -156,6 +190,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
       body: Stack (
         children: [
           SingleChildScrollView(
+              controller: _scrollController,
               child: Container(
                 padding: const EdgeInsets.all(40),
                 width: double.infinity,

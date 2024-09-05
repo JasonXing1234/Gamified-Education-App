@@ -44,6 +44,8 @@ class _HomeState extends State<Home> {
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
 
+  final double spacing = 30;
+
 
   void readingScreen1() {
     setState(() {
@@ -319,8 +321,8 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
-          const SizedBox(
-            height: 40,
+          SizedBox(
+            height: spacing,
           ),
 
 
@@ -335,9 +337,6 @@ class _HomeState extends State<Home> {
               );
             },
           ),
-          const SizedBox(
-            height: 20,
-          ),
 
           // Settings Lesson
           GestureDetector(
@@ -349,9 +348,6 @@ class _HomeState extends State<Home> {
                 MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: settings.lessonNumber)),
               );
             },
-          ),
-          const SizedBox(
-            height: 40,
           ),
 
           // Fake Profile Lesson
@@ -365,9 +361,6 @@ class _HomeState extends State<Home> {
               );
             },
           ),
-          const SizedBox(
-            height: 40,
-          ),
 
           // Social Tags Lesson
           GestureDetector(
@@ -380,10 +373,6 @@ class _HomeState extends State<Home> {
               );
             },
           ),
-          const SizedBox(
-            height: 40,
-          ),
-
 
 
           // TODO: Delete these buttons later
@@ -400,8 +389,8 @@ class _HomeState extends State<Home> {
             ),
             icon: const Icon(Icons.arrow_right_alt),
           ),
-          const SizedBox(
-            height: 40,
+          SizedBox(
+            height: spacing,
           ),
 
           // Start Quiz
@@ -417,8 +406,8 @@ class _HomeState extends State<Home> {
             ),
             icon: const Icon(Icons.arrow_right_alt),
           ),
-          const SizedBox(
-            height: 40,
+          SizedBox(
+            height: spacing,
           ),
         ],
       ),

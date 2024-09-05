@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiz/components/question_answers.dart';
+import 'package:quiz/components/answers_screen.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/components/practice/practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
 import 'package:quiz/components/question.dart';

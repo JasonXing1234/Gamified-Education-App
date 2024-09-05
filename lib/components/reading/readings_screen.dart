@@ -46,6 +46,47 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
 
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScrollEnd);
+  }
+
+  void _onScrollEnd() {
+    // TODO: this is not scrolling all the way to the top.
+    // Maybe because of the set up the height constant, but then the real height changes with more text boxes something?
+    // the Quiz screen reset scroll is working fine?
+
+
+    if (!_scrollController.position.isScrollingNotifier.value) {
+      // Get the current scroll offset
+      double offset = _scrollController.offset;
+
+      // Define the height of each "screen"
+      double screenHeight = MediaQuery.of(context).size.height;
+
+      double totalHeight = offset + screenHeight - 40;  // Subtract padding
+
+
+      // Find the nearest "screen" to snap to
+      int targetPage = (totalHeight / screenHeight).round();
+
+      // Snap to the exact position of the nearest page
+      double targetOffset = targetPage * screenHeight;
+
+      // Scroll to that "screen"
+      _scrollController.jumpTo(targetOffset);
+
+      // _scrollController.animateTo(
+      //   0,
+      //   duration: const Duration(milliseconds: 300),
+      //   curve: Curves.easeInOut,
+      // );
+    }
+  }
+
   // TODO: Set up answers with readings
   void nextReadingPage([String answer = ""]) {
     setState(() {
@@ -56,6 +97,8 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
 
   void dispose() {
     // Dispose the controller when the widget is disposed
+    _scrollController.removeListener(_onScrollEnd);
+    _scrollController.dispose();
     _controller.dispose();
     super.dispose();
   }
@@ -164,6 +207,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
       body: Stack(
         children: [
           SingleChildScrollView(
+              controller: _scrollController,
               child: Container(
                 padding: const EdgeInsets.all(40),
                 width: double.infinity,
@@ -195,7 +239,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                       },
                     )) : TextBox(currentText: "Click next"),
                     const SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
 
                     // Text field question
@@ -225,7 +269,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                       ),
 
                     const SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
 
                     currentReadingPage.photo == "no" ? const SizedBox.shrink() : Image.asset(currentReadingPage.photo),
