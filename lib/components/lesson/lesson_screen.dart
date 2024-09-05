@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/components/quiz_results_screen.dart';
 import 'package:quiz/components/lesson/lesson.dart';
@@ -23,12 +25,45 @@ class _LessonScreenState extends State<LessonScreen> {
 
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
+  final DatabaseReference _database = FirebaseDatabase.instance.ref();
+  User? user2;
+  List<dynamic> readings = [];
+  int startingPageIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    user2 = FirebaseAuth.instance.currentUser;
+
+    // Fetch readings once the widget is initialized
+    _fetchReadingList();
+  }
+  // Asynchronous function to fetch reading list data
+  Future<void> _fetchReadingList() async {
+    if (user2 != null) {
+      try {
+        DataSnapshot snapshot = await _database
+            .child('profile')
+            .child(user2!.uid)
+            .child('readingList')
+            .get();
+
+        if (snapshot.value != null) {
+          setState(() {
+            readings = snapshot.value as List<dynamic>;
+          });
+        }
+      } catch (e) {
+        // Handle potential errors, like network issues
+        print('Error fetching reading list: $e');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
 
     Lesson lesson;
-
     if (widget.lessonNumber == 1) {
       lesson = socialMediaNorms;
     }
@@ -81,6 +116,7 @@ class _LessonScreenState extends State<LessonScreen> {
                 height: 20,
               ),
               // row of buttons for Pre-quiz, readings, post-quiz, practice
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
