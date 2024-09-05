@@ -27,8 +27,6 @@ class _LessonScreenState extends State<LessonScreen> {
   @override
   Widget build(BuildContext context) {
 
-    // Readings and quizzes start with 1, but lessons start at 0
-    // Lesson lesson = lessons[widget.lessonNumber - 1];
     Lesson lesson;
 
     if (widget.lessonNumber == 1) {

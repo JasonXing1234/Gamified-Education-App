@@ -1,9 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/components/quiz/quiz_screen.dart';
 import 'package:quiz/components/result_screen.dart';
-
-import 'lesson/lesson_screen.dart';
 
 class QuizResultScreen extends StatefulWidget {
   QuizResultScreen({
@@ -31,7 +31,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       answers.add(answer);
       if (quiz1.length == answers.length) {
         widget.activeScreen = 'result-screen';
-        resultNumber = 1;
+        resultNumber = widget.lessonNumber;
       }
     });
   }
@@ -40,10 +40,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     setState(() {
       answers = [];
       Navigator.of(context).pop();
-      // Navigator.of(context).pushAndRemoveUntil(
-      //   MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: widget.lessonNumber)),
-      //       (route) => false, // This removes all previous routes
-      // );
     });
   }
 
@@ -58,6 +54,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       screen = QuizScreen(onSelectAnswer: recordAnswersQuiz1, quizNumber: widget.lessonNumber);
     }
     else if (widget.activeScreen == "result-screen") {
+
       screen = ResultScreen(
         quizNumber: resultNumber,
         userAnswers: answers,

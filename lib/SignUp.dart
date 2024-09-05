@@ -1,6 +1,8 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:firebase_database/firebase_database.dart';
+import 'UserModel.dart';
 import 'home_screen.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -11,13 +13,31 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final DatabaseReference databaseRef = FirebaseDatabase.instance.ref();
+  User? user2 = FirebaseAuth.instance.currentUser;
 
   Future<void> _signUp() async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      var result = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
       );
+      UserModel user = UserModel(
+        userId: result.user!.uid,
+        email: _emailController.text.toLowerCase(),
+        profilePic: null,
+        deviceToken: await FirebaseMessaging.instance.getToken(),
+        readingList: [0, 0, 0, 0, 0, 0],
+        quizScoreList:  [0, 0, 0, 0, 0, 0],
+      );
+      print('Failed to update field: prior');
+      try{
+        databaseRef.child('profile').child(user.userId!).set(user.toJson());
+      } catch (e) {
+        print('Error: $e');
+        // Show error message
+      }
+      print('Failed to update field: after');
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
@@ -54,7 +74,7 @@ class _SignUpPageState extends State<SignUpPage> {
               height: 100,
               child: TextField(
                 controller: _emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Enter Email here',
                   contentPadding: EdgeInsets.symmetric(vertical: 30.0, horizontal:110),
                   enabledBorder: OutlineInputBorder(
@@ -69,14 +89,14 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ),
             SizedBox(height: 20),
-            Text('Password', style: TextStyle(fontSize: 30)),
+            const Text('Password', style: TextStyle(fontSize: 30)),
             SizedBox(height: 20),
             SizedBox(
               width: 380,
               height: 100,
               child: TextField(
                     controller: _passwordController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Enter Password here',
                       contentPadding: EdgeInsets.symmetric(vertical: 30.0, horizontal:110),
                       enabledBorder: OutlineInputBorder(
@@ -96,7 +116,7 @@ class _SignUpPageState extends State<SignUpPage> {
               onPressed: _signUp,
               child: Text('Sign Up', style: TextStyle(color: Colors.white)),
               style: ElevatedButton.styleFrom(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontSize: 20, // Set the font size
                     color: Colors.white, // Set the text color
                   ),

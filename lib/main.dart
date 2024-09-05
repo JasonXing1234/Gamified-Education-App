@@ -1,21 +1,42 @@
-import 'package:flutter/material.dart';
-import 'package:quiz/home_screen.dart';
-import 'package:quiz/SignIn.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'package:flutter/material.dart';
 
-void main() async {
+import 'SignIn.dart';
+import 'firebase_options.dart';
+import 'home_screen.dart';
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+      options: DefaultFirebaseOptions.currentPlatform
   );
+  runApp(MyApp());
+}
 
-  runApp(const MaterialApp(
-    home: Home(),
-  ));
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: AuthCheck(),
+    );
+  }
+}
 
-  // TODO: Switch back to this later, setting home has screen to run for faster UI building
-  // runApp(MaterialApp(
-  //   home: SignInPage(),
-  // ));
+class AuthCheck extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator(); // Loading indicator
+        } else if (snapshot.hasData) {
+          return Home(); // User is signed in, navigate to HomePage
+        } else {
+          return SignInPage(); // User is not signed in, navigate to SignInPage
+        }
+      },
+    );
+  }
 }
