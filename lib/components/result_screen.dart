@@ -48,23 +48,23 @@ class ResultScreen extends StatelessWidget {
       summary.add({
         'index': i,
         'question':
-          quizNumber == 0 ? questions[i].context :
+          quizNumber == 0 ? fakeProfilesPractice1[i].context :
           quizNumber == 1 ? quiz1[i].question :
           quizNumber == 2 ? quiz2[i].question :
           quizNumber == 3 ? quiz3[i].context : // Fake Profiles Quiz
           quizNumber == 4 ? quiz4[i].context : // Social Tags Quiz
           quizNumber == 5 ? quiz5[i].question :
           quizNumber == 6 ? quiz6[i].question :
-          questions[i].answerOptions[0],
+          fakeProfilesPractice1[i].answerOptions[0],
         'correct_answer':
-            quizNumber == 0 ? questions[i].answerOptions[0] :
+            quizNumber == 0 ? fakeProfilesPractice1[i].answerOptions[0] :
             quizNumber == 1 ? quiz1[i].correctAnswer :
             quizNumber == 2 ? quiz2[i].answerOptions[0] :
             quizNumber == 3 ? quiz3[i].correctAnswer :
             quizNumber == 4 ? specialAnswers :
             quizNumber == 5 ? quiz5[i].correctAnswer :
             quizNumber == 6 ? quiz6[i].answerOptions[0] :
-            questions[i].answerOptions[0],
+            fakeProfilesPractice1[i].answerOptions[0],
         'user_answer': userAnswers[i],
       });
     }
@@ -75,7 +75,7 @@ class ResultScreen extends StatelessWidget {
   @override
   build(context) {
     final summary = getSummaryData();
-    int numTotalAnswers = questions.length;
+    int numTotalAnswers = fakeProfilesPractice1.length;
 
     var quizName = "QUIZ";
 

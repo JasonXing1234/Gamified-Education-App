@@ -138,7 +138,7 @@ class _HomeState extends State<Home> {
   void recordAnswer(String answer) {
     setState(() {
       answers.add(answer);
-      if (questions.length == answers.length) {
+      if (fakeProfilesPractice1.length == answers.length) {
         activeScreen = 'result-screen';
       }
     });

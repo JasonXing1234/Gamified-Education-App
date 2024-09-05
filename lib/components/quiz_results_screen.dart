@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
+import 'package:quiz/components/quiz/quiz_questions/quiz2.dart';
+import 'package:quiz/components/quiz/quiz_questions/quiz3.dart';
+import 'package:quiz/components/quiz/quiz_questions/quiz4.dart';
+import 'package:quiz/components/quiz/quiz_questions/quiz5.dart';
+import 'package:quiz/components/quiz/quiz_questions/quiz6.dart';
 import 'package:quiz/components/quiz/quiz_screen.dart';
 import 'package:quiz/components/result_screen.dart';
 
@@ -36,6 +41,56 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     });
   }
 
+  void recordAnswersQuiz2(String answer) {
+    setState(() {
+      answers.add(answer);
+      if (quiz2.length == answers.length) {
+        widget.activeScreen = 'result-screen';
+        resultNumber = 2;
+      }
+    });
+  }
+
+  void recordAnswersQuiz3(String answer) {
+    setState(() {
+      answers.add(answer);
+      if (quiz3.length == answers.length) {
+        widget.activeScreen = 'result-screen';
+        resultNumber = 3;
+      }
+    });
+  }
+
+  void recordAnswersQuiz4(String answer) {
+    setState(() {
+      answers.add(answer);
+      if (quiz4.length == answers.length) {
+        widget.activeScreen = 'result-screen';
+        resultNumber = 4;
+      }
+    });
+  }
+
+  void recordAnswersQuiz5(String answer) {
+    setState(() {
+      answers.add(answer);
+      if (quiz5.length == answers.length) {
+        widget.activeScreen = 'result-screen';
+        resultNumber = 5;
+      }
+    });
+  }
+
+  void recordAnswersQuiz6(String answer) {
+    setState(() {
+      answers.add(answer);
+      if (quiz6.length == answers.length) {
+        widget.activeScreen = 'result-screen';
+        resultNumber = 6;
+      }
+    });
+  }
+
   void returnHome() {
     setState(() {
       answers = [];
@@ -46,12 +101,19 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   @override
   Widget build(BuildContext context) {
 
+    List<Function(String)> quizAnswers = [recordAnswersQuiz1, recordAnswersQuiz2, recordAnswersQuiz3, recordAnswersQuiz4, recordAnswersQuiz5, recordAnswersQuiz6];
+
     Widget screen = const Center(
       child: Text('Open Blank Scaffold'),
     );
 
     if (widget.activeScreen == "quiz-screen") {
-      screen = QuizScreen(onSelectAnswer: recordAnswersQuiz1, quizNumber: widget.lessonNumber);
+      if (widget.lessonNumber > 6) {
+        screen = QuizScreen(onSelectAnswer: recordAnswersQuiz1, quizNumber: widget.lessonNumber);
+      }
+      else {
+        screen = QuizScreen(onSelectAnswer: quizAnswers[widget.lessonNumber - 1], quizNumber: widget.lessonNumber);
+      }
     }
     else if (widget.activeScreen == "result-screen") {
       screen = ResultScreen(

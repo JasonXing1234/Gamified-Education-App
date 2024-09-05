@@ -57,33 +57,33 @@ class _PracticeScreenState extends State<PracticeScreen> {
     _scrollController.addListener(_onScrollEnd);
 
     if(widget.quizNumber == 1) {
-      practiceQuestions = questions;
+      practiceQuestions = fakeProfilesPractice1;
       practiceName = "PRACTICE: SOCIAL MEDIA NORMS";
     }
     else if(widget.quizNumber == 2) {
-      practiceQuestions = questions2;
+      practiceQuestions = fakeProfilesPractice2;
       practiceName = "PRACTICE: SETTINGS";
     }
     else if(widget.quizNumber == 3) {
-      practiceQuestions = questions3;
+      practiceQuestions = fakeProfilesPractice3;
     }
     else if(widget.quizNumber == 4) {
-      practiceQuestions = questions4;
+      practiceQuestions = fakeProfilesPractice4;
     }
     else if(widget.quizNumber == 5) {
-      practiceQuestions = questions5;
+      practiceQuestions = fakeProfilesPractice5;
     }
     else if(widget.quizNumber == 6) {
-      practiceQuestions = questions6;
+      practiceQuestions = fakeProfilesPractice6;
     }
     else if(widget.quizNumber == 7) {
-      practiceQuestions = questions7;
+      practiceQuestions = fakeProfilesPractice7;
     }
     else if(widget.quizNumber == 8) {
-      practiceQuestions = questions8;
+      practiceQuestions = fakeProfilesPractice8;
     }
     else if(widget.quizNumber == 9) {
-      practiceQuestions = questionSum;
+      practiceQuestions = fakeProfilesPracticeAll;
       practiceName = "PRACTICE: FAKE PROFILES";
     }
     else {
