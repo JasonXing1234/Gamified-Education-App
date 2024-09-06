@@ -46,6 +46,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     _readingListFuture = _fetchReadingList();
   }
 
+
   // Asynchronous function to fetch reading list data
   Future<int?> _fetchReadingList() async {
     if (user2 != null) {
@@ -71,15 +72,19 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
   }
 
   Future<void> nextReadingPage() async {
-    readingPageIndex++;
+    setState(() {
+      readingPageIndex++;
+    });
     DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('readingList').get();
     List<dynamic> readings = snapshot.value as List<dynamic>;
     readings[widget.readingNumber - 1] = readingPageIndex;
     await _database.child('profile/${user2?.uid}').update({
       'readingList': readings,
     });
-    await Future.delayed(const Duration(seconds: 2));
       //_controller.dispose();
+    setState(() {
+      _readingListFuture = _fetchReadingList();  // Refresh FutureBuilder
+    });
   }
 
   void dispose() {
@@ -183,9 +188,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
       body: FutureBuilder<int?>(
         future: _readingListFuture,
     builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return const Center(child: CircularProgressIndicator());
-      } else if (snapshot.hasError) {
+      if (snapshot.hasError) {
     return Center(child: Text('Error: ${snapshot.error}'));
     } else { return Stack(
         children: [
