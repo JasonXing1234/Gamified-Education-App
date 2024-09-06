@@ -25,9 +25,12 @@ class SingleAnswerQuestion extends Question {
 }
 
 class MultipleAnswersQuestion extends Question {
-  const MultipleAnswersQuestion(super.context, super.question, super.photo, super.answerOptions, this.correctAnswers);
+  // Not labeled as const so that correct Answers can be sorted
+  MultipleAnswersQuestion(super.context, super.question, super.photo, super.answerOptions, this.correctAnswers);
 
-  final List<String> correctAnswers;
+  List<String> correctAnswers;
+
+
 
 }
 

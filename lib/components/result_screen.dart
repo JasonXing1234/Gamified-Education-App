@@ -32,15 +32,16 @@ class ResultScreen extends StatelessWidget {
     for (int i = 0; i < userAnswers.length; i++) {
       // if multiple options create a string with all the options?
 
-      // TODO: This doesn't work for checking the users response, bc it's a string comparison
-      // TODO: Also you can't pick multiple options right now
       String specialAnswers = "";
       if (quizNumber == 4) {
         // Social Tags questions -> Multiple Answers Question
         List<String> correctAnswers = quiz4[i].correctAnswers;
         String separator = "";
-        for (int j = 0; j < correctAnswers.length; j++) {
-          specialAnswers = specialAnswers + separator + correctAnswers[j];
+
+        // Sort the correct answers and make a string to compare with user
+        correctAnswers.sort();
+        for (var answer in correctAnswers) {
+          specialAnswers = specialAnswers + separator + answer;
           separator = ", ";
         }
       }

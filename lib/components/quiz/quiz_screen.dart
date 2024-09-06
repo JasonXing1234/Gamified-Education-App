@@ -170,6 +170,19 @@ class _QuestionsScreenState extends State<QuizScreen> {
                           nextQuestion(_controller.text);
                         }
                         else{
+                          if (currentQuestion is MultipleAnswersQuestion) {
+                            String sep = "";
+                            tempAnswer = "";
+
+                            // Sort the answers selected and make a string to compare with the correct answers
+                            // Also set up in the same way
+                            selectedAnswers.sort();
+                            for (var selectionOption in selectedAnswers) {
+                              tempAnswer = tempAnswer + sep + selectionOption;
+                              sep = ", ";
+                            }
+                          }
+
                           nextQuestion(tempAnswer);
                         }
                         // Clear answers for next question
@@ -222,6 +235,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
                       ),
                     ),
 
+                    // Multiple Answer Question
                     if (currentQuestion is MultipleAnswersQuestion)
                       if(currentQuestion.answerOptions[0] != 'textField') ...currentQuestion.answerOptions.asMap().entries.map(
                           (answer) => AnswerButton(

@@ -64,6 +64,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   void recordAnswersQuiz4(String answer) {
     setState(() {
       answers.add(answer);
+
       if (quiz4.length == answers.length) {
         widget.activeScreen = 'result-screen';
         resultNumber = 4;
