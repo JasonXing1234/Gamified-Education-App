@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/components/answers_screen.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
@@ -20,8 +22,23 @@ class ResultScreen extends StatelessWidget {
   final List<String> userAnswers;
   final void Function() restartQuiz;
   final int quizNumber;
+  final DatabaseReference _database = FirebaseDatabase.instance.ref();
+  User? user2 = FirebaseAuth.instance.currentUser;
 
   final AppTextStyles textStyles = AppTextStyles();
+
+  void _updateField(int quizResult) async {
+    try {
+      DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('quizScoreList').get();
+      List<dynamic> scores = snapshot.value as List<dynamic>;
+      scores[quizNumber - 1] = quizResult;
+      await _database.child('profile/${user2?.uid}').update({
+        'quizScoreList': scores,
+      });
+    } catch (e) {
+      print('Failed to update field: $e');
+    }
+  }
 
   List<Map<String, Object>> getSummaryData() {
     final List<Map<String, Object>> summary = [];
@@ -69,6 +86,11 @@ class ResultScreen extends StatelessWidget {
         'user_answer': userAnswers[i],
       });
     }
+    final int numCorrectAnswers = summary
+        .where((element) => element['correct_answer'] == element['user_answer'])
+        .length;
+
+    _updateField(numCorrectAnswers);
 
     return summary;
   }

@@ -17,9 +17,6 @@ import 'components/quiz/quiz_questions/quiz5.dart';
 import 'components/quiz/quiz_questions/quiz6.dart';
 
 import '../SignIn.dart';
-// import 'quiz/quiz_questions/quiz1.dart';
-// import 'quiz/quiz_questions/quiz2.dart';
-// import '../data/quiz5.dart';
 import '../styles/app_colors.dart';
 import '../styles/text_styles.dart';
 // >>>>>>> dev:lib/components/quiz.dart
@@ -409,6 +406,24 @@ class _HomeState extends State<Home> {
           SizedBox(
             height: spacing,
           ),
+          SizedBox(height: 150),
+          /*Center(
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                // Half-circle bars
+                CustomPaint(
+                  size: Size(200, 0), // Width and height of the half-circle
+                  painter: HalfCircleBarsPainter(),
+                ),
+                // Centered image
+                CircleAvatar(
+                  radius: 45.0, // Radius of the image circle
+                  backgroundImage: AssetImage('assets/images/img_10.png'),
+                ),
+              ],
+            ),
+          ),*/
         ],
       ),
     );

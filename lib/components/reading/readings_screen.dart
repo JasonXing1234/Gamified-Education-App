@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
 import 'package:quiz/components/reading/reading_page.dart';
@@ -21,7 +23,7 @@ import '../text_box/text_box.dart';
 class ReadingsScreen extends StatefulWidget {
   const ReadingsScreen({
     super.key,
-    required this.readingNumber,
+    required this.readingNumber
   });
 
   final int readingNumber;
@@ -47,11 +49,17 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
   final AppColors appColors = const AppColors();
 
   final ScrollController _scrollController = ScrollController();
-
+  
+  final DatabaseReference _database = FirebaseDatabase.instance.ref();
+  User? user2;
+  List<dynamic> readings = [1,1,1,1,1,1];
+  Future<int?>? _readingListFuture;
+  
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScrollEnd);
+    _readingListFuture = _fetchReadingList();
   }
 
   void _onScrollEnd() {
@@ -87,11 +95,44 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     }
   }
 
-  // TODO: Set up answers with readings
-  void nextReadingPage([String answer = ""]) {
+
+  // Asynchronous function to fetch reading list data
+  Future<int?> _fetchReadingList() async {
+    if (user2 != null) {
+      try {
+        DataSnapshot snapshot = await _database
+            .child('profile')
+            .child(user2!.uid)
+            .child('readingList')
+            .get();
+
+        if (snapshot.value != null) {
+          setState(() {
+            readings = snapshot.value as List<dynamic>;
+            readingPageIndex = readings[widget.readingNumber - 1];
+          });
+        }
+        return readingPageIndex;
+      } catch (e) {
+        // Handle potential errors, like network issues
+        print('Error fetching reading list: $e');
+      }
+    }
+  }
+
+  Future<void> nextReadingPage() async {
     setState(() {
       readingPageIndex++;
-      // _controller.dispose();
+    });
+    DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('readingList').get();
+    List<dynamic> readings = snapshot.value as List<dynamic>;
+    readings[widget.readingNumber - 1] = readingPageIndex;
+    await _database.child('profile/${user2?.uid}').update({
+      'readingList': readings,
+    });
+      //_controller.dispose();
+    setState(() {
+      _readingListFuture = _fetchReadingList();  // Refresh FutureBuilder
     });
   }
 
@@ -204,7 +245,12 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
         ),
       ),
 
-      body: Stack(
+      body: FutureBuilder<int?>(
+        future: _readingListFuture,
+    builder: (context, snapshot) {
+      if (snapshot.hasError) {
+    return Center(child: Text('Error: ${snapshot.error}'));
+    } else { return Stack(
         children: [
           SingleChildScrollView(
               controller: _scrollController,
@@ -283,10 +329,10 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
             color: Colors.white,
-            child: ProgressBar(pageIndex: readingPageIndex, pageList: readingPages),
+            child: ProgressBar(pageIndex: snapshot.data!, pageList: readingPages),
           )
         ],
-      ),
+      );}})
 
     );
   }
