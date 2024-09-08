@@ -58,7 +58,7 @@ class _SignUpPageState extends State<SignUpPage> {
       appBar: AppBar(title: Text('Sign Up')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Center(child:Column(
+        child: SingleChildScrollView(child: Center(child:Column(
           children: [
             Image.asset(
               'assets/images/img_1.png', // Path to your image
@@ -137,6 +137,6 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
         ),
       ),
-    );
+      ));
   }
 }

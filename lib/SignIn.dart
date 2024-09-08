@@ -34,9 +34,9 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Sign In')),
-      body: SingleChildScrollView(child: Padding(
+      body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Center(child: Column(
+        child: SingleChildScrollView(child:  Center(child: Column(
           children: [
             Image.asset(
               'assets/images/img_1.png', // Path to your image

@@ -51,7 +51,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
   final ScrollController _scrollController = ScrollController();
   
   final DatabaseReference _database = FirebaseDatabase.instance.ref();
-  User? user2;
+  User? user2 = FirebaseAuth.instance.currentUser;
   List<dynamic> readings = [1,1,1,1,1,1];
   Future<int?>? _readingListFuture;
   
@@ -223,7 +223,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                         if (currentReadingPage is ReadingMultipleAnswersQuestion) {
                           if (currentReadingPage.answerOptions[0] == "textField") {
                             // Add a controller text to get access to the answer
-                            nextReadingPage(_controller.text);
+                            nextReadingPage();
                           }
                         }
                         else {
