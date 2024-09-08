@@ -34,7 +34,7 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Sign In')),
-      body: Padding(
+      body: SingleChildScrollView(child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(child: Column(
           children: [
@@ -107,7 +107,7 @@ class _SignInPageState extends State<SignInPage> {
             ),
           ],
         ),),
-      ),
+      ),)
     );
   }
 }
