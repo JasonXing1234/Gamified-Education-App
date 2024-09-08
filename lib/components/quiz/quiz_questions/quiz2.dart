@@ -3,8 +3,8 @@ import 'package:quiz/components/question.dart';
 // TODO: Put in correct answers
 // TODO: Not sure how to do the text field questions
 
-const quiz2 = [
-  SingleAnswerQuestion(
+var quiz2 = [
+  const SingleAnswerQuestion(
     "no",
     "What does this setting do? Choose from this options",
     "assets/images/blocking.png",
@@ -17,7 +17,7 @@ const quiz2 = [
     ],
     "Allows you to block other users",
   ),
-  SingleAnswerQuestion(
+  const SingleAnswerQuestion(
     "no",
     "What does this setting do? Choose from these options: ",
     "assets/images/posts.png",
@@ -48,7 +48,7 @@ const quiz2 = [
     ],
     [],
   ),
-  SingleAnswerQuestion(
+  const SingleAnswerQuestion(
     "no",
     "What does this setting do? Choose from these options: ",
     "assets/images/privacy.png",
@@ -61,7 +61,7 @@ const quiz2 = [
     ],
     "Updates whether your account is private or public",
   ),
-  SingleAnswerQuestion(
+  const SingleAnswerQuestion(
     "no",
     "What does this setting do? Choose from these options: ",
     "assets/images/messageControls.png",
@@ -74,7 +74,7 @@ const quiz2 = [
     ],
     "Updates where your message go",
   ),
-  SingleAnswerQuestion(
+  const SingleAnswerQuestion(
     "no",
     "What does this setting do? Choose from these options: ",
     "assets/images/mentions.png",

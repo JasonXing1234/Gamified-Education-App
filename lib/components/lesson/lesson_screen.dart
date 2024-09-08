@@ -5,8 +5,11 @@ import 'package:quiz/components/quiz_results_screen.dart';
 import 'package:quiz/components/lesson/lesson.dart';
 import 'package:quiz/components/lesson/all_lessons.dart';
 import 'package:quiz/components/reading/readings_screen.dart';
+import 'package:quiz/components/rewards/all_characters.dart';
 import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
+
+import '../rewards/character.dart';
 
 class LessonScreen extends StatefulWidget {
   const LessonScreen({
@@ -60,30 +63,36 @@ class _LessonScreenState extends State<LessonScreen> {
     }
   }
 
+
+  String getPhase(Lesson lesson, Phase phase) {
+
+    return lesson.character.photos[phase] ?? "assets/images/lock.png";
+  }
+
   @override
   Widget build(BuildContext context) {
 
     Lesson lesson;
-    if (widget.lessonNumber == 1) {
+    if (widget.lessonNumber == socialMediaNorms.lessonNumber) {
       lesson = socialMediaNorms;
     }
-    else if (widget.lessonNumber == 2) {
+    else if (widget.lessonNumber == settings.lessonNumber) {
       lesson = settings;
     }
-    else if (widget.lessonNumber == 3) {
+    else if (widget.lessonNumber == fakeProfiles.lessonNumber) {
       lesson = fakeProfiles;
     }
-    else if (widget.lessonNumber == 4) {
+    else if (widget.lessonNumber == socialTags.lessonNumber) {
       lesson = socialTags;
     }
-    else if (widget.lessonNumber == 5) {
+    else if (widget.lessonNumber == appropriateInteractions.lessonNumber) {
       lesson = appropriateInteractions;
     }
-    else if (widget.lessonNumber == 6) {
+    else if (widget.lessonNumber == socialMediaVSReality.lessonNumber) {
       lesson = socialMediaVSReality;
     }
     else {
-      lesson = Lesson("LESSON", [], 0);
+      lesson = Lesson("LESSON", lockedCharacter, 0);
     }
 
 
@@ -102,81 +111,120 @@ class _LessonScreenState extends State<LessonScreen> {
           padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
           child: Column(
             children: [
-              // Row of image and stats
               const SizedBox(
                 height: 20,
               ),
-              Row(
-                children: [
-                  lesson.getCurrentPhoto() == "no" ? const SizedBox.shrink() : Image.asset(lesson.getCurrentPhoto()),
-                  // TODO: Add stats and ability to change character's name
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              // row of buttons for Pre-quiz, readings, post-quiz, practice
-
+              // row of buttons for Pre-quiz, readings, post-quiz
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ActivityButton(
-                    text: "PREP",
-                    onTap:
-                        (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ReadingsScreen(readingNumber: widget.lessonNumber)),
-                      );
-                    },
+                  Column(
+                    children: [
+                      ActivityButton(
+                        text: "PREP",
+                        onTap:
+                            (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ReadingsScreen(readingNumber: widget.lessonNumber)),
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      ImageBox(imageName: lesson.character.photos[Phase.baby] ?? "assets/images/lock.png"),
+                    ],
                   ),
-                  ActivityButton(
-                    text: "READ",
-                    onTap:
-                        (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ReadingsScreen(readingNumber: widget.lessonNumber)),
-                      );
-                    },
+
+                  Column(
+                    children: [
+                      ActivityButton(
+                        text: "READ",
+                        onTap:
+                            (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ReadingsScreen(readingNumber: widget.lessonNumber)),
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      ImageBox(imageName: lesson.character.photos[Phase.teen] ?? "assets/images/lock.png"),
+                    ],
                   ),
-                  ActivityButton(
-                    text: "QUIZ",
-                    onTap:
-                        (){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => QuizResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "quiz-screen",))
-                      );
-                    },
-                  ),
-                  ActivityButton(
-                    text: "PLAY", // Play is practice
-                    onTap:
-                        (){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => QuizResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "quiz-screen",))
-                      );
-                    },
+
+                  Column(
+                    children: [
+                      ActivityButton(
+                        text: "QUIZ",
+                        onTap:
+                            (){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => QuizResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "quiz-screen",))
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      ImageBox(imageName: lesson.character.photos[Phase.adult] ?? "assets/images/lock.png"),
+                    ],
                   ),
                 ],
               ),
+
               const SizedBox(
                 height: 20,
+              ),
+
+              // Row of image and stats
+              StatsNotebook(lesson: lesson, textStyles: textStyles),
+
+              // Text(
+              //   "Name: Norbert", //TODO: Set up user data for name of creature & way to edit name
+              //   style: textStyles.bodyText,
+              // ),
+              const SizedBox(
+                height: 15,
+              ),
+
+              ActivityButton(
+                text: "PRACTICE & EARN STARS", // Drill is practice
+                onTap:
+                    (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => QuizResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "quiz-screen",))
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+
+              Text(
+                "You currently have ${0} Stars", //TODO: Set up user data for number of stars
+                style: textStyles.bodyText,
+              ),
+              const SizedBox(
+                height: 5,
               ),
 
               // Scrollable Accessory List
               SizedBox(
-                height: 350, // Set a fixed height for the GridView
+                height: 275, // Set a fixed height for the GridView
                 width: 350,
                 child: GridView.extent(
                   maxCrossAxisExtent: 100, // Max width of each tile
-                  mainAxisSpacing: 7, // Space between rows
-                  crossAxisSpacing: 7, // Space between columns
+                  mainAxisSpacing: 10, // Space between rows
+                  crossAxisSpacing: 10, // Space between columns
                   children: List.generate(20, (index) {
                     return const Center(
-                      child: Accessory(imageName: "assets/character_images/sunglasses.png"),
+                      child: ImageBox(imageName: "assets/character_images/sunglasses.png"),
                     );
                   }),
                 ),
@@ -188,8 +236,59 @@ class _LessonScreenState extends State<LessonScreen> {
   }
 }
 
-class Accessory extends StatelessWidget {
-  const Accessory({
+class StatsNotebook extends StatelessWidget {
+  const StatsNotebook({
+    super.key,
+    required this.lesson,
+    required this.textStyles,
+  });
+
+  final Lesson lesson;
+  final AppTextStyles textStyles;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 375,
+      height: 200,
+      child: GridView.extent(
+        maxCrossAxisExtent: 300, // Max width of character and notebook
+        mainAxisSpacing: 1, // Space between rows
+        crossAxisSpacing: 1, // Space between columns
+        children: [
+          lesson.getCurrentPhoto() == "no" ? const SizedBox.shrink() : Image.asset(lesson.getCurrentPhoto()),
+          Stack(
+              children: [
+                Image.asset("assets/images/notebook_v2.png"),
+                Center(
+                    child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 2),
+                        child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 10,),
+                          Text(lesson.character.name, style: textStyles.caption,),
+                          const SizedBox(height: 5,),
+                          Text("Phase: ${lesson.character.currentPhase.name}", style: textStyles.caption,),
+                          const SizedBox(height: 5,),
+                          Text("Weight: ${lesson.character.stats[lesson.character.currentPhase]?["weight"]}", style: textStyles.caption,),
+                          const SizedBox(height: 5,),
+                          Text("Height: ${lesson.character.stats[lesson.character.currentPhase]?["height"]}", style: textStyles.caption,),
+                        ],
+                      ),
+                    ),
+                ),
+              ]
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ImageBox extends StatelessWidget {
+  const ImageBox({
     super.key,
     required this.imageName,
   });

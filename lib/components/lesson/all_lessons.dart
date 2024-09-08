@@ -1,4 +1,5 @@
 
+import '../rewards/all_characters.dart';
 import 'lesson.dart';
 
 // var lessons = [
@@ -11,50 +12,38 @@ import 'lesson.dart';
 // ];
 
 Lesson socialMediaNorms = Lesson(
-    "SOCIAL MEDIA NORMS",
-    [
-      "assets/character_images/orange_dragon/orange_dragon_adult.png",
-    ],
-    0
+  "SOCIAL MEDIA NORMS",
+  orangeDragon,
+  1
 );
 
 
 Lesson settings = Lesson(
-    "SETTINGS",
-    [
-      "assets/character_images/orange_dragon/orange_dragon_adult.png",
-    ],
-    0
+  "SETTINGS",
+  lockedCharacter,
+  2
 );
 
 Lesson fakeProfiles = Lesson(
-    "FAKE PROFILES",
-    [
-      "assets/character_images/orange_dragon/orange_dragon_adult.png",
-    ],
-    0
+  "FAKE PROFILES",
+  lockedCharacter,
+  3
 );
 
 Lesson socialTags = Lesson(
-    "SOCIAL TAGS",
-    [
-      "assets/character_images/orange_dragon/orange_dragon_adult.png",
-    ],
-    0
+  "SOCIAL TAGS",
+  lockedCharacter,
+  4
 );
 
 Lesson appropriateInteractions = Lesson(
-    "APPROPRIATE INTERACTIONS",
-    [
-      "assets/character_images/orange_dragon/orange_dragon_adult.png",
-    ],
-    0
+  "APPROPRIATE INTERACTIONS",
+  lockedCharacter,
+  5
 );
 
 Lesson socialMediaVSReality = Lesson(
-    "SOCIAL MEDIA VS REALITY",
-    [
-      "assets/character_images/orange_dragon/orange_dragon_adult.png",
-    ],
-    0
+  "SOCIAL MEDIA VS REALITY",
+  lockedCharacter,
+  6
 );

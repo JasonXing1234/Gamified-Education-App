@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz/components/question_answers.dart';
+import 'package:quiz/components/answers_screen.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/components/practice/practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
 import 'package:quiz/components/question.dart';
@@ -49,15 +49,16 @@ class ResultScreen extends StatelessWidget {
     for (int i = 0; i < userAnswers.length; i++) {
       // if multiple options create a string with all the options?
 
-      // TODO: This doesn't work for checking the users response, bc it's a string comparison
-      // TODO: Also you can't pick multiple options right now
       String specialAnswers = "";
       if (quizNumber == 4) {
         // Social Tags questions -> Multiple Answers Question
         List<String> correctAnswers = quiz4[i].correctAnswers;
         String separator = "";
-        for (int j = 0; j < correctAnswers.length; j++) {
-          specialAnswers = specialAnswers + separator + correctAnswers[j];
+
+        // Sort the correct answers and make a string to compare with user
+        correctAnswers.sort();
+        for (var answer in correctAnswers) {
+          specialAnswers = specialAnswers + separator + answer;
           separator = ", ";
         }
       }
@@ -65,23 +66,23 @@ class ResultScreen extends StatelessWidget {
       summary.add({
         'index': i,
         'question':
-          quizNumber == 0 ? questions[i].context :
+          quizNumber == 0 ? fakeProfilesPractice1[i].context :
           quizNumber == 1 ? quiz1[i].question :
           quizNumber == 2 ? quiz2[i].question :
           quizNumber == 3 ? quiz3[i].context : // Fake Profiles Quiz
           quizNumber == 4 ? quiz4[i].context : // Social Tags Quiz
           quizNumber == 5 ? quiz5[i].question :
           quizNumber == 6 ? quiz6[i].question :
-          questions[i].answerOptions[0],
+          fakeProfilesPractice1[i].answerOptions[0],
         'correct_answer':
-            quizNumber == 0 ? questions[i].answerOptions[0] :
+            quizNumber == 0 ? fakeProfilesPractice1[i].answerOptions[0] :
             quizNumber == 1 ? quiz1[i].correctAnswer :
             quizNumber == 2 ? quiz2[i].answerOptions[0] :
             quizNumber == 3 ? quiz3[i].correctAnswer :
             quizNumber == 4 ? specialAnswers :
             quizNumber == 5 ? quiz5[i].correctAnswer :
             quizNumber == 6 ? quiz6[i].answerOptions[0] :
-            questions[i].answerOptions[0],
+            fakeProfilesPractice1[i].answerOptions[0],
         'user_answer': userAnswers[i],
       });
     }
@@ -97,7 +98,7 @@ class ResultScreen extends StatelessWidget {
   @override
   build(context) {
     final summary = getSummaryData();
-    int numTotalAnswers = questions.length;
+    int numTotalAnswers = fakeProfilesPractice1.length;
 
     var quizName = "QUIZ";
 

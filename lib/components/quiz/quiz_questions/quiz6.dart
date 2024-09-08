@@ -1,7 +1,7 @@
 import 'package:quiz/components/question.dart';
 
-const quiz6 = [
-  SingleAnswerQuestion(
+var quiz6 = [
+  const SingleAnswerQuestion(
     "no",
     "The pictures that I see on social media are always real.",
     "no",
@@ -11,7 +11,7 @@ const quiz6 = [
     ],
     "False",
   ),
-  SingleAnswerQuestion(
+  const SingleAnswerQuestion(
     "no",
     "If someone is smiling in a social media picture, that means they really are happy.",
     "no",
@@ -21,7 +21,7 @@ const quiz6 = [
     ],
     "False",
   ),
-  SingleAnswerQuestion(
+  const SingleAnswerQuestion(
     "no",
     "It's possible for someone to edit how they look in photos.",
     "no",
@@ -31,7 +31,7 @@ const quiz6 = [
     ],
     "True",
   ),
-  SingleAnswerQuestion(
+  const SingleAnswerQuestion(
     "no",
     "People can post false information on social media.",
     "no",
@@ -41,7 +41,7 @@ const quiz6 = [
     ],
     "True",
   ),
-  SingleAnswerQuestion(
+  const SingleAnswerQuestion(
     "no",
     "People always spread misinformation on purpose",
     "no",

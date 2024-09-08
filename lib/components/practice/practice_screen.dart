@@ -41,58 +41,89 @@ class _PracticeScreenState extends State<PracticeScreen> {
   String tempAnswer = "";
   int selectedIndex = 4;
   int counter = 0;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
 
+  final ScrollController _scrollController = ScrollController();
+
+  List<Question> practiceQuestions = [];
+  var practiceName = "PRACTICE";
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScrollEnd);
+
+    if(widget.quizNumber == 1) {
+      practiceQuestions = fakeProfilesPractice1;
+      practiceName = "PRACTICE: SOCIAL MEDIA NORMS";
+    }
+    else if(widget.quizNumber == 2) {
+      practiceQuestions = fakeProfilesPractice2;
+      practiceName = "PRACTICE: SETTINGS";
+    }
+    else if(widget.quizNumber == 3) {
+      practiceQuestions = fakeProfilesPractice3;
+    }
+    else if(widget.quizNumber == 4) {
+      practiceQuestions = fakeProfilesPractice4;
+    }
+    else if(widget.quizNumber == 5) {
+      practiceQuestions = fakeProfilesPractice5;
+    }
+    else if(widget.quizNumber == 6) {
+      practiceQuestions = fakeProfilesPractice6;
+    }
+    else if(widget.quizNumber == 7) {
+      practiceQuestions = fakeProfilesPractice7;
+    }
+    else if(widget.quizNumber == 8) {
+      practiceQuestions = fakeProfilesPractice8;
+    }
+    else if(widget.quizNumber == 9) {
+      practiceQuestions = fakeProfilesPracticeAll;
+      practiceName = "PRACTICE: FAKE PROFILES";
+    }
+    else {
+      practiceQuestions = [];
+    }
+  }
+
+  void _onScrollEnd() {
+    if (!_scrollController.position.isScrollingNotifier.value) {
+      // Get the current scroll offset
+      double offset = _scrollController.offset;
+
+      // Define the height of each "screen"
+      double screenHeight = MediaQuery.of(context).size.height;
+
+      // Find the nearest "screen" to snap to
+      int targetPage = (offset / screenHeight).round();
+
+      // Scroll to that "screen"
+      _scrollController.animateTo(
+        targetPage * screenHeight,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
 
   void nextQuestion(String answer) {
     setState(() {
-      questionIndex++;
+      if (questionIndex < practiceQuestions.length - 1) {
+        questionIndex++;
+      }
     });
     widget.onSelectAnswer(answer);
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Question> practiceQuestions;
     Question currentQuestion;
-    var practiceName = "PRACTICE";
-
-    if(widget.quizNumber == 1) {
-      practiceQuestions = questions;
-      practiceName = "PRACTICE: SOCIAL MEDIA NORMS";
-    }
-    else if(widget.quizNumber == 2) {
-      practiceQuestions = questions2;
-      practiceName = "PRACTICE: SETTINGS";
-    }
-    else if(widget.quizNumber == 3) {
-      practiceQuestions = questions3;
-    }
-    else if(widget.quizNumber == 4) {
-      practiceQuestions = questions4;
-    }
-    else if(widget.quizNumber == 5) {
-      practiceQuestions = questions5;
-    }
-    else if(widget.quizNumber == 6) {
-      practiceQuestions = questions6;
-    }
-    else if(widget.quizNumber == 7) {
-      practiceQuestions = questions7;
-    }
-    else if(widget.quizNumber == 8) {
-      practiceQuestions = questions8;
-    }
-    else if(widget.quizNumber == 9) {
-      practiceQuestions = questionSum;
-      practiceName = "PRACTICE: FAKE PROFILES";
-    }
-    else {
-      practiceQuestions = [];
-    }
 
     if (practiceQuestions.isNotEmpty) {
       currentQuestion = practiceQuestions[questionIndex];

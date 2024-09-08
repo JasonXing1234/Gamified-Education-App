@@ -6,3 +6,11 @@ class ReadingPage {
   final String photo;
 
 }
+
+
+class ReadingMultipleAnswersQuestion extends ReadingPage {
+  const ReadingMultipleAnswersQuestion(super.title, super.text, super.photo, this.answerOptions, this.correctAnswers);
+
+  final List<String> answerOptions;
+  final List<String> correctAnswers;
+}
