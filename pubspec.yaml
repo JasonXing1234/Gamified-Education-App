@@ -68,6 +68,11 @@ flutter:
   assets:
     - lib/styles/
     - assets/images/
+    - assets/lesson_images/
+    - assets/lesson_images/social_media_norms_images/
+    - assets/lesson_images/settings_images/
+    - assets/lesson_images/fake_profiles_images/
+    - assets/lesson_images/social_tags_images/
     - assets/character_images/
     - assets/character_images/orange_dragon/
     - assets/images/quiz-logo.png

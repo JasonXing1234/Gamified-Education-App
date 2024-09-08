@@ -41,6 +41,8 @@ class _HomeState extends State<Home> {
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
 
+  final double spacing = 30;
+
 
   void readingScreen1() {
     setState(() {
@@ -133,7 +135,7 @@ class _HomeState extends State<Home> {
   void recordAnswer(String answer) {
     setState(() {
       answers.add(answer);
-      if (questions.length == answers.length) {
+      if (fakeProfilesPractice1.length == answers.length) {
         activeScreen = 'result-screen';
       }
     });
@@ -286,12 +288,12 @@ class _HomeState extends State<Home> {
                       Text(
                         "Social Media Norms",
                         textAlign: TextAlign.left,
-                        style: textStyles.smallBodyText,
+                        style: textStyles.caption,
                       ),
                     ],
                   ),
                   const SizedBox(
-                    width: 30,
+                    width: 20,
                   ),
                   ElevatedButton(
                     onPressed: (){
@@ -316,8 +318,8 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
-          const SizedBox(
-            height: 40,
+          SizedBox(
+            height: spacing,
           ),
 
 
@@ -328,12 +330,9 @@ class _HomeState extends State<Home> {
               // Navigate to the Social Media Norms Lesson
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const LessonScreen(lessonNumber: 1)),
+                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: socialMediaNorms.lessonNumber)),
               );
             },
-          ),
-          const SizedBox(
-            height: 20,
           ),
 
           // Settings Lesson
@@ -343,17 +342,37 @@ class _HomeState extends State<Home> {
               // Navigate to the Social Media Norms Lesson
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const LessonScreen(lessonNumber: 2)),
+                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: settings.lessonNumber)),
               );
             },
           ),
-          const SizedBox(
-            height: 40,
+
+          // Fake Profile Lesson
+          GestureDetector(
+            child: LessonDashboard(lesson: fakeProfiles),
+            onTap: () {
+              // Navigate to the Social Media Norms Lesson
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: fakeProfiles.lessonNumber)),
+              );
+            },
+          ),
+
+          // Social Tags Lesson
+          GestureDetector(
+            child: LessonDashboard(lesson: socialTags),
+            onTap: () {
+              // Navigate to the Social Media Norms Lesson
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: socialTags.lessonNumber)),
+              );
+            },
           ),
 
 
-
-
+          // TODO: Delete these buttons later
           // Start Practice
           OutlinedButton.icon(
             label: Text(
@@ -367,8 +386,8 @@ class _HomeState extends State<Home> {
             ),
             icon: const Icon(Icons.arrow_right_alt),
           ),
-          const SizedBox(
-            height: 40,
+          SizedBox(
+            height: spacing,
           ),
 
           // Start Quiz
@@ -384,8 +403,8 @@ class _HomeState extends State<Home> {
             ),
             icon: const Icon(Icons.arrow_right_alt),
           ),
-          const SizedBox(
-            height: 40,
+          SizedBox(
+            height: spacing,
           ),
           SizedBox(height: 150),
           /*Center(

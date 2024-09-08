@@ -38,22 +38,22 @@ class _QuestionsScreenState extends State<QuizScreen> {
   String tempAnswer = "";
   int selectedIndex = 10;
 
+  //For multiple answer options
+  List<String> selectedAnswers = [];
+
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
 
-  void dispose() {
-    // Dispose the controller when the widget is disposed
-    _controller.dispose();
-    super.dispose();
-  }
+  final ScrollController _scrollController = ScrollController();
+
+  List<Question> quizQuestions = [];
+  String quizName = "QUIZ";
+
 
   @override
-  Widget build(BuildContext context) {
-    List<Question> quizQuestions;
-
-    Question currentQuestion;
-
-    var quizName = "QUIZ";
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScrollEnd);
 
     if(widget.quizNumber == 1) {
       quizQuestions = quiz1;
@@ -82,22 +82,59 @@ class _QuestionsScreenState extends State<QuizScreen> {
     else {
       quizQuestions = [];
     }
+  }
+
+  void _onScrollEnd() {
+    if (!_scrollController.position.isScrollingNotifier.value) {
+      // Get the current scroll offset
+      double offset = _scrollController.offset;
+
+      // Define the height of each "screen"
+      double screenHeight = MediaQuery.of(context).size.height;
+
+      // Find the nearest "screen" to snap to
+      int targetPage = (offset / screenHeight).round();
+
+      // Scroll to that "screen"
+      _scrollController.animateTo(
+        targetPage * screenHeight,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+
+  void dispose() {
+    // Dispose the controller when the widget is disposed
+    _controller.dispose();
+    _scrollController.removeListener(_onScrollEnd);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+
+  void nextQuestion(String answer) {
+    setState(() {
+      if (questionIndex < quizQuestions.length - 1) {
+        questionIndex++;
+      }
+      //_controller.dispose();
+    });
+    widget.onSelectAnswer(answer);
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+
+    Question currentQuestion;
 
     if (quizQuestions.isNotEmpty) {
       currentQuestion = quizQuestions[questionIndex];
     }
     else {
       currentQuestion = const Question("no", "none", "no", ["none"]);
-    }
-
-    void nextQuestion(String answer) {
-      setState(() {
-        if (questionIndex < quizQuestions.length - 1) {
-          questionIndex++;
-        }
-        //_controller.dispose();
-      });
-      widget.onSelectAnswer(answer);
     }
 
     return Scaffold(
@@ -126,15 +163,32 @@ class _QuestionsScreenState extends State<QuizScreen> {
               ),
               Expanded(
                 child: NextButton(
+                  buttonText: questionIndex == quizQuestions.length -1 ? "SUBMIT" : "NEXT",
                   onTap: () {
                     setState(() {
                         if(currentQuestion.answerOptions[0] == 'textField'){
                           nextQuestion(_controller.text);
                         }
                         else{
+                          if (currentQuestion is MultipleAnswersQuestion) {
+                            String sep = "";
+                            tempAnswer = "";
+
+                            // Sort the answers selected and make a string to compare with the correct answers
+                            // Also set up in the same way
+                            selectedAnswers.sort();
+                            for (var selectionOption in selectedAnswers) {
+                              tempAnswer = tempAnswer + sep + selectionOption;
+                              sep = ", ";
+                            }
+                          }
+
                           nextQuestion(tempAnswer);
                         }
+                        // Clear answers for next question
                         selectedIndex = 10;
+                        selectedAnswers = [];
+
                       // }
                     });
                   },
@@ -149,6 +203,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
       body: Stack (
         children: [
           SingleChildScrollView(
+              controller: _scrollController,
               child: Container(
                 padding: const EdgeInsets.all(40),
                 width: double.infinity,
@@ -166,7 +221,9 @@ class _QuestionsScreenState extends State<QuizScreen> {
                     const SizedBox(
                       height: 30,
                     ),
-                    if(currentQuestion.answerOptions[0] != 'textField') ...currentQuestion.answerOptions.asMap().entries.map(
+
+                    // Answer option Questions
+                    if (currentQuestion is SingleAnswerQuestion) ...currentQuestion.answerOptions.asMap().entries.map(
                           (answer) => AnswerButton(
                         answerText: answer.value,
                         onTap: () {
@@ -177,6 +234,28 @@ class _QuestionsScreenState extends State<QuizScreen> {
                         }, color: selectedIndex == answer.key ? appColors.royalBlue : appColors.grey,
                       ),
                     ),
+
+                    // Multiple Answer Question
+                    if (currentQuestion is MultipleAnswersQuestion)
+                      if(currentQuestion.answerOptions[0] != 'textField') ...currentQuestion.answerOptions.asMap().entries.map(
+                          (answer) => AnswerButton(
+                        answerText: answer.value,
+                        onTap: () {
+                          setState(() {
+                            selectedIndex = answer.key;
+                            tempAnswer = answer.value;
+
+                            if (selectedAnswers.contains(answer.value)) {
+                              selectedAnswers.remove(answer.value); // Deselect if already selected
+                            } else {
+                              selectedAnswers.add(answer.value); // Select if not already selected
+                            }
+
+                          });
+                        }, color: selectedAnswers.contains(answer.value) ? appColors.royalBlue : appColors.grey,
+                      ),
+                    ),
+
                     if(currentQuestion.answerOptions[0] == 'textField')
                       TextFormField(controller: _controller,
                         decoration: const InputDecoration(

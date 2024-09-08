@@ -1,21 +1,22 @@
+import 'package:quiz/components/rewards/character.dart';
+
 class Lesson {
-  Lesson(this.title, this.characterPhotos, this.currentPhotoIndex);
+  Lesson(this.title, this.character, this.lessonNumber);
 
   final String title;
-  final List<String> characterPhotos;
-  int currentPhotoIndex;
-
-  void setCurrentPhoto(int index) {
-    currentPhotoIndex = index;
-  }
+  final Character character;
+  final int lessonNumber;
 
   String getCurrentPhoto() {
 
-    if (characterPhotos.isEmpty) {
-      return "no";
-    }
+    String? photo = character.photos[character.currentPhase];
 
-    return characterPhotos[currentPhotoIndex];
+    if (photo != null) {
+      return photo;
+    }
+    else {
+      return "assets/images/lock.png";
+    }
   }
 
 }
