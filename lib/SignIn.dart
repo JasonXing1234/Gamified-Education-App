@@ -36,7 +36,7 @@ class _SignInPageState extends State<SignInPage> {
       appBar: AppBar(title: Text('Sign In')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Center(child: Column(
+        child: SingleChildScrollView(child:  Center(child: Column(
           children: [
             Image.asset(
               'assets/images/img_1.png', // Path to your image
@@ -107,7 +107,7 @@ class _SignInPageState extends State<SignInPage> {
             ),
           ],
         ),),
-      ),
+      ),)
     );
   }
 }

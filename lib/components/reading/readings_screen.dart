@@ -51,7 +51,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
   final ScrollController _scrollController = ScrollController();
   
   final DatabaseReference _database = FirebaseDatabase.instance.ref();
-  User? user2;
+  User? user2 = FirebaseAuth.instance.currentUser;
   List<dynamic> readings = [1,1,1,1,1,1];
   Future<int?>? _readingListFuture;
   
