@@ -120,7 +120,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     }
   }
 
-  Future<void> nextReadingPage() async {
+  Future<void> nextReadingPage({String userAnswer = ""}) async {
     setState(() {
       readingPageIndex++;
     });
@@ -223,7 +223,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                         if (currentReadingPage is ReadingMultipleAnswersQuestion) {
                           if (currentReadingPage.answerOptions[0] == "textField") {
                             // Add a controller text to get access to the answer
-                            nextReadingPage(_controller.text);
+                            nextReadingPage(userAnswer: _controller.text);
                           }
                         }
                         else {
