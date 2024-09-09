@@ -76,85 +76,128 @@ class _SignUpPageState extends State<SignUpPage> {
                 //   fit: BoxFit.cover, // How the image should be inscribed into the space
                 // ),
                 const SizedBox(height: 30),
-                Text(
-                  "EMAIL",
-                  style: textStyles.heading1,
-                ),
-                const SizedBox(height: 10),
-                SizedBox(
-                  width: 350,
-                  height: 75,
-                  child: TextField(
-                    textAlign: TextAlign.center,
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      hintText: "Enter Email here",
-                      contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border
-                        borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border when focused
-                        borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners when focused
+                // Text(
+                //   "EMAIL",
+                //   style: textStyles.heading1,
+                // ),
+                // const SizedBox(height: 10),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.email,
+                      color: appColors.royalBlue,
+                      size: 40,
+                    ),
+                    const SizedBox(width: 20,),
+                    SizedBox(
+                      width: 280,
+                      height: 75,
+                      child: TextField(
+                        textAlign: TextAlign.center,
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          hintText: "Email",
+                          contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border
+                            borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border when focused
+                            borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners when focused
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
+                ),
+
+                const SizedBox(height: 30),
+                // Text(
+                //   "PASSWORD",
+                //   style: textStyles.heading1,
+                // ),
+                // const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.lock,
+                      color: appColors.royalBlue,
+                      size: 40,
+                    ),
+                    const SizedBox(width: 20,),
+                    SizedBox(
+                      width: 280,
+                      height: 75,
+                      child: TextField(
+                        textAlign: TextAlign.center,
+                        controller: _passwordController,
+                        decoration: InputDecoration(
+                          hintText: "Password",
+                          contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border
+                            borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border when focused
+                            borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners when focused
+                          ),
+                        ),
+                        obscureText: true,
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 30),
-                Text(
-                  "PASSWORD",
-                  style: textStyles.heading1,
-                ),
-                const SizedBox(height: 10),
-                SizedBox(
-                  width: 350,
-                  height: 75,
-                  child: TextField(
-                    textAlign: TextAlign.center,
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      hintText: 'Enter Password here',
-                      contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border
-                        borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border when focused
-                        borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners when focused
+
+
+                // Text(
+                //   "CONFIRM PASSWORD",
+                //   style: textStyles.heading1,
+                // ),
+                // const SizedBox(height: 10),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.lock,
+                      color: appColors.royalBlue,
+                      size: 40,
+                    ),
+                    const SizedBox(width: 20,),
+
+                    SizedBox(
+                      width: 280,
+                      height: 75,
+                      child: TextField(
+                        textAlign: TextAlign.center,
+                        controller: _confirmPasswordController,
+                        decoration: InputDecoration(
+                          hintText: "Confirm Password here",
+                          contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border
+                            borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border when focused
+                            borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners when focused
+                          ),
+                        ),
+                        obscureText: true,
                       ),
                     ),
-                    obscureText: true,
-                  ),
+                  ],
                 ),
-                const SizedBox(height: 30),
-                Text(
-                  "CONFIRM PASSWORD",
-                  style: textStyles.heading1,
-                ),
-                const SizedBox(height: 10),
-                SizedBox(
-                  width: 350,
-                  height: 75,
-                  child: TextField(
-                    textAlign: TextAlign.center,
-                    controller: _confirmPasswordController,
-                    decoration: InputDecoration(
-                      hintText: "Retype Password here",
-                      contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border
-                        borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border when focused
-                        borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners when focused
-                      ),
-                    ),
-                    obscureText: true,
-                  ),
-                ),
+
                 const SizedBox(height: 50),
                 ElevatedButton(
                   onPressed: _signUp,
