@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Home(), //TODO: Switch back to AuthCheck(), when ready, home is easier for setting up UI
+      home: AuthCheck(),
     );
   }
 }

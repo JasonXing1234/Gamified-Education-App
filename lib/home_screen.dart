@@ -19,10 +19,6 @@ import 'components/quiz/quiz_questions/quiz6.dart';
 import '../SignIn.dart';
 import '../styles/app_colors.dart';
 import '../styles/text_styles.dart';
-// >>>>>>> dev:lib/components/quiz.dart
-
-import 'styles/app_colors.dart';
-import 'styles/text_styles.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
