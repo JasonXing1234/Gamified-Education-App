@@ -168,7 +168,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     }
     else if(widget.readingNumber == 5) {
       readingPages = reading5;
-      lessonName = "APPROPRIATE INTERACTIONS";
+      lessonName = "INTERACTION ETIQUETTE";
     }
     else if(widget.readingNumber == 6) {
       readingPages = reading6;
@@ -216,8 +216,12 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                   onTap: () {
                     setState(() {
                       if (readingPageIndex == readingPages.length -1) { // Zero indexing
+                        // TODO: Reset user readingList for current lesson
+
+
                         // Already on last page
                         Navigator.of(context).pop();
+
                       }
                       else {
                         if (currentReadingPage is ReadingMultipleAnswersQuestion) {
@@ -247,92 +251,94 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
 
       body: FutureBuilder<int?>(
         future: _readingListFuture,
-    builder: (context, snapshot) {
-      if (snapshot.hasError) {
-    return Center(child: Text('Error: ${snapshot.error}'));
-    } else { return Stack(
-        children: [
-          SingleChildScrollView(
-              controller: _scrollController,
-              child: Container(
-                padding: const EdgeInsets.all(40),
-                width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      currentReadingPage.title,
-                      style: textStyles.heading1,
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
+          else {
+            return Stack(
+              children: [
+                SingleChildScrollView(
+                    controller: _scrollController,
+                    child: Container(
+                      padding: const EdgeInsets.all(40),
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            currentReadingPage.title,
+                            style: textStyles.heading1,
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
 
-                    currentReadingPage.text.isNotEmpty ? Container(child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: currentReadingPage.text.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10.0), // Adjust the padding as needed
-                          child: TextBox(currentText: currentReadingPage.text[index]),
-                        );
-                      },
-                    )) : TextBox(currentText: "Click next"),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                          currentReadingPage.text.isNotEmpty ? Container(child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: currentReadingPage.text.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 10.0), // Adjust the padding as needed
+                                child: TextBox(currentText: currentReadingPage.text[index]),
+                              );
+                            },
+                          )) : TextBox(currentText: "Click next"),
+                          const SizedBox(
+                            height: 20,
+                          ),
 
-                    // Text field question
-                    if (currentReadingPage is ReadingMultipleAnswersQuestion)
-                      if (currentReadingPage.answerOptions[0] == 'textField')
-                        TextFormField(controller: _controller,
-                          decoration: const InputDecoration(
-                            labelText: 'Enter your text',
-                            border: OutlineInputBorder(),
-                          ),),
+                          // Text field question
+                          if (currentReadingPage is ReadingMultipleAnswersQuestion)
+                            if (currentReadingPage.answerOptions[0] == 'textField')
+                              TextFormField(controller: _controller,
+                                decoration: const InputDecoration(
+                                  labelText: 'Enter your text',
+                                  border: OutlineInputBorder(),
+                                ),),
 
-                    // Select multiple answer options
-                    if (currentReadingPage is ReadingMultipleAnswersQuestion)
-                      if(currentReadingPage.answerOptions[0] != 'textField') ...currentReadingPage.answerOptions.asMap().entries.map(
-                            (answer) => AnswerButton(
-                          answerText: answer.value,
-                          onTap: () {
-                            setState(() {
-                              if (selectedAnswers.contains(answer.value)) {
-                                selectedAnswers.remove(answer.value); // Deselect if already selected
-                              } else {
-                                selectedAnswers.add(answer.value); // Select if not already selected
-                              }
-                            });
-                          }, color: selectedAnswers.contains(answer.value) ? appColors.royalBlue : appColors.grey,
-                        ),
+                          // Select multiple answer options
+                          if (currentReadingPage is ReadingMultipleAnswersQuestion)
+                            if(currentReadingPage.answerOptions[0] != 'textField') ...currentReadingPage.answerOptions.asMap().entries.map(
+                                  (answer) => AnswerButton(
+                                answerText: answer.value,
+                                onTap: () {
+                                  setState(() {
+                                    if (selectedAnswers.contains(answer.value)) {
+                                      selectedAnswers.remove(answer.value); // Deselect if already selected
+                                    } else {
+                                      selectedAnswers.add(answer.value); // Select if not already selected
+                                    }
+                                  });
+                                }, color: selectedAnswers.contains(answer.value) ? appColors.royalBlue : appColors.grey,
+                              ),
+                            ),
+
+                          const SizedBox(
+                            height: 20,
+                          ),
+
+                          currentReadingPage.photo == "no" ? const SizedBox.shrink() : Image.asset(currentReadingPage.photo),
+                          const SizedBox(
+                            height: 60,
+                          ),
+                        ],
                       ),
-
-                    const SizedBox(
-                      height: 20,
-                    ),
-
-                    currentReadingPage.photo == "no" ? const SizedBox.shrink() : Image.asset(currentReadingPage.photo),
-                    const SizedBox(
-                      height: 60,
-                    ),
-                  ],
+                    )
                 ),
-              )
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-            color: Colors.white,
-            child: ProgressBar(pageIndex: snapshot.data!, pageList: readingPages),
-          )
-        ],
-      );}})
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  color: Colors.white,
+                  child: ProgressBar(pageIndex: snapshot.data!, pageList: readingPages),
+                )
+              ],
+          );}})
 
     );
   }

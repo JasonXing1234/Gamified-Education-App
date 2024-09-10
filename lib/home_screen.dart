@@ -394,6 +394,19 @@ class _HomeState extends State<Home> {
             },
           ),
 
+          // Social Tags Lesson
+          GestureDetector(
+            child: LessonDashboard(lesson: appropriateInteractions),
+            onTap: () {
+              // Navigate to the Social Media Norms Lesson
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: appropriateInteractions.lessonNumber)),
+              );
+            },
+          ),
+
+
 
           // TODO: Delete this buttons later
           // Start Practice

@@ -34,7 +34,7 @@ class _SignUpPageState extends State<SignUpPage> {
         email: _emailController.text.toLowerCase(),
         profilePic: null,
         deviceToken: await FirebaseMessaging.instance.getToken(),
-        readingList: [1, 1, 1, 1, 1, 1],
+        readingList: [0, 0, 0, 0, 0, 0],
         quizScoreList:  [0, 0, 0, 0, 0, 0],
       );
       print('Failed to update field: prior');
