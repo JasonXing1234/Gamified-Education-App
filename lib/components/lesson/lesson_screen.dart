@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,7 @@ import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
 
 import '../../accessory.dart';
+import '../practice/practice_screen.dart';
 import '../rewards/character.dart';
 
 class LessonScreen extends StatefulWidget {
@@ -33,6 +36,7 @@ class _LessonScreenState extends State<LessonScreen> {
   User? user2;
   List<dynamic> readings = [];
   int startingPageIndex = 0;
+  Future<int?>? numStars;
 
   @override
   void initState() {
@@ -40,8 +44,10 @@ class _LessonScreenState extends State<LessonScreen> {
     user2 = FirebaseAuth.instance.currentUser;
 
     // Fetch readings once the widget is initialized
-    _fetchReadingList();
+    numStars = _fetchStars();
   }
+
+  void popScopeFuntion() {numStars = _fetchStars();}
 
   List purchased = List<dynamic>.filled(20, false);
 
@@ -50,6 +56,7 @@ class _LessonScreenState extends State<LessonScreen> {
 
   // Function to handle when "Yes" is pressed
   Future<void> handleYes() async {
+    int? tempNumStars = await numStars;
     setState(() {
       if (selectedImageIndex != null) {
         purchased[selectedImageIndex!] = true;
@@ -59,6 +66,7 @@ class _LessonScreenState extends State<LessonScreen> {
     try {
       await _database.child('profile/${user2?.uid}').update({
         'accessories': purchased,
+        'numStars': tempNumStars! - 1
       });
     } catch (e) {
       // Handle potential errors, like network issues
@@ -71,6 +79,26 @@ class _LessonScreenState extends State<LessonScreen> {
     setState(() {
       selectedImageIndex = null; // Close the popup without purchasing
     });
+  }
+
+  Future<int?> _fetchStars() async {
+    if (user2 != null) {
+      try {
+        DataSnapshot snapshot2 = await _database
+            .child('profile')
+            .child(user2!.uid)
+            .child('numStars')
+            .get();
+
+        if (snapshot2.value != null) {
+          return snapshot2.value as int;
+        }
+      }
+      catch (e) {
+        // Handle potential errors, like network issues
+        print('Error fetching reading list: $e');
+      }
+    }
   }
   // Asynchronous function to fetch reading list data
   Future<void> _fetchReadingList() async {
@@ -97,6 +125,18 @@ class _LessonScreenState extends State<LessonScreen> {
         if (snapshot2.value != null) {
           setState(() {
             purchased = snapshot2.value as List<dynamic>;
+          });
+        }
+
+        DataSnapshot snapshot3 = await _database
+            .child('profile')
+            .child(user2!.uid)
+            .child('numStars')
+            .get();
+
+        if (snapshot3.value != null) {
+          setState(() {
+            //numStars = snapshot3.value as int;
           });
         }
       } catch (e) {
@@ -139,7 +179,15 @@ class _LessonScreenState extends State<LessonScreen> {
     }
 
 
-    return Scaffold(
+    return PopScope(
+      //TODO: Make this work
+        onPopInvoked: (popDisposition) async {
+      // Perform the refresh logic
+      setState(() {
+        popScopeFuntion();
+      }); // Allow the pop action
+    },
+    child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
           title: Padding(
@@ -242,7 +290,7 @@ class _LessonScreenState extends State<LessonScreen> {
                     (){
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => QuizResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "quiz-screen",))
+                      MaterialPageRoute(builder: (context) => PracticeScreen(quizNumber: 1, onSelectAnswer: (String answer) {  },))
                   );
                 },
               ),
@@ -250,10 +298,24 @@ class _LessonScreenState extends State<LessonScreen> {
                 height: 5,
               ),
 
-              Text(
-                "You currently have ${0} Stars", //TODO: Set up user data for number of stars
-                style: textStyles.bodyText,
+              FutureBuilder<int?>(
+                future: numStars,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else if (snapshot.hasData) {
+                    return Text(
+                      "You currently have ${snapshot.data} Stars", //TODO: Set up user data for number of stars
+                      style: textStyles.bodyText,
+                    );
+                  } else {
+                    return Text('No data available');
+                  }
+                },
               ),
+
               const SizedBox(
                 height: 5,
               ),
@@ -293,7 +355,24 @@ class _LessonScreenState extends State<LessonScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             ElevatedButton(
-                              onPressed: () { handleYes();},
+                              onPressed: () {
+                                if (numStars != 0) {
+                                  handleYes();
+                                }
+                                else{
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('You don\'t have enough star'),
+                                      action: SnackBarAction(
+                                        label: 'UNDO',
+                                        onPressed: () {
+                                          // Do something to undo the change.
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                }
+                                },
                               child: Text('Yes'),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.green,
@@ -317,7 +396,7 @@ class _LessonScreenState extends State<LessonScreen> {
             ],
           ),
         ),
-    );
+    ));
   }
 
   Widget buildGridItem(int index) {
@@ -342,7 +421,7 @@ class _LessonScreenState extends State<LessonScreen> {
                 child: Center(
                   child: Icon(
                     Icons.check_circle,
-                    color: Colors.white,
+                    color: Colors.green,
                     size: 50,
                   ),
                 ),
