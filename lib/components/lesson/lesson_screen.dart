@@ -9,6 +9,7 @@ import 'package:quiz/components/rewards/all_characters.dart';
 import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
 
+import '../../accessory.dart';
 import '../rewards/character.dart';
 
 class LessonScreen extends StatefulWidget {
@@ -41,6 +42,36 @@ class _LessonScreenState extends State<LessonScreen> {
     // Fetch readings once the widget is initialized
     _fetchReadingList();
   }
+
+  List purchased = List<dynamic>.filled(20, false);
+
+  // The index of the selected image, or null if no image is selected
+  int? selectedImageIndex;
+
+  // Function to handle when "Yes" is pressed
+  Future<void> handleYes() async {
+    setState(() {
+      if (selectedImageIndex != null) {
+        purchased[selectedImageIndex!] = true;
+        selectedImageIndex = null; // Close the popup
+      }
+    });
+    try {
+      await _database.child('profile/${user2?.uid}').update({
+        'accessories': purchased,
+      });
+    } catch (e) {
+      // Handle potential errors, like network issues
+      print('Error fetching reading list: $e');
+    }
+  }
+
+  // Function to handle when "No" is pressed
+  void handleNo() {
+    setState(() {
+      selectedImageIndex = null; // Close the popup without purchasing
+    });
+  }
   // Asynchronous function to fetch reading list data
   Future<void> _fetchReadingList() async {
     if (user2 != null) {
@@ -54,6 +85,18 @@ class _LessonScreenState extends State<LessonScreen> {
         if (snapshot.value != null) {
           setState(() {
             readings = snapshot.value as List<dynamic>;
+          });
+        }
+
+        DataSnapshot snapshot2 = await _database
+            .child('profile')
+            .child(user2!.uid)
+            .child('accessories')
+            .get();
+
+        if (snapshot2.value != null) {
+          setState(() {
+            purchased = snapshot2.value as List<dynamic>;
           });
         }
       } catch (e) {
@@ -109,7 +152,8 @@ class _LessonScreenState extends State<LessonScreen> {
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-          child: Column(
+          child: Stack(
+            children: [ Column(
             children: [
               const SizedBox(
                 height: 20,
@@ -223,15 +267,89 @@ class _LessonScreenState extends State<LessonScreen> {
                   mainAxisSpacing: 10, // Space between rows
                   crossAxisSpacing: 10, // Space between columns
                   children: List.generate(20, (index) {
-                    return const Center(
-                      child: ImageBox(imageName: "assets/character_images/sunglasses.png"),
-                    );
+                    return buildGridItem(index);
                   }),
                 ),
               ),
             ],
           ),
+              if (selectedImageIndex != null)
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Do you want to buy this item?',
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () { handleYes();},
+                              child: Text('Yes'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green,
+                                padding: const EdgeInsets.symmetric(horizontal: 40),
+                              ),
+                            ),
+                            ElevatedButton(
+                              onPressed: handleNo,
+                              child: Text('No'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red,
+                                padding: const EdgeInsets.symmetric(horizontal: 40),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
+    );
+  }
+
+  Widget buildGridItem(int index) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedImageIndex = index;
+        });
+      },
+      child: Stack(
+        children: [
+          Image.asset(
+            'assets/character_images/sunglasses.png', // Placeholder image
+            //fit: BoxFit.cover,
+            //width: double.infinity,
+            //height: double.infinity,
+          ),
+          if (purchased[index])
+            Positioned.fill(
+              child: Container(
+                color: Colors.black.withOpacity(0.5),
+                child: Center(
+                  child: Icon(
+                    Icons.check_circle,
+                    color: Colors.white,
+                    size: 50,
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

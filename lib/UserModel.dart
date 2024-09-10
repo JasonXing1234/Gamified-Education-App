@@ -9,8 +9,11 @@ class UserModel extends Equatable {
   String? userName;
   String? profilePic;
   String? bannerImage;
+  int? numStars;
   List<int>? quizScoreList;
   List<int>? readingList;
+  List<bool>? accessories;
+  List<bool>? ifEachModuleComplete;
 
   UserModel(
       {this.email,
@@ -22,6 +25,9 @@ class UserModel extends Equatable {
         this.userName,
         this.quizScoreList,
         this.readingList,
+        this.numStars,
+        this.accessories,
+        this.ifEachModuleComplete
       });
 
   UserModel.fromJson(Map<dynamic, dynamic>? map) {
@@ -35,10 +41,23 @@ class UserModel extends Equatable {
     bannerImage = map['bannerImage'];
     key = map['key'];
     userName = map['userName'];
+    numStars = map['numStars'];
     if (map['quizScoreList'] != null) {
       quizScoreList = <int>[];
       map['quizScoreList'].forEach((value) {
         quizScoreList!.add(value);
+      });
+    }
+    if (map['accessories'] != null) {
+      accessories = <bool>[];
+      map['accessories'].forEach((value) {
+        accessories!.add(value);
+      });
+    }
+    if (map['ifEachModuleComplete'] != null) {
+      ifEachModuleComplete = <bool>[];
+      map['ifEachModuleComplete'].forEach((value) {
+        ifEachModuleComplete!.add(value);
       });
     }
     if (map['readingList'] != null) {
@@ -58,7 +77,10 @@ class UserModel extends Equatable {
       'bannerImage': bannerImage,
       'quizScoreList': quizScoreList,
       'userName': userName,
+      'numStars': numStars,
       'readingList': readingList,
+      'accessories': accessories,
+      'ifEachModuleComplete': ifEachModuleComplete
     };
   }
 
@@ -71,7 +93,10 @@ class UserModel extends Equatable {
     userName,
     profilePic,
     bannerImage,
+    numStars,
     quizScoreList,
     readingList,
+    accessories,
+    ifEachModuleComplete
   ];
 }
