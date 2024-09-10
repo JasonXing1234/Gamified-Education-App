@@ -211,7 +211,35 @@ class _HomeState extends State<Home> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(
-            height: 40,
+            height: 50,
+          ),
+
+          // Start Quiz
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              OutlinedButton.icon(
+                label: Text(
+                  "Menu",
+                  style: textStyles.mediumBodyTextWhite,
+                ),
+                onPressed: (){_scaffoldKey.currentState?.openEndDrawer();},
+                style: OutlinedButton.styleFrom(
+                  backgroundColor: appColors.royalBlue,
+                  foregroundColor: Colors.white,
+                ),
+                icon: const Icon(Icons.menu),
+              ),
+
+              const SizedBox(
+                width: 35,
+              ),
+            ],
+          ),
+
+
+          const SizedBox(
+            height: 10,
           ),
 
           // User Stats Box
@@ -318,7 +346,6 @@ class _HomeState extends State<Home> {
             height: spacing,
           ),
 
-
           // Social Media Norms Lesson
           GestureDetector(
             child: LessonDashboard(lesson: socialMediaNorms),
@@ -368,7 +395,7 @@ class _HomeState extends State<Home> {
           ),
 
 
-          // TODO: Delete these buttons later
+          // TODO: Delete this buttons later
           // Start Practice
           OutlinedButton.icon(
             label: Text(
@@ -385,41 +412,6 @@ class _HomeState extends State<Home> {
           SizedBox(
             height: spacing,
           ),
-
-          // Start Quiz
-          OutlinedButton.icon(
-            label: Text(
-              "Start Quiz",
-              style: textStyles.bodyTextWhite,
-            ),
-            onPressed: (){_scaffoldKey.currentState?.openEndDrawer();},
-            style: OutlinedButton.styleFrom(
-              backgroundColor: appColors.royalBlue,
-              foregroundColor: Colors.white,
-            ),
-            icon: const Icon(Icons.arrow_right_alt),
-          ),
-          SizedBox(
-            height: spacing,
-          ),
-          SizedBox(height: 150),
-          /*Center(
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                // Half-circle bars
-                CustomPaint(
-                  size: Size(200, 0), // Width and height of the half-circle
-                  painter: HalfCircleBarsPainter(),
-                ),
-                // Centered image
-                CircleAvatar(
-                  radius: 45.0, // Radius of the image circle
-                  backgroundImage: AssetImage('assets/images/img_10.png'),
-                ),
-              ],
-            ),
-          ),*/
         ],
       ),
     );
@@ -483,106 +475,28 @@ class _HomeState extends State<Home> {
           child: SafeArea(
             child: Column(
               children: <Widget>[
-                // OutlinedButton.icon(
-                //   onPressed: (){
-                //     setState(() {
-                //       readingScreen1();
-                //     });
-                //     Navigator.of(context).pop();
-                //   },
-                //   style: OutlinedButton.styleFrom(
-                //     backgroundColor: appColors.royalBlue,
-                //     foregroundColor: Colors.white,
-                //   ),
-                //   icon: const Icon(Icons.arrow_right_alt),
-                //   label: const Text("Social Norms Reading"),
-                // ),
-                OutlinedButton.icon(
-                  onPressed: (){
-                    setState(() {
-                      quizScreen1();
-                    });
-                    Navigator.of(context).pop();
-                  },
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: appColors.royalBlue,
-                    foregroundColor: Colors.white,
-                  ),
-                  icon: const Icon(Icons.arrow_right_alt),
-                  label: const Text("Social Norms"),
+                const SizedBox(height: 40),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.email,
+                      color: appColors.royalBlue,
+                      size: 30,
+                    ),
+                    const SizedBox(width: 20),
+                    Text(
+                      "${FirebaseAuth.instance.currentUser?.email}",
+                      style: textStyles.bodyText,
+                    ),
+                  ],
                 ),
+
+                const SizedBox(height: 40),
+
                 OutlinedButton.icon(
-                  onPressed: (){
-                    setState(() {
-                      quizScreen2();
-                    });
-                    Navigator.of(context).pop();
-                  },
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: appColors.royalBlue,
-                    foregroundColor: Colors.white,
-                  ),
-                  icon: const Icon(Icons.arrow_right_alt),
-                  label: const Text("Settings"),
-                ),
-                OutlinedButton.icon(
-                  onPressed: (){
-                    setState(() {
-                      quizScreen3();
-                    });
-                    Navigator.of(context).pop();
-                  },
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: appColors.royalBlue,
-                    foregroundColor: Colors.white,
-                  ),
-                  icon: const Icon(Icons.arrow_right_alt),
-                  label: const Text("Fake profiles"),
-                ),
-                OutlinedButton.icon(
-                  onPressed: (){
-                    setState(() {
-                      quizScreen4();
-                    });
-                    Navigator.of(context).pop();
-                  },
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: appColors.royalBlue,
-                    foregroundColor: Colors.white,
-                  ),
-                  icon: const Icon(Icons.arrow_right_alt),
-                  label: const Text("Social tags"),
-                ),
-                OutlinedButton.icon(
-                  onPressed: (){
-                    setState(() {
-                      quizScreen5();
-                    });
-                    Navigator.of(context).pop();
-                  },
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: appColors.royalBlue,
-                    foregroundColor: Colors.white,
-                  ),
-                  icon: const Icon(Icons.arrow_right_alt),
-                  label: const Text("Appropriate interactions"),
-                ),
-                OutlinedButton.icon(
-                  onPressed: (){
-                    setState(() {
-                      quizScreen6();
-                    });
-                    Navigator.of(context).pop();
-                  },
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: appColors.royalBlue,
-                    foregroundColor: Colors.white,
-                  ),
-                  icon: const Icon(Icons.arrow_right_alt),
-                  label: const Text("Social Media vs Reality"),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.logout),
                   onPressed: () async {
                     await FirebaseAuth.instance.signOut();
                     // Navigate back to the Sign-In page after signing out
@@ -590,7 +504,16 @@ class _HomeState extends State<Home> {
                       MaterialPageRoute(builder: (context) => SignInPage()),
                     );
                   },
+                  style: OutlinedButton.styleFrom(
+                    backgroundColor: appColors.royalBlue,
+                    foregroundColor: Colors.white,
+                  ),
+                  icon: const Icon(Icons.logout),
+                  label: const Text("Logout"),
                 ),
+
+                const SizedBox(height: 40),
+
               ],
             ),
           ),

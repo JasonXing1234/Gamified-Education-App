@@ -1,7 +1,5 @@
 import 'package:quiz/components/reading/reading_page.dart';
 
-import '../../question.dart';
-
 // Social Tags
 
 const reading4 = [
@@ -182,48 +180,54 @@ const reading4 = [
       "Boss / Teacher",
     ],
   ),
-  // MultipleAnswersQuestion(
-  //   "Your father who is a police officer",
-  //   "What social tag(s) apply this person?",
-  //   "no",
-  //   [
-  //     "Close Family",
-  //     "Distant Family",
-  //     "In-Person Friend",
-  //     "School Peer",
-  //     "Personal Service Provider",
-  //     "Work Peer",
-  //     "Boss / Teacher",
-  //     "Online Friend",
-  //     "Acquaintance",
-  //     "Community Helper",
-  //     "Stranger"
-  //   ],
-  //   [
-  //     "Close Family",
-  //     "Community Helper",
-  //   ],
-  // ),
-  // MultipleAnswersQuestion(
-  //   "A person who you've never seen or spoken to that sends you a 'Friend' request",
-  //   "What social tag(s) apply this person?",
-  //   "no",
-  //   [
-  //     "Close Family",
-  //     "Distant Family",
-  //     "In-Person Friend",
-  //     "School Peer",
-  //     "Personal Service Provider",
-  //     "Work Peer",
-  //     "Boss / Teacher",
-  //     "Online Friend",
-  //     "Acquaintance",
-  //     "Community Helper",
-  //     "Stranger"
-  //   ],
-  //   [
-  //     "Stranger",
-  //   ],
-  // ),
+  ReadingMultipleAnswersQuestion(
+    "QUESTION",
+    [
+     "Your father who is a police officer",
+     "What social tag(s) apply this person?",
+    ],
+    "no",
+    [
+      "Close Family",
+      "Distant Family",
+      "In-Person Friend",
+      "School Peer",
+      "Personal Service Provider",
+      "Work Peer",
+      "Boss / Teacher",
+      "Online Friend",
+      "Acquaintance",
+      "Community Helper",
+      "Stranger"
+    ],
+    [
+      "Close Family",
+      "Community Helper",
+    ],
+  ),
+  ReadingMultipleAnswersQuestion(
+    "QUESTION",
+    [
+      "A person who you've never seen or spoken to that sends you a 'Friend' request",
+      "What social tag(s) apply this person?",
+    ],
+    "no",
+    [
+      "Close Family",
+      "Distant Family",
+      "In-Person Friend",
+      "School Peer",
+      "Personal Service Provider",
+      "Work Peer",
+      "Boss / Teacher",
+      "Online Friend",
+      "Acquaintance",
+      "Community Helper",
+      "Stranger"
+    ],
+    [
+      "Stranger",
+    ],
+  ),
 
 ];

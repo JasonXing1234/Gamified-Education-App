@@ -116,11 +116,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
 
                 const SizedBox(height: 30),
-                // Text(
-                //   "PASSWORD",
-                //   style: textStyles.heading1,
-                // ),
-                // const SizedBox(height: 10),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -154,14 +150,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ],
                 ),
+
                 const SizedBox(height: 30),
-
-
-                // Text(
-                //   "CONFIRM PASSWORD",
-                //   style: textStyles.heading1,
-                // ),
-                // const SizedBox(height: 10),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -174,6 +164,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     const SizedBox(width: 20,),
 
+                    // TODO: Set up logic for confirm password for signing up
                     SizedBox(
                       width: 280,
                       height: 75,
