@@ -57,27 +57,27 @@ class _QuestionsScreenState extends State<QuizScreen> {
 
     if(widget.quizNumber == 1) {
       quizQuestions = quiz1;
-      quizName = "QUIZ: SOCIAL MEDIA NORMS";
+      // quizName = "QUIZ: SOCIAL MEDIA NORMS";
     }
     else if(widget.quizNumber == 2) {
       quizQuestions = quiz2;
-      quizName = "QUIZ: SETTINGS";
+      // quizName = "QUIZ: SETTINGS";
     }
     else if(widget.quizNumber == 3) {
       quizQuestions = quiz3;
-      quizName = "QUIZ: FAKE PROFILES";
+      // quizName = "QUIZ: FAKE PROFILES";
     }
     else if(widget.quizNumber == 4) {
       quizQuestions = quiz4;
-      quizName = "QUIZ: SOCIAL TAGS";
+      // quizName = "QUIZ: SOCIAL TAGS";
     }
     else if(widget.quizNumber == 5) {
       quizQuestions = quiz5;
-      quizName = "QUIZ: APPROPRIATE INTERACTIONS";
+      // quizName = "QUIZ: APPROPRIATE INTERACTIONS";
     }
     else if(widget.quizNumber == 6) {
       quizQuestions = quiz6;
-      quizName = "QUIZ: SOCIAL MEDIA VS REALITY";
+      // quizName = "QUIZ: SOCIAL MEDIA VS REALITY";
     }
     else {
       quizQuestions = [];
@@ -140,12 +140,41 @@ class _QuestionsScreenState extends State<QuizScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        toolbarHeight: 70, // Increases the height of the AppBar
         title: Padding(
-          padding: const EdgeInsets.only(top: 30.0), // Adjust the top padding of title
+            padding: const EdgeInsets.only(top: 20),
           child: Text(
             quizName,
             style: textStyles.heading1,
           ),
+        ),
+
+        leadingWidth: 100, // Gives space for the back button
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(left: 30, top: 20),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              //crossAxisAlignment: CrossAxisAlignment.center, // Aligns with the title vertically
+              children: [
+                Icon(
+                  Icons.arrow_back_ios,
+                  color: appColors.royalBlue,
+                  size: textStyles.heading1.fontSize,
+                ),
+                Text(
+                  "Exit",
+                  style: textStyles.customText(appColors.royalBlue, 20, FontWeight.normal),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,

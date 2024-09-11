@@ -20,7 +20,7 @@ class ProgressBar extends StatelessWidget {
       child: LinearProgressIndicator(
         // If on last page index (length - 1) set the progress to 1.0 otherwise get fraction
         value: pageIndex == pageList.length - 1 ? 1.0 : pageIndex / pageList.length,
-        minHeight: 20, // Increase height to better visualize the rounded corners
+        minHeight: 15, // Increase height to better visualize the rounded corners
         backgroundColor: appColors.grey,
         color: appColors.royalBlue,
       ),
