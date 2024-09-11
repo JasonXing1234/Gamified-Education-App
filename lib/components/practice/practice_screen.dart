@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
 import 'package:quiz/components/progress_bar/progress_bar.dart';
@@ -42,6 +44,8 @@ class _PracticeScreenState extends State<PracticeScreen> {
   int selectedIndex = 4;
   int counter = 0;
   // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final DatabaseReference _database = FirebaseDatabase.instance.ref();
+  User? user2 = FirebaseAuth.instance.currentUser;
 
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
@@ -111,8 +115,18 @@ class _PracticeScreenState extends State<PracticeScreen> {
     }
   }
 
+  Future<void> recordStar() async {
+    Navigator.of(context).pop();
+    if (questionIndex == practiceQuestions.length - 1) {
+      DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('numStars').get();
+      int numStars = snapshot.value as int;
+      await _database.child('profile/${user2?.uid}').update({
+        'numStars': numStars+1,
+      });
+    }
+  }
 
-  void nextQuestion(String answer) {
+  Future<void> nextQuestion(String answer) async {
     setState(() {
       if (questionIndex < practiceQuestions.length - 1) {
         questionIndex++;
@@ -156,18 +170,19 @@ class _PracticeScreenState extends State<PracticeScreen> {
                 ),
                 Expanded(
                   child: NextButton(
+                    buttonText: questionIndex == practiceQuestions.length -1 ? "FINISH" : "NEXT",
                     onTap: () {
                       setState(() {
-                        if(currentQuestion.answerOptions[0] == tempAnswer || counter == 2){
+                        if (questionIndex == practiceQuestions.length - 1) {
+                          recordStar();
+                          Navigator.of(context).pop();
+                        }
+                        else if(currentQuestion.answerOptions[0] == tempAnswer){
                           isCorrect = true;
-                          counter = 0;
                           nextQuestion(tempAnswer);
                         }
                         else{
                           isCorrect = false;
-                          if(counter < 2){
-                            counter++;
-                          }
                         }
                         selectedIndex = 4;
                       });
@@ -191,22 +206,13 @@ class _PracticeScreenState extends State<PracticeScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const SizedBox(
-                      height: 10,
-                    ),
-                    counter == 2 ? TextBox(
-                        currentText: "You answered incorrectly twice in a row. Please review slide 9 of the course materials to better understand this concept.",
-                        color: appColors.red
-                    ) : TextBox(
-                      currentText: currentQuestion.context,
-                    ),
-                    const SizedBox(
                       height: 30,
                     ),
                     currentQuestion.photo == 'no' ? SizedBox.shrink() : Image.asset(currentQuestion.photo),
                     const SizedBox(
                       height: 30,
                     ),
-                    counter == 2 ? SizedBox.shrink() : isCorrect == false ? Text(
+                    isCorrect == false ? Text(
                       'The answer was incorrect. Please try again.',
                       textAlign: TextAlign.left,
                       style: textStyles.customBodyText(appColors.red, 24),
@@ -214,6 +220,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
                     const SizedBox(
                       height: 15,
                     ),
+
                     counter == 2 ? SizedBox.shrink() : TextBox(
                       currentText: currentQuestion,
                     ),
@@ -232,6 +239,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
                         },
                       ),
                     ),
+
                     const SizedBox(
                       height: 60,
                     ),
