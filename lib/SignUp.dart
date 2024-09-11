@@ -29,6 +29,9 @@ class _SignUpPageState extends State<SignUpPage> {
         deviceToken: await FirebaseMessaging.instance.getToken(),
         readingList: [1, 1, 1, 1, 1, 1],
         quizScoreList:  [0, 0, 0, 0, 0, 0],
+        accessories: List<bool>.filled(20, false),
+        numStars: 0,
+          ifEachModuleComplete: List<bool>.filled(6, false),
       );
       print('Failed to update field: prior');
       try{

@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/components/lesson/lesson_dashboard.dart';
 import 'package:quiz/components/lesson/lesson_screen.dart';
@@ -37,11 +38,44 @@ class _HomeState extends State<Home> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String activeScreen = 'start-screen';
   int resultNumber = 0;
+  int numStars = 0;
+  final DatabaseReference _database = FirebaseDatabase.instance.ref();
+  User? user2;
 
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
 
   final double spacing = 30;
+
+  @override
+  void initState() {
+    super.initState();
+    user2 = FirebaseAuth.instance.currentUser;
+    // Fetch readings once the widget is initialized
+    _fetchReadingList();
+  }
+
+  Future<void> _fetchReadingList() async {
+    if (user2 != null) {
+      try {
+        DataSnapshot snapshot = await _database
+            .child('profile')
+            .child(user2!.uid)
+            .child('numStars')
+            .get();
+
+        if (snapshot.value != null) {
+          setState(() {
+            numStars = snapshot.value as int;
+          });
+        }
+
+      } catch (e) {
+        // Handle potential errors, like network issues
+        print('Error fetching reading list: $e');
+      }
+    }
+  }
 
 
   void readingScreen1() {
@@ -236,7 +270,7 @@ class _HomeState extends State<Home> {
                     children: [
                       Icon( Icons.stars, color: appColors.yellow, size: 60,),
                       Text("Stars", style: textStyles.mediumBodyText,),
-                      Text("0", style: textStyles.mediumBodyText,),
+                      Text(numStars.toString(), style: textStyles.mediumBodyText,),
                     ],
                   ),
                   const SizedBox(
