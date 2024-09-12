@@ -37,12 +37,14 @@ class _LessonScreenState extends State<LessonScreen> {
   List<dynamic> readings = [];
   int startingPageIndex = 0;
   Future<int?>? numStars;
+  int? tempNumStars;
 
   @override
   void initState() {
     super.initState();
     user2 = FirebaseAuth.instance.currentUser;
 
+    _fetchReadingList();
     // Fetch readings once the widget is initialized
     numStars = _fetchStars();
   }
@@ -56,18 +58,20 @@ class _LessonScreenState extends State<LessonScreen> {
 
   // Function to handle when "Yes" is pressed
   Future<void> handleYes() async {
-    int? tempNumStars = await numStars;
+    tempNumStars = await _fetchStars();
     setState(() {
       if (selectedImageIndex != null) {
         purchased[selectedImageIndex!] = true;
         selectedImageIndex = null; // Close the popup
       }
+      tempNumStars = tempNumStars! - 1;
     });
     try {
       await _database.child('profile/${user2?.uid}').update({
         'accessories': purchased,
-        'numStars': tempNumStars! - 1
+        'numStars': tempNumStars!
       });
+
     } catch (e) {
       // Handle potential errors, like network issues
       print('Error fetching reading list: $e');
@@ -92,6 +96,26 @@ class _LessonScreenState extends State<LessonScreen> {
 
         if (snapshot2.value != null) {
           return snapshot2.value as int;
+        }
+      }
+      catch (e) {
+        // Handle potential errors, like network issues
+        print('Error fetching reading list: $e');
+      }
+    }
+  }
+
+  Future<List<dynamic>?> _fetchAccessories() async {
+    if (user2 != null) {
+      try {
+        DataSnapshot snapshot2 = await _database
+            .child('profile')
+            .child(user2!.uid)
+            .child('accessories')
+            .get();
+
+        if (snapshot2.value != null) {
+          return snapshot2.value as List<bool>;
         }
       }
       catch (e) {
@@ -128,17 +152,6 @@ class _LessonScreenState extends State<LessonScreen> {
           });
         }
 
-        DataSnapshot snapshot3 = await _database
-            .child('profile')
-            .child(user2!.uid)
-            .child('numStars')
-            .get();
-
-        if (snapshot3.value != null) {
-          setState(() {
-            //numStars = snapshot3.value as int;
-          });
-        }
       } catch (e) {
         // Handle potential errors, like network issues
         print('Error fetching reading list: $e');
@@ -299,7 +312,7 @@ class _LessonScreenState extends State<LessonScreen> {
               ),
 
               FutureBuilder<int?>(
-                future: numStars,
+                future: _fetchStars(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator();
@@ -355,8 +368,9 @@ class _LessonScreenState extends State<LessonScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             ElevatedButton(
-                              onPressed: () {
-                                if (numStars != 0) {
+                              onPressed: () async {
+                                int? tempInt = await _fetchStars();
+                                if (tempInt! > 0) {
                                   handleYes();
                                 }
                                 else{

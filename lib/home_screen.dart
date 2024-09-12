@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String activeScreen = 'start-screen';
   int resultNumber = 0;
-  int numStars = 0;
+  Future<int?>? numStars;
   final DatabaseReference _database = FirebaseDatabase.instance.ref();
   User? user2;
 
@@ -52,10 +52,10 @@ class _HomeState extends State<Home> {
     super.initState();
     user2 = FirebaseAuth.instance.currentUser;
     // Fetch readings once the widget is initialized
-    _fetchReadingList();
+    numStars = _fetchReadingList();
   }
 
-  Future<void> _fetchReadingList() async {
+  Future<int?> _fetchReadingList() async {
     if (user2 != null) {
       try {
         DataSnapshot snapshot = await _database
@@ -65,9 +65,7 @@ class _HomeState extends State<Home> {
             .get();
 
         if (snapshot.value != null) {
-          setState(() {
-            numStars = snapshot.value as int;
-          });
+            return snapshot.value as int;
         }
 
       } catch (e) {
@@ -270,7 +268,21 @@ class _HomeState extends State<Home> {
                     children: [
                       Icon( Icons.stars, color: appColors.yellow, size: 60,),
                       Text("Stars", style: textStyles.mediumBodyText,),
-                      Text(numStars.toString(), style: textStyles.mediumBodyText,),
+                      FutureBuilder<int?>(
+                        future: _fetchReadingList(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else if (snapshot.hasData) {
+                            return Text(snapshot.data.toString(), style: textStyles.mediumBodyText,);
+                          } else {
+                            return Text('No data available');
+                          }
+                        },
+                      ),
+
                     ],
                   ),
                   const SizedBox(
