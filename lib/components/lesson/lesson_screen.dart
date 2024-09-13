@@ -236,8 +236,18 @@ class _LessonScreenState extends State<LessonScreen> {
             children: [ Column(
             children: [
               const SizedBox(
-                height: 20,
+                height: 15,
               ),
+
+              // Row of image and stats
+              StatsNotebook(lesson: lesson, textStyles: textStyles),
+
+              // Text(
+              //   "Name: Norbert", //TODO: Set up user data for name of creature & way to edit name
+              //   style: textStyles.bodyText,
+              // ),
+              const SizedBox(height: 15,),
+
               // row of buttons for Pre-quiz, readings, post-quiz
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -301,20 +311,7 @@ class _LessonScreenState extends State<LessonScreen> {
                 ],
               ),
 
-              const SizedBox(
-                height: 20,
-              ),
-
-              // Row of image and stats
-              StatsNotebook(lesson: lesson, textStyles: textStyles),
-
-              // Text(
-              //   "Name: Norbert", //TODO: Set up user data for name of creature & way to edit name
-              //   style: textStyles.bodyText,
-              // ),
-              const SizedBox(
-                height: 15,
-              ),
+              const SizedBox(height: 30,),
 
               ActivityButton(
                 text: "PRACTICE & EARN STARS", // Drill is practice
@@ -326,10 +323,9 @@ class _LessonScreenState extends State<LessonScreen> {
                   );
                 },
               ),
-              const SizedBox(
-                height: 5,
-              ),
+              const SizedBox(height: 5,),
 
+              // Number of Stars
               FutureBuilder<int?>(
                 future: numStars,
                 builder: (context, snapshot) {
@@ -338,12 +334,31 @@ class _LessonScreenState extends State<LessonScreen> {
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else if (snapshot.hasData) {
-                    return Text(
+                    return
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon( Icons.stars, color: appColors.yellow, size: textStyles.mediumBodyText.fontSize,),
+                          Text("Stars: ${snapshot.data}", style: textStyles.mediumBodyText,),
+                          Text(snapshot.data.toString(), style: textStyles.mediumBodyText,),
+                        ],
+                      );
+
+                      Text(
                       "You currently have ${snapshot.data} Stars", //TODO: Set up user data for number of stars
                       style: textStyles.bodyText,
                     );
                   } else {
-                    return Text('No data available');
+                    return Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon( Icons.stars, color: appColors.yellow, size: textStyles.mediumBodyText.fontSize,),
+                        Text("Stars 0", style: textStyles.mediumBodyText,),
+                      ],
+                    );
+
+
+                    //Text('No data available');
                   }
                 },
               ),
@@ -378,11 +393,11 @@ class _LessonScreenState extends State<LessonScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          'Do you want to buy this item?',
+                        const Text(
+                          "Do you want to buy this item?",
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -394,9 +409,9 @@ class _LessonScreenState extends State<LessonScreen> {
                                 else{
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      content: Text('You don\'t have enough star'),
+                                      content: const Text("You need 1 star to buy this item"),
                                       action: SnackBarAction(
-                                        label: 'UNDO',
+                                        label: "UNDO",
                                         onPressed: () {
                                           // Do something to undo the change.
                                         },
@@ -405,19 +420,19 @@ class _LessonScreenState extends State<LessonScreen> {
                                   );
                                 }
                                 },
-                              child: Text('Yes'),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.green,
                                 padding: const EdgeInsets.symmetric(horizontal: 40),
                               ),
+                              child: const Text("Yes"),
                             ),
                             ElevatedButton(
                               onPressed: handleNo,
-                              child: Text('No'),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.red,
                                 padding: const EdgeInsets.symmetric(horizontal: 40),
                               ),
+                              child: const Text("No"),
                             ),
                           ],
                         ),
@@ -440,17 +455,12 @@ class _LessonScreenState extends State<LessonScreen> {
       },
       child: Stack(
         children: [
-          Image.asset(
-            'assets/character_images/sunglasses.png', // Placeholder image
-            //fit: BoxFit.cover,
-            //width: double.infinity,
-            //height: double.infinity,
-          ),
+          const ImageBox(imageName: "assets/character_images/sunglasses.png"), // TODO: Remove Place holder image
           if (purchased[index])
             Positioned.fill(
               child: Container(
                 color: Colors.black.withOpacity(0.5),
-                child: Center(
+                child: const Center(
                   child: Icon(
                     Icons.check_circle,
                     color: Colors.green,
@@ -524,9 +534,38 @@ class ImageBox extends StatelessWidget {
 
   final String imageName;
 
+  final AppColors appColors = const AppColors();
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+
+    var locked = Container(
+      height: 100,
+      width: 100,
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        border: Border.all(color: Colors.black, width: 3.0),
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      child: Center(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20.0),
+          child: ColorFiltered(
+            colorFilter: ColorFilter.mode(
+              appColors.grey,
+              BlendMode.saturation,
+            ),
+            child: Image.asset(
+              imageName,
+              scale: 2,
+            ),
+          ),
+        ),
+      )
+    );
+
+    // Default: Owned by user but not being used
+    var purchased = Container(
       height: 100,
       width: 100,
       decoration: BoxDecoration(
@@ -541,6 +580,9 @@ class ImageBox extends StatelessWidget {
         ),
       ),
     );
+
+
+    return locked;
   }
 }
 
