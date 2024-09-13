@@ -15,7 +15,7 @@ import '../styles/app_colors.dart';
 import '../styles/text_styles.dart';
 import 'buttons/menu_button.dart';
 import 'buttons/next_button.dart';
-import 'buttons/sound_button.dart';
+import 'buttons/speed_button.dart';
 
 class ResultScreen extends StatelessWidget {
   ResultScreen({super.key, required this.userAnswers, required this.restartQuiz, required this.quizNumber});

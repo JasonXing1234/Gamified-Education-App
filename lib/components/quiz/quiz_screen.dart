@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
 import 'package:quiz/components/buttons/menu_button.dart';
-import 'package:quiz/components/buttons/sound_button.dart';
+import 'package:quiz/components/buttons/speed_button.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/components/question.dart';
 import 'package:quiz/styles/app_colors.dart';

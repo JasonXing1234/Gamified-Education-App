@@ -20,7 +20,7 @@ import '../../styles/text_styles.dart';
 
 import '../buttons/menu_button.dart';
 import '../buttons/next_button.dart';
-import '../buttons/sound_button.dart';
+import '../buttons/speed_button.dart';
 import '../text_box/text_box.dart';
 
 
