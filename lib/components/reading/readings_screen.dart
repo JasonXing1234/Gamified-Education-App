@@ -189,13 +189,43 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        toolbarHeight: 70,
         title: Padding(
-          padding: const EdgeInsets.only(top: 30.0), // Adjust the top padding of title
+          padding: const EdgeInsets.only(top: 20.0), // Adjust the top padding of title
           child: Text(
             lessonName,
             style: textStyles.heading1,
           ),
         ),
+
+        leadingWidth: 100, // Gives space for the back button
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(left: 30, top: 20),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              //crossAxisAlignment: CrossAxisAlignment.center, // Aligns with the title vertically
+              children: [
+                Icon(
+                  Icons.arrow_back_ios,
+                  color: appColors.royalBlue,
+                  size: textStyles.heading1.fontSize,
+                ),
+                Text(
+                  "Exit",
+                  style: textStyles.customText(appColors.royalBlue, 20, FontWeight.normal),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+
+        ),
+
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: Container(
@@ -208,7 +238,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                 child: MenuButton(),
               ),
               const Expanded(
-                child: SoundButton(),
+                child: SpeedButton(),
               ),
               Expanded(
                 child: NextButton(

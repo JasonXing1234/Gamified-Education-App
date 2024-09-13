@@ -62,11 +62,11 @@ class _PracticeScreenState extends State<PracticeScreen> {
 
     if(widget.quizNumber == 1) {
       practiceQuestions = fakeProfilesPractice1;
-      practiceName = "PRACTICE: SOCIAL MEDIA NORMS";
+      //practiceName = "PRACTICE: SOCIAL MEDIA NORMS";
     }
     else if(widget.quizNumber == 2) {
       practiceQuestions = fakeProfilesPractice2;
-      practiceName = "PRACTICE: SETTINGS";
+      //practiceName = "PRACTICE: SETTINGS";
     }
     else if(widget.quizNumber == 3) {
       practiceQuestions = fakeProfilesPractice3;
@@ -88,7 +88,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
     }
     else if(widget.quizNumber == 9) {
       practiceQuestions = fakeProfilesPracticeAll;
-      practiceName = "PRACTICE: FAKE PROFILES";
+      //practiceName = "PRACTICE: FAKE PROFILES";
     }
     else {
       practiceQuestions = [];
@@ -150,10 +150,43 @@ class _PracticeScreenState extends State<PracticeScreen> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text(
-            practiceName,
-            style: textStyles.heading1,
+          toolbarHeight: 70,
+          title: Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: Text(
+              practiceName,
+              style: textStyles.heading1,
+            ),
           ),
+
+          leadingWidth: 100, // Gives space for the back button
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30, top: 20),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                //crossAxisAlignment: CrossAxisAlignment.center, // Aligns with the title vertically
+                children: [
+                  Icon(
+                    Icons.arrow_back_ios,
+                    color: appColors.royalBlue,
+                    size: textStyles.heading1.fontSize,
+                  ),
+                  Text(
+                    "Exit",
+                    style: textStyles.customText(appColors.royalBlue, 20, FontWeight.normal),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+
+          ),
+
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: Container(
@@ -166,7 +199,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
                   child: MenuButton(),
                 ),
                 const Expanded(
-                  child: SoundButton(),
+                  child: SpeedButton(),
                 ),
                 Expanded(
                   child: NextButton(
@@ -205,6 +238,9 @@ class _PracticeScreenState extends State<PracticeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    currentQuestion.context == "" ? SizedBox.shrink() : TextBox(
+                      currentText: currentQuestion.context,
+                    ),
                     const SizedBox(
                       height: 30,
                     ),

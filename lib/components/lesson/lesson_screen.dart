@@ -190,13 +190,45 @@ class _LessonScreenState extends State<LessonScreen> {
     child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
+          toolbarHeight: 70,
           title: Padding(
-            padding: const EdgeInsets.only(top: 30.0), // Adjust the top padding of title
+            padding: const EdgeInsets.only(top: 20.0), // Adjust the top padding of title
             child: Text(
               lesson.title,
               style: textStyles.heading1,
             ),
           ),
+
+          // Return Home Button
+          leadingWidth: 60, // Gives space for the back button
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30, top: 20),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                //crossAxisAlignment: CrossAxisAlignment.center, // Aligns with the title vertically
+                children: [
+                  Icon(
+                    Icons.arrow_back_ios,
+                    color: appColors.royalBlue,
+                    size: textStyles.heading1.fontSize,
+                  ),
+                  // Text(
+                  //   "Back",
+                  //   style: textStyles.customText(appColors.royalBlue, 20, FontWeight.normal),
+                  //   overflow: TextOverflow.ellipsis,
+                  // ),
+                ],
+              ),
+            ),
+
+          ),
+
+
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
@@ -322,7 +354,7 @@ class _LessonScreenState extends State<LessonScreen> {
 
               // Scrollable Accessory List
               SizedBox(
-                height: 275, // Set a fixed height for the GridView
+                height: 250, // Set a fixed height for the GridView
                 width: 350,
                 child: GridView.extent(
                   maxCrossAxisExtent: 100, // Max width of each tile

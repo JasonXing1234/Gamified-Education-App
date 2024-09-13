@@ -149,7 +149,7 @@ class ResultScreen extends StatelessWidget {
                   child: MenuButton(),
                 ),
                 const Expanded(
-                  child: SoundButton(),
+                  child: SpeedButton(),
                 ),
                 Expanded(
                   child: NextButton(

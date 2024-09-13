@@ -188,7 +188,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
                 child: MenuButton(),
               ),
               const Expanded(
-                child: SoundButton(),
+                child: SpeedButton(),
               ),
               Expanded(
                 child: NextButton(
