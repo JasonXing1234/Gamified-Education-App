@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
+import 'package:quiz/components/practice/practice_questions/appropriate_interaction_practice/appropriate_interaction_practice_1.dart';
 import 'package:quiz/components/progress_bar/progress_bar.dart';
 
 import '../question.dart';
@@ -60,6 +61,8 @@ class _PracticeScreenState extends State<PracticeScreen> {
     super.initState();
     _scrollController.addListener(_onScrollEnd);
 
+
+    // TODO: Update these practices to match lesson and pick random practice
     if(widget.quizNumber == 1) {
       practiceQuestions = fakeProfilesPractice1;
       //practiceName = "PRACTICE: SOCIAL MEDIA NORMS";
@@ -75,7 +78,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
       practiceQuestions = fakeProfilesPractice4;
     }
     else if(widget.quizNumber == 5) {
-      practiceQuestions = fakeProfilesPractice5;
+      practiceQuestions = appropriateInteractionsPractice1;
     }
     else if(widget.quizNumber == 6) {
       practiceQuestions = fakeProfilesPractice6;
@@ -88,7 +91,6 @@ class _PracticeScreenState extends State<PracticeScreen> {
     }
     else if(widget.quizNumber == 9) {
       practiceQuestions = fakeProfilesPracticeAll;
-      //practiceName = "PRACTICE: FAKE PROFILES";
     }
     else {
       practiceQuestions = [];
@@ -238,16 +240,9 @@ class _PracticeScreenState extends State<PracticeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    currentQuestion.context == "" ? SizedBox.shrink() : TextBox(
-                      currentText: currentQuestion.context,
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
+                    currentQuestion.context == "no" ? SizedBox.shrink() : TextBox(currentText: currentQuestion.context,),
                     currentQuestion.photo == 'no' ? SizedBox.shrink() : Image.asset(currentQuestion.photo),
-                    const SizedBox(
-                      height: 30,
-                    ),
+                    currentQuestion.photo == 'no' ? SizedBox.shrink() : const SizedBox(height: 30,),
                     isCorrect == false ? Text(
                       'The answer was incorrect. Please try again.',
                       textAlign: TextAlign.left,

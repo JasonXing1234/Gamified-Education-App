@@ -319,7 +319,7 @@ class _LessonScreenState extends State<LessonScreen> {
                     (){
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PracticeScreen(quizNumber: 1, onSelectAnswer: (String answer) {  },))
+                      MaterialPageRoute(builder: (context) => PracticeScreen(quizNumber: widget.lessonNumber, onSelectAnswer: (String answer) {  },))
                   );
                 },
               ),
