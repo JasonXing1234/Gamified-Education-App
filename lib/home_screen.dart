@@ -512,7 +512,7 @@ class _HomeState extends State<Home> {
       screen = ResultScreen(
         quizNumber: resultNumber,
         userAnswers: answers,
-        restartQuiz: returnHomeAndResetQuiz,
+        endQuiz: returnHomeAndResetQuiz,
       );
     }
 
