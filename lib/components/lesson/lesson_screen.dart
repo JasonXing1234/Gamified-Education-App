@@ -407,6 +407,8 @@ class _LessonScreenState extends State<LessonScreen> {
                                   handleYes();
                                 }
                                 else{
+                                  handleNo();
+
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: const Text("You need 1 star to buy this item"),
