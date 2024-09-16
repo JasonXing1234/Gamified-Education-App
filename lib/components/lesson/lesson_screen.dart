@@ -267,7 +267,7 @@ class _LessonScreenState extends State<LessonScreen> {
                       const SizedBox(
                         height: 5,
                       ),
-                      ImageBox(imageName: lesson.character.photos[Phase.baby] ?? "assets/images/lock.png"),
+                      ImageBox(imageName: lesson.character.photos[Phase.baby] ?? "assets/images/lock.png", isLocked: true, isSelected: false,), //TODO: Update based on completion
                     ],
                   ),
 
@@ -286,7 +286,7 @@ class _LessonScreenState extends State<LessonScreen> {
                       const SizedBox(
                         height: 5,
                       ),
-                      ImageBox(imageName: lesson.character.photos[Phase.teen] ?? "assets/images/lock.png"),
+                      ImageBox(imageName: lesson.character.photos[Phase.teen] ?? "assets/images/lock.png", isLocked: true, isSelected: false,), //TODO: Update based on completion
                     ],
                   ),
 
@@ -305,7 +305,7 @@ class _LessonScreenState extends State<LessonScreen> {
                       const SizedBox(
                         height: 5,
                       ),
-                      ImageBox(imageName: lesson.character.photos[Phase.adult] ?? "assets/images/lock.png"),
+                      ImageBox(imageName: lesson.character.photos[Phase.adult] ?? "assets/images/lock.png", isLocked: false, isSelected: true,), //TODO: Update based on completion
                     ],
                   ),
                 ],
@@ -343,11 +343,6 @@ class _LessonScreenState extends State<LessonScreen> {
                           Text(snapshot.data.toString(), style: textStyles.mediumBodyText,),
                         ],
                       );
-
-                      Text(
-                      "You currently have ${snapshot.data} Stars", //TODO: Set up user data for number of stars
-                      style: textStyles.bodyText,
-                    );
                   } else {
                     return Row(
                       mainAxisSize: MainAxisSize.min,
@@ -455,20 +450,20 @@ class _LessonScreenState extends State<LessonScreen> {
       },
       child: Stack(
         children: [
-          const ImageBox(imageName: "assets/character_images/sunglasses.png"), // TODO: Remove Place holder image
-          if (purchased[index])
-            Positioned.fill(
-              child: Container(
-                color: Colors.black.withOpacity(0.5),
-                child: const Center(
-                  child: Icon(
-                    Icons.check_circle,
-                    color: Colors.green,
-                    size: 50,
-                  ),
-                ),
-              ),
-            ),
+          ImageBox(imageName: "assets/character_images/sunglasses.png", isLocked: !purchased[index], isSelected: false,), // TODO: Remove Place holder image and check if selected
+          // if (purchased[index])
+          //   Positioned.fill(
+          //     child: Container(
+          //       color: Colors.black.withOpacity(0.5),
+          //       child: const Center(
+          //         child: Icon(
+          //           Icons.check_circle,
+          //           color: Colors.green,
+          //           size: 50,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
         ],
       ),
     );
@@ -527,12 +522,16 @@ class StatsNotebook extends StatelessWidget {
 }
 
 class ImageBox extends StatelessWidget {
-  const ImageBox({
+  ImageBox({
     super.key,
     required this.imageName,
+    required this.isLocked,
+    required this.isSelected,
   });
 
   final String imageName;
+  bool isLocked;
+  bool isSelected;
 
   final AppColors appColors = const AppColors();
 
@@ -582,7 +581,27 @@ class ImageBox extends StatelessWidget {
     );
 
 
-    return locked;
+    // If accessory is selected
+    var selected = Container(
+      height: 100,
+      width: 100,
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        border: Border.all(color: appColors.green, width: 8.0),
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      child: Center(
+        child: Image.asset(
+          imageName,
+          scale: 2,
+        ),
+      ),
+    );
+
+
+    // if locked -> locked version
+    // if purchased -> check if selected
+    return isLocked ? locked : isSelected ? selected : purchased;
   }
 }
 
