@@ -403,12 +403,10 @@ class _LessonScreenState extends State<LessonScreen> {
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                if (numStars != 0) { //TODO: Fix??? - Mia Friday 13th Sep
+                                if (numStars != 0) { //TODO: Fix and stop player from purchasing if not able
                                   handleYes();
                                 }
                                 else{
-                                  handleNo();
-
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: const Text("You need 1 star to buy this item"),
