@@ -403,7 +403,7 @@ class _LessonScreenState extends State<LessonScreen> {
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                if (numStars != 0) {
+                                if (numStars != 0) { //TODO: Fix??? - Mia Friday 13th Sep
                                   handleYes();
                                 }
                                 else{
