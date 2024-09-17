@@ -139,7 +139,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Question currentQuestion;
+    dynamic currentQuestion;
 
     if (practiceQuestions.isNotEmpty) {
       currentQuestion = practiceQuestions[questionIndex];
@@ -212,7 +212,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
                           recordStar();
                           Navigator.of(context).pop();
                         }
-                        else if(currentQuestion.answerOptions[0] == tempAnswer){
+                        else if(currentQuestion.correctAnswer == tempAnswer){
                           isCorrect = true;
                           nextQuestion(tempAnswer);
                         }
