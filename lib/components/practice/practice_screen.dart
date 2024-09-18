@@ -145,7 +145,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
       currentQuestion = practiceQuestions[questionIndex];
     }
     else {
-      currentQuestion = const Question("no", "none", "no", ["none"]);
+      currentQuestion = const Question("no", "none", "no", ["none"], "none",);
     }
 
 

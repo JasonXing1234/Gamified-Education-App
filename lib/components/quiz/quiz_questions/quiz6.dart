@@ -10,6 +10,7 @@ var quiz6 = [
       "False",
     ],
     "False",
+    "explain",
   ),
   const SingleAnswerQuestion(
     "no",
@@ -20,6 +21,7 @@ var quiz6 = [
       "False",
     ],
     "False",
+    "explain",
   ),
   const SingleAnswerQuestion(
     "no",
@@ -30,6 +32,7 @@ var quiz6 = [
       "False",
     ],
     "True",
+    "explain",
   ),
   const SingleAnswerQuestion(
     "no",
@@ -40,6 +43,7 @@ var quiz6 = [
       "False",
     ],
     "True",
+    "explain",
   ),
   const SingleAnswerQuestion(
     "no",
@@ -50,6 +54,7 @@ var quiz6 = [
       "False",
     ],
     "False",
+    "explain",
   ),
   MultipleAnswersQuestion(
     "no",
@@ -61,6 +66,7 @@ var quiz6 = [
       "Do nothing; automatically repost it",
       "Ask yourself about whether it seems real"
     ],
+    "explain",
     ["Look it up", "Be cautious", "Ask yourself about whether it seems real",],
   ),
 ];
