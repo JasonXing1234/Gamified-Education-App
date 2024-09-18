@@ -2,6 +2,7 @@ import 'package:quiz/components/question.dart';
 
 // TODO: Put in correct answers
 // TODO: Not sure how to do the text field questions
+// TODO: Put in explanations for answers
 
 var quiz2 = [
   const SingleAnswerQuestion(
@@ -16,6 +17,7 @@ var quiz2 = [
       "Updates where your message go"
     ],
     "Allows you to block other users",
+    "explain",
   ),
   const SingleAnswerQuestion(
     "no",
@@ -29,6 +31,7 @@ var quiz2 = [
       "Updates where your message go"
     ],
     "Updates who can see your posts",
+    "explain",
   ),
   MultipleAnswersQuestion(
     "no",
@@ -37,6 +40,7 @@ var quiz2 = [
     [
       "textField"
     ],
+    "explain",
     [],
   ),
   MultipleAnswersQuestion(
@@ -46,6 +50,7 @@ var quiz2 = [
     [
       "textField"
     ],
+    "explain",
     [],
   ),
   const SingleAnswerQuestion(
@@ -60,6 +65,7 @@ var quiz2 = [
       "Updates where your message go"
     ],
     "Updates whether your account is private or public",
+    "explain",
   ),
   const SingleAnswerQuestion(
     "no",
@@ -73,6 +79,7 @@ var quiz2 = [
       "Updates where your message go"
     ],
     "Updates where your message go",
+    "explain",
   ),
   const SingleAnswerQuestion(
     "no",
@@ -86,6 +93,7 @@ var quiz2 = [
       "Updates where your message go"
     ],
     "Updates who can tag you in their posts",
+    "explain",
   ),
   MultipleAnswersQuestion(
     "no",
@@ -94,6 +102,7 @@ var quiz2 = [
     [
       "textField"
     ],
+    "explain",
     [],
   ),
   MultipleAnswersQuestion(
@@ -103,6 +112,7 @@ var quiz2 = [
     [
       "textField"
     ],
+    "explain",
     [],
   ),
   MultipleAnswersQuestion(
@@ -112,6 +122,7 @@ var quiz2 = [
     [
       "textField"
     ],
+    "explain",
     [],
   ),
 ];

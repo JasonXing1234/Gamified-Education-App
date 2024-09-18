@@ -134,7 +134,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
       currentQuestion = quizQuestions[questionIndex];
     }
     else {
-      currentQuestion = const Question("no", "none", "no", ["none"]);
+      currentQuestion = const Question("no", "none", "no", ["none"], "none");
     }
 
     return Scaffold(

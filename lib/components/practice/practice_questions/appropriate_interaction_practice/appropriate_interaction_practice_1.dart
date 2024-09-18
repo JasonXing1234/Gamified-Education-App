@@ -12,6 +12,7 @@ const appropriateInteractionsPractice1 = [
       "No"
     ],
     "Yes",
+    "explain",
     //TODO: Add "Explain the right answer" parameter
   ),
   SingleAnswerQuestion(
@@ -23,6 +24,7 @@ const appropriateInteractionsPractice1 = [
       "No"
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "no",
@@ -33,6 +35,7 @@ const appropriateInteractionsPractice1 = [
       "No"
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "no",
@@ -43,6 +46,7 @@ const appropriateInteractionsPractice1 = [
       "No"
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "no",
@@ -53,6 +57,7 @@ const appropriateInteractionsPractice1 = [
       "No"
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "no",
@@ -63,6 +68,7 @@ const appropriateInteractionsPractice1 = [
       "No"
     ],
     "No",
+    "explain",
   ),
 
   SingleAnswerQuestion(
@@ -74,6 +80,7 @@ const appropriateInteractionsPractice1 = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "no",
@@ -84,6 +91,7 @@ const appropriateInteractionsPractice1 = [
       "No"
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "no",
@@ -94,5 +102,6 @@ const appropriateInteractionsPractice1 = [
       "No"
     ],
     "No",
+    "explain",
   ),
 ];

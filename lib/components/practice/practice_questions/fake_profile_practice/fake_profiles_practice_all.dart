@@ -12,6 +12,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.",
@@ -22,6 +23,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.",
@@ -32,6 +34,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.",
@@ -42,6 +45,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.",
@@ -52,6 +56,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "This is what you know about the account so far."
@@ -69,6 +74,7 @@ const fakeProfilesPracticeAll = [
       "The account is most likely real. You can choose to accept the request.",
     ],
     "The account is most likely real. You can choose to accept the request.",
+    "explain",
   ),
 
   // Part 2
@@ -81,6 +87,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person.",
@@ -91,6 +98,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.",
@@ -101,6 +109,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person. ",
@@ -111,6 +120,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person. ",
@@ -121,6 +131,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "This is what you know about the account so far."
@@ -138,6 +149,7 @@ const fakeProfilesPracticeAll = [
       "The account is most likely real. You can choose to accept the request.",
     ],
     "The account might be fake. Since the person is not an acquaintance offline, ask a mentor about the request.", //TODO: Not sure???????
+    "explain",
   ),
 
   // Part 3
@@ -150,6 +162,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does not match the person they know. This is the first connection request they have received from this person.",
@@ -160,6 +173,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does not match the person they know. This is the first connection request they have received from this person.",
@@ -170,6 +184,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does not match the person they know. This is the first connection request they have received from this person.",
@@ -180,6 +195,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does not match the person they know. This is the first connection request they have received from this person.",
@@ -190,6 +206,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "This is what you know about the account so far."
@@ -207,6 +224,7 @@ const fakeProfilesPracticeAll = [
       "The account is most likely real. You can choose to accept the request.",
     ],
     "The account might be fake. Since the person is an acquaintance offline, ask that person about the request.",
+    "explain",
   ),
 
   // Part 4
@@ -220,6 +238,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. " + "\n"
@@ -231,6 +250,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. " + "\n"
@@ -242,6 +262,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. " + "\n"
@@ -253,6 +274,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. " + "\n"
@@ -264,6 +286,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "This is what you know about the account so far."
@@ -281,6 +304,7 @@ const fakeProfilesPracticeAll = [
       "The account is most likely real. You can choose to accept the request.",
     ],
     "The account is most likely fake. Reject the request.",
+    "explain",
   ),
 
   // Part 5
@@ -294,6 +318,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. " + "\n"
@@ -305,6 +330,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. " + "\n"
@@ -316,6 +342,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. " + "\n"
@@ -327,6 +354,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. " + "\n"
@@ -338,6 +366,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "This is what you know about the account so far."
@@ -355,6 +384,7 @@ const fakeProfilesPracticeAll = [
       "The account is most likely real. You can choose to accept the request.",
     ],
     "The account is most likely real. You can choose to accept the request.",
+    "explain",
   ),
 
   // Part 6
@@ -368,6 +398,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.",
@@ -378,6 +409,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.",
@@ -388,6 +420,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.",
@@ -398,6 +431,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.",
@@ -408,6 +442,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "This is what you know about the account so far."
@@ -425,6 +460,7 @@ const fakeProfilesPracticeAll = [
       "The account is most likely real. You can choose to accept the request.",
     ],
     "The account is most likely fake. Reject the request.",
+    "explain",
   ),
 
   // Part 7
@@ -437,6 +473,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.",
@@ -447,6 +484,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.",
@@ -457,6 +495,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.",
@@ -467,6 +506,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have met this person offline and the profile photo does match the person they know. This is the first connection request they have received from this person.",
@@ -477,6 +517,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "This is what you know about the account so far."
@@ -494,6 +535,7 @@ const fakeProfilesPracticeAll = [
       "The account is most likely real. You can choose to accept the request.",
     ],
     "The account might be fake. Since the person is an acquaintance offline, ask that person about the request.",
+    "explain",
   ),
 
   // Part 8
@@ -506,6 +548,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person.",
@@ -516,6 +559,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person.",
@@ -526,6 +570,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person.",
@@ -536,6 +581,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. They have not met this person offline. This is the first connection request they have received from this person.",
@@ -546,6 +592,7 @@ const fakeProfilesPracticeAll = [
       "No"
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "This is what you know about the account so far."
@@ -563,5 +610,6 @@ const fakeProfilesPracticeAll = [
       "The account is most likely real. You can choose to accept the request.",
     ],
     "The account might be fake. Since the person is not an acquaintance offline, ask a mentor about the request.",
+    "explain",
   ),
 ];
