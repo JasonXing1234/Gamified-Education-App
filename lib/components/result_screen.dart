@@ -15,12 +15,12 @@ import '../styles/app_colors.dart';
 import '../styles/text_styles.dart';
 import 'buttons/menu_button.dart';
 import 'buttons/next_button.dart';
-import 'buttons/sound_button.dart';
+import 'buttons/speed_button.dart';
 
 class ResultScreen extends StatelessWidget {
-  ResultScreen({super.key, required this.userAnswers, required this.restartQuiz, required this.quizNumber});
+  ResultScreen({super.key, required this.userAnswers, required this.endQuiz, required this.quizNumber});
   final List<String> userAnswers;
-  final void Function() restartQuiz;
+  final void Function() endQuiz;
   final int quizNumber;
   final DatabaseReference _database = FirebaseDatabase.instance.ref();
   User? user2 = FirebaseAuth.instance.currentUser;
@@ -149,13 +149,13 @@ class ResultScreen extends StatelessWidget {
                   child: MenuButton(),
                 ),
                 const Expanded(
-                  child: SoundButton(),
+                  child: SpeedButton(),
                 ),
                 Expanded(
                   child: NextButton(
-                    onTap: restartQuiz,
+                    onTap: endQuiz,
                     disabled: false,
-                    buttonText: "FINISH",
+                    buttonText: "NEXT",
                   ),
                 ),
               ],

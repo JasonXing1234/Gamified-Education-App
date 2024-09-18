@@ -13,6 +13,7 @@ import 'package:quiz/styles/text_styles.dart';
 
 import '../../accessory.dart';
 import '../practice/practice_screen.dart';
+import '../practice_results_screen.dart';
 import '../rewards/character.dart';
 
 class LessonScreen extends StatefulWidget {
@@ -203,13 +204,45 @@ class _LessonScreenState extends State<LessonScreen> {
     child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
+          toolbarHeight: 70,
           title: Padding(
-            padding: const EdgeInsets.only(top: 30.0), // Adjust the top padding of title
+            padding: const EdgeInsets.only(top: 20.0), // Adjust the top padding of title
             child: Text(
               lesson.title,
               style: textStyles.heading1,
             ),
           ),
+
+          // Return Home Button
+          leadingWidth: 60, // Gives space for the back button
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30, top: 20),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                //crossAxisAlignment: CrossAxisAlignment.center, // Aligns with the title vertically
+                children: [
+                  Icon(
+                    Icons.arrow_back_ios,
+                    color: appColors.royalBlue,
+                    size: textStyles.heading1.fontSize,
+                  ),
+                  // Text(
+                  //   "Back",
+                  //   style: textStyles.customText(appColors.royalBlue, 20, FontWeight.normal),
+                  //   overflow: TextOverflow.ellipsis,
+                  // ),
+                ],
+              ),
+            ),
+
+          ),
+
+
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
@@ -217,8 +250,18 @@ class _LessonScreenState extends State<LessonScreen> {
             children: [ Column(
             children: [
               const SizedBox(
-                height: 20,
+                height: 15,
               ),
+
+              // Row of image and stats
+              StatsNotebook(lesson: lesson, textStyles: textStyles),
+
+              // Text(
+              //   "Name: Norbert", //TODO: Set up user data for name of creature & way to edit name
+              //   style: textStyles.bodyText,
+              // ),
+              const SizedBox(height: 5,),
+
               // row of buttons for Pre-quiz, readings, post-quiz
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -238,7 +281,7 @@ class _LessonScreenState extends State<LessonScreen> {
                       const SizedBox(
                         height: 5,
                       ),
-                      ImageBox(imageName: lesson.character.photos[Phase.baby] ?? "assets/images/lock.png"),
+                      //ImageBox(imageName: lesson.character.photos[Phase.baby] ?? "assets/images/lock.png", isLocked: true, isSelected: false,), //TODO: Update based on completion
                     ],
                   ),
 
@@ -257,7 +300,7 @@ class _LessonScreenState extends State<LessonScreen> {
                       const SizedBox(
                         height: 5,
                       ),
-                      ImageBox(imageName: lesson.character.photos[Phase.teen] ?? "assets/images/lock.png"),
+                      //ImageBox(imageName: lesson.character.photos[Phase.teen] ?? "assets/images/lock.png", isLocked: true, isSelected: false,), //TODO: Update based on completion
                     ],
                   ),
 
@@ -276,26 +319,13 @@ class _LessonScreenState extends State<LessonScreen> {
                       const SizedBox(
                         height: 5,
                       ),
-                      ImageBox(imageName: lesson.character.photos[Phase.adult] ?? "assets/images/lock.png"),
+                      //ImageBox(imageName: lesson.character.photos[Phase.adult] ?? "assets/images/lock.png", isLocked: false, isSelected: true,), //TODO: Update based on completion
                     ],
                   ),
                 ],
               ),
 
-              const SizedBox(
-                height: 20,
-              ),
-
-              // Row of image and stats
-              StatsNotebook(lesson: lesson, textStyles: textStyles),
-
-              // Text(
-              //   "Name: Norbert", //TODO: Set up user data for name of creature & way to edit name
-              //   style: textStyles.bodyText,
-              // ),
-              const SizedBox(
-                height: 15,
-              ),
+              const SizedBox(height: 15,),
 
               ActivityButton(
                 text: "PRACTICE & EARN STARS", // Drill is practice
@@ -303,14 +333,15 @@ class _LessonScreenState extends State<LessonScreen> {
                     (){
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PracticeScreen(quizNumber: 1, onSelectAnswer: (String answer) {  },))
+                      MaterialPageRoute(builder: (context) => PracticeResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "practice-screen",))
+
+                    //MaterialPageRoute(builder: (context) => PracticeScreen(quizNumber: widget.lessonNumber, onSelectAnswer: (String answer) {  },))
                   );
                 },
               ),
-              const SizedBox(
-                height: 5,
-              ),
+              const SizedBox(height: 5,),
 
+              // Number of Stars
               FutureBuilder<int?>(
                 future: _fetchStars(),
                 builder: (context, snapshot) {
@@ -319,28 +350,42 @@ class _LessonScreenState extends State<LessonScreen> {
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else if (snapshot.hasData) {
-                    return Text(
-                      "You currently have ${snapshot.data} Stars", //TODO: Set up user data for number of stars
-                      style: textStyles.bodyText,
-                    );
+                    return
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon( Icons.stars, color: appColors.yellow, size: textStyles.mediumBodyText.fontSize,),
+                          Text("Stars: ${snapshot.data}", style: textStyles.mediumBodyText,),
+                          Text(snapshot.data.toString(), style: textStyles.mediumBodyText,),
+                        ],
+                      );
                   } else {
-                    return Text('No data available');
+                    return Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon( Icons.stars, color: appColors.yellow, size: textStyles.heading1.fontSize,),
+                        Text(" Stars 0", style: textStyles.bodyText,),
+                      ],
+                    );
+
+
+                    //Text('No data available');
                   }
                 },
               ),
 
               const SizedBox(
-                height: 5,
+                height: 10,
               ),
 
               // Scrollable Accessory List
               SizedBox(
-                height: 275, // Set a fixed height for the GridView
+                height: 350, // Set a fixed height for the GridView
                 width: 350,
                 child: GridView.extent(
                   maxCrossAxisExtent: 100, // Max width of each tile
-                  mainAxisSpacing: 10, // Space between rows
-                  crossAxisSpacing: 10, // Space between columns
+                  mainAxisSpacing: 20, // Space between rows
+                  crossAxisSpacing: 20, // Space between columns
                   children: List.generate(20, (index) {
                     return buildGridItem(index);
                   }),
@@ -359,11 +404,11 @@ class _LessonScreenState extends State<LessonScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          'Do you want to buy this item?',
+                        const Text(
+                          "Do you want to buy this item?",
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -376,9 +421,9 @@ class _LessonScreenState extends State<LessonScreen> {
                                 else{
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      content: Text('You don\'t have enough star'),
+                                      content: const Text("You need 1 star to buy this item"),
                                       action: SnackBarAction(
-                                        label: 'UNDO',
+                                        label: "UNDO",
                                         onPressed: () {
                                           // Do something to undo the change.
                                         },
@@ -387,19 +432,19 @@ class _LessonScreenState extends State<LessonScreen> {
                                   );
                                 }
                                 },
-                              child: Text('Yes'),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.green,
                                 padding: const EdgeInsets.symmetric(horizontal: 40),
                               ),
+                              child: const Text("Yes"),
                             ),
                             ElevatedButton(
                               onPressed: handleNo,
-                              child: Text('No'),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.red,
                                 padding: const EdgeInsets.symmetric(horizontal: 40),
                               ),
+                              child: const Text("No"),
                             ),
                           ],
                         ),
@@ -422,25 +467,20 @@ class _LessonScreenState extends State<LessonScreen> {
       },
       child: Stack(
         children: [
-          Image.asset(
-            'assets/character_images/sunglasses.png', // Placeholder image
-            //fit: BoxFit.cover,
-            //width: double.infinity,
-            //height: double.infinity,
-          ),
-          if (purchased[index])
-            Positioned.fill(
-              child: Container(
-                color: Colors.black.withOpacity(0.5),
-                child: Center(
-                  child: Icon(
-                    Icons.check_circle,
-                    color: Colors.green,
-                    size: 50,
-                  ),
-                ),
-              ),
-            ),
+          ImageBox(imageName: "assets/character_images/sunglasses.png", isLocked: !purchased[index], isSelected: false,), // TODO: Remove Place holder image and check if selected
+          // if (purchased[index])
+          //   Positioned.fill(
+          //     child: Container(
+          //       color: Colors.black.withOpacity(0.5),
+          //       child: const Center(
+          //         child: Icon(
+          //           Icons.check_circle,
+          //           color: Colors.green,
+          //           size: 50,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
         ],
       ),
     );
@@ -499,16 +539,60 @@ class StatsNotebook extends StatelessWidget {
 }
 
 class ImageBox extends StatelessWidget {
-  const ImageBox({
+  ImageBox({
     super.key,
     required this.imageName,
+    required this.isLocked,
+    required this.isSelected,
   });
 
   final String imageName;
+  bool isLocked;
+  bool isSelected;
+
+  final AppColors appColors = const AppColors();
+  final AppTextStyles textStyles = AppTextStyles();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+
+    var locked = Container(
+      height: 100,
+      width: 100,
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        border: Border.all(color: Colors.black, width: 3.0),
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      child: Center(
+        child: Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                  appColors.grey,
+                  BlendMode.saturation,
+                ),
+                child: Image.asset(imageName, scale: 2,),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Icon( Icons.stars, color: appColors.yellow, size: textStyles.mediumBodyText.fontSize,),
+
+            ),
+
+          ],
+        ),
+
+
+
+      )
+    );
+
+    // Default: Owned by user but not being used
+    var purchased = Container(
       height: 100,
       width: 100,
       decoration: BoxDecoration(
@@ -523,6 +607,29 @@ class ImageBox extends StatelessWidget {
         ),
       ),
     );
+
+
+    // If accessory is selected
+    var selected = Container(
+      height: 100,
+      width: 100,
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        border: Border.all(color: appColors.green, width: 8.0),
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      child: Center(
+        child: Image.asset(
+          imageName,
+          scale: 2,
+        ),
+      ),
+    );
+
+
+    // if locked -> locked version
+    // if purchased -> check if selected
+    return isLocked ? locked : isSelected ? selected : purchased;
   }
 }
 

@@ -15,7 +15,7 @@ import '../../styles/app_colors.dart';
 import '../../styles/text_styles.dart';
 import '../buttons/menu_button.dart';
 import '../buttons/next_button.dart';
-import '../buttons/sound_button.dart';
+import '../buttons/speed_button.dart';
 import '../lesson/lesson_screen.dart';
 import '../text_box/text_box.dart';
 
@@ -120,7 +120,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     }
   }
 
-  Future<void> nextReadingPage() async {
+  Future<void> nextReadingPage({String userAnswer = ""}) async {
     setState(() {
       readingPageIndex++;
     });
@@ -177,7 +177,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     }
     else if(widget.readingNumber == 5) {
       readingPages = reading5;
-      lessonName = "APPROPRIATE INTERACTIONS";
+      lessonName = "INTERACTION ETIQUETTE";
     }
     else if(widget.readingNumber == 6) {
       readingPages = reading6;
@@ -198,13 +198,43 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        toolbarHeight: 70,
         title: Padding(
-          padding: const EdgeInsets.only(top: 30.0), // Adjust the top padding of title
+          padding: const EdgeInsets.only(top: 20.0), // Adjust the top padding of title
           child: Text(
             lessonName,
             style: textStyles.heading1,
           ),
         ),
+
+        leadingWidth: 100, // Gives space for the back button
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(left: 30, top: 20),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              //crossAxisAlignment: CrossAxisAlignment.center, // Aligns with the title vertically
+              children: [
+                Icon(
+                  Icons.arrow_back_ios,
+                  color: appColors.royalBlue,
+                  size: textStyles.heading1.fontSize,
+                ),
+                Text(
+                  "Exit",
+                  style: textStyles.customText(appColors.royalBlue, 20, FontWeight.normal),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+
+        ),
+
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: Container(
@@ -217,7 +247,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                 child: MenuButton(),
               ),
               const Expanded(
-                child: SoundButton(),
+                child: SpeedButton(),
               ),
               Expanded(
                 child: NextButton(
@@ -225,15 +255,19 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                   onTap: () {
                     setState(() {
                       if (readingPageIndex == readingPages.length -1) { // Zero indexing
+                        // TODO: Reset user readingList for current lesson
+
+
                         // Already on last page
                         backToFirstPage();
                         Navigator.of(context).pop();
+
                       }
                       else {
                         if (currentReadingPage is ReadingMultipleAnswersQuestion) {
                           if (currentReadingPage.answerOptions[0] == "textField") {
                             // Add a controller text to get access to the answer
-                            nextReadingPage();
+                            nextReadingPage(userAnswer: _controller.text);
                           }
                         }
                         else {
@@ -257,92 +291,94 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
 
       body: FutureBuilder<int?>(
         future: _readingListFuture,
-    builder: (context, snapshot) {
-      if (snapshot.hasError) {
-    return Center(child: Text('Error: ${snapshot.error}'));
-    } else { return Stack(
-        children: [
-          SingleChildScrollView(
-              controller: _scrollController,
-              child: Container(
-                padding: const EdgeInsets.all(40),
-                width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      currentReadingPage.title,
-                      style: textStyles.heading1,
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
+          else {
+            return Stack(
+              children: [
+                SingleChildScrollView(
+                    controller: _scrollController,
+                    child: Container(
+                      padding: const EdgeInsets.all(40),
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            currentReadingPage.title,
+                            style: textStyles.heading1,
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
 
-                    currentReadingPage.text.isNotEmpty ? Container(child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: currentReadingPage.text.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10.0), // Adjust the padding as needed
-                          child: TextBox(currentText: currentReadingPage.text[index]),
-                        );
-                      },
-                    )) : TextBox(currentText: "Click next"),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                          currentReadingPage.text.isNotEmpty ? Container(child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: currentReadingPage.text.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 10.0), // Adjust the padding as needed
+                                child: TextBox(currentText: currentReadingPage.text[index]),
+                              );
+                            },
+                          )) : TextBox(currentText: "Click next"),
+                          const SizedBox(
+                            height: 20,
+                          ),
 
-                    // Text field question
-                    if (currentReadingPage is ReadingMultipleAnswersQuestion)
-                      if (currentReadingPage.answerOptions[0] == 'textField')
-                        TextFormField(controller: _controller,
-                          decoration: const InputDecoration(
-                            labelText: 'Enter your text',
-                            border: OutlineInputBorder(),
-                          ),),
+                          // Text field question
+                          if (currentReadingPage is ReadingMultipleAnswersQuestion)
+                            if (currentReadingPage.answerOptions[0] == 'textField')
+                              TextFormField(controller: _controller,
+                                decoration: const InputDecoration(
+                                  labelText: 'Enter your text',
+                                  border: OutlineInputBorder(),
+                                ),),
 
-                    // Select multiple answer options
-                    if (currentReadingPage is ReadingMultipleAnswersQuestion)
-                      if(currentReadingPage.answerOptions[0] != 'textField') ...currentReadingPage.answerOptions.asMap().entries.map(
-                            (answer) => AnswerButton(
-                          answerText: answer.value,
-                          onTap: () {
-                            setState(() {
-                              if (selectedAnswers.contains(answer.value)) {
-                                selectedAnswers.remove(answer.value); // Deselect if already selected
-                              } else {
-                                selectedAnswers.add(answer.value); // Select if not already selected
-                              }
-                            });
-                          }, color: selectedAnswers.contains(answer.value) ? appColors.royalBlue : appColors.grey,
-                        ),
+                          // Select multiple answer options
+                          if (currentReadingPage is ReadingMultipleAnswersQuestion)
+                            if(currentReadingPage.answerOptions[0] != 'textField') ...currentReadingPage.answerOptions.asMap().entries.map(
+                                  (answer) => AnswerButton(
+                                answerText: answer.value,
+                                onTap: () {
+                                  setState(() {
+                                    if (selectedAnswers.contains(answer.value)) {
+                                      selectedAnswers.remove(answer.value); // Deselect if already selected
+                                    } else {
+                                      selectedAnswers.add(answer.value); // Select if not already selected
+                                    }
+                                  });
+                                }, color: selectedAnswers.contains(answer.value) ? appColors.royalBlue : appColors.grey,
+                              ),
+                            ),
+
+                          const SizedBox(
+                            height: 20,
+                          ),
+
+                          currentReadingPage.photo == "no" ? const SizedBox.shrink() : Image.asset(currentReadingPage.photo),
+                          const SizedBox(
+                            height: 60,
+                          ),
+                        ],
                       ),
-
-                    const SizedBox(
-                      height: 20,
-                    ),
-
-                    currentReadingPage.photo == "no" ? const SizedBox.shrink() : Image.asset(currentReadingPage.photo),
-                    const SizedBox(
-                      height: 60,
-                    ),
-                  ],
+                    )
                 ),
-              )
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-            color: Colors.white,
-            child: ProgressBar(pageIndex: snapshot.data!, pageList: readingPages),
-          )
-        ],
-      );}})
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  color: Colors.white,
+                  child: ProgressBar(pageIndex: snapshot.data!, pageList: readingPages),
+                )
+              ],
+          );}})
 
     );
   }
