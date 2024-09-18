@@ -13,6 +13,7 @@ import 'package:quiz/styles/text_styles.dart';
 
 import '../../accessory.dart';
 import '../practice/practice_screen.dart';
+import '../practice_results_screen.dart';
 import '../rewards/character.dart';
 
 class LessonScreen extends StatefulWidget {
@@ -37,12 +38,14 @@ class _LessonScreenState extends State<LessonScreen> {
   List<dynamic> readings = [];
   int startingPageIndex = 0;
   Future<int?>? numStars;
+  int? tempNumStars;
 
   @override
   void initState() {
     super.initState();
     user2 = FirebaseAuth.instance.currentUser;
 
+    _fetchReadingList();
     // Fetch readings once the widget is initialized
     numStars = _fetchStars();
   }
@@ -56,18 +59,20 @@ class _LessonScreenState extends State<LessonScreen> {
 
   // Function to handle when "Yes" is pressed
   Future<void> handleYes() async {
-    int? tempNumStars = await numStars;
+    tempNumStars = await _fetchStars();
     setState(() {
       if (selectedImageIndex != null) {
         purchased[selectedImageIndex!] = true;
         selectedImageIndex = null; // Close the popup
       }
+      tempNumStars = tempNumStars! - 1;
     });
     try {
       await _database.child('profile/${user2?.uid}').update({
         'accessories': purchased,
-        'numStars': tempNumStars! - 1
+        'numStars': tempNumStars!
       });
+
     } catch (e) {
       // Handle potential errors, like network issues
       print('Error fetching reading list: $e');
@@ -92,6 +97,26 @@ class _LessonScreenState extends State<LessonScreen> {
 
         if (snapshot2.value != null) {
           return snapshot2.value as int;
+        }
+      }
+      catch (e) {
+        // Handle potential errors, like network issues
+        print('Error fetching reading list: $e');
+      }
+    }
+  }
+
+  Future<List<dynamic>?> _fetchAccessories() async {
+    if (user2 != null) {
+      try {
+        DataSnapshot snapshot2 = await _database
+            .child('profile')
+            .child(user2!.uid)
+            .child('accessories')
+            .get();
+
+        if (snapshot2.value != null) {
+          return snapshot2.value as List<bool>;
         }
       }
       catch (e) {
@@ -128,17 +153,6 @@ class _LessonScreenState extends State<LessonScreen> {
           });
         }
 
-        DataSnapshot snapshot3 = await _database
-            .child('profile')
-            .child(user2!.uid)
-            .child('numStars')
-            .get();
-
-        if (snapshot3.value != null) {
-          setState(() {
-            //numStars = snapshot3.value as int;
-          });
-        }
       } catch (e) {
         // Handle potential errors, like network issues
         print('Error fetching reading list: $e');
@@ -246,7 +260,7 @@ class _LessonScreenState extends State<LessonScreen> {
               //   "Name: Norbert", //TODO: Set up user data for name of creature & way to edit name
               //   style: textStyles.bodyText,
               // ),
-              const SizedBox(height: 15,),
+              const SizedBox(height: 5,),
 
               // row of buttons for Pre-quiz, readings, post-quiz
               Row(
@@ -267,7 +281,7 @@ class _LessonScreenState extends State<LessonScreen> {
                       const SizedBox(
                         height: 5,
                       ),
-                      ImageBox(imageName: lesson.character.photos[Phase.baby] ?? "assets/images/lock.png", isLocked: true, isSelected: false,), //TODO: Update based on completion
+                      //ImageBox(imageName: lesson.character.photos[Phase.baby] ?? "assets/images/lock.png", isLocked: true, isSelected: false,), //TODO: Update based on completion
                     ],
                   ),
 
@@ -286,7 +300,7 @@ class _LessonScreenState extends State<LessonScreen> {
                       const SizedBox(
                         height: 5,
                       ),
-                      ImageBox(imageName: lesson.character.photos[Phase.teen] ?? "assets/images/lock.png", isLocked: true, isSelected: false,), //TODO: Update based on completion
+                      //ImageBox(imageName: lesson.character.photos[Phase.teen] ?? "assets/images/lock.png", isLocked: true, isSelected: false,), //TODO: Update based on completion
                     ],
                   ),
 
@@ -305,13 +319,13 @@ class _LessonScreenState extends State<LessonScreen> {
                       const SizedBox(
                         height: 5,
                       ),
-                      ImageBox(imageName: lesson.character.photos[Phase.adult] ?? "assets/images/lock.png", isLocked: false, isSelected: true,), //TODO: Update based on completion
+                      //ImageBox(imageName: lesson.character.photos[Phase.adult] ?? "assets/images/lock.png", isLocked: false, isSelected: true,), //TODO: Update based on completion
                     ],
                   ),
                 ],
               ),
 
-              const SizedBox(height: 30,),
+              const SizedBox(height: 15,),
 
               ActivityButton(
                 text: "PRACTICE & EARN STARS", // Drill is practice
@@ -319,7 +333,9 @@ class _LessonScreenState extends State<LessonScreen> {
                     (){
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PracticeScreen(quizNumber: widget.lessonNumber, onSelectAnswer: (String answer) {  },))
+                      MaterialPageRoute(builder: (context) => PracticeResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "practice-screen",))
+
+                    //MaterialPageRoute(builder: (context) => PracticeScreen(quizNumber: widget.lessonNumber, onSelectAnswer: (String answer) {  },))
                   );
                 },
               ),
@@ -327,7 +343,7 @@ class _LessonScreenState extends State<LessonScreen> {
 
               // Number of Stars
               FutureBuilder<int?>(
-                future: numStars,
+                future: _fetchStars(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator();
@@ -347,8 +363,8 @@ class _LessonScreenState extends State<LessonScreen> {
                     return Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon( Icons.stars, color: appColors.yellow, size: textStyles.mediumBodyText.fontSize,),
-                        Text("Stars 0", style: textStyles.mediumBodyText,),
+                        Icon( Icons.stars, color: appColors.yellow, size: textStyles.heading1.fontSize,),
+                        Text(" Stars 0", style: textStyles.bodyText,),
                       ],
                     );
 
@@ -359,17 +375,17 @@ class _LessonScreenState extends State<LessonScreen> {
               ),
 
               const SizedBox(
-                height: 5,
+                height: 10,
               ),
 
               // Scrollable Accessory List
               SizedBox(
-                height: 250, // Set a fixed height for the GridView
+                height: 350, // Set a fixed height for the GridView
                 width: 350,
                 child: GridView.extent(
                   maxCrossAxisExtent: 100, // Max width of each tile
-                  mainAxisSpacing: 10, // Space between rows
-                  crossAxisSpacing: 10, // Space between columns
+                  mainAxisSpacing: 20, // Space between rows
+                  crossAxisSpacing: 20, // Space between columns
                   children: List.generate(20, (index) {
                     return buildGridItem(index);
                   }),
@@ -397,8 +413,9 @@ class _LessonScreenState extends State<LessonScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             ElevatedButton(
-                              onPressed: () {
-                                if (numStars != 0) { //TODO: Fix and stop player from purchasing if not able
+                              onPressed: () async {
+                                int? tempInt = await _fetchStars();
+                                if (tempInt! > 0) {
                                   handleYes();
                                 }
                                 else{
@@ -534,6 +551,7 @@ class ImageBox extends StatelessWidget {
   bool isSelected;
 
   final AppColors appColors = const AppColors();
+  final AppTextStyles textStyles = AppTextStyles();
 
   @override
   Widget build(BuildContext context) {
@@ -547,19 +565,29 @@ class ImageBox extends StatelessWidget {
         borderRadius: BorderRadius.circular(20.0),
       ),
       child: Center(
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20.0),
-          child: ColorFiltered(
-            colorFilter: ColorFilter.mode(
-              appColors.grey,
-              BlendMode.saturation,
+        child: Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                  appColors.grey,
+                  BlendMode.saturation,
+                ),
+                child: Image.asset(imageName, scale: 2,),
+              ),
             ),
-            child: Image.asset(
-              imageName,
-              scale: 2,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Icon( Icons.stars, color: appColors.yellow, size: textStyles.mediumBodyText.fontSize,),
+
             ),
-          ),
+
+          ],
         ),
+
+
+
       )
     );
 

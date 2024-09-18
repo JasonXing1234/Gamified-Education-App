@@ -136,6 +136,15 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     });
   }
 
+  Future<void> backToFirstPage() async {
+    DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('readingList').get();
+    List<dynamic> readings = snapshot.value as List<dynamic>;
+    readings[widget.readingNumber - 1] = 0;
+    await _database.child('profile/${user2?.uid}').update({
+      'readingList': readings,
+    });
+  }
+
   void dispose() {
     // Dispose the controller when the widget is disposed
     _scrollController.removeListener(_onScrollEnd);
@@ -250,6 +259,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
 
 
                         // Already on last page
+                        backToFirstPage();
                         Navigator.of(context).pop();
 
                       }

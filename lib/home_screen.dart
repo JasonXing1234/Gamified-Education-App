@@ -34,7 +34,7 @@ class _HomeState extends State<Home> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String activeScreen = 'start-screen';
   int resultNumber = 0;
-  int numStars = 0;
+  Future<int?>? numStars;
   final DatabaseReference _database = FirebaseDatabase.instance.ref();
   User? user2;
 
@@ -48,10 +48,10 @@ class _HomeState extends State<Home> {
     super.initState();
     user2 = FirebaseAuth.instance.currentUser;
     // Fetch readings once the widget is initialized
-    _fetchReadingList();
+    numStars = _fetchReadingList();
   }
 
-  Future<void> _fetchReadingList() async {
+  Future<int?> _fetchReadingList() async {
     if (user2 != null) {
       try {
         DataSnapshot snapshot = await _database
@@ -61,9 +61,7 @@ class _HomeState extends State<Home> {
             .get();
 
         if (snapshot.value != null) {
-          setState(() {
-            numStars = snapshot.value as int;
-          });
+            return snapshot.value as int;
         }
 
       } catch (e) {
@@ -74,11 +72,11 @@ class _HomeState extends State<Home> {
   }
 
 
-  void readingScreen1() {
-    setState(() {
-      activeScreen = 'reading-screen1';
-    });
-  }
+  // void readingScreen1() {
+  //   setState(() {
+  //     activeScreen = 'reading-screen1';
+  //   });
+  // }
 
   void changeScreen1() {
     setState(() {
@@ -126,40 +124,41 @@ class _HomeState extends State<Home> {
       activeScreen = 'question-screen9';
     });
   }
-  void quizScreen1() {
-    setState(() {
-      activeScreen = 'quiz-screen1';
-    });
-  }
-  void quizScreen2() {
-    setState(() {
-      activeScreen = 'quiz-screen2';
-    });
-  }
+  // void quizScreen1() {
+  //   setState(() {
+  //     activeScreen = 'quiz-screen1';
+  //   });
+  // }
 
-  void quizScreen3() {
-    setState(() {
-      activeScreen = 'quiz-screen3';
-    });
-  }
-
-  void quizScreen4() {
-    setState(() {
-      activeScreen = 'quiz-screen4';
-    });
-  }
-
-  void quizScreen5() {
-    setState(() {
-      activeScreen = 'quiz-screen5';
-    });
-  }
-
-  void quizScreen6() {
-    setState(() {
-      activeScreen = 'quiz-screen6';
-    });
-  }
+  // void quizScreen2() {
+  //   setState(() {
+  //     activeScreen = 'quiz-screen2';
+  //   });
+  // }
+  //
+  // void quizScreen3() {
+  //   setState(() {
+  //     activeScreen = 'quiz-screen3';
+  //   });
+  // }
+  //
+  // void quizScreen4() {
+  //   setState(() {
+  //     activeScreen = 'quiz-screen4';
+  //   });
+  // }
+  //
+  // void quizScreen5() {
+  //   setState(() {
+  //     activeScreen = 'quiz-screen5';
+  //   });
+  // }
+  //
+  // void quizScreen6() {
+  //   setState(() {
+  //     activeScreen = 'quiz-screen6';
+  //   });
+  // }
 
   List<String> answers = [];
   void recordAnswer(String answer) {
@@ -171,65 +170,65 @@ class _HomeState extends State<Home> {
     });
   }
 
-  void recordAnswer1(String answer) {
-    setState(() {
-      answers.add(answer);
-      if (quiz1.length == answers.length) {
-        activeScreen = 'result-screen';
-        resultNumber = 1;
-      }
-    });
-  }
-
-  void recordAnswer2(String answer) {
-    setState(() {
-      answers.add(answer);
-      if (quiz2.length == answers.length) {
-        activeScreen = 'result-screen';
-        resultNumber = 2;
-      }
-    });
-  }
-
-  void recordAnswer3(String answer) {
-    setState(() {
-      answers.add(answer);
-      if (quiz3.length == answers.length) {
-        activeScreen = 'result-screen';
-        resultNumber = 3;
-      }
-    });
-  }
-
-  void recordAnswer4(String answer) {
-    setState(() {
-      answers.add(answer);
-      if (quiz4.length == answers.length) {
-        activeScreen = 'result-screen';
-        resultNumber = 4;
-      }
-    });
-  }
-
-  void recordAnswer5(String answer) {
-    setState(() {
-      answers.add(answer);
-      if (quiz5.length == answers.length) {
-        activeScreen = 'result-screen';
-        resultNumber = 5;
-      }
-    });
-  }
-
-  void recordAnswer6(String answer) {
-    setState(() {
-      answers.add(answer);
-      if (quiz6.length == answers.length) {
-        activeScreen = 'result-screen';
-        resultNumber = 6;
-      }
-    });
-  }
+  // void recordAnswer1(String answer) {
+  //   setState(() {
+  //     answers.add(answer);
+  //     if (quiz1.length == answers.length) {
+  //       activeScreen = 'result-screen';
+  //       resultNumber = 1;
+  //     }
+  //   });
+  // }
+  //
+  // void recordAnswer2(String answer) {
+  //   setState(() {
+  //     answers.add(answer);
+  //     if (quiz2.length == answers.length) {
+  //       activeScreen = 'result-screen';
+  //       resultNumber = 2;
+  //     }
+  //   });
+  // }
+  //
+  // void recordAnswer3(String answer) {
+  //   setState(() {
+  //     answers.add(answer);
+  //     if (quiz3.length == answers.length) {
+  //       activeScreen = 'result-screen';
+  //       resultNumber = 3;
+  //     }
+  //   });
+  // }
+  //
+  // void recordAnswer4(String answer) {
+  //   setState(() {
+  //     answers.add(answer);
+  //     if (quiz4.length == answers.length) {
+  //       activeScreen = 'result-screen';
+  //       resultNumber = 4;
+  //     }
+  //   });
+  // }
+  //
+  // void recordAnswer5(String answer) {
+  //   setState(() {
+  //     answers.add(answer);
+  //     if (quiz5.length == answers.length) {
+  //       activeScreen = 'result-screen';
+  //       resultNumber = 5;
+  //     }
+  //   });
+  // }
+  //
+  // void recordAnswer6(String answer) {
+  //   setState(() {
+  //     answers.add(answer);
+  //     if (quiz6.length == answers.length) {
+  //       activeScreen = 'result-screen';
+  //       resultNumber = 6;
+  //     }
+  //   });
+  // }
 
   void returnHomeAndResetQuiz() {
     setState(() {
@@ -294,7 +293,21 @@ class _HomeState extends State<Home> {
                     children: [
                       Icon( Icons.stars, color: appColors.yellow, size: 60,),
                       Text("Stars", style: textStyles.mediumBodyText,),
-                      Text(numStars.toString(), style: textStyles.mediumBodyText,),
+                      FutureBuilder<int?>(
+                        future: _fetchReadingList(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else if (snapshot.hasData) {
+                            return Text(snapshot.data.toString(), style: textStyles.mediumBodyText,);
+                          } else {
+                            return Text('No data available');
+                          }
+                        },
+                      ),
+
                     ],
                   ),
                   const SizedBox(
@@ -444,18 +457,18 @@ class _HomeState extends State<Home> {
 
           // TODO: Delete this buttons later
           // Start Practice
-          OutlinedButton.icon(
-            label: Text(
-              "Start Practice",
-              style: textStyles.bodyTextWhite,
-            ),
-            onPressed: (){_scaffoldKey.currentState?.openDrawer();},
-            style: OutlinedButton.styleFrom(
-              backgroundColor: appColors.royalBlue,
-              foregroundColor: Colors.white,
-            ),
-            icon: const Icon(Icons.arrow_right_alt),
-          ),
+          // OutlinedButton.icon(
+          //   label: Text(
+          //     "Start Practice",
+          //     style: textStyles.bodyTextWhite,
+          //   ),
+          //   onPressed: (){_scaffoldKey.currentState?.openDrawer();},
+          //   style: OutlinedButton.styleFrom(
+          //     backgroundColor: appColors.royalBlue,
+          //     foregroundColor: Colors.white,
+          //   ),
+          //   icon: const Icon(Icons.arrow_right_alt),
+          // ),
           SizedBox(
             height: spacing,
           ),
@@ -463,58 +476,58 @@ class _HomeState extends State<Home> {
       ),
     );
 
-    if (activeScreen == 'question-screen') {
-      screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 1,);
-    }
-    else if (activeScreen == 'question-screen2') {
-      screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 2,);
-    }
-    else if (activeScreen == 'question-screen3') {
-      screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 3,);
-    }
-    else if (activeScreen == 'question-screen4') {
-      screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 4,);
-    }
-    else if (activeScreen == 'question-screen5') {
-      screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 5,);
-    }
-    else if (activeScreen == 'question-screen6') {
-      screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 6,);
-    }
-    else if (activeScreen == 'question-screen7') {
-      screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 7,);
-    }
-    else if (activeScreen == 'question-screen8') {
-      screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 8,);
-    }
-    else if (activeScreen == 'question-screen9') {
-      screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 9,);
-    }
-    else if (activeScreen == 'quiz-screen1') {
-      screen = QuizScreen(onSelectAnswer: recordAnswer1, quizNumber: 1,);
-    }
-    else if (activeScreen == 'quiz-screen2') {
-      screen = QuizScreen(onSelectAnswer: recordAnswer2, quizNumber: 2,);
-    }
-    else if (activeScreen == 'quiz-screen3') {
-      screen = QuizScreen(onSelectAnswer: recordAnswer3, quizNumber: 3,);
-    }
-    else if (activeScreen == 'quiz-screen4') {
-      screen = QuizScreen(onSelectAnswer: recordAnswer4, quizNumber: 4,);
-    }
-    else if (activeScreen == 'quiz-screen5') {
-      screen = QuizScreen(onSelectAnswer: recordAnswer5, quizNumber: 5,);
-    }
-    else if (activeScreen == 'quiz-screen6') {
-      screen = QuizScreen(onSelectAnswer: recordAnswer6, quizNumber: 6,);
-    }
-    else if (activeScreen == 'result-screen') {
-      screen = ResultScreen(
-        quizNumber: resultNumber,
-        userAnswers: answers,
-        endQuiz: returnHomeAndResetQuiz,
-      );
-    }
+    // if (activeScreen == 'question-screen') {
+    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 1,);
+    // }
+    // else if (activeScreen == 'question-screen2') {
+    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 2,);
+    // }
+    // else if (activeScreen == 'question-screen3') {
+    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 3,);
+    // }
+    // else if (activeScreen == 'question-screen4') {
+    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 4,);
+    // }
+    // else if (activeScreen == 'question-screen5') {
+    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 5,);
+    // }
+    // else if (activeScreen == 'question-screen6') {
+    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 6,);
+    // }
+    // else if (activeScreen == 'question-screen7') {
+    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 7,);
+    // }
+    // else if (activeScreen == 'question-screen8') {
+    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 8,);
+    // }
+    // else if (activeScreen == 'question-screen9') {
+    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 9,);
+    // }
+    // else if (activeScreen == 'quiz-screen1') {
+    //   screen = QuizScreen(onSelectAnswer: recordAnswer1, quizNumber: 1,);
+    // }
+    // else if (activeScreen == 'quiz-screen2') {
+    //   screen = QuizScreen(onSelectAnswer: recordAnswer2, quizNumber: 2,);
+    // }
+    // else if (activeScreen == 'quiz-screen3') {
+    //   screen = QuizScreen(onSelectAnswer: recordAnswer3, quizNumber: 3,);
+    // }
+    // else if (activeScreen == 'quiz-screen4') {
+    //   screen = QuizScreen(onSelectAnswer: recordAnswer4, quizNumber: 4,);
+    // }
+    // else if (activeScreen == 'quiz-screen5') {
+    //   screen = QuizScreen(onSelectAnswer: recordAnswer5, quizNumber: 5,);
+    // }
+    // else if (activeScreen == 'quiz-screen6') {
+    //   screen = QuizScreen(onSelectAnswer: recordAnswer6, quizNumber: 6,);
+    // }
+    // else if (activeScreen == 'result-screen') {
+    //   screen = ResultScreen(
+    //     quizNumber: resultNumber,
+    //     userAnswers: answers,
+    //     endQuiz: returnHomeAndResetQuiz,
+    //   );
+    // }
 
     return Scaffold(
         key: _scaffoldKey,
@@ -565,139 +578,139 @@ class _HomeState extends State<Home> {
             ),
           ),
         ),
-        drawer: Drawer(
-          child: SafeArea(
-            child: Column(
-              children: <Widget>[
-                      OutlinedButton.icon(
-                        onPressed: (){
-                          changeScreen9();
-                        },
-                        style: OutlinedButton.styleFrom(
-                          backgroundColor: appColors.royalBlue,
-                          foregroundColor: Colors.white,
-                        ),
-                        icon: const Icon(Icons.arrow_right_alt),
-                        label: const Text("      Start Practice from beginning       "),
-                      ),
-                      OutlinedButton.icon(
-                          onPressed: (){
-                            setState(() {
-                              changeScreen1();
-                            });
-                            Navigator.of(context).pop();
-                          },
-                          style: OutlinedButton.styleFrom(
-                            backgroundColor: appColors.royalBlue,
-                            foregroundColor: Colors.white,
-                          ),
-                          icon: const Icon(Icons.arrow_right_alt),
-                          label: const Text("part 1"),
-                        ),
-
-                      OutlinedButton.icon(
-                        onPressed: (){
-                          setState(() {
-                            changeScreen2();
-                          });
-                          Navigator.of(context).pop();
-                        },
-
-                        style: OutlinedButton.styleFrom(
-                          backgroundColor: appColors.royalBlue,
-                          foregroundColor: Colors.white,
-                        ),
-                        icon: const Icon(Icons.arrow_right_alt),
-                        label: const Text("part 2"),
-                      ),
-                      OutlinedButton.icon(
-                        onPressed: (){
-                          setState(() {
-                            changeScreen3();
-                          });
-                          Navigator.of(context).pop();
-                        },
-                        style: OutlinedButton.styleFrom(
-                          backgroundColor: appColors.royalBlue,
-                          foregroundColor: Colors.white,
-                        ),
-                        icon: const Icon(Icons.arrow_right_alt),
-                        label: const Text("part 3"),
-                      ),
-                      OutlinedButton.icon(
-                        onPressed: (){
-                          setState(() {
-                            changeScreen4();
-                          });
-                          Navigator.of(context).pop();
-                        },
-                        style: OutlinedButton.styleFrom(
-                          backgroundColor: appColors.royalBlue,
-                          foregroundColor: Colors.white,
-                        ),
-                        icon: const Icon(Icons.arrow_right_alt),
-                        label: const Text("part 4"),
-                      ),
-                      OutlinedButton.icon(
-                        onPressed: (){
-                          setState(() {
-                            changeScreen5();
-                          });
-                          Navigator.of(context).pop();
-                        },
-                        style: OutlinedButton.styleFrom(
-                          backgroundColor: appColors.royalBlue,
-                          foregroundColor: Colors.white,
-                        ),
-                        icon: const Icon(Icons.arrow_right_alt),
-                        label: const Text("part 5"),
-                      ),
-                      OutlinedButton.icon(
-                        onPressed: (){
-                          setState(() {
-                            changeScreen6();
-                          });
-                          Navigator.of(context).pop();
-                        },
-                        style: OutlinedButton.styleFrom(
-                          backgroundColor: appColors.royalBlue,
-                          foregroundColor: Colors.white,
-                        ),
-                        icon: const Icon(Icons.arrow_right_alt),
-                        label: const Text("part 6"),
-                      ),
-                      OutlinedButton.icon(
-                        onPressed: (){
-                          setState(() {
-                            changeScreen7();
-                          });
-                          Navigator.of(context).pop();
-                        },
-                        style: OutlinedButton.styleFrom(
-                          backgroundColor: appColors.royalBlue,
-                          foregroundColor: Colors.white,
-                        ),
-                        icon: const Icon(Icons.arrow_right_alt),
-                        label: const Text("part 7"),
-                      ),
-                      OutlinedButton.icon(
-                        onPressed: (){
-                          setState(() {
-                            changeScreen8();
-                          });
-                          Navigator.of(context).pop();
-                        },
-                        style: OutlinedButton.styleFrom(
-                          backgroundColor: appColors.royalBlue,
-                          foregroundColor: Colors.white,
-                        ),
-                        icon: const Icon(Icons.arrow_right_alt),
-                        label: const Text("part 8"),
-                      ),
-                    ],
-                  ),
-                ),
-        ),
+        // drawer: Drawer(
+        //   child: SafeArea(
+        //     child: Column(
+        //       children: <Widget>[
+        //               OutlinedButton.icon(
+        //                 onPressed: (){
+        //                   changeScreen9();
+        //                 },
+        //                 style: OutlinedButton.styleFrom(
+        //                   backgroundColor: appColors.royalBlue,
+        //                   foregroundColor: Colors.white,
+        //                 ),
+        //                 icon: const Icon(Icons.arrow_right_alt),
+        //                 label: const Text("      Start Practice from beginning       "),
+        //               ),
+        //               OutlinedButton.icon(
+        //                   onPressed: (){
+        //                     setState(() {
+        //                       changeScreen1();
+        //                     });
+        //                     Navigator.of(context).pop();
+        //                   },
+        //                   style: OutlinedButton.styleFrom(
+        //                     backgroundColor: appColors.royalBlue,
+        //                     foregroundColor: Colors.white,
+        //                   ),
+        //                   icon: const Icon(Icons.arrow_right_alt),
+        //                   label: const Text("part 1"),
+        //                 ),
+        //
+        //               OutlinedButton.icon(
+        //                 onPressed: (){
+        //                   setState(() {
+        //                     changeScreen2();
+        //                   });
+        //                   Navigator.of(context).pop();
+        //                 },
+        //
+        //                 style: OutlinedButton.styleFrom(
+        //                   backgroundColor: appColors.royalBlue,
+        //                   foregroundColor: Colors.white,
+        //                 ),
+        //                 icon: const Icon(Icons.arrow_right_alt),
+        //                 label: const Text("part 2"),
+        //               ),
+        //               OutlinedButton.icon(
+        //                 onPressed: (){
+        //                   setState(() {
+        //                     changeScreen3();
+        //                   });
+        //                   Navigator.of(context).pop();
+        //                 },
+        //                 style: OutlinedButton.styleFrom(
+        //                   backgroundColor: appColors.royalBlue,
+        //                   foregroundColor: Colors.white,
+        //                 ),
+        //                 icon: const Icon(Icons.arrow_right_alt),
+        //                 label: const Text("part 3"),
+        //               ),
+        //               OutlinedButton.icon(
+        //                 onPressed: (){
+        //                   setState(() {
+        //                     changeScreen4();
+        //                   });
+        //                   Navigator.of(context).pop();
+        //                 },
+        //                 style: OutlinedButton.styleFrom(
+        //                   backgroundColor: appColors.royalBlue,
+        //                   foregroundColor: Colors.white,
+        //                 ),
+        //                 icon: const Icon(Icons.arrow_right_alt),
+        //                 label: const Text("part 4"),
+        //               ),
+        //               OutlinedButton.icon(
+        //                 onPressed: (){
+        //                   setState(() {
+        //                     changeScreen5();
+        //                   });
+        //                   Navigator.of(context).pop();
+        //                 },
+        //                 style: OutlinedButton.styleFrom(
+        //                   backgroundColor: appColors.royalBlue,
+        //                   foregroundColor: Colors.white,
+        //                 ),
+        //                 icon: const Icon(Icons.arrow_right_alt),
+        //                 label: const Text("part 5"),
+        //               ),
+        //               OutlinedButton.icon(
+        //                 onPressed: (){
+        //                   setState(() {
+        //                     changeScreen6();
+        //                   });
+        //                   Navigator.of(context).pop();
+        //                 },
+        //                 style: OutlinedButton.styleFrom(
+        //                   backgroundColor: appColors.royalBlue,
+        //                   foregroundColor: Colors.white,
+        //                 ),
+        //                 icon: const Icon(Icons.arrow_right_alt),
+        //                 label: const Text("part 6"),
+        //               ),
+        //               OutlinedButton.icon(
+        //                 onPressed: (){
+        //                   setState(() {
+        //                     changeScreen7();
+        //                   });
+        //                   Navigator.of(context).pop();
+        //                 },
+        //                 style: OutlinedButton.styleFrom(
+        //                   backgroundColor: appColors.royalBlue,
+        //                   foregroundColor: Colors.white,
+        //                 ),
+        //                 icon: const Icon(Icons.arrow_right_alt),
+        //                 label: const Text("part 7"),
+        //               ),
+        //               OutlinedButton.icon(
+        //                 onPressed: (){
+        //                   setState(() {
+        //                     changeScreen8();
+        //                   });
+        //                   Navigator.of(context).pop();
+        //                 },
+        //                 style: OutlinedButton.styleFrom(
+        //                   backgroundColor: appColors.royalBlue,
+        //                   foregroundColor: Colors.white,
+        //                 ),
+        //                 icon: const Icon(Icons.arrow_right_alt),
+        //                 label: const Text("part 8"),
+        //               ),
+        //             ],
+        //           ),
+        //         ),
+        // ),
         body: Container(
           width: double.infinity,
           decoration: const BoxDecoration(

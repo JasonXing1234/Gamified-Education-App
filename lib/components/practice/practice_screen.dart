@@ -209,8 +209,9 @@ class _PracticeScreenState extends State<PracticeScreen> {
                     onTap: () {
                       setState(() {
                         if (questionIndex == practiceQuestions.length - 1) {
+                          // End practice
                           recordStar();
-                          Navigator.of(context).pop();
+                          //Navigator.of(context).pop();
                         }
                         else if(currentQuestion.correctAnswer == tempAnswer){
                           isCorrect = true;
