@@ -37,7 +37,8 @@ Lesson socialTags = Lesson(
 );
 
 Lesson appropriateInteractions = Lesson(
-  "APPROPRIATE INTERACTIONS",
+  //"APPROPRIATE INTERACTIONS",
+  "INTERACTION ETIQUETTE", // Slightly shorter name for dashboard on home-screen
   lockedCharacter,
   5
 );

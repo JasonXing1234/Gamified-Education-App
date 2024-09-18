@@ -9,6 +9,7 @@ import 'package:quiz/components/quiz/quiz_questions/quiz5.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz6.dart';
 import 'package:quiz/components/quiz/quiz_screen.dart';
 import 'package:quiz/components/result_screen.dart';
+import 'package:quiz/components/rewards/reward_screen.dart';
 
 class QuizResultScreen extends StatefulWidget {
   QuizResultScreen({
@@ -95,7 +96,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   void returnHome() {
     setState(() {
       answers = [];
-      Navigator.of(context).pop();
+      // Navigator.of(context).pop();
+      widget.activeScreen = 'reward-screen';
     });
   }
 
@@ -121,8 +123,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       screen = ResultScreen(
         quizNumber: resultNumber,
         userAnswers: answers,
-        restartQuiz: returnHome,
+        endQuiz: returnHome,
       );
+    }
+    else if (widget.activeScreen == "reward-screen") {
+      screen = const RewardScreen();
     }
 
     return Scaffold(
