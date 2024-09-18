@@ -18,6 +18,7 @@ var quiz4 = [
       "Community Helper",
       "Stranger"
     ],
+    "explain",
     ["In-Person Friend",],
   ),
   MultipleAnswersQuestion(
@@ -36,6 +37,7 @@ var quiz4 = [
       "Community Helper",
       "Stranger"
     ],
+    "explain",
     ["School Peer",],
   ),
   MultipleAnswersQuestion(
@@ -54,6 +56,7 @@ var quiz4 = [
       "Community Helper",
       "Stranger"
     ],
+    "explain",
     ["In-Person Friend", "Work Peer",],
   ),
   MultipleAnswersQuestion(
@@ -72,6 +75,7 @@ var quiz4 = [
       "Community Helper",
       "Stranger"
     ],
+    "explain",
     ["Acquaintance",],
   ),
   MultipleAnswersQuestion(
@@ -90,6 +94,7 @@ var quiz4 = [
       "Community Helper",
       "Stranger"
     ],
+    "explain",
     ["Boss / Teacher",],
   ),
   MultipleAnswersQuestion(
@@ -108,6 +113,7 @@ var quiz4 = [
       "Community Helper",
       "Stranger"
     ],
+    "explain",
     ["Personal Service Provider",],
   ),
   MultipleAnswersQuestion(
@@ -126,6 +132,7 @@ var quiz4 = [
       "Community Helper",
       "Stranger"
     ],
+    "explain",
     ["Work Peer",],
   ),
   MultipleAnswersQuestion(
@@ -144,6 +151,7 @@ var quiz4 = [
       "Community Helper",
       "Stranger"
     ],
+    "explain",
     ["Stranger"],
   ),
   MultipleAnswersQuestion(
@@ -162,6 +170,7 @@ var quiz4 = [
       "Community Helper",
       "Stranger"
     ],
+    "explain",
     ["In-Person Friend", "School Peer",],
   ),
   MultipleAnswersQuestion(
@@ -180,6 +189,7 @@ var quiz4 = [
       "Community Helper",
       "Stranger"
     ],
+    "explain",
     ["Online Friend",],
   ),
   MultipleAnswersQuestion(
@@ -198,6 +208,7 @@ var quiz4 = [
       "Community Helper",
       "Stranger"
     ],
+    "explain",
     ["Family", "Work Peer",],
   ),
   MultipleAnswersQuestion(
@@ -216,6 +227,7 @@ var quiz4 = [
       "Community Helper",
       "Stranger"
     ],
+    "explain",
     ["Family",],
   ),
 ];

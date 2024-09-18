@@ -10,6 +10,7 @@ const quiz5 = [
       "No",
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "no",
@@ -20,6 +21,7 @@ const quiz5 = [
       "No",
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "no",
@@ -30,6 +32,7 @@ const quiz5 = [
       "No",
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "no",
@@ -40,6 +43,7 @@ const quiz5 = [
       "No",
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "no",
@@ -50,6 +54,7 @@ const quiz5 = [
       "No",
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "no",
@@ -60,6 +65,7 @@ const quiz5 = [
       "No",
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "no",
@@ -70,6 +76,7 @@ const quiz5 = [
       "No",
     ],
     "Yes",
+    "explain",
   ),
   SingleAnswerQuestion(
     "no",
@@ -80,6 +87,7 @@ const quiz5 = [
       "No",
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "no",
@@ -90,6 +98,7 @@ const quiz5 = [
       "No",
     ],
     "No",
+    "explain",
   ),
 
 ];

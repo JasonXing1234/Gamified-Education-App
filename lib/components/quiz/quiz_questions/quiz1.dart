@@ -1,5 +1,7 @@
 import '../../question.dart';
 
+// TODO: Create explanations for correct answer
+
 const quiz1 = [
   SingleAnswerQuestion(
     "no",
@@ -11,6 +13,7 @@ const quiz1 = [
       "I don't know"
     ],
     "Yes",
+    "On Instagram you can create different accounts: Personal, Finsta, Business, Verified Celebrity/Influencer, or an interest/topic account.",
   ),
   SingleAnswerQuestion(
     "no",
@@ -24,6 +27,7 @@ const quiz1 = [
       "Top/Interest Account"
     ],
     "Verified Celebrity or Influencer Account",
+    "explain",
   ),
   SingleAnswerQuestion(
     "no",
@@ -37,6 +41,7 @@ const quiz1 = [
       "Top/Interest Account"
     ],
     "Alternate Personal Account (finista)",
+    "explain",
   ),
   SingleAnswerQuestion(
     "no",
@@ -50,6 +55,7 @@ const quiz1 = [
       "Top/Interest Account"
     ],
     "Business Account",
+    "explain",
   ),
   SingleAnswerQuestion(
     "no",
@@ -63,6 +69,7 @@ const quiz1 = [
       "Top/Interest Account"
     ],
     "Top/Interest Account",
+    "explain",
   ),
   SingleAnswerQuestion(
     "no",
@@ -76,6 +83,7 @@ const quiz1 = [
       "Top/Interest Account"
     ],
     "Personal Account",
+    "explain",
   ),
   SingleAnswerQuestion(
     "no",
@@ -87,6 +95,7 @@ const quiz1 = [
       "I don't know"
     ],
     "No",
+    "explain",
   ),
   SingleAnswerQuestion(
     "no",
@@ -98,6 +107,7 @@ const quiz1 = [
       "Page"
     ],
     "Group",
+    "explain",
   ),
   SingleAnswerQuestion(
     "no",
@@ -109,6 +119,7 @@ const quiz1 = [
       "Page"
     ],
     "Personal",
+    "explain",
   ),
   SingleAnswerQuestion(
     "no",
@@ -120,5 +131,6 @@ const quiz1 = [
       "Page"
     ],
     "Page",
+    "explain",
   ),
 ];
