@@ -10,8 +10,8 @@ const fakeProfilesPractice4 = [
       "Yes",
       "No"
     ],
-    "No",
     "explain",
+    "No",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. " + "\n"
@@ -22,8 +22,8 @@ const fakeProfilesPractice4 = [
       "Yes",
       "No"
     ],
-    "No",
     "explain",
+    "No",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. " + "\n"
@@ -34,8 +34,8 @@ const fakeProfilesPractice4 = [
       "Yes",
       "No"
     ],
-    "No",
     "explain",
+    "No",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. " + "\n"
@@ -46,8 +46,8 @@ const fakeProfilesPractice4 = [
       "Yes",
       "No"
     ],
-    "No",
     "explain",
+    "No",
   ),
   SingleAnswerQuestion(
     "You are helping someone decide whether or not to accept a friend request. " + "\n"
@@ -58,8 +58,8 @@ const fakeProfilesPractice4 = [
       "Yes",
       "No"
     ],
-    "No",
     "explain",
+    "No",
   ),
   SingleAnswerQuestion(
     "This is what you know about the account so far."
@@ -76,7 +76,7 @@ const fakeProfilesPractice4 = [
       "The account might be fake. Since the person is not an acquaintance offline, ask a mentor about the request.",
       "The account is most likely real. You can choose to accept the request.",
     ],
-    "The account is most likely fake. Reject the request.",
     "explain",
+    "The account is most likely fake. Reject the request.",
   ),
 ];

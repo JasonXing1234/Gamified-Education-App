@@ -16,8 +16,8 @@ var quiz2 = [
       "Allows you to block other users",
       "Updates where your message go"
     ],
-    "Allows you to block other users",
     "explain",
+    "Allows you to block other users",
   ),
   const SingleAnswerQuestion(
     "no",
@@ -30,8 +30,8 @@ var quiz2 = [
       "Allows you to block other users",
       "Updates where your message go"
     ],
-    "Updates who can see your posts",
     "explain",
+    "Updates who can see your posts",
   ),
   MultipleAnswersQuestion(
     "no",
@@ -64,8 +64,8 @@ var quiz2 = [
       "Allows you to block other users",
       "Updates where your message go"
     ],
-    "Updates whether your account is private or public",
     "explain",
+    "Updates whether your account is private or public",
   ),
   const SingleAnswerQuestion(
     "no",
@@ -78,8 +78,8 @@ var quiz2 = [
       "Allows you to block other users",
       "Updates where your message go"
     ],
-    "Updates where your message go",
     "explain",
+    "Updates where your message go",
   ),
   const SingleAnswerQuestion(
     "no",
@@ -92,8 +92,8 @@ var quiz2 = [
       "Allows you to block other users",
       "Updates where your message go"
     ],
-    "Updates who can tag you in their posts",
     "explain",
+    "Updates who can tag you in their posts",
   ),
   MultipleAnswersQuestion(
     "no",

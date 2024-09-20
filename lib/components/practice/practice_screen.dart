@@ -215,9 +215,13 @@ class _PracticeScreenState extends State<PracticeScreen> {
                         }
                         else if(currentQuestion.correctAnswer == tempAnswer){
                           isCorrect = true;
+
+                          print("Next question");
                           nextQuestion(tempAnswer);
+
                         }
                         else{
+                          print("Question is false");
                           isCorrect = false;
                         }
                         selectedIndex = 4;
