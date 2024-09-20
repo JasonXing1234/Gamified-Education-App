@@ -118,7 +118,6 @@ class _PracticeScreenState extends State<PracticeScreen> {
   }
 
   Future<void> recordStar() async {
-    Navigator.of(context).pop();
     if (questionIndex == practiceQuestions.length - 1) {
       DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('numStars').get();
       int numStars = snapshot.value as int;
@@ -211,20 +210,17 @@ class _PracticeScreenState extends State<PracticeScreen> {
                         if (questionIndex == practiceQuestions.length - 1) {
                           // End practice
                           recordStar();
-                          //Navigator.of(context).pop();
+
+                          nextQuestion(tempAnswer);
                         }
                         else if(currentQuestion.correctAnswer == tempAnswer){
                           isCorrect = true;
-
-                          print("Next question");
                           nextQuestion(tempAnswer);
-
                         }
                         else{
-                          print("Question is false");
                           isCorrect = false;
                         }
-                        selectedIndex = 4;
+                        selectedIndex = 10;
                       });
                     },
                     disabled: false,
