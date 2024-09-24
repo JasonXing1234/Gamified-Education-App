@@ -7,6 +7,7 @@ import 'package:quiz/components/quiz_results_screen.dart';
 import 'package:quiz/components/lesson/lesson.dart';
 import 'package:quiz/components/lesson/all_lessons.dart';
 import 'package:quiz/components/reading/readings_screen.dart';
+import 'package:quiz/components/reading_results_screen.dart';
 import 'package:quiz/components/rewards/all_characters.dart';
 import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
@@ -231,11 +232,6 @@ class _LessonScreenState extends State<LessonScreen> {
                     color: appColors.royalBlue,
                     size: textStyles.heading1.fontSize,
                   ),
-                  // Text(
-                  //   "Back",
-                  //   style: textStyles.customText(appColors.royalBlue, 20, FontWeight.normal),
-                  //   overflow: TextOverflow.ellipsis,
-                  // ),
                 ],
               ),
             ),
@@ -266,61 +262,41 @@ class _LessonScreenState extends State<LessonScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Column(
-                    children: [
-                      ActivityButton(
-                        text: "PREP",
-                        onTap:
-                            (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => ReadingsScreen(readingNumber: widget.lessonNumber)),
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      //ImageBox(imageName: lesson.character.photos[Phase.baby] ?? "assets/images/lock.png", isLocked: true, isSelected: false,), //TODO: Update based on completion
-                    ],
+
+                  ActivityButton(
+                    text: "PREP",
+                    onTap:
+                        (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ReadingResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "reading-screen",)),
+                      );
+                    },
                   ),
 
-                  Column(
-                    children: [
-                      ActivityButton(
-                        text: "READ",
-                        onTap:
-                            (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => ReadingsScreen(readingNumber: widget.lessonNumber)),
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      //ImageBox(imageName: lesson.character.photos[Phase.teen] ?? "assets/images/lock.png", isLocked: true, isSelected: false,), //TODO: Update based on completion
-                    ],
+                  ActivityButton(
+                    text: "READ",
+                    onTap:
+                        (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ReadingResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "reading-screen",)),
+                      );
+                    },
                   ),
 
-                  Column(
-                    children: [
-                      ActivityButton(
-                        text: "QUIZ",
-                        onTap:
-                            (){
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => QuizResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "quiz-screen",))
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      //ImageBox(imageName: lesson.character.photos[Phase.adult] ?? "assets/images/lock.png", isLocked: false, isSelected: true,), //TODO: Update based on completion
-                    ],
+                  ActivityButton(
+                    text: "QUIZ",
+                    onTap:
+                        (){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => QuizResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "quiz-screen",))
+                      );
+                    },
+                  ),
+                  const SizedBox(
+                    height: 5,
                   ),
                 ],
               ),
@@ -339,6 +315,7 @@ class _LessonScreenState extends State<LessonScreen> {
                   );
                 },
               ),
+
               const SizedBox(height: 5,),
 
               // Number of Stars

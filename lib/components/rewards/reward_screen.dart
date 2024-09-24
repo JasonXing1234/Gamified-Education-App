@@ -6,14 +6,19 @@ import 'package:quiz/styles/text_styles.dart';
 import '../buttons/menu_button.dart';
 import '../buttons/next_button.dart';
 import '../buttons/speed_button.dart';
+import '../lesson/all_lessons.dart';
+import '../lesson/lesson.dart';
+import 'all_characters.dart';
 
 class RewardScreen extends StatefulWidget {
   const RewardScreen({
     super.key,
-    // required this.lessonNumber,
+    required this.lessonNumber,
+    required this.activityName,
   });
 
-  // final int lessonNumber;
+  final int lessonNumber;
+  final String activityName;
 
   // Unlocked features
   @override
@@ -27,7 +32,34 @@ class _RewardScreenState extends State<RewardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+
+    Lesson lesson;
+    if (widget.lessonNumber == socialMediaNorms.lessonNumber) {
+      lesson = socialMediaNorms;
+    }
+    else if (widget.lessonNumber == settings.lessonNumber) {
+      lesson = settings;
+    }
+    else if (widget.lessonNumber == fakeProfiles.lessonNumber) {
+      lesson = fakeProfiles;
+    }
+    else if (widget.lessonNumber == socialTags.lessonNumber) {
+      lesson = socialTags;
+    }
+    else if (widget.lessonNumber == appropriateInteractions.lessonNumber) {
+      lesson = appropriateInteractions;
+    }
+    else if (widget.lessonNumber == socialMediaVSReality.lessonNumber) {
+      lesson = socialMediaVSReality;
+    }
+    else {
+      lesson = Lesson("LESSON", lockedCharacter, 0);
+    }
+
+
+    String rewardImage = lesson.getCurrentPhoto();
+
+
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -100,9 +132,25 @@ class _RewardScreenState extends State<RewardScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Well done!",
+                "Well done, you completed the ${capitalizeString(lesson.title)} ${capitalizeString(widget.activityName)}!",
                 style: textStyles.bodyText,
-                textAlign: TextAlign.center,)
+                textAlign: TextAlign.center,),
+
+              const SizedBox(height: 20,),
+
+              Text(
+                "You Earned",
+                style: textStyles.heading1,
+                textAlign: TextAlign.center,
+              ),
+
+              const SizedBox(height: 50,),
+
+              widget.activityName == "practice" ? Icon( Icons.stars, color: appColors.yellow, size: 200,) : Image.asset(rewardImage),
+              widget.activityName == "practice" ?
+                Text("1 Star", style: textStyles.bodyText, textAlign: TextAlign.center,) :
+                Text("${capitalizeString(lesson.character.currentPhase.name)} ${lesson.character.name}", style: textStyles.bodyText, textAlign: TextAlign.center,),
+
             ],
           ),
         ),

@@ -16,17 +16,18 @@ import '../../styles/text_styles.dart';
 import '../buttons/menu_button.dart';
 import '../buttons/next_button.dart';
 import '../buttons/speed_button.dart';
-import '../lesson/lesson_screen.dart';
 import '../text_box/text_box.dart';
 
 
 class ReadingsScreen extends StatefulWidget {
   const ReadingsScreen({
     super.key,
-    required this.readingNumber
+    required this.readingNumber,
+    required this.openRewardPage,
   });
 
   final int readingNumber;
+  final void Function() openRewardPage;
 
   @override
   State<ReadingsScreen> createState() => _ReadingsScreenState();
@@ -260,7 +261,8 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
 
                         // Already on last page
                         backToFirstPage();
-                        Navigator.of(context).pop();
+                        widget.openRewardPage();
+                        //Navigator.of(context).pop();
 
                       }
                       else {
