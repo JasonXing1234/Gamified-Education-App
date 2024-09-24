@@ -147,10 +147,11 @@ class _RewardScreenState extends State<RewardScreen> {
               const SizedBox(height: 50,),
 
               widget.activityName == "practice" ? Icon( Icons.stars, color: appColors.yellow, size: 200,) : Image.asset(rewardImage),
+
+              // TODO: Set up correct character reward: this just shows the current character name and image
               widget.activityName == "practice" ?
                 Text("1 Star", style: textStyles.bodyText, textAlign: TextAlign.center,) :
                 Text("${capitalizeString(lesson.character.currentPhase.name)} ${lesson.character.name}", style: textStyles.bodyText, textAlign: TextAlign.center,),
-
             ],
           ),
         ),
