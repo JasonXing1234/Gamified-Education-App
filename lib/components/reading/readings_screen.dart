@@ -264,7 +264,15 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
 
                       }
                       else {
-                        if (currentReadingPage is ReadingMultipleAnswersQuestion) {
+                        if (currentReadingPage is ReadingQuestion) {
+                          nextReadingPage(userAnswer: selectedAnswerValue);
+
+                          // Reset
+                          selectedAnswerIndex = 10;
+                          selectedAnswerValue = "";
+
+                        }
+                        else if (currentReadingPage is ReadingMultipleAnswersQuestion) {
                           if (currentReadingPage.answerOptions[0] == "textField") {
                             // Add a controller text to get access to the answer
                             nextReadingPage(userAnswer: _controller.text);
@@ -333,6 +341,22 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                           const SizedBox(
                             height: 20,
                           ),
+
+                          // Reading Question
+                          if (currentReadingPage is ReadingQuestion)
+                            ...currentReadingPage.answerOptions.asMap().entries.map(
+                                  (answer) => AnswerButton(
+                                color: selectedAnswerIndex == answer.key ? appColors.royalBlue : appColors.grey,
+                                answerText: answer.value,
+                                onTap: () {
+                                  setState(() {
+                                    selectedAnswerIndex = answer.key;
+                                    selectedAnswerValue = answer.value;
+                                  });
+                                },
+                              ),
+                            ),
+
 
                           // Text field question
                           if (currentReadingPage is ReadingMultipleAnswersQuestion)
