@@ -43,9 +43,6 @@ class ResultScreen extends StatelessWidget {
   List<Map<String, Object>> getSummaryData() {
     final List<Map<String, Object>> summary = [];
 
-    // TODO: How should multiple answers and text field answers be formatted?
-    // TODO: Some quizzes have multiple question types
-
     for (int i = 0; i < userAnswers.length; i++) {
       // if multiple options create a string with all the options?
 

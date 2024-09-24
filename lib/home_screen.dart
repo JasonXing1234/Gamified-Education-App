@@ -317,8 +317,9 @@ class _HomeState extends State<Home> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon( Icons.menu_book_rounded, color: appColors.green, size: 60),
+                      // TODO: Add logic to record the lessons (6) or activities (6*4) completed
                       Text(
-                        "Lessons", // TODO: Lessons or activities? Activities=quiz, practice, reading
+                        "Lessons",
                         style: textStyles.mediumBodyText,
                       ),
                       Text("0/6", style: textStyles.mediumBodyText,),

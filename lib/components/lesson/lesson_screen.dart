@@ -252,10 +252,6 @@ class _LessonScreenState extends State<LessonScreen> {
               // Row of image and stats
               StatsNotebook(lesson: lesson, textStyles: textStyles),
 
-              // Text(
-              //   "Name: Norbert", //TODO: Set up user data for name of creature & way to edit name
-              //   style: textStyles.bodyText,
-              // ),
               const SizedBox(height: 5,),
 
               // row of buttons for Pre-quiz, readings, post-quiz
@@ -444,7 +440,7 @@ class _LessonScreenState extends State<LessonScreen> {
       },
       child: Stack(
         children: [
-          ImageBox(imageName: "assets/character_images/sunglasses.png", isLocked: !purchased[index], isSelected: false,), // TODO: Remove Place holder image and check if selected
+          ImageBox(imageName: "assets/character_images/sunglasses.png", isLocked: !purchased[index], isSelected: false,),
           // if (purchased[index])
           //   Positioned.fill(
           //     child: Container(

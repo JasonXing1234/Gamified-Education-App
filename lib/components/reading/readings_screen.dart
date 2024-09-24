@@ -256,13 +256,11 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                   onTap: () {
                     setState(() {
                       if (readingPageIndex == readingPages.length -1) { // Zero indexing
-                        // TODO: Reset user readingList for current lesson
-
-
-                        // Already on last page
+                        // Already on last page, reset to first page
                         backToFirstPage();
+
+                        // Open the rewards page
                         widget.openRewardPage();
-                        //Navigator.of(context).pop();
 
                       }
                       else {
