@@ -41,6 +41,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
 
   int selectedAnswerIndex = 10; // For answer options for single correct answer
   String selectedAnswerValue = "";
+  bool isCorrect = true;
 
   // For answer options for multiple correct answers
   List<String> selectedAnswers = [];
@@ -265,7 +266,16 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                       }
                       else {
                         if (currentReadingPage is ReadingQuestion) {
-                          nextReadingPage(userAnswer: selectedAnswerValue);
+
+                          if (currentReadingPage.correctAnswer == selectedAnswerValue) {
+                            // Correct :)
+                            isCorrect = true;
+                            nextReadingPage(userAnswer: selectedAnswerValue);
+
+                          }
+                          else {
+                            isCorrect = false;
+                          }
 
                           // Reset
                           selectedAnswerIndex = 10;
@@ -344,17 +354,38 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
 
                           // Reading Question
                           if (currentReadingPage is ReadingQuestion)
-                            ...currentReadingPage.answerOptions.asMap().entries.map(
-                                  (answer) => AnswerButton(
-                                color: selectedAnswerIndex == answer.key ? appColors.royalBlue : appColors.grey,
-                                answerText: answer.value,
-                                onTap: () {
-                                  setState(() {
-                                    selectedAnswerIndex = answer.key;
-                                    selectedAnswerValue = answer.value;
-                                  });
-                                },
-                              ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: currentReadingPage.answerOptions.asMap().entries.map(
+                                    (answer) => Container(
+                                  width: double.infinity, // Makes each button take full width
+                                  padding: const EdgeInsets.symmetric(vertical: 5), // Add padding if needed
+                                  child: AnswerButton(
+                                    color: selectedAnswerIndex == answer.key
+                                        ? appColors.royalBlue
+                                        : appColors.grey,
+                                    answerText: answer.value,
+                                    onTap: () {
+                                      setState(() {
+                                        selectedAnswerIndex = answer.key;
+                                        selectedAnswerValue = answer.value;
+                                      });
+                                    },
+                                    // textAlign: TextAlign.center, // Centers the text within the button
+                                  ),
+                                ),
+                              ).toList(),
+                            ),
+
+                          const SizedBox(
+                            height: 10,
+                          ),
+
+                          if (currentReadingPage is ReadingQuestion && isCorrect == false)
+                            Text(
+                              "Your answer was incorrect. ${currentReadingPage.explanation}. Try again.",
+                              textAlign: TextAlign.left,
+                              style: textStyles.customBodyText(appColors.red, 24),
                             ),
 
 

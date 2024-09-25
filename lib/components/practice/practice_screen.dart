@@ -242,16 +242,10 @@ class _PracticeScreenState extends State<PracticeScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     currentQuestion.context == "no" ? SizedBox.shrink() : TextBox(currentText: currentQuestion.context,),
+                    currentQuestion.context == "no" ? SizedBox.shrink() : const SizedBox(height: 30,),
                     currentQuestion.photo == 'no' ? SizedBox.shrink() : Image.asset(currentQuestion.photo),
                     currentQuestion.photo == 'no' ? SizedBox.shrink() : const SizedBox(height: 30,),
-                    isCorrect == false ? Text(
-                      'The answer was incorrect. Please try again.',
-                      textAlign: TextAlign.left,
-                      style: textStyles.customBodyText(appColors.red, 24),
-                    ) : SizedBox.shrink(),
-                    const SizedBox(
-                      height: 15,
-                    ),
+
 
                     counter == 2 ? SizedBox.shrink() : TextBox(
                       currentText: currentQuestion,
@@ -259,18 +253,37 @@ class _PracticeScreenState extends State<PracticeScreen> {
                     const SizedBox(
                       height: 30,
                     ),
+
                     ...currentQuestion.answerOptions.asMap().entries.map(
-                          (answer) => counter == 2 ? SizedBox.shrink() : AnswerButton(
-                        color: selectedIndex == answer.key ? appColors.royalBlue : appColors.grey,
-                        answerText: answer.value,
-                        onTap: () {
-                          setState(() {
-                            selectedIndex = answer.key;
-                            tempAnswer = answer.value;
-                          });
-                        },
+                          (answer) => Container(
+                        width: double.infinity, // Makes each button take full width
+                        padding: const EdgeInsets.symmetric(vertical: 5), // Add padding if needed
+                        child: AnswerButton(
+                          color: selectedIndex == answer.key
+                              ? appColors.royalBlue
+                              : appColors.grey,
+                          answerText: answer.value,
+                          onTap: () {
+                            setState(() {
+                              selectedIndex = answer.key;
+                              tempAnswer = answer.value;
+                            });
+                          },
+                          // textAlign: TextAlign.center, // Centers the text within the button
+                        ),
                       ),
                     ),
+
+                    const SizedBox(
+                      height: 15,
+                    ),
+
+                    isCorrect == false ? Text(
+                      'The answer was incorrect. Please try again.',
+                      textAlign: TextAlign.left,
+                      style: textStyles.customBodyText(appColors.red, 24),
+                    ) : SizedBox.shrink(),
+
 
                     const SizedBox(
                       height: 60,

@@ -59,11 +59,11 @@ const fakeProfilesPractice1 = [
   ),
   SingleAnswerQuestion(
     "This is what you know about the account so far."
-        "Does your friend know this person offline? : Yes"
-        "Does the account have a profile picture and does your friend think it matches what they look like in person? : Yes"
-        "Is this your friend's first connection request from this person? : Yes"
-        "Does the profile have more than 50 friends and less than 2000 friends? : Yes"
-        "Does your friend has 5 or more mutual friends with this account?  : Yes",
+        "Does your friend know this person offline? : Yes\n"
+        "Does the account have a profile picture and does your friend think it matches what they look like in person? : Yes\n"
+        "Is this your friend's first connection request from this person? : Yes\n"
+        "Does the profile have more than 50 friends and less than 2000 friends? : Yes\n"
+        "Does your friend has 5 or more mutual friends with this account?  : Yes\n",
     "Given this information, which recommendation would you give your friend about the request?",
     "no",
     [

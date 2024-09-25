@@ -252,17 +252,26 @@ class _QuestionsScreenState extends State<QuizScreen> {
                     ),
 
                     // Answer option Questions
-                    if (currentQuestion is SingleAnswerQuestion) ...currentQuestion.answerOptions.asMap().entries.map(
-                          (answer) => AnswerButton(
-                        answerText: answer.value,
-                        onTap: () {
-                          setState(() {
-                            selectedIndex = answer.key;
-                            tempAnswer = answer.value;
-                          });
-                        }, color: selectedIndex == answer.key ? appColors.royalBlue : appColors.grey,
+                    if (currentQuestion is SingleAnswerQuestion)
+                      ...currentQuestion.answerOptions.asMap().entries.map(
+                            (answer) => Container(
+                          width: double.infinity, // Makes each button take full width
+                          padding: const EdgeInsets.symmetric(vertical: 5), // Add padding if needed
+                          child: AnswerButton(
+                            color: selectedIndex == answer.key
+                                ? appColors.royalBlue
+                                : appColors.grey,
+                            answerText: answer.value,
+                            onTap: () {
+                              setState(() {
+                                selectedIndex = answer.key;
+                                tempAnswer = answer.value;
+                              });
+                            },
+                            // textAlign: TextAlign.center, // Centers the text within the button
+                          ),
+                        ),
                       ),
-                    ),
 
                     // Multiple Answer Question
                     if (currentQuestion is MultipleAnswersQuestion)

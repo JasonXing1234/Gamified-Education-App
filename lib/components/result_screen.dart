@@ -72,7 +72,7 @@ class ResultScreen extends StatelessWidget {
           quizNumber == 6 ? quiz6[i].question :
           fakeProfilesPractice1[i].answerOptions[0],
         'correct_answer':
-            quizNumber == 0 ? fakeProfilesPractice1[i].answerOptions[0] :
+            quizNumber == 0 ? fakeProfilesPractice1[i].correctAnswer :
             quizNumber == 1 ? quiz1[i].correctAnswer :
             quizNumber == 2 ? quiz2[i].answerOptions[0] :
             quizNumber == 3 ? quiz3[i].correctAnswer :
@@ -97,31 +97,31 @@ class ResultScreen extends StatelessWidget {
     final summary = getSummaryData();
     int numTotalAnswers = fakeProfilesPractice1.length;
 
-    var quizName = "QUIZ";
+    var quizName = "RESULTS";
 
     if (quizNumber == 1){
       numTotalAnswers = quiz1.length;
-      quizName = "QUIZ: SOCIAL MEDIA NORMS";
+      quizName = "SOCIAL MEDIA NORMS";
     }
     else if (quizNumber == 2){
       numTotalAnswers = quiz2.length;
-      quizName = "QUIZ: SETTINGS";
+      quizName = "SETTINGS";
     }
     else if (quizNumber == 3){
       numTotalAnswers = quiz3.length;
-      quizName = "QUIZ: FAKE PROFILES";
+      quizName = "FAKE PROFILES";
     }
     else if (quizNumber == 4){
       numTotalAnswers = quiz4.length;
-      quizName = "QUIZ: SOCIAL TAGS";
+      quizName = "SOCIAL TAGS";
     }
     else if (quizNumber == 5){
       numTotalAnswers = quiz5.length;
-      quizName = "QUIZ: APPROPRIATE INTERACTIONS";
+      quizName = "APPROPRIATE INTERACTIONS";
     }
     else if (quizNumber == 6){
       numTotalAnswers = quiz5.length;
-      quizName = "QUIZ: SOCIAL MEDIA VS REALITY";
+      quizName = "SOCIAL MEDIA VS REALITY";
     }
     final int numCorrectAnswers = summary
         .where((element) => element['correct_answer'] == element['user_answer'])
