@@ -118,7 +118,6 @@ class _PracticeScreenState extends State<PracticeScreen> {
   }
 
   Future<void> recordStar() async {
-    Navigator.of(context).pop();
     if (questionIndex == practiceQuestions.length - 1) {
       DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('numStars').get();
       int numStars = snapshot.value as int;
@@ -211,7 +210,8 @@ class _PracticeScreenState extends State<PracticeScreen> {
                         if (questionIndex == practiceQuestions.length - 1) {
                           // End practice
                           recordStar();
-                          //Navigator.of(context).pop();
+
+                          nextQuestion(tempAnswer);
                         }
                         else if(currentQuestion.correctAnswer == tempAnswer){
                           isCorrect = true;
@@ -220,7 +220,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
                         else{
                           isCorrect = false;
                         }
-                        selectedIndex = 4;
+                        selectedIndex = 10;
                       });
                     },
                     disabled: false,
@@ -242,16 +242,10 @@ class _PracticeScreenState extends State<PracticeScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     currentQuestion.context == "no" ? SizedBox.shrink() : TextBox(currentText: currentQuestion.context,),
+                    currentQuestion.context == "no" ? SizedBox.shrink() : const SizedBox(height: 30,),
                     currentQuestion.photo == 'no' ? SizedBox.shrink() : Image.asset(currentQuestion.photo),
                     currentQuestion.photo == 'no' ? SizedBox.shrink() : const SizedBox(height: 30,),
-                    isCorrect == false ? Text(
-                      'The answer was incorrect. Please try again.',
-                      textAlign: TextAlign.left,
-                      style: textStyles.customBodyText(appColors.red, 24),
-                    ) : SizedBox.shrink(),
-                    const SizedBox(
-                      height: 15,
-                    ),
+
 
                     counter == 2 ? SizedBox.shrink() : TextBox(
                       currentText: currentQuestion,
@@ -259,18 +253,36 @@ class _PracticeScreenState extends State<PracticeScreen> {
                     const SizedBox(
                       height: 30,
                     ),
+
                     ...currentQuestion.answerOptions.asMap().entries.map(
-                          (answer) => counter == 2 ? SizedBox.shrink() : AnswerButton(
-                        color: selectedIndex == answer.key ? appColors.royalBlue : appColors.grey,
-                        answerText: answer.value,
-                        onTap: () {
-                          setState(() {
-                            selectedIndex = answer.key;
-                            tempAnswer = answer.value;
-                          });
-                        },
+                          (answer) => Container(
+                        width: double.infinity, // Makes each button take full width
+                        padding: const EdgeInsets.symmetric(vertical: 5), // Add padding if needed
+                        child: AnswerButton(
+                          color: selectedIndex == answer.key ?  appColors.orange : appColors.royalBlue,
+                          borderThickness: selectedIndex == answer.key ? 6.0 : 3.0,
+                          answerText: answer.value,
+                          onTap: () {
+                            setState(() {
+                              selectedIndex = answer.key;
+                              tempAnswer = answer.value;
+                            });
+                          },
+                          // textAlign: TextAlign.center, // Centers the text within the button
+                        ),
                       ),
                     ),
+
+                    const SizedBox(
+                      height: 15,
+                    ),
+
+                    isCorrect == false ? Text(
+                      'The answer was incorrect. Please try again.',
+                      textAlign: TextAlign.left,
+                      style: textStyles.customBodyText(appColors.red, 24),
+                    ) : SizedBox.shrink(),
+
 
                     const SizedBox(
                       height: 60,

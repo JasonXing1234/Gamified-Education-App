@@ -94,7 +94,7 @@ class _PracticeResultScreenState extends State<PracticeResultScreen> {
       );
     }
     else if (widget.activeScreen == "reward-screen") {
-      screen = const RewardScreen();
+      screen = RewardScreen(lessonNumber: widget.lessonNumber, activityName: "practice",);
     }
 
     return Scaffold(

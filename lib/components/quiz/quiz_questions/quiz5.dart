@@ -9,8 +9,8 @@ const quiz5 = [
       "Yes",
       "No",
     ],
-    "Yes",
     "explain",
+    "Yes",
   ),
   SingleAnswerQuestion(
     "no",
@@ -20,8 +20,8 @@ const quiz5 = [
       "Yes",
       "No",
     ],
-    "No",
     "explain",
+    "No",
   ),
   SingleAnswerQuestion(
     "no",
@@ -31,8 +31,8 @@ const quiz5 = [
       "Yes",
       "No",
     ],
-    "No",
     "explain",
+    "No",
   ),
   SingleAnswerQuestion(
     "no",
@@ -42,8 +42,8 @@ const quiz5 = [
       "Yes",
       "No",
     ],
-    "No",
     "explain",
+    "No",
   ),
   SingleAnswerQuestion(
     "no",
@@ -53,8 +53,8 @@ const quiz5 = [
       "Yes",
       "No",
     ],
-    "No",
     "explain",
+    "No",
   ),
   SingleAnswerQuestion(
     "no",
@@ -64,8 +64,8 @@ const quiz5 = [
       "Yes",
       "No",
     ],
-    "No",
     "explain",
+    "No",
   ),
   SingleAnswerQuestion(
     "no",
@@ -75,8 +75,8 @@ const quiz5 = [
       "Yes",
       "No",
     ],
-    "Yes",
     "explain",
+    "Yes",
   ),
   SingleAnswerQuestion(
     "no",
@@ -86,8 +86,8 @@ const quiz5 = [
       "Yes",
       "No",
     ],
-    "No",
     "explain",
+    "No",
   ),
   SingleAnswerQuestion(
     "no",
@@ -97,8 +97,8 @@ const quiz5 = [
       "Yes",
       "No",
     ],
-    "No",
     "explain",
+    "No",
   ),
 
 ];

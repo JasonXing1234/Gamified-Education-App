@@ -9,8 +9,8 @@ var quiz6 = [
       "True",
       "False",
     ],
-    "False",
     "explain",
+    "False",
   ),
   const SingleAnswerQuestion(
     "no",
@@ -20,8 +20,8 @@ var quiz6 = [
       "True",
       "False",
     ],
-    "False",
     "explain",
+    "False",
   ),
   const SingleAnswerQuestion(
     "no",
@@ -31,8 +31,8 @@ var quiz6 = [
       "True",
       "False",
     ],
-    "True",
     "explain",
+    "True",
   ),
   const SingleAnswerQuestion(
     "no",
@@ -42,8 +42,8 @@ var quiz6 = [
       "True",
       "False",
     ],
-    "True",
     "explain",
+    "True",
   ),
   const SingleAnswerQuestion(
     "no",
@@ -53,8 +53,8 @@ var quiz6 = [
       "True",
       "False",
     ],
-    "False",
     "explain",
+    "False",
   ),
   MultipleAnswersQuestion(
     "no",
