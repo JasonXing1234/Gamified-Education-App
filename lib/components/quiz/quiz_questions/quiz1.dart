@@ -12,8 +12,8 @@ const quiz1 = [
       "No",
       "I don't know"
     ],
-    "Yes",
     "On Instagram you can create different accounts: Personal, Finsta, Business, Verified Celebrity/Influencer, or an interest/topic account.",
+    "Yes",
   ),
   SingleAnswerQuestion(
     "no",
@@ -26,8 +26,8 @@ const quiz1 = [
       "Verified Celebrity or Influencer Account",
       "Top/Interest Account"
     ],
-    "Verified Celebrity or Influencer Account",
     "explain",
+    "Verified Celebrity or Influencer Account",
   ),
   SingleAnswerQuestion(
     "no",
@@ -40,8 +40,8 @@ const quiz1 = [
       "Verified Celebrity or Influencer Account",
       "Top/Interest Account"
     ],
-    "Alternate Personal Account (finista)",
     "explain",
+    "Alternate Personal Account (finista)",
   ),
   SingleAnswerQuestion(
     "no",
@@ -54,8 +54,8 @@ const quiz1 = [
       "Verified Celebrity or Influencer Account",
       "Top/Interest Account"
     ],
-    "Business Account",
     "explain",
+    "Business Account",
   ),
   SingleAnswerQuestion(
     "no",
@@ -68,8 +68,8 @@ const quiz1 = [
       "Verified Celebrity or Influencer Account",
       "Top/Interest Account"
     ],
-    "Top/Interest Account",
     "explain",
+    "Top/Interest Account",
   ),
   SingleAnswerQuestion(
     "no",
@@ -82,8 +82,8 @@ const quiz1 = [
       "Verified Celebrity or Influencer Account",
       "Top/Interest Account"
     ],
-    "Personal Account",
     "explain",
+    "Personal Account",
   ),
   SingleAnswerQuestion(
     "no",
@@ -94,8 +94,8 @@ const quiz1 = [
       "No",
       "I don't know"
     ],
-    "No",
     "explain",
+    "No",
   ),
   SingleAnswerQuestion(
     "no",
@@ -106,8 +106,8 @@ const quiz1 = [
       "Group",
       "Page"
     ],
-    "Group",
     "explain",
+    "Group",
   ),
   SingleAnswerQuestion(
     "no",
@@ -118,8 +118,8 @@ const quiz1 = [
       "Group",
       "Page"
     ],
-    "Personal",
     "explain",
+    "Personal",
   ),
   SingleAnswerQuestion(
     "no",
@@ -130,7 +130,7 @@ const quiz1 = [
       "Group",
       "Page"
     ],
-    "Page",
     "explain",
+    "Page",
   ),
 ];
