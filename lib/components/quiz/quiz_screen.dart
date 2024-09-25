@@ -275,24 +275,28 @@ class _QuestionsScreenState extends State<QuizScreen> {
                     // Multiple Answer Question
                     if (currentQuestion is MultipleAnswersQuestion)
                       if(currentQuestion.answerOptions[0] != 'textField') ...currentQuestion.answerOptions.asMap().entries.map(
-                            (answer) => AnswerButton(
-                              color: selectedAnswers.contains(answer.value) ? appColors.orange : appColors.royalBlue,
-                              borderThickness: selectedAnswers.contains(answer.value) ? 6.0 : 3.0,
-                              answerText: answer.value,
-                              onTap: () {
-                                setState(() {
-                                  selectedIndex = answer.key;
-                                  tempAnswer = answer.value;
+                            (answer) => Container(
+                              width: double.infinity, // Makes each button take full width
+                              padding: const EdgeInsets.symmetric(vertical: 5),
+                              child: AnswerButton(
+                                color: selectedAnswers.contains(answer.value) ? appColors.orange : appColors.royalBlue,
+                                borderThickness: selectedAnswers.contains(answer.value) ? 6.0 : 3.0,
+                                answerText: answer.value,
+                                onTap: () {
+                                  setState(() {
+                                    selectedIndex = answer.key;
+                                    tempAnswer = answer.value;
 
-                                  if (selectedAnswers.contains(answer.value)) {
-                                    selectedAnswers.remove(answer.value); // Deselect if already selected
-                                  } else {
-                                    selectedAnswers.add(answer.value); // Select if not already selected
-                                  }
+                                    if (selectedAnswers.contains(answer.value)) {
+                                      selectedAnswers.remove(answer.value); // Deselect if already selected
+                                    } else {
+                                      selectedAnswers.add(answer.value); // Select if not already selected
+                                    }
 
-                                });
-                              },
-                        ),
+                                  });
+                                },
+                              ),
+                            ),
                       ),
 
                     if(currentQuestion.answerOptions[0] == 'textField')
