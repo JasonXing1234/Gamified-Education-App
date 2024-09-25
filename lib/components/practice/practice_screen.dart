@@ -259,9 +259,8 @@ class _PracticeScreenState extends State<PracticeScreen> {
                         width: double.infinity, // Makes each button take full width
                         padding: const EdgeInsets.symmetric(vertical: 5), // Add padding if needed
                         child: AnswerButton(
-                          color: selectedIndex == answer.key
-                              ? appColors.royalBlue
-                              : appColors.grey,
+                          color: selectedIndex == answer.key ?  appColors.orange : appColors.royalBlue,
+                          borderThickness: selectedIndex == answer.key ? 6.0 : 3.0,
                           answerText: answer.value,
                           onTap: () {
                             setState(() {

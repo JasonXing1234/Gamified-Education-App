@@ -361,9 +361,8 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                                   width: double.infinity, // Makes each button take full width
                                   padding: const EdgeInsets.symmetric(vertical: 5), // Add padding if needed
                                   child: AnswerButton(
-                                    color: selectedAnswerIndex == answer.key
-                                        ? appColors.royalBlue
-                                        : appColors.grey,
+                                    color: selectedAnswerIndex == answer.key ? appColors.yellow : appColors.royalBlue,
+                                    borderThickness: selectedAnswerIndex == answer.key ? 6.0 : 3.0,
                                     answerText: answer.value,
                                     onTap: () {
                                       setState(() {
@@ -402,16 +401,18 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                           if (currentReadingPage is ReadingMultipleAnswersQuestion)
                             if(currentReadingPage.answerOptions[0] != 'textField') ...currentReadingPage.answerOptions.asMap().entries.map(
                                   (answer) => AnswerButton(
-                                answerText: answer.value,
-                                onTap: () {
-                                  setState(() {
-                                    if (selectedAnswers.contains(answer.value)) {
-                                      selectedAnswers.remove(answer.value); // Deselect if already selected
-                                    } else {
-                                      selectedAnswers.add(answer.value); // Select if not already selected
-                                    }
-                                  });
-                                }, color: selectedAnswers.contains(answer.value) ? appColors.royalBlue : appColors.grey,
+                                    color: selectedAnswers.contains(answer.value) ?  appColors.orange : appColors.royalBlue,
+                                    borderThickness: selectedAnswers.contains(answer.value) ? 6.0 : 3.0,
+                                    answerText: answer.value,
+                                    onTap: () {
+                                      setState(() {
+                                        if (selectedAnswers.contains(answer.value)) {
+                                          selectedAnswers.remove(answer.value); // Deselect if already selected
+                                        } else {
+                                          selectedAnswers.add(answer.value); // Select if not already selected
+                                        }
+                                      });
+                                    },
                               ),
                             ),
 
