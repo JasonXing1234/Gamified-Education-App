@@ -61,39 +61,39 @@ const reading1 = [
   ),
 
   // TODO: With checking answers should there be an answer explanation right after?
-  ReadingMultipleAnswersQuestion(
-    "QUESTION",
-    [
-      "What happens when you become 'Friends' with someone on Facebook?",
-    ],
-    "no",
-    [
-      "textField",
-    ],
-    [],
-  ),
-  ReadingMultipleAnswersQuestion(
-    "QUESTION",
-    [
-      "Why would you use Instagram instead of Facebook?",
-    ],
-    "no",
-    [
-      "textField",
-    ],
-    [],
-  ),
-  ReadingMultipleAnswersQuestion(
-    "QUESTION",
-    [
-      "Why would you use Facebook instead of Instagram?",
-    ],
-    "no",
-    [
-      "textField",
-    ],
-    [],
-  ),
+  // ReadingMultipleAnswersQuestion(
+  //   "QUESTION",
+  //   [
+  //     "What happens when you become 'Friends' with someone on Facebook?",
+  //   ],
+  //   "no",
+  //   [
+  //     "textField",
+  //   ],
+  //   [],
+  // ),
+  // ReadingMultipleAnswersQuestion(
+  //   "QUESTION",
+  //   [
+  //     "Why would you use Instagram instead of Facebook?",
+  //   ],
+  //   "no",
+  //   [
+  //     "textField",
+  //   ],
+  //   [],
+  // ),
+  // ReadingMultipleAnswersQuestion(
+  //   "QUESTION",
+  //   [
+  //     "Why would you use Facebook instead of Instagram?",
+  //   ],
+  //   "no",
+  //   [
+  //     "textField",
+  //   ],
+  //   [],
+  // ),
   ReadingPage(
     "PERSONAL FACEBOOK",
     [
