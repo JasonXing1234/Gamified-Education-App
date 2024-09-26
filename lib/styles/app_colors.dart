@@ -12,6 +12,7 @@ class AppColors {
   final Color red = const Color(0xffB72512);
 
   final Color yellow = const Color(0xffF6D353);
+  final Color orange = const Color(0xffE89127);
 
 
 

@@ -127,7 +127,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       );
     }
     else if (widget.activeScreen == "reward-screen") {
-      screen = const RewardScreen();
+      screen = RewardScreen(lessonNumber: widget.lessonNumber, activityName: "quiz",);
     }
 
     return Scaffold(

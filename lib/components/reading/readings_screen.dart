@@ -16,17 +16,18 @@ import '../../styles/text_styles.dart';
 import '../buttons/menu_button.dart';
 import '../buttons/next_button.dart';
 import '../buttons/speed_button.dart';
-import '../lesson/lesson_screen.dart';
 import '../text_box/text_box.dart';
 
 
 class ReadingsScreen extends StatefulWidget {
   const ReadingsScreen({
     super.key,
-    required this.readingNumber
+    required this.readingNumber,
+    required this.openRewardPage,
   });
 
   final int readingNumber;
+  final void Function() openRewardPage;
 
   @override
   State<ReadingsScreen> createState() => _ReadingsScreenState();
@@ -40,6 +41,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
 
   int selectedAnswerIndex = 10; // For answer options for single correct answer
   String selectedAnswerValue = "";
+  bool isCorrect = true;
 
   // For answer options for multiple correct answers
   List<String> selectedAnswers = [];
@@ -255,16 +257,32 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                   onTap: () {
                     setState(() {
                       if (readingPageIndex == readingPages.length -1) { // Zero indexing
-                        // TODO: Reset user readingList for current lesson
-
-
-                        // Already on last page
+                        // Already on last page, reset to first page
                         backToFirstPage();
-                        Navigator.of(context).pop();
+
+                        // Open the rewards page
+                        widget.openRewardPage();
 
                       }
                       else {
-                        if (currentReadingPage is ReadingMultipleAnswersQuestion) {
+                        if (currentReadingPage is ReadingQuestion) {
+
+                          if (currentReadingPage.correctAnswer == selectedAnswerValue) {
+                            // Correct :)
+                            isCorrect = true;
+                            nextReadingPage(userAnswer: selectedAnswerValue);
+
+                          }
+                          else {
+                            isCorrect = false;
+                          }
+
+                          // Reset
+                          selectedAnswerIndex = 10;
+                          selectedAnswerValue = "";
+
+                        }
+                        else if (currentReadingPage is ReadingMultipleAnswersQuestion) {
                           if (currentReadingPage.answerOptions[0] == "textField") {
                             // Add a controller text to get access to the answer
                             nextReadingPage(userAnswer: _controller.text);
@@ -334,6 +352,42 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                             height: 20,
                           ),
 
+                          // Reading Question
+                          if (currentReadingPage is ReadingQuestion)
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: currentReadingPage.answerOptions.asMap().entries.map(
+                                    (answer) => Container(
+                                  width: double.infinity, // Makes each button take full width
+                                  padding: const EdgeInsets.symmetric(vertical: 5), // Add padding if needed
+                                  child: AnswerButton(
+                                    color: selectedAnswerIndex == answer.key ? appColors.yellow : appColors.royalBlue,
+                                    borderThickness: selectedAnswerIndex == answer.key ? 6.0 : 3.0,
+                                    answerText: answer.value,
+                                    onTap: () {
+                                      setState(() {
+                                        selectedAnswerIndex = answer.key;
+                                        selectedAnswerValue = answer.value;
+                                      });
+                                    },
+                                    // textAlign: TextAlign.center, // Centers the text within the button
+                                  ),
+                                ),
+                              ).toList(),
+                            ),
+
+                          const SizedBox(
+                            height: 10,
+                          ),
+
+                          if (currentReadingPage is ReadingQuestion && isCorrect == false)
+                            Text(
+                              "Your answer was incorrect. ${currentReadingPage.explanation}. Try again.",
+                              textAlign: TextAlign.left,
+                              style: textStyles.customBodyText(appColors.red, 24),
+                            ),
+
+
                           // Text field question
                           if (currentReadingPage is ReadingMultipleAnswersQuestion)
                             if (currentReadingPage.answerOptions[0] == 'textField')
@@ -347,16 +401,18 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                           if (currentReadingPage is ReadingMultipleAnswersQuestion)
                             if(currentReadingPage.answerOptions[0] != 'textField') ...currentReadingPage.answerOptions.asMap().entries.map(
                                   (answer) => AnswerButton(
-                                answerText: answer.value,
-                                onTap: () {
-                                  setState(() {
-                                    if (selectedAnswers.contains(answer.value)) {
-                                      selectedAnswers.remove(answer.value); // Deselect if already selected
-                                    } else {
-                                      selectedAnswers.add(answer.value); // Select if not already selected
-                                    }
-                                  });
-                                }, color: selectedAnswers.contains(answer.value) ? appColors.royalBlue : appColors.grey,
+                                    color: selectedAnswers.contains(answer.value) ?  appColors.orange : appColors.royalBlue,
+                                    borderThickness: selectedAnswers.contains(answer.value) ? 6.0 : 3.0,
+                                    answerText: answer.value,
+                                    onTap: () {
+                                      setState(() {
+                                        if (selectedAnswers.contains(answer.value)) {
+                                          selectedAnswers.remove(answer.value); // Deselect if already selected
+                                        } else {
+                                          selectedAnswers.add(answer.value); // Select if not already selected
+                                        }
+                                      });
+                                    },
                               ),
                             ),
 

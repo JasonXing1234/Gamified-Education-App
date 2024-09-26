@@ -297,13 +297,13 @@ class _HomeState extends State<Home> {
                         future: _fetchReadingList(),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState == ConnectionState.waiting) {
-                            return CircularProgressIndicator();
+                            return const CircularProgressIndicator();
                           } else if (snapshot.hasError) {
                             return Text('Error: ${snapshot.error}');
                           } else if (snapshot.hasData) {
                             return Text(snapshot.data.toString(), style: textStyles.mediumBodyText,);
                           } else {
-                            return Text('No data available');
+                            return Text("0", style: textStyles.mediumBodyText,);
                           }
                         },
                       ),
@@ -317,8 +317,9 @@ class _HomeState extends State<Home> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon( Icons.menu_book_rounded, color: appColors.green, size: 60),
+                      // TODO: Add logic to record the lessons (6) or activities (6*4) completed
                       Text(
-                        "Lessons", // TODO: Lessons or activities? Activities=quiz, practice, reading
+                        "Lessons",
                         style: textStyles.mediumBodyText,
                       ),
                       Text("0/6", style: textStyles.mediumBodyText,),
@@ -453,22 +454,6 @@ class _HomeState extends State<Home> {
             },
           ),
 
-
-
-          // TODO: Delete this buttons later
-          // Start Practice
-          // OutlinedButton.icon(
-          //   label: Text(
-          //     "Start Practice",
-          //     style: textStyles.bodyTextWhite,
-          //   ),
-          //   onPressed: (){_scaffoldKey.currentState?.openDrawer();},
-          //   style: OutlinedButton.styleFrom(
-          //     backgroundColor: appColors.royalBlue,
-          //     foregroundColor: Colors.white,
-          //   ),
-          //   icon: const Icon(Icons.arrow_right_alt),
-          // ),
           SizedBox(
             height: spacing,
           ),
@@ -578,139 +563,7 @@ class _HomeState extends State<Home> {
             ),
           ),
         ),
-        // drawer: Drawer(
-        //   child: SafeArea(
-        //     child: Column(
-        //       children: <Widget>[
-        //               OutlinedButton.icon(
-        //                 onPressed: (){
-        //                   changeScreen9();
-        //                 },
-        //                 style: OutlinedButton.styleFrom(
-        //                   backgroundColor: appColors.royalBlue,
-        //                   foregroundColor: Colors.white,
-        //                 ),
-        //                 icon: const Icon(Icons.arrow_right_alt),
-        //                 label: const Text("      Start Practice from beginning       "),
-        //               ),
-        //               OutlinedButton.icon(
-        //                   onPressed: (){
-        //                     setState(() {
-        //                       changeScreen1();
-        //                     });
-        //                     Navigator.of(context).pop();
-        //                   },
-        //                   style: OutlinedButton.styleFrom(
-        //                     backgroundColor: appColors.royalBlue,
-        //                     foregroundColor: Colors.white,
-        //                   ),
-        //                   icon: const Icon(Icons.arrow_right_alt),
-        //                   label: const Text("part 1"),
-        //                 ),
-        //
-        //               OutlinedButton.icon(
-        //                 onPressed: (){
-        //                   setState(() {
-        //                     changeScreen2();
-        //                   });
-        //                   Navigator.of(context).pop();
-        //                 },
-        //
-        //                 style: OutlinedButton.styleFrom(
-        //                   backgroundColor: appColors.royalBlue,
-        //                   foregroundColor: Colors.white,
-        //                 ),
-        //                 icon: const Icon(Icons.arrow_right_alt),
-        //                 label: const Text("part 2"),
-        //               ),
-        //               OutlinedButton.icon(
-        //                 onPressed: (){
-        //                   setState(() {
-        //                     changeScreen3();
-        //                   });
-        //                   Navigator.of(context).pop();
-        //                 },
-        //                 style: OutlinedButton.styleFrom(
-        //                   backgroundColor: appColors.royalBlue,
-        //                   foregroundColor: Colors.white,
-        //                 ),
-        //                 icon: const Icon(Icons.arrow_right_alt),
-        //                 label: const Text("part 3"),
-        //               ),
-        //               OutlinedButton.icon(
-        //                 onPressed: (){
-        //                   setState(() {
-        //                     changeScreen4();
-        //                   });
-        //                   Navigator.of(context).pop();
-        //                 },
-        //                 style: OutlinedButton.styleFrom(
-        //                   backgroundColor: appColors.royalBlue,
-        //                   foregroundColor: Colors.white,
-        //                 ),
-        //                 icon: const Icon(Icons.arrow_right_alt),
-        //                 label: const Text("part 4"),
-        //               ),
-        //               OutlinedButton.icon(
-        //                 onPressed: (){
-        //                   setState(() {
-        //                     changeScreen5();
-        //                   });
-        //                   Navigator.of(context).pop();
-        //                 },
-        //                 style: OutlinedButton.styleFrom(
-        //                   backgroundColor: appColors.royalBlue,
-        //                   foregroundColor: Colors.white,
-        //                 ),
-        //                 icon: const Icon(Icons.arrow_right_alt),
-        //                 label: const Text("part 5"),
-        //               ),
-        //               OutlinedButton.icon(
-        //                 onPressed: (){
-        //                   setState(() {
-        //                     changeScreen6();
-        //                   });
-        //                   Navigator.of(context).pop();
-        //                 },
-        //                 style: OutlinedButton.styleFrom(
-        //                   backgroundColor: appColors.royalBlue,
-        //                   foregroundColor: Colors.white,
-        //                 ),
-        //                 icon: const Icon(Icons.arrow_right_alt),
-        //                 label: const Text("part 6"),
-        //               ),
-        //               OutlinedButton.icon(
-        //                 onPressed: (){
-        //                   setState(() {
-        //                     changeScreen7();
-        //                   });
-        //                   Navigator.of(context).pop();
-        //                 },
-        //                 style: OutlinedButton.styleFrom(
-        //                   backgroundColor: appColors.royalBlue,
-        //                   foregroundColor: Colors.white,
-        //                 ),
-        //                 icon: const Icon(Icons.arrow_right_alt),
-        //                 label: const Text("part 7"),
-        //               ),
-        //               OutlinedButton.icon(
-        //                 onPressed: (){
-        //                   setState(() {
-        //                     changeScreen8();
-        //                   });
-        //                   Navigator.of(context).pop();
-        //                 },
-        //                 style: OutlinedButton.styleFrom(
-        //                   backgroundColor: appColors.royalBlue,
-        //                   foregroundColor: Colors.white,
-        //                 ),
-        //                 icon: const Icon(Icons.arrow_right_alt),
-        //                 label: const Text("part 8"),
-        //               ),
-        //             ],
-        //           ),
-        //         ),
-        // ),
+
         body: Container(
           width: double.infinity,
           decoration: const BoxDecoration(
