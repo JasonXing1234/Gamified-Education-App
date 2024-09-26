@@ -42,17 +42,17 @@ const reading2 = [
     ],
     "assets/lesson_images/settings_images/find_settings_4.png",
   ),
-  ReadingMultipleAnswersQuestion(
-    "QUESTION",
-    [
-      "Why would you want to limit who can see your posts?",
-    ],
-    "no",
-    [
-      "textField",
-    ],
-    [],
-  ),
+  // ReadingMultipleAnswersQuestion(
+  //   "QUESTION",
+  //   [
+  //     "Why would you want to limit who can see your posts?",
+  //   ],
+  //   "no",
+  //   [
+  //     "textField",
+  //   ],
+  //   [],
+  // ),
   ReadingPage(
     "POST VISIBILITY",
     [
@@ -96,17 +96,17 @@ const reading2 = [
     ],
     "assets/lesson_images/settings_images/fb_post_visibility_5.png",
   ),
-  ReadingMultipleAnswersQuestion(
-    "QUESTION",
-    [
-      "Why would you want to limit who is able to follow you or interact with your posts?",
-    ],
-    "no",
-    [
-      "textField",
-    ],
-    [],
-  ),
+  // ReadingMultipleAnswersQuestion(
+  //   "QUESTION",
+  //   [
+  //     "Why would you want to limit who is able to follow you or interact with your posts?",
+  //   ],
+  //   "no",
+  //   [
+  //     "textField",
+  //   ],
+  //   [],
+  // ),
   ReadingPage(
     "POST INTERACTION",
     [
@@ -142,28 +142,28 @@ const reading2 = [
     ],
     "assets/lesson_images/settings_images/fb_interaction_4.png",
   ),
-  ReadingMultipleAnswersQuestion(
-    "QUESTION",
-    [
-      "What does it mean to actively use Facebook?",
-    ],
-    "no",
-    [
-      "textField",
-    ],
-    [],
-  ),
-  ReadingMultipleAnswersQuestion(
-    "QUESTION",
-    [
-      "Why would you want to limit who is able to see when you’re actively using Facebook?",
-    ],
-    "no",
-    [
-      "textField",
-    ],
-    [],
-  ),
+  // ReadingMultipleAnswersQuestion(
+  //   "QUESTION",
+  //   [
+  //     "What does it mean to actively use Facebook?",
+  //   ],
+  //   "no",
+  //   [
+  //     "textField",
+  //   ],
+  //   [],
+  // ),
+  // ReadingMultipleAnswersQuestion(
+  //   "QUESTION",
+  //   [
+  //     "Why would you want to limit who is able to see when you’re actively using Facebook?",
+  //   ],
+  //   "no",
+  //   [
+  //     "textField",
+  //   ],
+  //   [],
+  // ),
   ReadingPage(
     "ACTIVELY USING FACEBOOK STATUS",
     [
@@ -187,28 +187,28 @@ const reading2 = [
     ],
     "assets/lesson_images/settings_images/fb_active_status_2.png",
   ),
-  ReadingMultipleAnswersQuestion(
-    "QUESTION",
-    [
-      "What does it mean to block someone on Facebook?",
-    ],
-    "no",
-    [
-      "textField",
-    ],
-    [],
-  ),
-  ReadingMultipleAnswersQuestion(
-    "QUESTION",
-    [
-      "Why would you want to block someone on Facebook?",
-    ],
-    "no",
-    [
-      "textField",
-    ],
-    [],
-  ),
+  // ReadingMultipleAnswersQuestion(
+  //   "QUESTION",
+  //   [
+  //     "What does it mean to block someone on Facebook?",
+  //   ],
+  //   "no",
+  //   [
+  //     "textField",
+  //   ],
+  //   [],
+  // ),
+  // ReadingMultipleAnswersQuestion(
+  //   "QUESTION",
+  //   [
+  //     "Why would you want to block someone on Facebook?",
+  //   ],
+  //   "no",
+  //   [
+  //     "textField",
+  //   ],
+  //   [],
+  // ),
   ReadingPage(
     "BLOCKING USERS",
     [
@@ -240,28 +240,28 @@ const reading2 = [
     ],
     "assets/lesson_images/settings_images/instagram.png",
   ),
-  ReadingMultipleAnswersQuestion(
-    "QUESTION",
-    [
-      "What does it mean to have a private account?",
-    ],
-    "no",
-    [
-      "textField",
-    ],
-    [],
-  ),
-  ReadingMultipleAnswersQuestion(
-    "QUESTION",
-    [
-      "Why would you want to set your Instagram to private?",
-    ],
-    "no",
-    [
-      "textField",
-    ],
-    [],
-  ),
+  // ReadingMultipleAnswersQuestion(
+  //   "QUESTION",
+  //   [
+  //     "What does it mean to have a private account?",
+  //   ],
+  //   "no",
+  //   [
+  //     "textField",
+  //   ],
+  //   [],
+  // ),
+  // ReadingMultipleAnswersQuestion(
+  //   "QUESTION",
+  //   [
+  //     "Why would you want to set your Instagram to private?",
+  //   ],
+  //   "no",
+  //   [
+  //     "textField",
+  //   ],
+  //   [],
+  // ),
   ReadingPage(
     "PRIVATE INSTAGRAM",
     [
@@ -284,17 +284,17 @@ const reading2 = [
     ],
     "assets/lesson_images/settings_images/insta_private_account_2.png",
   ),
-  ReadingMultipleAnswersQuestion(
-    "QUESTION",
-    [
-      "Why would you want to update who can message you on Instagram?",
-    ],
-    "no",
-    [
-      "textField",
-    ],
-    [],
-  ),
+  // ReadingMultipleAnswersQuestion(
+  //   "QUESTION",
+  //   [
+  //     "Why would you want to update who can message you on Instagram?",
+  //   ],
+  //   "no",
+  //   [
+  //     "textField",
+  //   ],
+  //   [],
+  // ),
   ReadingPage(
     "LIMITING MESSAGES",
     [
@@ -337,17 +337,17 @@ const reading2 = [
     ],
     "assets/lesson_images/settings_images/insta_messaging_5.png",
   ),
-  ReadingMultipleAnswersQuestion(
-    "QUESTION",
-    [
-      "Why would you want to limit who can respond to your stories on Instagram?",
-    ],
-    "no",
-    [
-      "textField",
-    ],
-    [],
-  ),
+  // ReadingMultipleAnswersQuestion(
+  //   "QUESTION",
+  //   [
+  //     "Why would you want to limit who can respond to your stories on Instagram?",
+  //   ],
+  //   "no",
+  //   [
+  //     "textField",
+  //   ],
+  //   [],
+  // ),
   ReadingPage(
     "LIMITING STORY REPLIES",
     [
@@ -370,17 +370,17 @@ const reading2 = [
     ],
     "assets/lesson_images/settings_images/insta_stories_2.png",
   ),
-  ReadingMultipleAnswersQuestion(
-    "QUESTION",
-    [
-      "Why would you want to limit who can tag or mention you on Instagram?",
-    ],
-    "no",
-    [
-      "textField",
-    ],
-    [],
-  ),
+  // ReadingMultipleAnswersQuestion(
+  //   "QUESTION",
+  //   [
+  //     "Why would you want to limit who can tag or mention you on Instagram?",
+  //   ],
+  //   "no",
+  //   [
+  //     "textField",
+  //   ],
+  //   [],
+  // ),
   ReadingPage(
     "LIMITING TAGS & MENTIONS",
     [
@@ -403,17 +403,17 @@ const reading2 = [
     ],
     "assets/lesson_images/settings_images/insta_tags_mentions_2.png",
   ),
-  ReadingMultipleAnswersQuestion(
-    "QUESTION",
-    [
-      "Why would you want to filter what other people can comment on your Instagram Account?",
-    ],
-    "no",
-    [
-      "textField",
-    ],
-    [],
-  ),
+  // ReadingMultipleAnswersQuestion(
+  //   "QUESTION",
+  //   [
+  //     "Why would you want to filter what other people can comment on your Instagram Account?",
+  //   ],
+  //   "no",
+  //   [
+  //     "textField",
+  //   ],
+  //   [],
+  // ),
   ReadingPage(
     "FILTERING COMMENTS",
     [
@@ -457,17 +457,17 @@ const reading2 = [
     ],
     "assets/lesson_images/settings_images/insta_comments_5.png",
   ),
-  ReadingMultipleAnswersQuestion(
-    "QUESTION",
-    [
-      "Why would you want to block users on Instagram?",
-    ],
-    "no",
-    [
-      "textField",
-    ],
-    [],
-  ),
+  // ReadingMultipleAnswersQuestion(
+  //   "QUESTION",
+  //   [
+  //     "Why would you want to block users on Instagram?",
+  //   ],
+  //   "no",
+  //   [
+  //     "textField",
+  //   ],
+  //   [],
+  // ),
   ReadingPage(
     "BLOCKING USERS",
     [

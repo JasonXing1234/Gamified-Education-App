@@ -5,13 +5,13 @@ import '../reading_page.dart';
 
 // Social Media Norms
 
-var reading1 = [
-  const ReadingPage(
+const reading1 = [
+  ReadingPage(
     "WHAT IS A NORM?",
     ["A norm is the way which something is usually done"],
     "no",
   ),
-  const ReadingPage(
+  ReadingPage(
     "IMPACT",
     [
       "When you follow the norms of social media, you may have a better experience.",
@@ -19,22 +19,7 @@ var reading1 = [
     ],
     "assets/lesson_images/social_media_norms_images/computer.png",
   ),
-  const ReadingQuestion(
-    "QUESTION",
-    [
-      "Why do we follow norms when we use social media?",
-    ],
-    "no",
-    [
-      "So we and others can have a good experience online",
-      "To gain popularity on social media",
-      "Because it's fun to follow rules",
-      "Because everyone else follows them",
-    ],
-    "So we and others can have a good experience online",
-    "explain",
-  ),
-  const ReadingPage(
+  ReadingPage(
     "PLATFORMS",
     [
       "On social media platforms anyone is able to create a profile.",
@@ -42,7 +27,7 @@ var reading1 = [
     ],
     "no",
   ),
-  const ReadingPage(
+  ReadingPage(
     // TODO: Maybe split this into two slides, if you don't want scrolling
     "INSTAGRAM NORMS",
     [
@@ -64,7 +49,7 @@ var reading1 = [
   //     ],
   //     "Yes",
   // ),
-  const ReadingPage(
+  ReadingPage(
     "FACEBOOK NORMS",
     [
       "Common to create your own or share other's content",
@@ -76,40 +61,40 @@ var reading1 = [
   ),
 
   // TODO: With checking answers should there be an answer explanation right after?
-  const ReadingMultipleAnswersQuestion(
-    "QUESTION",
-    [
-      "What happens when you become 'Friends' with someone on Facebook?",
-    ],
-    "no",
-    [
-      "textField",
-    ],
-    [],
-  ),
-  const ReadingMultipleAnswersQuestion(
-    "QUESTION",
-    [
-      "Why would you use Instagram instead of Facebook?",
-    ],
-    "no",
-    [
-      "textField",
-    ],
-    [],
-  ),
-  const ReadingMultipleAnswersQuestion(
-    "QUESTION",
-    [
-      "Why would you use Facebook instead of Instagram?",
-    ],
-    "no",
-    [
-      "textField",
-    ],
-    [],
-  ),
-  const ReadingPage(
+  // ReadingMultipleAnswersQuestion(
+  //   "QUESTION",
+  //   [
+  //     "What happens when you become 'Friends' with someone on Facebook?",
+  //   ],
+  //   "no",
+  //   [
+  //     "textField",
+  //   ],
+  //   [],
+  // ),
+  // ReadingMultipleAnswersQuestion(
+  //   "QUESTION",
+  //   [
+  //     "Why would you use Instagram instead of Facebook?",
+  //   ],
+  //   "no",
+  //   [
+  //     "textField",
+  //   ],
+  //   [],
+  // ),
+  // ReadingMultipleAnswersQuestion(
+  //   "QUESTION",
+  //   [
+  //     "Why would you use Facebook instead of Instagram?",
+  //   ],
+  //   "no",
+  //   [
+  //     "textField",
+  //   ],
+  //   [],
+  // ),
+  ReadingPage(
     "PERSONAL FACEBOOK",
     [
       "These are the accounts you automatically have when you sign up for Facebook.",
@@ -117,7 +102,7 @@ var reading1 = [
     ],
     "assets/lesson_images/social_media_norms_images/facebook_personal.png",
   ),
-  const ReadingPage(
+  ReadingPage(
     "FACEBOOK 'FRIENDS'",
     [
       "Just because Facebook calls it a 'Friend' does not mean that all of your Facebook 'Friends' are truly your friend.",
@@ -125,7 +110,7 @@ var reading1 = [
     ],
     "assets/lesson_images/social_media_norms_images/facebook_personal.png",
   ),
-  const ReadingPage(
+  ReadingPage(
     "WHY CREATE A PERSONAL FACEBOOK?",
     [
       "Someone may create a user account to connect with their Friends over social media.",
@@ -133,7 +118,7 @@ var reading1 = [
     ],
     "assets/lesson_images/social_media_norms_images/facebook_personal.png",
   ),
-  const ReadingPage(
+  ReadingPage(
     "FACEBOOK GROUP",
     [
       "These are accounts where you can talk with people about specific interests.",
@@ -142,28 +127,28 @@ var reading1 = [
     ],
     "assets/lesson_images/social_media_norms_images/facebook_group.png",
   ),
-  const ReadingPage(
+  ReadingPage(
     "WHY CREATE A GROUP",
     [
       "Someone may create a group to have a place to discuss something they are interested in with others. Groups tend to be interactive."
     ],
     "assets/lesson_images/social_media_norms_images/facebook_group.png",
   ),
-  const ReadingPage(
+  ReadingPage(
     "FACEBOOK PAGE",
     [
       "These accounts are normally about a business or interest. They are less interactive.",
     ],
     "assets/lesson_images/social_media_norms_images/facebook_page.png",
   ),
-  const ReadingPage(
+  ReadingPage(
     "WHY CREATE A PAGE?",
     [
       "Someone may create a page to share information about events and news. People don’t often comment on the posts."
     ],
     "assets/lesson_images/social_media_norms_images/facebook_page.png",
   ),
-  const ReadingPage(
+  ReadingPage(
     "REMEMBER",
     [
       "On Facebook, it is NOT common to create different personal accounts for different purposes.",
@@ -172,7 +157,7 @@ var reading1 = [
     ],
     "no",
   ),
-  const ReadingPage(
+  ReadingPage(
     "PERSONAL INSTAGRAM",
     [
       "These are the accounts you automatically have when you sign up for Instagram.",
@@ -180,7 +165,7 @@ var reading1 = [
     ],
     "assets/lesson_images/social_media_norms_images/instagram_personal.png",
   ),
-  const ReadingPage(
+  ReadingPage(
     "WHY CREATE A PERSONAL INSTAGRAM?",
     [
       "So that they can post about themselves and their lives for their friends to see.",
@@ -188,63 +173,63 @@ var reading1 = [
     ],
     "assets/lesson_images/social_media_norms_images/instagram_personal.png",
   ),
-  const ReadingPage(
+  ReadingPage(
     "ALTERNATE PERSONAL (FINSTA)",
     [
       "These are accounts which are typically used by individuals to post things that they only want certain people to see",
     ],
     "assets/lesson_images/social_media_norms_images/instagram_finsta.png",
   ),
-  const ReadingPage(
+  ReadingPage(
     "WHY CREATE A FINSTA?",
     [
       "So that they can post about themselves and their lives for a limited number of friends to see."
     ],
     "assets/lesson_images/social_media_norms_images/instagram_finsta.png",
   ),
-  const ReadingPage(
+  ReadingPage(
     "BUSINESS ACCOUNTS",
     [
       "These are accounts which are typically used to post images of promotionals or products which are for sale",
     ],
     "assets/lesson_images/social_media_norms_images/instagram_business.png",
   ),
-  const ReadingPage(
+  ReadingPage(
     "WHY CREATE A BUSINESS ACCOUNT?",
     [
       "Someone (or a company) would use a business profile when they want to advertise their products which are for sale",
     ],
     "assets/lesson_images/social_media_norms_images/instagram_business.png",
   ),
-  const ReadingPage(
+  ReadingPage(
     "VERIFIED CELEBRITY & INFLUENCER",
     [
       "These are accounts which are used by a celebrity or influencer. These accounts will have a 'verified' symbol.",
     ],
     "assets/images/verifiedSymbol.png",
   ),
-  const ReadingPage(
+  ReadingPage(
     "WHY CREATE AN INFLUENCER ACCOUNT?",
     [
       "A celebrity or influencer uses these accounts to post about their lives. They may promote products or themselves.",
     ],
     "assets/lesson_images/social_media_norms_images/instagram_influencer.png",
   ),
-  const ReadingPage(
+  ReadingPage(
     "TOPIC / INTEREST ACCOUNT",
     [
       "These are accounts which post about certain topics or interests. These include meme accounts, fan accounts, etc."
     ],
     "assets/lesson_images/social_media_norms_images/instagram_topic.png",
   ),
-  const ReadingPage(
+  ReadingPage(
     "WHY CREATE A TOPIC ACCOUNT?",
     [
       "Someone may use a topic/interest account to post exclusively about things which they are interested in.",
     ],
     "assets/lesson_images/social_media_norms_images/instagram_topic.png",
   ),
-  const ReadingPage(
+  ReadingPage(
     "REMEMBER",
     [ // TODO: edited the order of this text and the wording, should this match the original?
       "Anyone can create a social media account",
