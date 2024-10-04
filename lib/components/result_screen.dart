@@ -29,11 +29,13 @@ class ResultScreen extends StatelessWidget {
 
   void _updateField(int quizResult) async {
     try {
-      DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('quizScoreList').get();
-      List<dynamic> scores = snapshot.value as List<dynamic>;
-      scores[quizNumber - 1] = quizResult;
+      DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('quizList').get();
+      List<dynamic> quizzes = snapshot.value as List<dynamic>;
+      quizzes[quizNumber - 1]['quizScore'] = quizResult;
+
+      // Update the database with the modified quizzes list
       await _database.child('profile/${user2?.uid}').update({
-        'quizScoreList': scores,
+        'quizzes': quizzes,
       });
     } catch (e) {
       print('Failed to update field: $e');

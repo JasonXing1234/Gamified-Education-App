@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:quiz/models/quizModel.dart';
+import 'package:quiz/models/readingModel.dart';
 
 // ignore: must_be_immutable
 class UserModel extends Equatable {
@@ -10,8 +12,8 @@ class UserModel extends Equatable {
   String? profilePic;
   String? bannerImage;
   int? numStars;
-  List<int>? quizScoreList;
-  List<int>? readingList;
+  List<QuizModel>? quizList;
+  List<readingModel>? readingList;
   List<bool>? accessories;
   List<bool>? ifEachModuleComplete;
 
@@ -23,7 +25,7 @@ class UserModel extends Equatable {
         this.bannerImage,
         this.key,
         this.userName,
-        this.quizScoreList,
+        this.quizList,
         this.readingList,
         this.numStars,
         this.accessories,
@@ -42,10 +44,10 @@ class UserModel extends Equatable {
     key = map['key'];
     userName = map['userName'];
     numStars = map['numStars'];
-    if (map['quizScoreList'] != null) {
-      quizScoreList = <int>[];
-      map['quizScoreList'].forEach((value) {
-        quizScoreList!.add(value);
+    if (map['quizList'] != null) {
+      quizList = <QuizModel>[];
+      map['quizList'].forEach((value) {
+        quizList!.add(QuizModel.fromJson(Map<String, dynamic>.from(value)));
       });
     }
     if (map['accessories'] != null) {
@@ -61,9 +63,9 @@ class UserModel extends Equatable {
       });
     }
     if (map['readingList'] != null) {
-      readingList = <int>[];
+      readingList = <readingModel>[];
       map['readingList'].forEach((value) {
-        readingList!.add(value);
+        readingList!.add(readingModel.fromJson(Map<String, dynamic>.from(value)));
       });
     }
   }
@@ -75,10 +77,10 @@ class UserModel extends Equatable {
       "deviceToken": deviceToken,
       'profilePic': profilePic,
       'bannerImage': bannerImage,
-      'quizScoreList': quizScoreList,
+      'quizList': quizList?.map((e) => e.toJson()).toList(),
       'userName': userName,
       'numStars': numStars,
-      'readingList': readingList,
+      'readingList': readingList?.map((e) => e.toJson()).toList(),
       'accessories': accessories,
       'ifEachModuleComplete': ifEachModuleComplete
     };
@@ -94,7 +96,7 @@ class UserModel extends Equatable {
     profilePic,
     bannerImage,
     numStars,
-    quizScoreList,
+    quizList,
     readingList,
     accessories,
     ifEachModuleComplete

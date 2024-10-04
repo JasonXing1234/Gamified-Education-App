@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
 import 'package:quiz/components/buttons/menu_button.dart';
@@ -37,6 +39,8 @@ class _QuestionsScreenState extends State<QuizScreen> {
   TextEditingController _controller = TextEditingController();
   String tempAnswer = "";
   int selectedIndex = 10;
+  User? user2 = FirebaseAuth.instance.currentUser;
+  late DatabaseReference _database;
 
   //For multiple answer options
   List<String> selectedAnswers = [];
@@ -114,7 +118,31 @@ class _QuestionsScreenState extends State<QuizScreen> {
   }
 
 
-  void nextQuestion(String answer) {
+  Future<void> nextQuestion(String answer) async {
+    final userId = user2?.uid;
+
+    if (userId != null) {
+      try {
+        await _database.child('profile').child(userId).child('quizList')
+            .child('quiz${widget.quizNumber.toString()}')
+            .child('questions')
+            .child(questionIndex.toString())
+            .update({
+          'endTimeStamp': DateTime.now().toIso8601String(),
+        });
+        if (questionIndex < quizQuestions.length - 1) {
+          await _database.child('profile').child(userId).child('quizList')
+              .child(widget.quizNumber.toString())
+              .child('questions')
+              .child(questionIndex.toString())
+              .update({
+            'beginTimeStamp': DateTime.now().toIso8601String(),
+          });
+        }
+      } catch (e) {
+        print('Error updating timestamps: $e');
+      }
+    }
     setState(() {
       if (questionIndex < quizQuestions.length - 1) {
         questionIndex++;
