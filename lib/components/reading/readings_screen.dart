@@ -138,6 +138,22 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     });
   }
 
+  Future<void> prevReadingPage({String userAnswer = ""}) async {
+    setState(() {
+      readingPageIndex--;
+    });
+    DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('readingList').get();
+    List<dynamic> readings = snapshot.value as List<dynamic>;
+    readings[widget.readingNumber - 1] = readingPageIndex;
+    await _database.child('profile/${user2?.uid}').update({
+      'readingList': readings,
+    });
+    //_controller.dispose();
+    setState(() {
+      _readingListFuture = _fetchReadingList();  // Refresh FutureBuilder
+    });
+  }
+
   Future<void> backToFirstPage() async {
     DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('readingList').get();
     List<dynamic> readings = snapshot.value as List<dynamic>;
@@ -248,9 +264,26 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
               const Expanded(
                 child: MenuButton(),
               ),
-              const Expanded(
-                child: SpeedButton(),
+              Expanded(
+                child: NextButton(
+                  buttonText: "BACK",
+                  onTap: () {
+                    setState(() {
+                      if (readingPageIndex > 0) {
+                        prevReadingPage();
+                      }
+
+                      // Clear Answers for next question
+                      selectedAnswerIndex = 10;
+                      selectedAnswers = [];
+
+                    });
+                  },
+                  disabled: readingPageIndex == 0,
+                  secondary: true,
+                ),
               ),
+              const SizedBox(width: 20,),
               Expanded(
                 child: NextButton(
                   buttonText: readingPageIndex == readingPages.length -1 ? "FINISH" : "NEXT",
