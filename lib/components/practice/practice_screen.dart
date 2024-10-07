@@ -119,10 +119,10 @@ class _PracticeScreenState extends State<PracticeScreen> {
 
   Future<void> recordStar() async {
     if (questionIndex == practiceQuestions.length - 1) {
-      DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('numStars').get();
-      int numStars = snapshot.value as int;
+      DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('numTickets').get();
+      int numTickets = snapshot.value as int;
       await _database.child('profile/${user2?.uid}').update({
-        'numStars': numStars+1,
+        'numTickets': numTickets+1,
       });
     }
   }

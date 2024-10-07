@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
@@ -136,7 +137,7 @@ class _RewardScreenState extends State<RewardScreen> {
                 style: textStyles.bodyText,
                 textAlign: TextAlign.center,),
 
-              const SizedBox(height: 20,),
+              const SizedBox(height: 40,),
 
               Text(
                 "You Earned",
@@ -144,13 +145,13 @@ class _RewardScreenState extends State<RewardScreen> {
                 textAlign: TextAlign.center,
               ),
 
-              const SizedBox(height: 50,),
+              const SizedBox(height: 20,),
 
-              widget.activityName == "practice" ? Icon( Icons.stars, color: appColors.yellow, size: 200,) : Image.asset(rewardImage),
-
+              widget.activityName == "practice" ? FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: 100,) : Image.asset(rewardImage),
+              
               // TODO: Set up correct character reward: this just shows the current character name and image
               widget.activityName == "practice" ?
-                Text("1 Star", style: textStyles.bodyText, textAlign: TextAlign.center,) :
+                Text("1 Ticket", style: textStyles.heading1, textAlign: TextAlign.center,) :
                 Text("${capitalizeString(lesson.character.currentPhase.name)} ${lesson.character.name}", style: textStyles.bodyText, textAlign: TextAlign.center,),
             ],
           ),
