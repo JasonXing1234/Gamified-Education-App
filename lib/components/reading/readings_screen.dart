@@ -377,7 +377,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                             itemBuilder: (context, index) {
                               return Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 10.0), // Adjust the padding as needed
-                                child: TextBox(currentText: currentReadingPage.text[index]),
+                                child: Text(currentReadingPage.text[index], style: textStyles.mediumBodyText),   //TextBox(currentText: currentReadingPage.text[index]),
                               );
                             },
                           )) : TextBox(currentText: "Click next"),
@@ -450,12 +450,12 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                             ),
 
                           const SizedBox(
-                            height: 20,
+                            height: 10,
                           ),
 
                           currentReadingPage.photo == "no" ? const SizedBox.shrink() : Image.asset(currentReadingPage.photo),
                           const SizedBox(
-                            height: 60,
+                            height: 70,
                           ),
                         ],
                       ),
