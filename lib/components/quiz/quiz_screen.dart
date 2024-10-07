@@ -187,9 +187,9 @@ class _QuestionsScreenState extends State<QuizScreen> {
               const Expanded(
                 child: MenuButton(),
               ),
-              const Expanded(
-                child: SpeedButton(),
-              ),
+              // const Expanded(
+              //   child: SpeedButton(),
+              // ),
               Expanded(
                 child: NextButton(
                   buttonText: questionIndex == quizQuestions.length -1 ? "SUBMIT" : "NEXT",

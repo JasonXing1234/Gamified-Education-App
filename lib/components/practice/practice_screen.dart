@@ -39,7 +39,8 @@ class PracticeScreen extends StatefulWidget {
 }
 
 class _PracticeScreenState extends State<PracticeScreen> {
-  bool isCorrect = true;
+  bool isCorrect = false;
+  bool checkedAnswer = false;
   int questionIndex = 0;
   String tempAnswer = "";
   int selectedIndex = 4;
@@ -117,7 +118,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
     }
   }
 
-  Future<void> recordStar() async {
+  Future<void> recordTicket() async {
     if (questionIndex == practiceQuestions.length - 1) {
       DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('numTickets').get();
       int numTickets = snapshot.value as int;
@@ -129,6 +130,10 @@ class _PracticeScreenState extends State<PracticeScreen> {
 
   Future<void> nextQuestion(String answer) async {
     setState(() {
+      checkedAnswer = false;
+      isCorrect = false;
+      selectedIndex = 10;
+      tempAnswer = "";
       if (questionIndex < practiceQuestions.length - 1) {
         questionIndex++;
       }
@@ -199,31 +204,37 @@ class _PracticeScreenState extends State<PracticeScreen> {
                 const Expanded(
                   child: MenuButton(),
                 ),
-                const Expanded(
-                  child: SpeedButton(),
-                ),
+                // const Expanded(
+                //   child: SpeedButton(),
+                // ),
                 Expanded(
                   child: NextButton(
-                    buttonText: questionIndex == practiceQuestions.length -1 ? "FINISH" : "NEXT",
+                    buttonText: questionIndex == practiceQuestions.length -1 && isCorrect == true ? "FINISH" : isCorrect == false ? "CHECK" : "NEXT" ,
                     onTap: () {
                       setState(() {
-                        if (questionIndex == practiceQuestions.length - 1) {
+                        if (isCorrect && checkedAnswer && questionIndex == practiceQuestions.length - 1) {
                           // End practice
-                          recordStar();
-
+                          recordTicket();
                           nextQuestion(tempAnswer);
                         }
-                        else if(currentQuestion.correctAnswer == tempAnswer){
-                          isCorrect = true;
+                        else if (isCorrect && checkedAnswer) {
+                          // TODO: This may have unexpected behavior is user gets the right answer then changes answer to incorrect response
+                          // Move onto next question after correct and checked have been set
                           nextQuestion(tempAnswer);
+                          selectedIndex = 10;
+                        }
+                        else if(currentQuestion.correctAnswer == tempAnswer){
+                          // Set correct and checked
+                          isCorrect = true;
+                          checkedAnswer = true;
                         }
                         else{
                           isCorrect = false;
+                          checkedAnswer = true;
                         }
-                        selectedIndex = 10;
                       });
                     },
-                    disabled: false,
+                    disabled: tempAnswer == "",
                   ),
                 ),
               ],
@@ -245,7 +256,6 @@ class _PracticeScreenState extends State<PracticeScreen> {
                     currentQuestion.context == "no" ? SizedBox.shrink() : const SizedBox(height: 30,),
                     currentQuestion.photo == 'no' ? SizedBox.shrink() : Image.asset(currentQuestion.photo),
                     currentQuestion.photo == 'no' ? SizedBox.shrink() : const SizedBox(height: 30,),
-
 
                     counter == 2 ? SizedBox.shrink() : TextBox(
                       currentText: currentQuestion,
@@ -277,12 +287,17 @@ class _PracticeScreenState extends State<PracticeScreen> {
                       height: 15,
                     ),
 
-                    isCorrect == false ? Text(
+                    isCorrect == false && checkedAnswer == true ? Text(
                       'The answer was incorrect. Please try again.',
                       textAlign: TextAlign.left,
                       style: textStyles.customBodyText(appColors.red, 24),
                     ) : SizedBox.shrink(),
 
+                    isCorrect == true && checkedAnswer == true ? Text(
+                      'Correct!',
+                      textAlign: TextAlign.left,
+                      style: textStyles.customBodyText(appColors.green, 24),
+                    ) : SizedBox.shrink(),
 
                     const SizedBox(
                       height: 60,
