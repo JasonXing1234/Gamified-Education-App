@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz/components/buttons/ListenButton.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
 import 'package:quiz/components/reading/reading_page.dart';
 import 'package:quiz/components/reading/readings/reading1.dart';
@@ -224,7 +225,6 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
             style: textStyles.heading1,
           ),
         ),
-
         leadingWidth: 100, // Gives space for the back button
         leading: GestureDetector(
           onTap: () {
@@ -261,8 +261,11 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Row(
             children: [
+              // const Expanded(
+              //   child: MenuButton(),
+              // ),
               const Expanded(
-                child: MenuButton(),
+                  child: ListenButton()
               ),
               Expanded(
                 child: NextButton(
