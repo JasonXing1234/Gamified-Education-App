@@ -6,6 +6,7 @@ import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/components/practice/practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
 import 'package:quiz/components/question.dart';
 
+import 'buttons/ListenButton.dart';
 import 'quiz/quiz_questions/quiz2.dart';
 import 'quiz/quiz_questions/quiz3.dart';
 import 'quiz/quiz_questions/quiz4.dart';
@@ -143,7 +144,7 @@ class ResultScreen extends StatelessWidget {
             child: Row(
               children: [
                 const Expanded(
-                  child: MenuButton(),
+                    child: ListenButton(),
                 ),
                 const Expanded(
                   child: SpeedButton(),

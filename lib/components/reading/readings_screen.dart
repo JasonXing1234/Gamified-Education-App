@@ -261,9 +261,6 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Row(
             children: [
-              // const Expanded(
-              //   child: MenuButton(),
-              // ),
               const Expanded(
                   child: ListenButton()
               ),

@@ -6,6 +6,7 @@ import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/components/question.dart';
 import 'package:quiz/styles/app_colors.dart';
 
+import '../buttons/ListenButton.dart';
 import '../progress_bar/progress_bar.dart';
 import 'quiz_questions/quiz2.dart';
 import 'quiz_questions/quiz3.dart';
@@ -185,7 +186,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
           child: Row(
             children: [
               const Expanded(
-                child: MenuButton(),
+                  child: ListenButton(),
               ),
               // const Expanded(
               //   child: SpeedButton(),
