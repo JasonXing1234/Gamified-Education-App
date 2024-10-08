@@ -37,7 +37,7 @@ class _SignUpPageState extends State<SignUpPage> {
         readingList: [0, 0, 0, 0, 0, 0],
         quizScoreList:  [0, 0, 0, 0, 0, 0],
         accessories: List<bool>.filled(20, false),
-        numStars: 0,
+        numTickets: 0,
           ifEachModuleComplete: List<bool>.filled(6, false),
       );
       print('Failed to update field: prior');

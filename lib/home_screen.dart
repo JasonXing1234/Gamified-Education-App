@@ -1,21 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quiz/components/lesson/lesson_dashboard.dart';
 import 'package:quiz/components/lesson/lesson_screen.dart';
 import 'package:quiz/components/lesson/all_lessons.dart';
 
-import 'package:quiz/components/practice/practice_screen.dart';
-import 'package:quiz/components/quiz/quiz_screen.dart';
-import 'package:quiz/components/result_screen.dart';
-import 'package:quiz/components/practice/practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
 
-import 'components/quiz/quiz_questions/quiz1.dart';
-import 'components/quiz/quiz_questions/quiz2.dart';
-import 'components/quiz/quiz_questions/quiz3.dart';
-import 'components/quiz/quiz_questions/quiz4.dart';
-import 'components/quiz/quiz_questions/quiz5.dart';
-import 'components/quiz/quiz_questions/quiz6.dart';
 
 import '../SignIn.dart';
 import '../styles/app_colors.dart';
@@ -34,7 +25,7 @@ class _HomeState extends State<Home> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String activeScreen = 'start-screen';
   int resultNumber = 0;
-  Future<int?>? numStars;
+  Future<int?>? numTickets;
   final DatabaseReference _database = FirebaseDatabase.instance.ref();
   User? user2;
 
@@ -48,7 +39,7 @@ class _HomeState extends State<Home> {
     super.initState();
     user2 = FirebaseAuth.instance.currentUser;
     // Fetch readings once the widget is initialized
-    numStars = _fetchReadingList();
+    numTickets = _fetchReadingList();
   }
 
   Future<int?> _fetchReadingList() async {
@@ -57,7 +48,7 @@ class _HomeState extends State<Home> {
         DataSnapshot snapshot = await _database
             .child('profile')
             .child(user2!.uid)
-            .child('numStars')
+            .child('numTickets')
             .get();
 
         if (snapshot.value != null) {
@@ -69,172 +60,6 @@ class _HomeState extends State<Home> {
         print('Error fetching reading list: $e');
       }
     }
-  }
-
-
-  // void readingScreen1() {
-  //   setState(() {
-  //     activeScreen = 'reading-screen1';
-  //   });
-  // }
-
-  void changeScreen1() {
-    setState(() {
-      activeScreen = 'question-screen';
-    });
-  }
-
-  void changeScreen5() {
-    setState(() {
-      activeScreen = 'question-screen5';
-    });
-  }
-  void changeScreen2() {
-    setState(() {
-      activeScreen = 'question-screen2';
-    });
-  }
-  void changeScreen3() {
-    setState(() {
-      activeScreen = 'question-screen3';
-    });
-  }
-  void changeScreen4() {
-    setState(() {
-      activeScreen = 'question-screen4';
-    });
-  }
-  void changeScreen6() {
-    setState(() {
-      activeScreen = 'question-screen6';
-    });
-  }
-  void changeScreen7() {
-    setState(() {
-      activeScreen = 'question-screen7';
-    });
-  }
-  void changeScreen8() {
-    setState(() {
-      activeScreen = 'question-screen8';
-    });
-  }
-  void changeScreen9() {
-    setState(() {
-      activeScreen = 'question-screen9';
-    });
-  }
-  // void quizScreen1() {
-  //   setState(() {
-  //     activeScreen = 'quiz-screen1';
-  //   });
-  // }
-
-  // void quizScreen2() {
-  //   setState(() {
-  //     activeScreen = 'quiz-screen2';
-  //   });
-  // }
-  //
-  // void quizScreen3() {
-  //   setState(() {
-  //     activeScreen = 'quiz-screen3';
-  //   });
-  // }
-  //
-  // void quizScreen4() {
-  //   setState(() {
-  //     activeScreen = 'quiz-screen4';
-  //   });
-  // }
-  //
-  // void quizScreen5() {
-  //   setState(() {
-  //     activeScreen = 'quiz-screen5';
-  //   });
-  // }
-  //
-  // void quizScreen6() {
-  //   setState(() {
-  //     activeScreen = 'quiz-screen6';
-  //   });
-  // }
-
-  List<String> answers = [];
-  void recordAnswer(String answer) {
-    setState(() {
-      answers.add(answer);
-      if (fakeProfilesPractice1.length == answers.length) {
-        activeScreen = 'result-screen';
-      }
-    });
-  }
-
-  // void recordAnswer1(String answer) {
-  //   setState(() {
-  //     answers.add(answer);
-  //     if (quiz1.length == answers.length) {
-  //       activeScreen = 'result-screen';
-  //       resultNumber = 1;
-  //     }
-  //   });
-  // }
-  //
-  // void recordAnswer2(String answer) {
-  //   setState(() {
-  //     answers.add(answer);
-  //     if (quiz2.length == answers.length) {
-  //       activeScreen = 'result-screen';
-  //       resultNumber = 2;
-  //     }
-  //   });
-  // }
-  //
-  // void recordAnswer3(String answer) {
-  //   setState(() {
-  //     answers.add(answer);
-  //     if (quiz3.length == answers.length) {
-  //       activeScreen = 'result-screen';
-  //       resultNumber = 3;
-  //     }
-  //   });
-  // }
-  //
-  // void recordAnswer4(String answer) {
-  //   setState(() {
-  //     answers.add(answer);
-  //     if (quiz4.length == answers.length) {
-  //       activeScreen = 'result-screen';
-  //       resultNumber = 4;
-  //     }
-  //   });
-  // }
-  //
-  // void recordAnswer5(String answer) {
-  //   setState(() {
-  //     answers.add(answer);
-  //     if (quiz5.length == answers.length) {
-  //       activeScreen = 'result-screen';
-  //       resultNumber = 5;
-  //     }
-  //   });
-  // }
-  //
-  // void recordAnswer6(String answer) {
-  //   setState(() {
-  //     answers.add(answer);
-  //     if (quiz6.length == answers.length) {
-  //       activeScreen = 'result-screen';
-  //       resultNumber = 6;
-  //     }
-  //   });
-  // }
-
-  void returnHomeAndResetQuiz() {
-    setState(() {
-      activeScreen = 'start-screen';
-      answers = [];
-    });
   }
 
   @override
@@ -251,17 +76,23 @@ class _HomeState extends State<Home> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              OutlinedButton.icon(
-                label: Text(
-                  "Menu",
-                  style: textStyles.mediumBodyTextWhite,
+              const SizedBox(
+                width: 35,
+              ),
+              Text(
+                "Name",
+                style: textStyles.bodyText,
+              ),
+              const Spacer(),
+              IconButton(
+                onPressed: () {
+                  _scaffoldKey.currentState?.openEndDrawer();
+                },
+                icon: Icon(
+                    Icons.menu,
+                  size: 35,
+                  color: appColors.royalBlue
                 ),
-                onPressed: (){_scaffoldKey.currentState?.openEndDrawer();},
-                style: OutlinedButton.styleFrom(
-                  backgroundColor: appColors.royalBlue,
-                  foregroundColor: Colors.white,
-                ),
-                icon: const Icon(Icons.menu),
               ),
 
               const SizedBox(
@@ -276,62 +107,63 @@ class _HomeState extends State<Home> {
           ),
 
           // User Stats Box
-          Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 5),
-              decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                border: Border.all(color: Colors.black, width: 3.0),
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon( Icons.stars, color: appColors.yellow, size: 60,),
-                      Text("Stars", style: textStyles.mediumBodyText,),
-                      FutureBuilder<int?>(
-                        future: _fetchReadingList(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return const CircularProgressIndicator();
-                          } else if (snapshot.hasError) {
-                            return Text('Error: ${snapshot.error}');
-                          } else if (snapshot.hasData) {
-                            return Text(snapshot.data.toString(), style: textStyles.mediumBodyText,);
-                          } else {
-                            return Text("0", style: textStyles.mediumBodyText,);
-                          }
-                        },
-                      ),
-
-                    ],
-                  ),
-                  const SizedBox(
-                    width: 50,
-                  ),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon( Icons.menu_book_rounded, color: appColors.green, size: 60),
-                      // TODO: Add logic to record the lessons (6) or activities (6*4) completed
-                      Text(
-                        "Lessons",
-                        style: textStyles.mediumBodyText,
-                      ),
-                      Text("0/6", style: textStyles.mediumBodyText,),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
+          // Padding(
+          //     padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+          //   child: Container(
+          //     padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 5),
+          //     decoration: BoxDecoration(
+          //       shape: BoxShape.rectangle,
+          //       border: Border.all(color: Colors.black, width: 3.0),
+          //       borderRadius: BorderRadius.circular(20.0),
+          //     ),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       children: [
+          //         Column(
+          //           mainAxisSize: MainAxisSize.min,
+          //           children: [
+          //             FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: 60,),
+          //             // Icon( Icons.stars, color: appColors.yellow, size: 60,),
+          //             Text("Tickets", style: textStyles.mediumBodyText,),
+          //             FutureBuilder<int?>(
+          //               future: _fetchReadingList(),
+          //               builder: (context, snapshot) {
+          //                 if (snapshot.connectionState == ConnectionState.waiting) {
+          //                   return const CircularProgressIndicator();
+          //                 } else if (snapshot.hasError) {
+          //                   return Text('Error: ${snapshot.error}');
+          //                 } else if (snapshot.hasData) {
+          //                   return Text(snapshot.data.toString(), style: textStyles.mediumBodyText,);
+          //                 } else {
+          //                   return Text("0", style: textStyles.mediumBodyText,);
+          //                 }
+          //               },
+          //             ),
+          //
+          //           ],
+          //         ),
+          //         const SizedBox(
+          //           width: 50,
+          //         ),
+          //         Column(
+          //           mainAxisSize: MainAxisSize.min,
+          //           children: [
+          //             Icon( Icons.menu_book_rounded, color: appColors.green, size: 60),
+          //             // TODO: Add logic to record the lessons (6) or activities (6*4) completed
+          //             Text(
+          //               "Lessons",
+          //               style: textStyles.mediumBodyText,
+          //             ),
+          //             Text("0/6", style: textStyles.mediumBodyText,),
+          //           ],
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          // const SizedBox(
+          //   height: 20,
+          // ),
 
           // Current Activity and Lesson Shortcut
           Padding(
@@ -365,7 +197,7 @@ class _HomeState extends State<Home> {
                     ],
                   ),
                   const SizedBox(
-                    width: 20,
+                    width: 25,
                   ),
                   ElevatedButton(
                     onPressed: (){

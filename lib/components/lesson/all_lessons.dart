@@ -20,7 +20,7 @@ Lesson socialMediaNorms = Lesson(
 
 Lesson settings = Lesson(
   "SETTINGS",
-  lockedCharacter,
+    questionCharacter,
   2
 );
 

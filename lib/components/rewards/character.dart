@@ -3,7 +3,8 @@ enum Phase {
   adult,
   teen,
   baby,
-  egg
+  egg,
+  unknown,
 }
 
 class Character {
