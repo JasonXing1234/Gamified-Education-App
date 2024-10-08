@@ -50,18 +50,18 @@ class TextBox extends StatelessWidget {
             textAlign: TextAlign.left,
             style: textStyles.customBodyText(color, 24),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-            child: TextButton.icon(
-              onPressed: readText,
-              icon: const Icon(Icons.play_arrow),
-              label: const Text("listen to text"),
-              style: TextButton.styleFrom(
-                foregroundColor: color, // Text color
-                textStyle: textStyles.caption,
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+          //   child: TextButton.icon(
+          //     onPressed: readText,
+          //     icon: const Icon(Icons.play_arrow),
+          //     label: const Text("listen to text"),
+          //     style: TextButton.styleFrom(
+          //       foregroundColor: color, // Text color
+          //       textStyle: textStyles.caption,
+          //     ),
+          //   ),
+          // ),
         ],
       )
     );

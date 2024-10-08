@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quiz/components/quiz_results_screen.dart';
 import 'package:quiz/components/lesson/lesson.dart';
 import 'package:quiz/components/lesson/all_lessons.dart';
@@ -38,8 +39,8 @@ class _LessonScreenState extends State<LessonScreen> {
   User? user2;
   List<dynamic> readings = [];
   int startingPageIndex = 0;
-  Future<int?>? numStars;
-  int? tempNumStars;
+  Future<int?>? numTickets;
+  int? tempNumTickets;
 
   @override
   void initState() {
@@ -48,10 +49,10 @@ class _LessonScreenState extends State<LessonScreen> {
 
     _fetchReadingList();
     // Fetch readings once the widget is initialized
-    numStars = _fetchStars();
+    numTickets = _fetchTickets();
   }
 
-  void popScopeFuntion() {numStars = _fetchStars();}
+  void popScopeFuntion() {numTickets = _fetchTickets();}
 
   List purchased = List<dynamic>.filled(20, false);
 
@@ -60,18 +61,18 @@ class _LessonScreenState extends State<LessonScreen> {
 
   // Function to handle when "Yes" is pressed
   Future<void> handleYes() async {
-    tempNumStars = await _fetchStars();
+    tempNumTickets = await _fetchTickets();
     setState(() {
       if (selectedImageIndex != null) {
         purchased[selectedImageIndex!] = true;
         selectedImageIndex = null; // Close the popup
       }
-      tempNumStars = tempNumStars! - 1;
+      tempNumTickets = tempNumTickets! - 1;
     });
     try {
       await _database.child('profile/${user2?.uid}').update({
         'accessories': purchased,
-        'numStars': tempNumStars!
+        'numTickets': tempNumTickets!
       });
 
     } catch (e) {
@@ -87,13 +88,13 @@ class _LessonScreenState extends State<LessonScreen> {
     });
   }
 
-  Future<int?> _fetchStars() async {
+  Future<int?> _fetchTickets() async {
     if (user2 != null) {
       try {
         DataSnapshot snapshot2 = await _database
             .child('profile')
             .child(user2!.uid)
-            .child('numStars')
+            .child('numTickets')
             .get();
 
         if (snapshot2.value != null) {
@@ -260,7 +261,7 @@ class _LessonScreenState extends State<LessonScreen> {
                 children: [
 
                   ActivityButton(
-                    text: "PREP",
+                    text: "PRE-QUIZ",
                     onTap:
                         (){
                       Navigator.push(
@@ -271,7 +272,7 @@ class _LessonScreenState extends State<LessonScreen> {
                   ),
 
                   ActivityButton(
-                    text: "READ",
+                    text: "READING",
                     onTap:
                         (){
                       Navigator.push(
@@ -282,7 +283,7 @@ class _LessonScreenState extends State<LessonScreen> {
                   ),
 
                   ActivityButton(
-                    text: "QUIZ",
+                    text: "POST-QUIZ",
                     onTap:
                         (){
                       Navigator.push(
@@ -291,16 +292,13 @@ class _LessonScreenState extends State<LessonScreen> {
                       );
                     },
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
                 ],
               ),
 
               const SizedBox(height: 15,),
 
               ActivityButton(
-                text: "PRACTICE & EARN STARS", // Drill is practice
+                text: "PRACTICE & EARN TICKETS", // Drill is practice
                 onTap:
                     (){
                   Navigator.push(
@@ -314,9 +312,9 @@ class _LessonScreenState extends State<LessonScreen> {
 
               const SizedBox(height: 5,),
 
-              // Number of Stars
+              // Number of Tickets
               FutureBuilder<int?>(
-                future: _fetchStars(),
+                future: _fetchTickets(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator();
@@ -327,8 +325,10 @@ class _LessonScreenState extends State<LessonScreen> {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon( Icons.stars, color: appColors.yellow, size: textStyles.mediumBodyText.fontSize,),
-                          Text("Stars: ${snapshot.data}", style: textStyles.mediumBodyText,),
+                          FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: textStyles.mediumBodyText.fontSize,),
+
+                          // Icon( Icons.Tickets, color: appColors.yellow, size: textStyles.mediumBodyText.fontSize,),
+                          Text("Tickets: ${snapshot.data}", style: textStyles.mediumBodyText,),
                           Text(snapshot.data.toString(), style: textStyles.mediumBodyText,),
                         ],
                       );
@@ -336,8 +336,9 @@ class _LessonScreenState extends State<LessonScreen> {
                     return Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon( Icons.stars, color: appColors.yellow, size: textStyles.heading1.fontSize,),
-                        Text(" Stars 0", style: textStyles.bodyText,),
+                        FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: textStyles.heading1.fontSize,),
+                        // Icon( Icons.Tickets, color: appColors.yellow, size: textStyles.heading1.fontSize,),
+                        Text(" Tickets 0", style: textStyles.bodyText,),
                       ],
                     );
 
@@ -348,7 +349,7 @@ class _LessonScreenState extends State<LessonScreen> {
               ),
 
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
 
               // Scrollable Accessory List
@@ -387,14 +388,14 @@ class _LessonScreenState extends State<LessonScreen> {
                           children: [
                             ElevatedButton(
                               onPressed: () async {
-                                int? tempInt = await _fetchStars();
+                                int? tempInt = await _fetchTickets();
                                 if (tempInt! > 0) {
                                   handleYes();
                                 }
                                 else{
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      content: const Text("You need 1 star to buy this item"),
+                                      content: const Text("You need 1 ticket to buy this item"),
                                       action: SnackBarAction(
                                         label: "UNDO",
                                         onPressed: () {
@@ -552,7 +553,9 @@ class ImageBox extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Icon( Icons.stars, color: appColors.yellow, size: textStyles.mediumBodyText.fontSize,),
+              child: FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: textStyles.mediumBodyText.fontSize,),
+
+              //Icon( Icons.Tickets, color: appColors.yellow, size: textStyles.mediumBodyText.fontSize,),
 
             ),
 

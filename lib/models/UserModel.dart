@@ -11,7 +11,7 @@ class UserModel extends Equatable {
   String? userName;
   String? profilePic;
   String? bannerImage;
-  int? numStars;
+  int? numTickets;
   List<QuizModel>? quizList;
   List<readingModel>? readingList;
   List<bool>? accessories;
@@ -27,7 +27,7 @@ class UserModel extends Equatable {
         this.userName,
         this.quizList,
         this.readingList,
-        this.numStars,
+        this.numTickets,
         this.accessories,
         this.ifEachModuleComplete
       });
@@ -43,7 +43,7 @@ class UserModel extends Equatable {
     bannerImage = map['bannerImage'];
     key = map['key'];
     userName = map['userName'];
-    numStars = map['numStars'];
+    numStars = map['numTickets'];
     if (map['quizList'] != null) {
       quizList = <QuizModel>[];
       map['quizList'].forEach((value) {
@@ -79,7 +79,7 @@ class UserModel extends Equatable {
       'bannerImage': bannerImage,
       'quizList': quizList?.map((e) => e.toJson()).toList(),
       'userName': userName,
-      'numStars': numStars,
+      'numTickets': numTickets,
       'readingList': readingList?.map((e) => e.toJson()).toList(),
       'accessories': accessories,
       'ifEachModuleComplete': ifEachModuleComplete
@@ -95,7 +95,7 @@ class UserModel extends Equatable {
     userName,
     profilePic,
     bannerImage,
-    numStars,
+    numTickets,
     quizList,
     readingList,
     accessories,
