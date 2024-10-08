@@ -43,7 +43,7 @@ class UserModel extends Equatable {
     bannerImage = map['bannerImage'];
     key = map['key'];
     userName = map['userName'];
-    numStars = map['numTickets'];
+    numTickets = map['numTickets'];
     if (map['quizList'] != null) {
       quizList = <QuizModel>[];
       map['quizList'].forEach((value) {
