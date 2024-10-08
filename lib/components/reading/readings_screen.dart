@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz/components/buttons/ListenButton.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
 import 'package:quiz/components/reading/reading_page.dart';
 import 'package:quiz/components/reading/readings/reading1.dart';
@@ -138,6 +139,22 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     });
   }
 
+  Future<void> prevReadingPage({String userAnswer = ""}) async {
+    setState(() {
+      readingPageIndex--;
+    });
+    DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('readingList').get();
+    List<dynamic> readings = snapshot.value as List<dynamic>;
+    readings[widget.readingNumber - 1] = readingPageIndex;
+    await _database.child('profile/${user2?.uid}').update({
+      'readingList': readings,
+    });
+    //_controller.dispose();
+    setState(() {
+      _readingListFuture = _fetchReadingList();  // Refresh FutureBuilder
+    });
+  }
+
   Future<void> backToFirstPage() async {
     DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('readingList').get();
     List<dynamic> readings = snapshot.value as List<dynamic>;
@@ -208,7 +225,6 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
             style: textStyles.heading1,
           ),
         ),
-
         leadingWidth: 100, // Gives space for the back button
         leading: GestureDetector(
           onTap: () {
@@ -246,11 +262,28 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
           child: Row(
             children: [
               const Expanded(
-                child: MenuButton(),
+                  child: ListenButton()
               ),
-              const Expanded(
-                child: SpeedButton(),
+              Expanded(
+                child: NextButton(
+                  buttonText: "BACK",
+                  onTap: () {
+                    setState(() {
+                      if (readingPageIndex > 0) {
+                        prevReadingPage();
+                      }
+
+                      // Clear Answers for next question
+                      selectedAnswerIndex = 10;
+                      selectedAnswers = [];
+
+                    });
+                  },
+                  disabled: readingPageIndex == 0,
+                  secondary: true,
+                ),
               ),
+              const SizedBox(width: 20,),
               Expanded(
                 child: NextButton(
                   buttonText: readingPageIndex == readingPages.length -1 ? "FINISH" : "NEXT",
@@ -344,7 +377,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                             itemBuilder: (context, index) {
                               return Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 10.0), // Adjust the padding as needed
-                                child: TextBox(currentText: currentReadingPage.text[index]),
+                                child: Text(currentReadingPage.text[index], style: textStyles.mediumBodyText),   //TextBox(currentText: currentReadingPage.text[index]),
                               );
                             },
                           )) : TextBox(currentText: "Click next"),
@@ -417,12 +450,12 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                             ),
 
                           const SizedBox(
-                            height: 20,
+                            height: 10,
                           ),
 
                           currentReadingPage.photo == "no" ? const SizedBox.shrink() : Image.asset(currentReadingPage.photo),
                           const SizedBox(
-                            height: 60,
+                            height: 70,
                           ),
                         ],
                       ),

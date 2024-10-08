@@ -10,12 +10,14 @@ class NextButton extends StatelessWidget {
     required this.disabled,
     required this.onTap,
     this.buttonText = "NEXT",
+    this.secondary = false,
   });
 
   final bool disabled;
   final void Function() onTap;
 
   String buttonText;
+  final bool secondary;
 
 
   // Style Variables
@@ -31,12 +33,15 @@ class NextButton extends StatelessWidget {
     if (disabled) {
       color = appColors.grey;
     }
+    else if (secondary) {
+      color = appColors.lightRoyalBlue;
+    }
     else {
       color = appColors.royalBlue;
     }
 
     return ElevatedButton(
-      onPressed: onTap,
+      onPressed: disabled ? null : onTap,
       style: ElevatedButton.styleFrom(
         //padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10), // Padding for text and border
         fixedSize: const Size(150, 50),
