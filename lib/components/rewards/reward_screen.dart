@@ -55,7 +55,7 @@ class _RewardScreenState extends State<RewardScreen> {
       lesson = socialMediaVSReality;
     }
     else {
-      lesson = Lesson("LESSON", lockedCharacter, 0);
+      lesson = Lesson("LESSON", lockedCharacter, 0, 0.0);
     }
 
 

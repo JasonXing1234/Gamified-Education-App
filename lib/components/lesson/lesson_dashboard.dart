@@ -51,7 +51,7 @@ class _LessonDashboardState extends State<LessonDashboard> {
               Stack(
                 children: [
                   Center(
-                    child: SemiCircleProgressBar(progress: widget.lesson.character == lockedCharacter ? 0.0 : 0.75), // 75% progress,
+                    child: SemiCircleProgressBar(progress: widget.lesson.character == lockedCharacter ? 0.0 : widget.lesson.progress), // 75% progress,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 35, horizontal: 0),

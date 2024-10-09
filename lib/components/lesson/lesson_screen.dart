@@ -191,7 +191,7 @@ class _LessonScreenState extends State<LessonScreen> {
       lesson = socialMediaVSReality;
     }
     else {
-      lesson = Lesson("LESSON", lockedCharacter, 0);
+      lesson = Lesson("LESSON", lockedCharacter, 0, 0.0);
     }
 
 

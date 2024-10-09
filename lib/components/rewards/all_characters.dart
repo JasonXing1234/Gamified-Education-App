@@ -56,5 +56,5 @@ final Character orangeDragon = Character(
       Phase.egg: "assets/character_images/orange_dragon/orange_dragon_adult.png",
       Phase.unknown: "assets/images/question_mark.png",
     },
-    Phase.adult,
+    Phase.teen,
 );
