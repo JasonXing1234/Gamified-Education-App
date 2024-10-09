@@ -1,16 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+
 import 'package:quiz/components/practice/practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
 import 'package:quiz/components/practice/practice_screen.dart';
-import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
-import 'package:quiz/components/quiz/quiz_questions/quiz2.dart';
-import 'package:quiz/components/quiz/quiz_questions/quiz3.dart';
-import 'package:quiz/components/quiz/quiz_questions/quiz4.dart';
-import 'package:quiz/components/quiz/quiz_questions/quiz5.dart';
-import 'package:quiz/components/quiz/quiz_questions/quiz6.dart';
-import 'package:quiz/components/quiz/quiz_screen.dart';
-import 'package:quiz/components/result_screen.dart';
 import 'package:quiz/components/rewards/reward_screen.dart';
 
 class PracticeResultScreen extends StatefulWidget {

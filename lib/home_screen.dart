@@ -1,16 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quiz/components/lesson/lesson_dashboard.dart';
 import 'package:quiz/components/lesson/lesson_screen.dart';
 import 'package:quiz/components/lesson/all_lessons.dart';
 
-
-
-import '../SignIn.dart';
 import '../styles/app_colors.dart';
 import '../styles/text_styles.dart';
+import 'components/menu/menu.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -293,121 +290,14 @@ class _HomeState extends State<Home> {
       ),
     );
 
-    // if (activeScreen == 'question-screen') {
-    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 1,);
-    // }
-    // else if (activeScreen == 'question-screen2') {
-    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 2,);
-    // }
-    // else if (activeScreen == 'question-screen3') {
-    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 3,);
-    // }
-    // else if (activeScreen == 'question-screen4') {
-    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 4,);
-    // }
-    // else if (activeScreen == 'question-screen5') {
-    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 5,);
-    // }
-    // else if (activeScreen == 'question-screen6') {
-    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 6,);
-    // }
-    // else if (activeScreen == 'question-screen7') {
-    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 7,);
-    // }
-    // else if (activeScreen == 'question-screen8') {
-    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 8,);
-    // }
-    // else if (activeScreen == 'question-screen9') {
-    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 9,);
-    // }
-    // else if (activeScreen == 'quiz-screen1') {
-    //   screen = QuizScreen(onSelectAnswer: recordAnswer1, quizNumber: 1,);
-    // }
-    // else if (activeScreen == 'quiz-screen2') {
-    //   screen = QuizScreen(onSelectAnswer: recordAnswer2, quizNumber: 2,);
-    // }
-    // else if (activeScreen == 'quiz-screen3') {
-    //   screen = QuizScreen(onSelectAnswer: recordAnswer3, quizNumber: 3,);
-    // }
-    // else if (activeScreen == 'quiz-screen4') {
-    //   screen = QuizScreen(onSelectAnswer: recordAnswer4, quizNumber: 4,);
-    // }
-    // else if (activeScreen == 'quiz-screen5') {
-    //   screen = QuizScreen(onSelectAnswer: recordAnswer5, quizNumber: 5,);
-    // }
-    // else if (activeScreen == 'quiz-screen6') {
-    //   screen = QuizScreen(onSelectAnswer: recordAnswer6, quizNumber: 6,);
-    // }
-    // else if (activeScreen == 'result-screen') {
-    //   screen = ResultScreen(
-    //     quizNumber: resultNumber,
-    //     userAnswers: answers,
-    //     endQuiz: returnHomeAndResetQuiz,
-    //   );
-    // }
-
     return Scaffold(
         key: _scaffoldKey,
-        endDrawer: Drawer(
-          child: SafeArea(
-            child: Column(
-              children: <Widget>[
-                const SizedBox(height: 40),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.email,
-                      color: appColors.royalBlue,
-                      size: 30,
-                    ),
-                    const SizedBox(width: 20),
-                    Text(
-                      "${FirebaseAuth.instance.currentUser?.email}",
-                      style: textStyles.bodyText,
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 40),
-
-                OutlinedButton.icon(
-                  onPressed: () async {
-                    await FirebaseAuth.instance.signOut();
-                    // Navigate back to the Sign-In page after signing out
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => SignInPage()),
-                    );
-                  },
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: appColors.royalBlue,
-                    foregroundColor: Colors.white,
-                  ),
-                  icon: const Icon(Icons.logout),
-                  label: const Text("Logout"),
-                ),
-
-                const SizedBox(height: 40),
-
-              ],
-            ),
-          ),
-        ),
+        endDrawer: MenuDrawer(),
 
         body: Container(
           width: double.infinity,
           decoration: const BoxDecoration(
             color: Colors.white,
-            // gradient: LinearGradient(
-            //   colors: [
-            //     Color(0x986BF567),
-            //     Colors.white,
-            //   ],
-            //   begin: Alignment.topCenter,
-            //   end: Alignment.bottomCenter,
-            // ),
           ),
           child: screen,
         ),
