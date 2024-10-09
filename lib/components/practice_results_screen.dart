@@ -38,17 +38,9 @@ class _PracticeResultScreenState extends State<PracticeResultScreen> {
     setState(() {
       answers.add(answer);
       if (fakeProfilesPractice1.length == answers.length) {
-        widget.activeScreen = 'result-screen';
+        widget.activeScreen = "reward-screen";
       }
     });
-
-    // setState(() {
-    //   answers.add(answer);
-    //   if (quiz1.length == answers.length) {
-    //     widget.activeScreen = 'result-screen';
-    //     resultNumber = widget.lessonNumber;
-    //   }
-    // });
   }
 
   void recordAnswersPractice2(String answer) {
@@ -85,13 +77,6 @@ class _PracticeResultScreenState extends State<PracticeResultScreen> {
       else {
         screen = PracticeScreen(onSelectAnswer: practiceAnswers[widget.lessonNumber - 1], quizNumber: widget.lessonNumber);
       }
-    }
-    else if (widget.activeScreen == "result-screen") {
-      screen = ResultScreen(
-        quizNumber: resultNumber,
-        userAnswers: answers,
-        endQuiz: returnHome,
-      );
     }
     else if (widget.activeScreen == "reward-screen") {
       screen = RewardScreen(lessonNumber: widget.lessonNumber, activityName: "practice",);
