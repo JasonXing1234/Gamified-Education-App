@@ -41,7 +41,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
   String tempAnswer = "";
   int selectedIndex = 10;
   User? user2 = FirebaseAuth.instance.currentUser;
-  late DatabaseReference _database;
+  final DatabaseReference _database = FirebaseDatabase.instance.ref();
 
   //For multiple answer options
   List<String> selectedAnswers = [];
@@ -59,7 +59,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScrollEnd);
-
+    recordingTimeStamp();
     if(widget.quizNumber == 1) {
       quizQuestions = quiz1;
       // quizName = "QUIZ: SOCIAL MEDIA NORMS";
@@ -118,14 +118,24 @@ class _QuestionsScreenState extends State<QuizScreen> {
     super.dispose();
   }
 
+  Future<void> recordingTimeStamp() async {
+    await _database.child('profile').child(user2!.uid).child('quizList')
+        .child(widget.quizNumber.toString())
+        .child('questions')
+        .child(questionIndex.toString())
+        .update({
+      'endTimeStamp': DateTime.now().toIso8601String(),
+    });
+  }
+
 
   Future<void> nextQuestion(String answer) async {
     final userId = user2?.uid;
 
-    if (userId != null) {
+    if (userId != null && questionIndex < quizQuestions.length - 1) {
       try {
         await _database.child('profile').child(userId).child('quizList')
-            .child('quiz${widget.quizNumber.toString()}')
+            .child((widget.quizNumber - 1).toString())
             .child('questions')
             .child(questionIndex.toString())
             .update({
@@ -135,7 +145,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
           await _database.child('profile').child(userId).child('quizList')
               .child(widget.quizNumber.toString())
               .child('questions')
-              .child(questionIndex.toString())
+              .child((questionIndex + 1).toString())
               .update({
             'beginTimeStamp': DateTime.now().toIso8601String(),
           });

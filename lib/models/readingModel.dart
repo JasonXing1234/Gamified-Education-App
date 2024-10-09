@@ -1,6 +1,7 @@
 class readingModel {
   String readingID;
   int progress;
+  
 
   readingModel({
     required this.readingID,
