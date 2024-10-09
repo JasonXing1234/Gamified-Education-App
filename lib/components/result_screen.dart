@@ -153,7 +153,7 @@ class ResultScreen extends StatelessWidget {
                   child: NextButton(
                     onTap: endQuiz,
                     disabled: false,
-                    buttonText: "NEXT",
+                    buttonName: "NEXT",
                   ),
                 ),
               ],

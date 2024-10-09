@@ -195,22 +195,19 @@ class _PracticeScreenState extends State<PracticeScreen> {
           ),
 
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: Container(
           color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Expanded(
+            // padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Row(
               children: [
                 const Expanded(
                     child: ListenButton(),
                 ),
-                // const Expanded(
-                //   child: SpeedButton(),
-                // ),
                 Expanded(
                   child: NextButton(
-                    buttonText: questionIndex == practiceQuestions.length -1 && isCorrect == true ? "FINISH" : isCorrect == false ? "CHECK" : "NEXT" ,
+                    buttonName: questionIndex == practiceQuestions.length -1 && isCorrect == true ? "FINISH" : isCorrect == false ? "CHECK" : "NEXT" ,
                     onTap: () {
                       setState(() {
                         if (isCorrect && checkedAnswer && questionIndex == practiceQuestions.length - 1) {

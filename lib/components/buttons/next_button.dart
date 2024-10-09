@@ -9,15 +9,13 @@ class NextButton extends StatelessWidget {
     super.key,
     required this.disabled,
     required this.onTap,
-    this.buttonText = "NEXT",
-    this.secondary = false,
+    this.buttonName = "NEXT",
   });
 
   final bool disabled;
   final void Function() onTap;
 
-  String buttonText;
-  final bool secondary;
+  String buttonName;
 
 
   // Style Variables
@@ -33,29 +31,35 @@ class NextButton extends StatelessWidget {
     if (disabled) {
       color = appColors.grey;
     }
-    else if (secondary) {
-      color = appColors.lightRoyalBlue;
-    }
     else {
       color = appColors.royalBlue;
     }
 
-    return ElevatedButton(
+    return IconButton(
+      icon: Icon(
+        buttonName == "BACK" ? Icons.chevron_left : Icons.chevron_right,
+        color: color,
+        size: 40,
+      ),
       onPressed: disabled ? null : onTap,
-      style: ElevatedButton.styleFrom(
-        //padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10), // Padding for text and border
-        fixedSize: const Size(150, 50),
-        backgroundColor: color,
-        foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(borderRadius),
-        ),
-      ),
-      child: Text(
-        buttonText,
-        style: textStyles.mediumBodyTextWhite,
-        textAlign: TextAlign.center,
-      ),
     );
+
+    // return ElevatedButton(
+    //   onPressed: disabled ? null : onTap,
+    //   style: ElevatedButton.styleFrom(
+    //     //padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10), // Padding for text and border
+    //     fixedSize: const Size(150, 50),
+    //     backgroundColor: color,
+    //     foregroundColor: Colors.white,
+    //     shape: RoundedRectangleBorder(
+    //       borderRadius: BorderRadius.circular(borderRadius),
+    //     ),
+    //   ),
+    //   child: Text(
+    //     buttonText,
+    //     style: textStyles.mediumBodyTextWhite,
+    //     textAlign: TextAlign.center,
+    //   ),
+    // );
   }
 }

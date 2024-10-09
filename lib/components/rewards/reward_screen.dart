@@ -114,7 +114,7 @@ class _RewardScreenState extends State<RewardScreen> {
               ),
               Expanded(
                 child: NextButton(
-                  buttonText: "FINISH",
+                  buttonName: "FINISH",
                   onTap: () {
                     Navigator.of(context).pop();
                   },

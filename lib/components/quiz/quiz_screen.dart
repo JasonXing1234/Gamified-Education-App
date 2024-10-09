@@ -178,22 +178,19 @@ class _QuestionsScreenState extends State<QuizScreen> {
 
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
         color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Expanded(
+          // padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Row(
             children: [
               const Expanded(
                   child: ListenButton(),
               ),
-              // const Expanded(
-              //   child: SpeedButton(),
-              // ),
               Expanded(
                 child: NextButton(
-                  buttonText: questionIndex == quizQuestions.length -1 ? "SUBMIT" : "NEXT",
+                  buttonName: questionIndex == quizQuestions.length -1 ? "SUBMIT" : "NEXT",
                   onTap: () {
                     setState(() {
                         if(currentQuestion.answerOptions[0] == 'textField'){

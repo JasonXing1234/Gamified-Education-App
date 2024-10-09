@@ -254,89 +254,86 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
         ),
 
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
         color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Row(
-            children: [
-              const Expanded(
-                  child: ListenButton()
-              ),
-              Expanded(
-                child: NextButton(
-                  buttonText: "BACK",
-                  onTap: () {
-                    setState(() {
-                      if (readingPageIndex > 0) {
-                        prevReadingPage();
-                      }
-
-                      // Clear Answers for next question
-                      selectedAnswerIndex = 10;
-                      selectedAnswers = [];
-
-                    });
-                  },
-                  disabled: readingPageIndex == 0,
-                  secondary: true,
-                ),
-              ),
-              const SizedBox(width: 20,),
-              Expanded(
-                child: NextButton(
-                  buttonText: readingPageIndex == readingPages.length -1 ? "FINISH" : "NEXT",
-                  onTap: () {
-                    setState(() {
-                      if (readingPageIndex == readingPages.length -1) { // Zero indexing
-                        // Already on last page, reset to first page
-                        backToFirstPage();
-
-                        // Open the rewards page
-                        widget.openRewardPage();
-
-                      }
-                      else {
-                        if (currentReadingPage is ReadingQuestion) {
-
-                          if (currentReadingPage.correctAnswer == selectedAnswerValue) {
-                            // Correct :)
-                            isCorrect = true;
-                            nextReadingPage(userAnswer: selectedAnswerValue);
-
-                          }
-                          else {
-                            isCorrect = false;
-                          }
-
-                          // Reset
-                          selectedAnswerIndex = 10;
-                          selectedAnswerValue = "";
-
+        child: Expanded(
+            child: Row(
+              children: [
+                Expanded(
+                  child: NextButton(
+                    buttonName: "BACK",
+                    onTap: () {
+                      setState(() {
+                        if (readingPageIndex > 0) {
+                          prevReadingPage();
                         }
-                        else if (currentReadingPage is ReadingMultipleAnswersQuestion) {
-                          if (currentReadingPage.answerOptions[0] == "textField") {
-                            // Add a controller text to get access to the answer
-                            nextReadingPage(userAnswer: _controller.text);
-                          }
+
+                        // Clear Answers for next question
+                        selectedAnswerIndex = 10;
+                        selectedAnswers = [];
+
+                      });
+                    },
+                    disabled: readingPageIndex == 0,
+                  ),
+                ),
+                const Expanded(
+                    child: ListenButton()
+                ),
+                Expanded(
+                  child: NextButton(
+                    buttonName: readingPageIndex == readingPages.length -1 ? "FINISH" : "NEXT",
+                    onTap: () {
+                      setState(() {
+                        if (readingPageIndex == readingPages.length -1) { // Zero indexing
+                          // Already on last page, reset to first page
+                          backToFirstPage();
+
+                          // Open the rewards page
+                          widget.openRewardPage();
+
                         }
                         else {
-                          nextReadingPage();
+                          if (currentReadingPage is ReadingQuestion) {
+
+                            if (currentReadingPage.correctAnswer == selectedAnswerValue) {
+                              // Correct :)
+                              isCorrect = true;
+                              nextReadingPage(userAnswer: selectedAnswerValue);
+
+                            }
+                            else {
+                              isCorrect = false;
+                            }
+
+                            // Reset
+                            selectedAnswerIndex = 10;
+                            selectedAnswerValue = "";
+
+                          }
+                          else if (currentReadingPage is ReadingMultipleAnswersQuestion) {
+                            if (currentReadingPage.answerOptions[0] == "textField") {
+                              // Add a controller text to get access to the answer
+                              nextReadingPage(userAnswer: _controller.text);
+                            }
+                          }
+                          else {
+                            nextReadingPage();
+                          }
                         }
-                      }
 
-                      // Clear Answers for next question
-                      selectedAnswerIndex = 10;
-                      selectedAnswers = [];
+                        // Clear Answers for next question
+                        selectedAnswerIndex = 10;
+                        selectedAnswers = [];
 
-                    });
-                  },
-                  disabled: false,
+                      });
+                    },
+                    disabled: false,
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
         ),
       ),
 
