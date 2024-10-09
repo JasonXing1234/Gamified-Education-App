@@ -181,16 +181,15 @@ class _QuestionsScreenState extends State<QuizScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
         color: Colors.white,
-        child: Expanded(
-          // padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: SizedBox(
+          height: 60,
           child: Row(
             children: [
               const Expanded(
                   child: ListenButton(),
               ),
               Expanded(
-                child: NextButton(
-                  buttonName: questionIndex == quizQuestions.length -1 ? "SUBMIT" : "NEXT",
+                child: MultiPurposeButton(
                   onTap: () {
                     setState(() {
                         if(currentQuestion.answerOptions[0] == 'textField'){
@@ -220,6 +219,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
                     });
                   },
                   disabled: false,
+                  buttonType: questionIndex == quizQuestions.length -1 ? ButtonType.submit : ButtonType.next,
                 ),
               ),
             ],

@@ -99,26 +99,23 @@ class _RewardScreenState extends State<RewardScreen> {
               ),
           ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: Container(
         color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: SizedBox(
+          height: 60,
           child: Row(
             children: [
               const Expanded(
                   child: ListenButton(),
               ),
-              const Expanded(
-                child: SpeedButton(),
-              ),
               Expanded(
-                child: NextButton(
-                  buttonName: "FINISH",
+                child: MultiPurposeButton(
                   onTap: () {
                     Navigator.of(context).pop();
                   },
                   disabled: false,
+                  buttonType: ButtonType.finish,
                 ),
               ),
             ],

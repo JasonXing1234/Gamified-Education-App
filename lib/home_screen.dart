@@ -182,7 +182,7 @@ class _HomeState extends State<Home> {
                     crossAxisAlignment: CrossAxisAlignment.start, // Aligns children to the left
                     children: [
                       Text(
-                        "Current Lesson",
+                        "Next Activity",
                         textAlign: TextAlign.left,
                         style: textStyles.mediumBodyText,
                       ),
@@ -213,8 +213,8 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     child: Text(
-                      "PREP",
-                      style: textStyles.mediumBodyTextWhite,
+                      "POST-QUIZ",
+                      style: textStyles.smallBodyTextWhite,
                       textAlign: TextAlign.center,
                     ),
                   ),

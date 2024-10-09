@@ -257,12 +257,12 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
         color: Colors.white,
-        child: Expanded(
+        child: SizedBox(
+          height: 60,
             child: Row(
               children: [
                 Expanded(
-                  child: NextButton(
-                    buttonName: "BACK",
+                  child: MultiPurposeButton(
                     onTap: () {
                       setState(() {
                         if (readingPageIndex > 0) {
@@ -276,14 +276,14 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                       });
                     },
                     disabled: readingPageIndex == 0,
+                    buttonType: ButtonType.back,
                   ),
                 ),
                 const Expanded(
                     child: ListenButton()
                 ),
                 Expanded(
-                  child: NextButton(
-                    buttonName: readingPageIndex == readingPages.length -1 ? "FINISH" : "NEXT",
+                  child: MultiPurposeButton(
                     onTap: () {
                       setState(() {
                         if (readingPageIndex == readingPages.length -1) { // Zero indexing
@@ -330,6 +330,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                       });
                     },
                     disabled: false,
+                    buttonType: readingPageIndex == readingPages.length -1 ? ButtonType.finish : ButtonType.next,
                   ),
                 ),
               ],

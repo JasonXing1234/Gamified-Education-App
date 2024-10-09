@@ -154,6 +154,71 @@ class _PracticeScreenState extends State<PracticeScreen> {
     }
 
 
+    // Set up the correct button check, finish or next
+    Widget button;
+    if (tempAnswer == "") {
+      // User hasn't answered the question
+      button = MultiPurposeButton(
+        onTap: () {},
+        buttonType: ButtonType.check,
+        disabled: true,
+      );
+    }
+    else if (!checkedAnswer || !isCorrect) {
+      // User can now check answer
+      button = MultiPurposeButton(
+        onTap: () {
+          setState(() {
+            if(currentQuestion.correctAnswer == tempAnswer){
+              // Set correct and checked
+              // TODO: Find a way to lock the correct answer, so user doesn't accidently change answer
+              isCorrect = true;
+              checkedAnswer = true;
+            }
+            else{
+              isCorrect = false;
+              checkedAnswer = true;
+            }
+          });
+        },
+        buttonType: ButtonType.check,
+        disabled: false,
+      );
+    }
+    else if (isCorrect && questionIndex == practiceQuestions.length - 1) {
+      // Answer is correct and on last question, can finish the practice
+      button = MultiPurposeButton(
+        onTap: () {
+          setState(() {
+            recordTicket();
+            nextQuestion(tempAnswer);
+          });
+        },
+        buttonType: ButtonType.submit,
+        disabled: false,
+      );
+    }
+    else if (isCorrect) {
+      // Go to next question if correct
+      button = MultiPurposeButton(
+        onTap: () {
+          setState(() {
+            nextQuestion(currentQuestion.correctAnswer); // Protect user from accidentally changing answers
+            selectedIndex = 10;
+          });
+        },
+        buttonType: ButtonType.next,
+        disabled: false,
+      );
+    }
+    else {
+      button = MultiPurposeButton(
+        onTap: () {},
+        buttonType: ButtonType.next,
+        disabled: true,
+      );
+    }
+
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -193,48 +258,18 @@ class _PracticeScreenState extends State<PracticeScreen> {
             ),
 
           ),
-
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: Container(
           color: Colors.white,
-          child: Expanded(
-            // padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: SizedBox(
+            height: 60,
             child: Row(
               children: [
                 const Expanded(
                     child: ListenButton(),
                 ),
-                Expanded(
-                  child: NextButton(
-                    buttonName: questionIndex == practiceQuestions.length -1 && isCorrect == true ? "FINISH" : isCorrect == false ? "CHECK" : "NEXT" ,
-                    onTap: () {
-                      setState(() {
-                        if (isCorrect && checkedAnswer && questionIndex == practiceQuestions.length - 1) {
-                          // End practice
-                          recordTicket();
-                          nextQuestion(tempAnswer);
-                        }
-                        else if (isCorrect && checkedAnswer) {
-                          // TODO: This may have unexpected behavior is user gets the right answer then changes answer to incorrect response
-                          // Move onto next question after correct and checked have been set
-                          nextQuestion(tempAnswer);
-                          selectedIndex = 10;
-                        }
-                        else if(currentQuestion.correctAnswer == tempAnswer){
-                          // Set correct and checked
-                          isCorrect = true;
-                          checkedAnswer = true;
-                        }
-                        else{
-                          isCorrect = false;
-                          checkedAnswer = true;
-                        }
-                      });
-                    },
-                    disabled: tempAnswer == "",
-                  ),
-                ),
+                Expanded(child: button,),
               ],
             ),
           ),
