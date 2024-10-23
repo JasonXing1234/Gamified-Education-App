@@ -31,6 +31,7 @@ class QuizScreen extends StatefulWidget {
   final void Function(String answer) onSelectAnswer;
   final int quizNumber;
 
+
   @override
   State<QuizScreen> createState() => _QuestionsScreenState();
 }
@@ -40,6 +41,8 @@ class _QuestionsScreenState extends State<QuizScreen> {
   TextEditingController _controller = TextEditingController();
   String tempAnswer = "";
   int selectedIndex = 10;
+  final int resetAnswerValue = 10;
+
   User? user2 = FirebaseAuth.instance.currentUser;
   final DatabaseReference _database = FirebaseDatabase.instance.ref();
 
@@ -169,11 +172,56 @@ class _QuestionsScreenState extends State<QuizScreen> {
 
     Question currentQuestion;
 
+
     if (quizQuestions.isNotEmpty) {
       currentQuestion = quizQuestions[questionIndex];
     }
     else {
       currentQuestion = const Question("no", "none", "no", ["none"], "none");
+    }
+
+    Widget nextButton;
+    if (selectedIndex == resetAnswerValue) {
+      // No answer has been selected by user
+      nextButton = MultiPurposeButton(
+        onTap: () {},
+        buttonType: ButtonType.next,
+        disabled: true,
+      );
+    }
+    else {
+      nextButton = MultiPurposeButton(
+        onTap: () {
+          setState(() {
+            if(currentQuestion.answerOptions[0] == 'textField'){
+              nextQuestion(_controller.text);
+            }
+            else{
+              if (currentQuestion is MultipleAnswersQuestion) {
+                String sep = "";
+                tempAnswer = "";
+
+                // Sort the answers selected and make a string to compare with the correct answers
+                // Also set up in the same way
+                selectedAnswers.sort();
+                for (var selectionOption in selectedAnswers) {
+                  tempAnswer = tempAnswer + sep + selectionOption;
+                  sep = ", ";
+                }
+              }
+
+              nextQuestion(tempAnswer);
+            }
+            // Clear answers for next question
+            selectedIndex = 10;
+            selectedAnswers = [];
+
+            // }
+          });
+        },
+        disabled: false,
+        buttonType: questionIndex == quizQuestions.length -1 ? ButtonType.submit : ButtonType.next,
+      );
     }
 
     return Scaffold(
@@ -227,38 +275,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
                   child: ListenButton(),
               ),
               Expanded(
-                child: MultiPurposeButton(
-                  onTap: () {
-                    setState(() {
-                        if(currentQuestion.answerOptions[0] == 'textField'){
-                          nextQuestion(_controller.text);
-                        }
-                        else{
-                          if (currentQuestion is MultipleAnswersQuestion) {
-                            String sep = "";
-                            tempAnswer = "";
-
-                            // Sort the answers selected and make a string to compare with the correct answers
-                            // Also set up in the same way
-                            selectedAnswers.sort();
-                            for (var selectionOption in selectedAnswers) {
-                              tempAnswer = tempAnswer + sep + selectionOption;
-                              sep = ", ";
-                            }
-                          }
-
-                          nextQuestion(tempAnswer);
-                        }
-                        // Clear answers for next question
-                        selectedIndex = 10;
-                        selectedAnswers = [];
-
-                      // }
-                    });
-                  },
-                  disabled: false,
-                  buttonType: questionIndex == quizQuestions.length -1 ? ButtonType.submit : ButtonType.next,
-                ),
+                child: nextButton,
               ),
             ],
           ),
