@@ -4,8 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
-import 'UserModel.dart';
+import 'models/UserModel.dart';
 import 'home_screen.dart';
+import 'models/quizModel.dart';
+import 'models/quizQuestionModel.dart';
+import 'models/readingModel.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -23,6 +26,44 @@ class _SignUpPageState extends State<SignUpPage> {
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
 
+  List<QuizModel> quizzes = List.generate(6, (index) {
+    return QuizModel(
+      quizId: 'quiz${index + 1}',
+      quizScore: 0,
+      questions: List.generate(3, (questionIndex) {
+        return QuizQuestionModel(
+          questionId: '${index + 1}_$questionIndex',
+          isCorrect: false,
+          beginTimeStamp: DateTime.now(),
+          endTimeStamp: DateTime.now().add(Duration(minutes: 1)),
+        );
+      }),
+    );
+  });
+
+  List<readingModel> readings = List.generate(6, (index) {
+    return readingModel(
+      readingID: 'reading${index + 1}',
+      progress: 0,
+    );
+  });
+
+  List<readingModel> initialReadings = List.generate(6, (index) => readingModel(
+    readingID: 'reading_$index',
+    progress: 0,
+  ));
+
+  List<QuizModel> initialQuizzes = List.generate(6, (index) => QuizModel(
+    quizId: 'quiz$index',
+    quizScore: 0,
+    questions: List.generate(10, (questionIndex) => QuizQuestionModel(
+      questionId: 'questionIndex',
+      isCorrect: false,
+      beginTimeStamp: DateTime.now(),
+      endTimeStamp: DateTime.now().add(Duration(minutes: 1)),
+    )),
+  ));
+
   Future<void> _signUp() async {
     try {
       var result = await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -34,8 +75,8 @@ class _SignUpPageState extends State<SignUpPage> {
         email: _emailController.text.toLowerCase(),
         profilePic: null,
         deviceToken: await FirebaseMessaging.instance.getToken(),
-        readingList: [0, 0, 0, 0, 0, 0],
-        quizScoreList:  [0, 0, 0, 0, 0, 0],
+        readingList: initialReadings,
+        quizList: initialQuizzes,
         accessories: List<bool>.filled(20, false),
         numTickets: 0,
           ifEachModuleComplete: List<bool>.filled(6, false),
@@ -55,10 +96,8 @@ class _SignUpPageState extends State<SignUpPage> {
       Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => const Home()),
       );
-      // Navigate to home screen or other page
     } catch (e) {
       print('Error: $e');
-      // Show error message
     }
   }
 

@@ -28,13 +28,15 @@ class ResultScreen extends StatelessWidget {
 
   final AppTextStyles textStyles = AppTextStyles();
 
-  void _updateField(int quizResult) async {
+  Future<void> _updateField(int quizResult) async {
     try {
-      DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('quizScoreList').get();
-      List<dynamic> scores = snapshot.value as List<dynamic>;
-      scores[quizNumber - 1] = quizResult;
+      DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('quizList').get();
+      List<dynamic> quizzes = snapshot.value as List<dynamic>;
+      quizzes[quizNumber - 1]['quizScore'] = quizResult;
+
+      // Update the database with the modified quizzes list
       await _database.child('profile/${user2?.uid}').update({
-        'quizScoreList': scores,
+        'quizzes': quizzes,
       });
     } catch (e) {
       print('Failed to update field: $e');
@@ -84,6 +86,7 @@ class ResultScreen extends StatelessWidget {
         'user_answer': userAnswers[i],
       });
     }
+
     final int numCorrectAnswers = summary
         .where((element) => element['correct_answer'] == element['user_answer'])
         .length;
@@ -94,9 +97,18 @@ class ResultScreen extends StatelessWidget {
   }
 
   @override
-  build(context) {
+  build(context) async {
     final summary = getSummaryData();
     int numTotalAnswers = fakeProfilesPractice1.length;
+    for(int i = 0; i < summary.length; i++) {
+      await _database.child('profile').child(user2!.uid).child('quizList')
+          .child((quizNumber - 1).toString())
+          .child('questions')
+          .child(i.toString())
+          .update({
+        'isCorrect': summary[i]['correct_answer'] == summary[i]['user_answer'] ? true : false,
+      });
+    }
 
     var quizName = "RESULTS";
 

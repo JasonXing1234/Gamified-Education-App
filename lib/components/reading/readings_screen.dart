@@ -111,9 +111,22 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
 
         if (snapshot.value != null) {
           setState(() {
-            readings = snapshot.value as List<dynamic>;
-            readingPageIndex = readings[widget.readingNumber - 1];
+            // Assuming snapshot.value is a List of reading objects
+            List<dynamic> readingList = snapshot.value as List<dynamic>;
+            readings = readingList;
+
+            // Assuming you want to access a specific reading object based on widget.readingNumber
+            if (widget.readingNumber - 1 < readings.length) {
+              // Update the readingPageIndex based on the fetched reading object
+              readingPageIndex = readings[widget.readingNumber - 1]['progress']; // Access progress
+            } else {
+              readingPageIndex = 0; // Default or reset if index is out of bounds
+            }
           });
+          // setState(() {
+          //   readings = snapshot.value as List<dynamic>;
+          //   readingPageIndex = readings[widget.readingNumber - 1];
+          // });
         }
         return readingPageIndex;
       } catch (e) {
@@ -129,11 +142,10 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     });
     DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('readingList').get();
     List<dynamic> readings = snapshot.value as List<dynamic>;
-    readings[widget.readingNumber - 1] = readingPageIndex;
+    readings[widget.readingNumber - 1]['progress'] = readingPageIndex;
     await _database.child('profile/${user2?.uid}').update({
-      'readingList': readings,
+      'readings': readings,
     });
-      //_controller.dispose();
     setState(() {
       _readingListFuture = _fetchReadingList();  // Refresh FutureBuilder
     });
@@ -158,7 +170,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
   Future<void> backToFirstPage() async {
     DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('readingList').get();
     List<dynamic> readings = snapshot.value as List<dynamic>;
-    readings[widget.readingNumber - 1] = 0;
+    readings[widget.readingNumber - 1]['progress'] = 0;
     await _database.child('profile/${user2?.uid}').update({
       'readingList': readings,
     });

@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
 import 'package:quiz/components/buttons/menu_button.dart';
@@ -38,6 +40,8 @@ class _QuestionsScreenState extends State<QuizScreen> {
   TextEditingController _controller = TextEditingController();
   String tempAnswer = "";
   int selectedIndex = 10;
+  User? user2 = FirebaseAuth.instance.currentUser;
+  final DatabaseReference _database = FirebaseDatabase.instance.ref();
 
   //For multiple answer options
   List<String> selectedAnswers = [];
@@ -55,7 +59,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScrollEnd);
-
+    recordingTimeStamp();
     if(widget.quizNumber == 1) {
       quizQuestions = quiz1;
       // quizName = "QUIZ: SOCIAL MEDIA NORMS";
@@ -114,8 +118,42 @@ class _QuestionsScreenState extends State<QuizScreen> {
     super.dispose();
   }
 
+  Future<void> recordingTimeStamp() async {
+    await _database.child('profile').child(user2!.uid).child('quizList')
+        .child(widget.quizNumber.toString())
+        .child('questions')
+        .child(questionIndex.toString())
+        .update({
+      'endTimeStamp': DateTime.now().toIso8601String(),
+    });
+  }
 
-  void nextQuestion(String answer) {
+
+  Future<void> nextQuestion(String answer) async {
+    final userId = user2?.uid;
+
+    if (userId != null && questionIndex < quizQuestions.length - 1) {
+      try {
+        await _database.child('profile').child(userId).child('quizList')
+            .child((widget.quizNumber - 1).toString())
+            .child('questions')
+            .child(questionIndex.toString())
+            .update({
+          'endTimeStamp': DateTime.now().toIso8601String(),
+        });
+        if (questionIndex < quizQuestions.length - 1) {
+          await _database.child('profile').child(userId).child('quizList')
+              .child(widget.quizNumber.toString())
+              .child('questions')
+              .child((questionIndex + 1).toString())
+              .update({
+            'beginTimeStamp': DateTime.now().toIso8601String(),
+          });
+        }
+      } catch (e) {
+        print('Error updating timestamps: $e');
+      }
+    }
     setState(() {
       if (questionIndex < quizQuestions.length - 1) {
         questionIndex++;
