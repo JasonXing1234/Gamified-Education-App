@@ -6,7 +6,7 @@ const tutorialPractice = [
   SingleAnswerQuestion(
     "no",
     "This is a sample practice question. For practices you have to get the right "
-        "answer before moving to the next question. Choose option A",
+        "answer before moving to the next question. Choose option A for this question",
     "no",
     [
       "Yes",

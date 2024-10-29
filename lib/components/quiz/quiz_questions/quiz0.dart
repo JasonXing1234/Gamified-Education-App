@@ -12,7 +12,7 @@ var quiz0 = [
       "B",
       "C"
     ],
-    "Option A is the correct answer for this practice question",
+    "Option A is the correct answer for this quiz question",
     "A",
   ),
   MultipleAnswersQuestion(
