@@ -223,6 +223,18 @@ class _HomeState extends State<Home> {
             height: spacing,
           ),
 
+          // Tutorial Lesson
+          GestureDetector(
+            child: LessonDashboard(lesson: tutorial),
+            onTap: () {
+              // Navigate to the Tutorial Lesson
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: tutorial.lessonNumber, lesson: tutorial)),
+              );
+            },
+          ),
+
           // Social Media Norms Lesson
           GestureDetector(
             child: LessonDashboard(lesson: socialMediaNorms),
@@ -230,7 +242,7 @@ class _HomeState extends State<Home> {
               // Navigate to the Social Media Norms Lesson
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: socialMediaNorms.lessonNumber)),
+                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: socialMediaNorms.lessonNumber, lesson: socialMediaNorms)),
               );
             },
           ),
@@ -242,7 +254,7 @@ class _HomeState extends State<Home> {
               // Navigate to the Social Media Norms Lesson
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: settings.lessonNumber)),
+                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: settings.lessonNumber, lesson: settings)),
               );
             },
           ),
@@ -254,7 +266,7 @@ class _HomeState extends State<Home> {
               // Navigate to the Social Media Norms Lesson
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: fakeProfiles.lessonNumber)),
+                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: fakeProfiles.lessonNumber, lesson: fakeProfiles)),
               );
             },
           ),
@@ -266,7 +278,7 @@ class _HomeState extends State<Home> {
               // Navigate to the Social Media Norms Lesson
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: socialTags.lessonNumber)),
+                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: socialTags.lessonNumber, lesson: socialTags)),
               );
             },
           ),
@@ -278,7 +290,7 @@ class _HomeState extends State<Home> {
               // Navigate to the Social Media Norms Lesson
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: appropriateInteractions.lessonNumber)),
+                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: appropriateInteractions.lessonNumber, lesson: appropriateInteractions)),
               );
             },
           ),

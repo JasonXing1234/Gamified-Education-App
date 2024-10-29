@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:quiz/components/buttons/ListenButton.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
 import 'package:quiz/components/reading/reading_page.dart';
+import 'package:quiz/components/reading/readings/reading0.dart';
 import 'package:quiz/components/reading/readings/reading1.dart';
 import 'package:quiz/components/progress_bar/progress_bar.dart';
 import 'package:quiz/components/reading/readings/reading2.dart';
@@ -190,7 +191,13 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     ReadingPage currentReadingPage;
     var lessonName = "LESSON";
 
-    if(widget.readingNumber == 1) {
+
+
+    if(widget.readingNumber == 0) {
+      readingPages = reading0;
+      lessonName = "TUTORIAL & SET UP";
+    }
+    else if(widget.readingNumber == 1) {
       readingPages = reading1;
       lessonName = "SOCIAL MEDIA NORMS";
     }

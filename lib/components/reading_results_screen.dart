@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:quiz/components/reading/readings_screen.dart';
 import 'package:quiz/components/rewards/reward_screen.dart';
 
+import 'lesson/lesson.dart';
+
 class ReadingResultScreen extends StatefulWidget {
   ReadingResultScreen({
     super.key,
     required this.lessonNumber,
+    required this.lesson,
     required this.activeScreen
   });
 
   final int lessonNumber;
+  final Lesson lesson;
   String activeScreen;
 
   @override
@@ -42,7 +46,7 @@ class _ReadingResultScreenState extends State<ReadingResultScreen> {
       screen = ReadingsScreen(readingNumber: widget.lessonNumber, openRewardPage: openRewardPage);
     }
     else if (widget.activeScreen == "reward-screen") {
-      screen = RewardScreen(lessonNumber: widget.lessonNumber, activityName: "reading",);
+      screen = RewardScreen(lessonNumber: widget.lessonNumber, lesson: widget.lesson, activityName: "reading",);
     }
 
     return Scaffold(

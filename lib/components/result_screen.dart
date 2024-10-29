@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/components/answers_screen.dart';
+import 'package:quiz/components/quiz/quiz_questions/quiz0.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/components/practice/practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
 import 'package:quiz/components/question.dart';
@@ -66,7 +67,7 @@ class ResultScreen extends StatelessWidget {
       summary.add({
         'index': i,
         'question':
-          quizNumber == 0 ? fakeProfilesPractice1[i].context :
+          quizNumber == 0 ? quiz0[i].context :
           quizNumber == 1 ? quiz1[i].question :
           quizNumber == 2 ? quiz2[i].question :
           quizNumber == 3 ? quiz3[i].context : // Fake Profiles Quiz
@@ -75,7 +76,7 @@ class ResultScreen extends StatelessWidget {
           quizNumber == 6 ? quiz6[i].question :
           fakeProfilesPractice1[i].answerOptions[0],
         'correct_answer':
-            quizNumber == 0 ? fakeProfilesPractice1[i].correctAnswer :
+            // TODO quizNumber == 0 ? quiz0[i].correctAnswer :
             quizNumber == 1 ? quiz1[i].correctAnswer :
             quizNumber == 2 ? quiz2[i].answerOptions[0] :
             quizNumber == 3 ? quiz3[i].correctAnswer :
@@ -112,6 +113,10 @@ class ResultScreen extends StatelessWidget {
 
     var quizName = "RESULTS";
 
+    if (quizNumber == 0){
+      numTotalAnswers = quiz0.length;
+      quizName = "TUTORIAL & SET UP";
+    }
     if (quizNumber == 1){
       numTotalAnswers = quiz1.length;
       quizName = "SOCIAL MEDIA NORMS";

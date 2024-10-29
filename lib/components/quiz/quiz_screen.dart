@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
 import 'package:quiz/components/buttons/menu_button.dart';
 import 'package:quiz/components/buttons/speed_button.dart';
+import 'package:quiz/components/quiz/quiz_questions/quiz0.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/components/question.dart';
 import 'package:quiz/styles/app_colors.dart';
@@ -63,7 +64,12 @@ class _QuestionsScreenState extends State<QuizScreen> {
     super.initState();
     _scrollController.addListener(_onScrollEnd);
     recordingTimeStamp();
-    if(widget.quizNumber == 1) {
+
+
+    if(widget.quizNumber == 0) {
+      quizQuestions = quiz0;
+    }
+    else if(widget.quizNumber == 1) {
       quizQuestions = quiz1;
       // quizName = "QUIZ: SOCIAL MEDIA NORMS";
     }

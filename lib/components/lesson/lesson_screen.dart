@@ -22,9 +22,11 @@ class LessonScreen extends StatefulWidget {
   const LessonScreen({
     super.key,
     required this.lessonNumber,
+    required this.lesson,
   });
 
   final int lessonNumber;
+  final Lesson lesson;
 
   // Unlocked features
   @override
@@ -171,28 +173,31 @@ class _LessonScreenState extends State<LessonScreen> {
   @override
   Widget build(BuildContext context) {
 
-    Lesson lesson;
-    if (widget.lessonNumber == socialMediaNorms.lessonNumber) {
-      lesson = socialMediaNorms;
-    }
-    else if (widget.lessonNumber == settings.lessonNumber) {
-      lesson = settings;
-    }
-    else if (widget.lessonNumber == fakeProfiles.lessonNumber) {
-      lesson = fakeProfiles;
-    }
-    else if (widget.lessonNumber == socialTags.lessonNumber) {
-      lesson = socialTags;
-    }
-    else if (widget.lessonNumber == appropriateInteractions.lessonNumber) {
-      lesson = appropriateInteractions;
-    }
-    else if (widget.lessonNumber == socialMediaVSReality.lessonNumber) {
-      lesson = socialMediaVSReality;
-    }
-    else {
-      lesson = Lesson("LESSON", lockedCharacter, 0, 0.0);
-    }
+    // Lesson lesson;
+    // if (widget.lessonNumber == tutorial.lessonNumber) {
+    //   lesson = tutorial;
+    // }
+    // else if (widget.lessonNumber == socialMediaNorms.lessonNumber) {
+    //   lesson = socialMediaNorms;
+    // }
+    // else if (widget.lessonNumber == settings.lessonNumber) {
+    //   lesson = settings;
+    // }
+    // else if (widget.lessonNumber == fakeProfiles.lessonNumber) {
+    //   lesson = fakeProfiles;
+    // }
+    // else if (widget.lessonNumber == socialTags.lessonNumber) {
+    //   lesson = socialTags;
+    // }
+    // else if (widget.lessonNumber == appropriateInteractions.lessonNumber) {
+    //   lesson = appropriateInteractions;
+    // }
+    // else if (widget.lessonNumber == socialMediaVSReality.lessonNumber) {
+    //   lesson = socialMediaVSReality;
+    // }
+    // else {
+    //   lesson = tutorial;
+    // }
 
 
     return PopScope(
@@ -210,7 +215,7 @@ class _LessonScreenState extends State<LessonScreen> {
           title: Padding(
             padding: const EdgeInsets.only(top: 20.0), // Adjust the top padding of title
             child: Text(
-              lesson.title,
+              widget.lesson.title,
               style: textStyles.heading1,
             ),
           ),
@@ -251,7 +256,7 @@ class _LessonScreenState extends State<LessonScreen> {
               ),
 
               // Row of image and stats
-              StatsNotebook(lesson: lesson, textStyles: textStyles),
+              StatsNotebook(lesson: widget.lesson, textStyles: textStyles),
 
               const SizedBox(height: 5,),
 
@@ -266,7 +271,7 @@ class _LessonScreenState extends State<LessonScreen> {
                         (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ReadingResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "reading-screen",)),
+                        MaterialPageRoute(builder: (context) => ReadingResultScreen(lessonNumber: widget.lessonNumber, lesson: widget.lesson, activeScreen: "reading-screen",)),
                       );
                     },
                   ),
@@ -277,7 +282,7 @@ class _LessonScreenState extends State<LessonScreen> {
                         (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ReadingResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "reading-screen",)),
+                        MaterialPageRoute(builder: (context) => ReadingResultScreen(lessonNumber: widget.lessonNumber, lesson: widget.lesson, activeScreen: "reading-screen",)),
                       );
                     },
                   ),
@@ -288,7 +293,7 @@ class _LessonScreenState extends State<LessonScreen> {
                         (){
                       Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => QuizResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "quiz-screen",))
+                          MaterialPageRoute(builder: (context) => QuizResultScreen(lessonNumber: widget.lessonNumber, lesson: widget.lesson, activeScreen: "quiz-screen",))
                       );
                     },
                   ),
@@ -303,7 +308,7 @@ class _LessonScreenState extends State<LessonScreen> {
                     (){
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PracticeResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "practice-screen",))
+                      MaterialPageRoute(builder: (context) => PracticeResultScreen(lessonNumber: widget.lessonNumber, lesson: widget.lesson, activeScreen: "practice-screen",))
 
                     //MaterialPageRoute(builder: (context) => PracticeScreen(quizNumber: widget.lessonNumber, onSelectAnswer: (String answer) {  },))
                   );
