@@ -63,12 +63,15 @@ class _PracticeResultScreenState extends State<PracticeResultScreen> {
       child: Text('Open Blank Scaffold for practices'),
     );
 
+
+    // TODO: Update these practices to pick random practices
+
     if (widget.activeScreen == "practice-screen") {
       if (widget.lesson.lessonNumber > 6) {
-        screen = PracticeScreen(onSelectAnswer: recordAnswersPractice1, quizNumber: widget.lesson.lessonNumber);
+        screen = PracticeScreen(onSelectAnswer: recordAnswersPractice1, practice: widget.lesson.practice,);
       }
       else {
-        screen = PracticeScreen(onSelectAnswer: practiceAnswers[widget.lesson.lessonNumber - 1], quizNumber: widget.lesson.lessonNumber);
+        screen = PracticeScreen(onSelectAnswer: practiceAnswers[widget.lesson.lessonNumber - 1], practice: widget.lesson.practice,);
       }
     }
     else if (widget.activeScreen == "reward-screen") {

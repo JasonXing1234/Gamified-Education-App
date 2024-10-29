@@ -12,9 +12,7 @@ class Lesson {
 
   final List<ReadingPage> reading;
   final List<Question> quiz;
-  final List<Question> practice;
-
-
+  final List<Question> practice; // TODO: Update these practices to have lots of practices?????
 
   String getCurrentPhoto() {
 

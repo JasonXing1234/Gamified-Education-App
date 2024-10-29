@@ -29,11 +29,14 @@ import '../text_box/text_box.dart';
 class PracticeScreen extends StatefulWidget {
   const PracticeScreen({
     super.key,
-    required this.onSelectAnswer, required this.quizNumber,
+    required this.onSelectAnswer,
+    required this.practice,
+
 
   });
   final void Function(String answer) onSelectAnswer;
-  final int quizNumber;
+  // final int quizNumber;
+  final List<Question> practice;
 
   @override
   State<PracticeScreen> createState() => _PracticeScreenState();
@@ -63,40 +66,8 @@ class _PracticeScreenState extends State<PracticeScreen> {
     super.initState();
     _scrollController.addListener(_onScrollEnd);
 
+    practiceQuestions = widget.practice;
 
-    // TODO: Update these practices to match lesson and pick random practice
-    if(widget.quizNumber == 1) {
-      practiceQuestions = fakeProfilesPractice1;
-      //practiceName = "PRACTICE: SOCIAL MEDIA NORMS";
-    }
-    else if(widget.quizNumber == 2) {
-      practiceQuestions = fakeProfilesPractice2;
-      //practiceName = "PRACTICE: SETTINGS";
-    }
-    else if(widget.quizNumber == 3) {
-      practiceQuestions = fakeProfilesPractice3;
-    }
-    else if(widget.quizNumber == 4) {
-      practiceQuestions = fakeProfilesPractice4;
-    }
-    else if(widget.quizNumber == 5) {
-      practiceQuestions = appropriateInteractionsPractice1;
-    }
-    else if(widget.quizNumber == 6) {
-      practiceQuestions = fakeProfilesPractice6;
-    }
-    else if(widget.quizNumber == 7) {
-      practiceQuestions = fakeProfilesPractice7;
-    }
-    else if(widget.quizNumber == 8) {
-      practiceQuestions = fakeProfilesPractice8;
-    }
-    else if(widget.quizNumber == 9) {
-      practiceQuestions = fakeProfilesPracticeAll;
-    }
-    else {
-      practiceQuestions = [];
-    }
   }
 
   void _onScrollEnd() {
