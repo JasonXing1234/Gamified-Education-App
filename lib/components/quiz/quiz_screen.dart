@@ -27,10 +27,12 @@ class QuizScreen extends StatefulWidget {
     super.key,
     required this.onSelectAnswer,
     required this.quizNumber,
+    required this.quiz,
   });
 
   final void Function(String answer) onSelectAnswer;
   final int quizNumber;
+  final List<Question> quiz;
 
 
   @override
@@ -65,37 +67,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
     _scrollController.addListener(_onScrollEnd);
     recordingTimeStamp();
 
-
-    if(widget.quizNumber == 0) {
-      quizQuestions = quiz0;
-    }
-    else if(widget.quizNumber == 1) {
-      quizQuestions = quiz1;
-      // quizName = "QUIZ: SOCIAL MEDIA NORMS";
-    }
-    else if(widget.quizNumber == 2) {
-      quizQuestions = quiz2;
-      // quizName = "QUIZ: SETTINGS";
-    }
-    else if(widget.quizNumber == 3) {
-      quizQuestions = quiz3;
-      // quizName = "QUIZ: FAKE PROFILES";
-    }
-    else if(widget.quizNumber == 4) {
-      quizQuestions = quiz4;
-      // quizName = "QUIZ: SOCIAL TAGS";
-    }
-    else if(widget.quizNumber == 5) {
-      quizQuestions = quiz5;
-      // quizName = "QUIZ: APPROPRIATE INTERACTIONS";
-    }
-    else if(widget.quizNumber == 6) {
-      quizQuestions = quiz6;
-      // quizName = "QUIZ: SOCIAL MEDIA VS REALITY";
-    }
-    else {
-      quizQuestions = [];
-    }
+    quizQuestions = widget.quiz;
   }
 
   void _onScrollEnd() {

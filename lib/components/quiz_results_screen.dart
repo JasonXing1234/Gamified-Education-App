@@ -1,5 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz0.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
@@ -125,10 +123,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
     if (widget.activeScreen == "quiz-screen") {
       if (widget.lesson.lessonNumber > 6) {
-        screen = QuizScreen(onSelectAnswer: recordAnswersQuiz1, quizNumber: widget.lesson.lessonNumber);
+        screen = QuizScreen(onSelectAnswer: recordAnswersQuiz1, quizNumber: widget.lesson.lessonNumber, quiz: widget.lesson.quiz);
       }
       else {
-        screen = QuizScreen(onSelectAnswer: quizAnswers[widget.lesson.lessonNumber], quizNumber: widget.lesson.lessonNumber);
+        screen = QuizScreen(onSelectAnswer: quizAnswers[widget.lesson.lessonNumber], quizNumber: widget.lesson.lessonNumber, quiz: widget.lesson.quiz);
       }
     }
     else if (widget.activeScreen == "result-screen") {

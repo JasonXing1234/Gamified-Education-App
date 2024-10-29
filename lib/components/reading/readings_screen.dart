@@ -4,20 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:quiz/components/buttons/ListenButton.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
 import 'package:quiz/components/reading/reading_page.dart';
-import 'package:quiz/components/reading/readings/reading0.dart';
-import 'package:quiz/components/reading/readings/reading1.dart';
 import 'package:quiz/components/progress_bar/progress_bar.dart';
-import 'package:quiz/components/reading/readings/reading2.dart';
-import 'package:quiz/components/reading/readings/reading3.dart';
-import 'package:quiz/components/reading/readings/reading4.dart';
-import 'package:quiz/components/reading/readings/reading5.dart';
-import 'package:quiz/components/reading/readings/reading6.dart';
+
 
 import '../../styles/app_colors.dart';
 import '../../styles/text_styles.dart';
-import '../buttons/menu_button.dart';
 import '../buttons/next_button.dart';
-import '../buttons/speed_button.dart';
 import '../lesson/lesson.dart';
 import '../text_box/text_box.dart';
 
@@ -193,38 +185,6 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     var lessonName = "LESSON";
 
     readingPages = widget.lesson.reading;
-
-    // if(widget.readingNumber == 0) {
-    //   readingPages = reading0;
-    //   lessonName = "TUTORIAL & SET UP";
-    // }
-    // else if(widget.readingNumber == 1) {
-    //   readingPages = reading1;
-    //   lessonName = "SOCIAL MEDIA NORMS";
-    // }
-    // else if(widget.readingNumber == 2) {
-    //   readingPages = reading2;
-    //   lessonName = "SETTINGS";
-    // }
-    // else if(widget.readingNumber == 3) {
-    //   readingPages = reading3;
-    //   lessonName = "FAKE PROFILES";
-    // }
-    // else if(widget.readingNumber == 4) {
-    //   readingPages = reading4;
-    //   lessonName = "SOCIAL TAGS";
-    // }
-    // else if(widget.readingNumber == 5) {
-    //   readingPages = reading5;
-    //   lessonName = "INTERACTION ETIQUETTE";
-    // }
-    // else if(widget.readingNumber == 6) {
-    //   readingPages = reading6;
-    //   lessonName = "SOCIAL MEDIA VS REALITY";
-    // }
-    // else {
-    //   readingPages = [];
-    // }
 
     if (readingPages.isNotEmpty) {
       currentReadingPage = readingPages[readingPageIndex];

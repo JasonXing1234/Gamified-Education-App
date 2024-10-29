@@ -5,7 +5,6 @@ import 'package:quiz/components/answers_screen.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz0.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/components/practice/practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
-import 'package:quiz/components/question.dart';
 
 import 'buttons/ListenButton.dart';
 import 'quiz/quiz_questions/quiz2.dart';
@@ -13,11 +12,8 @@ import 'quiz/quiz_questions/quiz3.dart';
 import 'quiz/quiz_questions/quiz4.dart';
 import 'quiz/quiz_questions/quiz5.dart';
 import 'quiz/quiz_questions/quiz6.dart';
-import '../styles/app_colors.dart';
 import '../styles/text_styles.dart';
-import 'buttons/menu_button.dart';
 import 'buttons/next_button.dart';
-import 'buttons/speed_button.dart';
 
 class ResultScreen extends StatelessWidget {
   ResultScreen({super.key, required this.userAnswers, required this.endQuiz, required this.quizNumber});
