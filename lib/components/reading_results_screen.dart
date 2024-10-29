@@ -7,12 +7,10 @@ import 'lesson/lesson.dart';
 class ReadingResultScreen extends StatefulWidget {
   ReadingResultScreen({
     super.key,
-    required this.lessonNumber,
     required this.lesson,
     required this.activeScreen
   });
 
-  final int lessonNumber;
   final Lesson lesson;
   String activeScreen;
 
@@ -43,10 +41,10 @@ class _ReadingResultScreenState extends State<ReadingResultScreen> {
     );
 
     if (widget.activeScreen == "reading-screen") {
-      screen = ReadingsScreen(readingNumber: widget.lessonNumber, openRewardPage: openRewardPage);
+      screen = ReadingsScreen(lesson: widget.lesson, openRewardPage: openRewardPage);
     }
     else if (widget.activeScreen == "reward-screen") {
-      screen = RewardScreen(lessonNumber: widget.lessonNumber, lesson: widget.lesson, activityName: "reading",);
+      screen = RewardScreen(lesson: widget.lesson, activityName: "reading",);
     }
 
     return Scaffold(

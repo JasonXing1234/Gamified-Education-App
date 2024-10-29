@@ -15,12 +15,10 @@ import 'all_characters.dart';
 class RewardScreen extends StatefulWidget {
   const RewardScreen({
     super.key,
-    required this.lessonNumber,
     required this.lesson,
     required this.activityName,
   });
 
-  final int lessonNumber;
   final Lesson lesson;
   final String activityName;
 

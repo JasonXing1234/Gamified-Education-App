@@ -9,12 +9,10 @@ import 'lesson/lesson.dart';
 class PracticeResultScreen extends StatefulWidget {
   PracticeResultScreen({
     super.key,
-    required this.lessonNumber,
     required this.lesson,
     required this.activeScreen
   });
 
-  final int lessonNumber;
   final Lesson lesson;
   String activeScreen;
 
@@ -66,15 +64,15 @@ class _PracticeResultScreenState extends State<PracticeResultScreen> {
     );
 
     if (widget.activeScreen == "practice-screen") {
-      if (widget.lessonNumber > 6) {
-        screen = PracticeScreen(onSelectAnswer: recordAnswersPractice1, quizNumber: widget.lessonNumber);
+      if (widget.lesson.lessonNumber > 6) {
+        screen = PracticeScreen(onSelectAnswer: recordAnswersPractice1, quizNumber: widget.lesson.lessonNumber);
       }
       else {
-        screen = PracticeScreen(onSelectAnswer: practiceAnswers[widget.lessonNumber - 1], quizNumber: widget.lessonNumber);
+        screen = PracticeScreen(onSelectAnswer: practiceAnswers[widget.lesson.lessonNumber - 1], quizNumber: widget.lesson.lessonNumber);
       }
     }
     else if (widget.activeScreen == "reward-screen") {
-      screen = RewardScreen(lessonNumber: widget.lessonNumber, lesson: widget.lesson, activityName: "practice",);
+      screen = RewardScreen(lesson: widget.lesson, activityName: "practice",);
     }
 
     return Scaffold(

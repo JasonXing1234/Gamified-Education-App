@@ -103,64 +103,7 @@ class _HomeState extends State<Home> {
             height: 10,
           ),
 
-          // User Stats Box
-          // Padding(
-          //     padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-          //   child: Container(
-          //     padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 5),
-          //     decoration: BoxDecoration(
-          //       shape: BoxShape.rectangle,
-          //       border: Border.all(color: Colors.black, width: 3.0),
-          //       borderRadius: BorderRadius.circular(20.0),
-          //     ),
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.center,
-          //       children: [
-          //         Column(
-          //           mainAxisSize: MainAxisSize.min,
-          //           children: [
-          //             FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: 60,),
-          //             // Icon( Icons.stars, color: appColors.yellow, size: 60,),
-          //             Text("Tickets", style: textStyles.mediumBodyText,),
-          //             FutureBuilder<int?>(
-          //               future: _fetchReadingList(),
-          //               builder: (context, snapshot) {
-          //                 if (snapshot.connectionState == ConnectionState.waiting) {
-          //                   return const CircularProgressIndicator();
-          //                 } else if (snapshot.hasError) {
-          //                   return Text('Error: ${snapshot.error}');
-          //                 } else if (snapshot.hasData) {
-          //                   return Text(snapshot.data.toString(), style: textStyles.mediumBodyText,);
-          //                 } else {
-          //                   return Text("0", style: textStyles.mediumBodyText,);
-          //                 }
-          //               },
-          //             ),
-          //
-          //           ],
-          //         ),
-          //         const SizedBox(
-          //           width: 50,
-          //         ),
-          //         Column(
-          //           mainAxisSize: MainAxisSize.min,
-          //           children: [
-          //             Icon( Icons.menu_book_rounded, color: appColors.green, size: 60),
-          //             // TODO: Add logic to record the lessons (6) or activities (6*4) completed
-          //             Text(
-          //               "Lessons",
-          //               style: textStyles.mediumBodyText,
-          //             ),
-          //             Text("0/6", style: textStyles.mediumBodyText,),
-          //           ],
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-          // const SizedBox(
-          //   height: 20,
-          // ),
+
 
           // Current Activity and Lesson Shortcut
           Padding(
@@ -230,7 +173,7 @@ class _HomeState extends State<Home> {
               // Navigate to the Tutorial Lesson
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: tutorial.lessonNumber, lesson: tutorial)),
+                MaterialPageRoute(builder: (context) => LessonScreen(lesson: tutorial)),
               );
             },
           ),
@@ -242,7 +185,7 @@ class _HomeState extends State<Home> {
               // Navigate to the Social Media Norms Lesson
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: socialMediaNorms.lessonNumber, lesson: socialMediaNorms)),
+                MaterialPageRoute(builder: (context) => LessonScreen(lesson: socialMediaNorms)),
               );
             },
           ),
@@ -254,7 +197,7 @@ class _HomeState extends State<Home> {
               // Navigate to the Social Media Norms Lesson
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: settings.lessonNumber, lesson: settings)),
+                MaterialPageRoute(builder: (context) => LessonScreen(lesson: settings)),
               );
             },
           ),
@@ -266,7 +209,7 @@ class _HomeState extends State<Home> {
               // Navigate to the Social Media Norms Lesson
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: fakeProfiles.lessonNumber, lesson: fakeProfiles)),
+                MaterialPageRoute(builder: (context) => LessonScreen(lesson: fakeProfiles)),
               );
             },
           ),
@@ -278,7 +221,7 @@ class _HomeState extends State<Home> {
               // Navigate to the Social Media Norms Lesson
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: socialTags.lessonNumber, lesson: socialTags)),
+                MaterialPageRoute(builder: (context) => LessonScreen(lesson: socialTags)),
               );
             },
           ),
@@ -290,7 +233,7 @@ class _HomeState extends State<Home> {
               // Navigate to the Social Media Norms Lesson
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: appropriateInteractions.lessonNumber, lesson: appropriateInteractions)),
+                MaterialPageRoute(builder: (context) => LessonScreen(lesson: appropriateInteractions)),
               );
             },
           ),

@@ -17,12 +17,10 @@ import 'lesson/lesson.dart';
 class QuizResultScreen extends StatefulWidget {
   QuizResultScreen({
     super.key,
-    required this.lessonNumber,
     required this.lesson,
     required this.activeScreen
   });
 
-  final int lessonNumber;
   final Lesson lesson;
   String activeScreen;
 
@@ -42,7 +40,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       answers.add(answer);
       if (quiz0.length == answers.length) {
         widget.activeScreen = 'result-screen';
-        resultNumber = widget.lessonNumber;
+        resultNumber = widget.lesson.lessonNumber;
       }
     });
   }
@@ -52,7 +50,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       answers.add(answer);
       if (quiz1.length == answers.length) {
         widget.activeScreen = 'result-screen';
-        resultNumber = widget.lessonNumber;
+        resultNumber = widget.lesson.lessonNumber;
       }
     });
   }
@@ -126,11 +124,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     );
 
     if (widget.activeScreen == "quiz-screen") {
-      if (widget.lessonNumber > 6) {
-        screen = QuizScreen(onSelectAnswer: recordAnswersQuiz1, quizNumber: widget.lessonNumber);
+      if (widget.lesson.lessonNumber > 6) {
+        screen = QuizScreen(onSelectAnswer: recordAnswersQuiz1, quizNumber: widget.lesson.lessonNumber);
       }
       else {
-        screen = QuizScreen(onSelectAnswer: quizAnswers[widget.lessonNumber], quizNumber: widget.lessonNumber);
+        screen = QuizScreen(onSelectAnswer: quizAnswers[widget.lesson.lessonNumber], quizNumber: widget.lesson.lessonNumber);
       }
     }
     else if (widget.activeScreen == "result-screen") {
@@ -142,7 +140,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       );
     }
     else if (widget.activeScreen == "reward-screen") {
-      screen = RewardScreen(lessonNumber: widget.lessonNumber, lesson: widget.lesson, activityName: "quiz",);
+      screen = RewardScreen(lesson: widget.lesson, activityName: "quiz",);
     }
 
     return Scaffold(

@@ -21,11 +21,9 @@ import '../rewards/character.dart';
 class LessonScreen extends StatefulWidget {
   const LessonScreen({
     super.key,
-    required this.lessonNumber,
     required this.lesson,
   });
 
-  final int lessonNumber;
   final Lesson lesson;
 
   // Unlocked features
@@ -173,33 +171,6 @@ class _LessonScreenState extends State<LessonScreen> {
   @override
   Widget build(BuildContext context) {
 
-    // Lesson lesson;
-    // if (widget.lessonNumber == tutorial.lessonNumber) {
-    //   lesson = tutorial;
-    // }
-    // else if (widget.lessonNumber == socialMediaNorms.lessonNumber) {
-    //   lesson = socialMediaNorms;
-    // }
-    // else if (widget.lessonNumber == settings.lessonNumber) {
-    //   lesson = settings;
-    // }
-    // else if (widget.lessonNumber == fakeProfiles.lessonNumber) {
-    //   lesson = fakeProfiles;
-    // }
-    // else if (widget.lessonNumber == socialTags.lessonNumber) {
-    //   lesson = socialTags;
-    // }
-    // else if (widget.lessonNumber == appropriateInteractions.lessonNumber) {
-    //   lesson = appropriateInteractions;
-    // }
-    // else if (widget.lessonNumber == socialMediaVSReality.lessonNumber) {
-    //   lesson = socialMediaVSReality;
-    // }
-    // else {
-    //   lesson = tutorial;
-    // }
-
-
     return PopScope(
       //TODO: Make this work
         onPopInvoked: (popDisposition) async {
@@ -271,7 +242,7 @@ class _LessonScreenState extends State<LessonScreen> {
                         (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ReadingResultScreen(lessonNumber: widget.lessonNumber, lesson: widget.lesson, activeScreen: "reading-screen",)),
+                        MaterialPageRoute(builder: (context) => ReadingResultScreen(lesson: widget.lesson, activeScreen: "reading-screen",)),
                       );
                     },
                   ),
@@ -282,7 +253,7 @@ class _LessonScreenState extends State<LessonScreen> {
                         (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ReadingResultScreen(lessonNumber: widget.lessonNumber, lesson: widget.lesson, activeScreen: "reading-screen",)),
+                        MaterialPageRoute(builder: (context) => ReadingResultScreen(lesson: widget.lesson, activeScreen: "reading-screen",)),
                       );
                     },
                   ),
@@ -293,7 +264,7 @@ class _LessonScreenState extends State<LessonScreen> {
                         (){
                       Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => QuizResultScreen(lessonNumber: widget.lessonNumber, lesson: widget.lesson, activeScreen: "quiz-screen",))
+                          MaterialPageRoute(builder: (context) => QuizResultScreen(lesson: widget.lesson, activeScreen: "quiz-screen",))
                       );
                     },
                   ),
@@ -308,7 +279,7 @@ class _LessonScreenState extends State<LessonScreen> {
                     (){
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PracticeResultScreen(lessonNumber: widget.lessonNumber, lesson: widget.lesson, activeScreen: "practice-screen",))
+                      MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: widget.lesson, activeScreen: "practice-screen",))
 
                     //MaterialPageRoute(builder: (context) => PracticeScreen(quizNumber: widget.lessonNumber, onSelectAnswer: (String answer) {  },))
                   );
