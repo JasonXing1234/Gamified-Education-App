@@ -182,8 +182,8 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
   Widget build(BuildContext context) {
     List<ReadingPage> readingPages;
     ReadingPage currentReadingPage;
-    var lessonName = "LESSON";
 
+    var lessonName = widget.lesson.title;
     readingPages = widget.lesson.reading;
 
     if (readingPages.isNotEmpty) {
