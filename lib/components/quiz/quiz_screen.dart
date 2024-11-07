@@ -155,7 +155,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
       currentQuestion = quizQuestions[questionIndex];
     }
     else {
-      currentQuestion = const Question("no", "none", "no", ["none"], "none");
+      currentQuestion = Question(context: "no", question: "none", photo: "no", answerOptions: ["none"], explanation: "none");
     }
 
     Widget nextButton;
@@ -274,7 +274,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
                     const SizedBox(
                       height: 10,
                     ),
-                    currentQuestion.context == "no" ? SizedBox.shrink() : TextBox(currentText: currentQuestion.context),
+                    currentQuestion.context == "no" ? SizedBox.shrink() : Text(currentQuestion.context, style: textStyles.mediumBodyText,),//TextBox(currentText: currentQuestion.context),
                     currentQuestion.context == "no" ? SizedBox.shrink() : const SizedBox(height: 20), // Add an extra space between context & question box
                     TextBox(currentText: currentQuestion),
                     currentQuestion.photo == 'no' ? SizedBox.shrink() : Image.asset(currentQuestion.photo),

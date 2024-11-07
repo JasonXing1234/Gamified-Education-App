@@ -1,106 +1,98 @@
 import 'package:quiz/components/question.dart';
 
-//TODO: Put in the correct answers
-
-const appropriateInteractionsPractice1 = [
+var appropriateInteractionsPractice1 = [
   SingleAnswerQuestion(
-  "no",
-  "Your friend wants to make a second personal account on Facebook to post memes on. "
-      "Is it ok for your friend to do that?",
-  "no",
-  [
-    "Yes",
-    "No",
-    "I don’t know"
-  ],
-  "No",
-  "Facebook has rules against making multiple accounts.",
+    context: "Your friend wants to make a second personal account on Facebook to post memes on. "
+        "Is it ok for your friend to do that?",
+    question: "Is it ok for your friend to make a second personal account on Facebook?",
+    photo: "no",
+    answerOptions: [
+      "Yes",
+      "No",
+      "I don’t know"
+    ],
+    explanation: "Facebook has rules against making multiple accounts.",
+    correctAnswer: "No",
   ),
   SingleAnswerQuestion(
-    "no",
-    "Who is able to make a social media account?",
-    "no",
-    [
+    context: "Who is able to make a social media account?",
+    question: "Who is allowed to make a social media account?",
+    photo: "no",
+    answerOptions: [
       "People who are older than 13",
       "Trustworthy people",
       "People that pass a background check",
       "Anyone",
     ],
-    "Anyone",
-    "It is easy for anyone to make a social media account.",
+    explanation: "It is easy for anyone to make a social media account.",
+    correctAnswer: "Anyone",
   ),
   SingleAnswerQuestion(
-    "no",
-    "Jill has an Instagram account where she posts pictures of her dog for a small "
+    context: "Jill has an Instagram account where she posts pictures of her dog for a small "
         "group of her friends to see. What kind of account is this?",
-    "no",
-    [
+    question: "What kind of Instagram account does Jill have?",
+    photo: "no",
+    answerOptions: [
       "Top/Interest Account",
       "Alternate Personal Account (finista)",
       "Page",
       "Verified Celebrity or Influencer Account",
     ],
-    "Alternate Personal Account (finista)",
-    "People use alternate personal accounts to post for a smaller group of friends.",
+    explanation: "People use alternate personal accounts to post for a smaller group of friends.",
+    correctAnswer: "Alternate Personal Account (finista)",
   ),
   SingleAnswerQuestion(
-    "no",
-    "What is a social media norm?",
-    "no",
-    [
+    context: "What is a social media norm?",
+    question: "What does the term 'social media norm' refer to?",
+    photo: "no",
+    answerOptions: [
       "A way that people typically use social media",
       "A popup ad",
       "Business Account",
       "A guy on social media whose name is Norman",
       "A post on social media"
     ],
-    "A way that people typically use social media",
-    "Norms are the way something is typically done.",
+    explanation: "Norms are the way something is typically done.",
+    correctAnswer: "A way that people typically use social media",
   ),
   SingleAnswerQuestion(
-    "no",
-    "Which kind of Facebook account allows strangers to discuss common interests?",
-    "no",
-    [
+    context: "Which kind of Facebook account allows strangers to discuss common interests?",
+    question: "Which kind of Facebook account is designed for strangers to interact?",
+    photo: "no",
+    answerOptions: [
       "Personal",
       "Page",
       "Facebook messenger",
       "Group",
     ],
-    "Group",
-    "Groups are designed for strangers with common interests to interact with each other.",
+    explanation: "Groups are designed for strangers with common interests to interact with each other.",
+    correctAnswer: "Group",
   ),
   SingleAnswerQuestion(
-    "no",
-    "You see a post from McDonalds on Instagram. What kind of account is this?",
-    "no",
-    [
+    context: "You see a post from McDonalds on Instagram. What kind of account is this?",
+    question: "What kind of account is McDonald's Instagram post from?",
+    photo: "no",
+    answerOptions: [
       "Business Account",
       "Personal Account",
       "Alternate Personal Account (finista)",
       "Page",
     ],
-    "Business Account",
-    "Business accounts are used to promote products, and McDonalds is a business "
-        "that promotes products.",
+    explanation: "Business accounts are used to promote products, and McDonalds is a business that promotes products.",
+    correctAnswer: "Business Account",
   ),
   SingleAnswerQuestion(
-    "no",
-    "Your cousin wants to make a second Instagram account to promote their music. "
+    context: "Your cousin wants to make a second Instagram account to promote their music. "
         "Is it ok to make multiple personal accounts on Instagram?",
-    "no",
-    [
+    question: "Is it okay to make multiple personal accounts on Instagram?",
+    photo: "no",
+    answerOptions: [
       "Yes",
       "No",
       "I don't know",
     ],
-    "Yes",
-    "Instagram allows users to have multiple accounts",
+    explanation: "Instagram allows users to have multiple accounts.",
+    correctAnswer: "Yes",
   ),
-
   //TODO: Left off on question 8
 ];
-
-
-
-

@@ -121,7 +121,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
       currentQuestion = practiceQuestions[questionIndex];
     }
     else {
-      currentQuestion = const Question("no", "none", "no", ["none"], "none",);
+      currentQuestion = Question(context: "no", question: "none", photo: "no", answerOptions: ["none"], explanation: "none");
     }
 
 
@@ -256,7 +256,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    currentQuestion.context == "no" ? SizedBox.shrink() : TextBox(currentText: currentQuestion.context,),
+                    currentQuestion.context == "no" ? SizedBox.shrink() : Text(currentQuestion.context, style: textStyles.mediumBodyText,),
                     currentQuestion.context == "no" ? SizedBox.shrink() : const SizedBox(height: 30,),
                     currentQuestion.photo == 'no' ? SizedBox.shrink() : Image.asset(currentQuestion.photo),
                     currentQuestion.photo == 'no' ? SizedBox.shrink() : const SizedBox(height: 30,),
