@@ -33,7 +33,7 @@ class MenuDrawer extends StatelessWidget {
             // TODO: Add customization features
             // Change font
 
-            // Change color theme
+            // Change color theme and dark mode
 
             // Change reading speed
 

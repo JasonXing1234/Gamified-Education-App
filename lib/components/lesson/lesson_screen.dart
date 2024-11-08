@@ -6,15 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quiz/components/quiz_results_screen.dart';
 import 'package:quiz/components/lesson/lesson.dart';
-import 'package:quiz/components/lesson/all_lessons.dart';
-import 'package:quiz/components/reading/readings_screen.dart';
 import 'package:quiz/components/reading_results_screen.dart';
-import 'package:quiz/components/rewards/all_characters.dart';
 import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
 
-import '../../accessory.dart';
-import '../practice/practice_screen.dart';
 import '../practice_results_screen.dart';
 import '../rewards/character.dart';
 
@@ -302,10 +297,7 @@ class _LessonScreenState extends State<LessonScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: textStyles.mediumBodyText.fontSize,),
-
-                          // Icon( Icons.Tickets, color: appColors.yellow, size: textStyles.mediumBodyText.fontSize,),
-                          Text("Tickets: ${snapshot.data}", style: textStyles.mediumBodyText,),
-                          Text(snapshot.data.toString(), style: textStyles.mediumBodyText,),
+                          Text(" Tickets: ${snapshot.data}", style: textStyles.mediumBodyText,),
                         ],
                       );
                   } else {

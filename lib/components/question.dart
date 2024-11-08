@@ -52,9 +52,7 @@ class MultipleAnswersQuestion extends Question {
   List<String> correctAnswers;
 }
 
-// class TextFieldQuestion extends Question {
-//   const TextFieldQuestion(super.context, super.question, super.photo, super.answerOptions, this.correctAnswers);
-//
-//   final List<String> correctAnswers;
-//
-// }
+class TextFieldQuestion extends Question {
+  TextFieldQuestion({required super.context, required super.question, required super.photo, required super.answerOptions, required super.explanation});
+
+}
