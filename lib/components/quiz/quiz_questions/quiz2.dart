@@ -5,124 +5,124 @@ import 'package:quiz/components/question.dart';
 // TODO: Put in explanations for answers
 
 var quiz2 = [
-  const SingleAnswerQuestion(
-    "no",
-    "What does this setting do? Choose from this options",
-    "assets/images/blocking.png",
-    [
+  SingleAnswerQuestion(
+    context: "What does this setting do? Choose from these options:",
+    question: "What does this setting do?",
+    photo: "assets/images/blocking.png",
+    answerOptions: [
       "Updates who can tag you in their posts",
       "Updates who can see your posts",
       "Updates whether your account is private or public",
       "Allows you to block other users",
       "Updates where your message go"
     ],
-    "explain",
-    "Allows you to block other users",
+    explanation: "This setting allows you to block other users, preventing them from interacting with you.",
+    correctAnswer: "Allows you to block other users",
   ),
-  const SingleAnswerQuestion(
-    "no",
-    "What does this setting do? Choose from these options: ",
-    "assets/images/posts.png",
-    [
+  SingleAnswerQuestion(
+    context: "What does this setting do? Choose from these options:",
+    question: "What does this setting do?",
+    photo: "assets/images/posts.png",
+    answerOptions: [
       "Updates who can tag you in their posts",
       "Updates who can see your posts",
       "Updates whether your account is private or public",
       "Allows you to block other users",
       "Updates where your message go"
     ],
-    "explain",
-    "Updates who can see your posts",
+    explanation: "This setting updates who can see your posts, allowing you to control your audience.",
+    correctAnswer: "Updates who can see your posts",
   ),
   MultipleAnswersQuestion(
-    "no",
-    "Why would you want to limit who can tag you in posts, stories, and comments?",
-    "no",
-    [
+    context: "Why would you want to limit who can tag you in posts, stories, and comments?",
+    question: "Why would you want to limit who can tag you in posts, stories, and comments?",
+    photo: "no",
+    answerOptions: [
       "textField"
     ],
-    "explain",
-    [],
+    explanation: "Limiting who can tag you helps protect your privacy and control the visibility of posts involving you.",
+    correctAnswers: [],
   ),
   MultipleAnswersQuestion(
-    "no",
-    "Why would you want to block another user?",
-    "no",
-    [
+    context: "Why would you want to block another user?",
+    question: "Why would you want to block another user?",
+    photo: "no",
+    answerOptions: [
       "textField"
     ],
-    "explain",
-    [],
+    explanation: "Blocking another user may be necessary if they are harassing you or violating your privacy.",
+    correctAnswers: [],
   ),
-  const SingleAnswerQuestion(
-    "no",
-    "What does this setting do? Choose from these options: ",
-    "assets/images/privacy.png",
-    [
+  SingleAnswerQuestion(
+    context: "What does this setting do? Choose from these options:",
+    question: "What does this setting do?",
+    photo: "assets/images/privacy.png",
+    answerOptions: [
       "Updates who can tag you in their posts",
       "Updates who can see your posts",
       "Updates whether your account is private or public",
       "Allows you to block other users",
       "Updates where your message go"
     ],
-    "explain",
-    "Updates whether your account is private or public",
+    explanation: "This setting updates whether your account is private or public, allowing you to control who can find and follow you.",
+    correctAnswer: "Updates whether your account is private or public",
   ),
-  const SingleAnswerQuestion(
-    "no",
-    "What does this setting do? Choose from these options: ",
-    "assets/images/messageControls.png",
-    [
+  SingleAnswerQuestion(
+    context: "What does this setting do? Choose from these options:",
+    question: "What does this setting do?",
+    photo: "assets/images/messageControls.png",
+    answerOptions: [
       "Updates who can tag you in their posts",
       "Updates who can see your posts",
       "Updates whether your account is private or public",
       "Allows you to block other users",
       "Updates where your message go"
     ],
-    "explain",
-    "Updates where your message go",
+    explanation: "This setting allows you to manage where your messages go, either to your main inbox or the message requests.",
+    correctAnswer: "Updates where your message go",
   ),
-  const SingleAnswerQuestion(
-    "no",
-    "What does this setting do? Choose from these options: ",
-    "assets/images/mentions.png",
-    [
+  SingleAnswerQuestion(
+    context: "What does this setting do? Choose from these options:",
+    question: "What does this setting do?",
+    photo: "assets/images/mentions.png",
+    answerOptions: [
       "Updates who can tag you in their posts",
       "Updates who can see your posts",
       "Updates whether your account is private or public",
       "Allows you to block other users",
       "Updates where your message go"
     ],
-    "explain",
-    "Updates who can tag you in their posts",
+    explanation: "This setting updates who can tag you in their posts, offering you control over the visibility of your interactions.",
+    correctAnswer: "Updates who can tag you in their posts",
   ),
   MultipleAnswersQuestion(
-    "no",
-    "On Instagram, why would you want to limit who can reply to your story? ",
-    "no",
-    [
+    context: "On Instagram, why would you want to limit who can reply to your story?",
+    question: "Why would you want to limit who can reply to your story?",
+    photo: "no",
+    answerOptions: [
       "textField"
     ],
-    "explain",
-    [],
+    explanation: "Limiting replies to your story helps maintain privacy and avoid unwanted or negative interactions.",
+    correctAnswers: [],
   ),
   MultipleAnswersQuestion(
-    "no",
-    "On Instagram, why would you want to adjust where messages go (e.g., to the chat inbox or the message requests)?",
-    "no",
-    [
+    context: "On Instagram, why would you want to adjust where messages go (e.g., to the chat inbox or the message requests)?",
+    question: "Why would you want to adjust where messages go?",
+    photo: "no",
+    answerOptions: [
       "textField"
     ],
-    "explain",
-    [],
+    explanation: "Adjusting message delivery can help you filter unwanted or spammy messages, ensuring your inbox stays organized.",
+    correctAnswers: [],
   ),
   MultipleAnswersQuestion(
-    "no",
-    "On Instagram, why would you want to set your social media account to private? ",
-    "no",
-    [
+    context: "On Instagram, why would you want to set your social media account to private?",
+    question: "Why would you want to set your Instagram account to private?",
+    photo: "no",
+    answerOptions: [
       "textField"
     ],
-    "explain",
-    [],
+    explanation: "Setting your account to private restricts access to your posts and stories, keeping your content safe from people you don't know.",
+    correctAnswers: [],
   ),
 ];
