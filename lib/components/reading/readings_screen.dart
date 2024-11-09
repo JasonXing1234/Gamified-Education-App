@@ -95,10 +95,6 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
 
   // Asynchronous function to fetch reading list data
   Future<int?> _fetchReadingList() async {
-    //TODO: This function resets readingPageIndex so that readings can not move forward.
-    //TODO: It's called in nextReadingPage and that's everything gets reset
-    //TODO: How you distinguish going to last index vs updating progress -> Maybe a different function?
-
     if (user2 != null) {
       try {
         DataSnapshot snapshot = await _database
@@ -136,8 +132,6 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
 
   // Asynchronous function to update reading list data
   Future<int?> _updateReadingList() async {
-    //TODO: Doesn't update reading progress, but now you can move through readings
-
     if (user2 != null) {
       try {
         DataSnapshot snapshot = await _database
@@ -147,57 +141,87 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
             .get();
 
         if (snapshot.value != null) {
-          setState(() {
-            // Assuming snapshot.value is a List of reading objects
-            List<dynamic> readingList = snapshot.value as List<dynamic>;
-            readings = readingList;
+          List<dynamic> readingList = snapshot.value as List<dynamic>;
 
-            // Assuming you want to access a specific reading object based on widget.readingNumber
-            if (widget.lesson.lessonNumber - 1 < readings.length) {
-              // Update the readings based on the newReadingPageIndex
-              readings[widget.lesson.lessonNumber - 1]['progress'] = readingPageIndex;
-            }
+          setState(() {
+            readings = readingList;
           });
         }
         return readingPageIndex;
       } catch (e) {
-        // Handle potential errors, like network issues
         print('Error updating reading list: $e');
       }
     }
+    return null;
   }
 
-
-
   Future<void> nextReadingPage({String userAnswer = ""}) async {
-    setState(() {
-      readingPageIndex++;
-    });
-    DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('readingList').get();
-    List<dynamic> readings = snapshot.value as List<dynamic>;
-    readings[widget.lesson.lessonNumber - 1]['progress'] = readingPageIndex;
-    await _database.child('profile/${user2?.uid}').update({
-      'readings': readings,
-    });
-    setState(() {
-      _readingListFuture = _updateReadingList();  // Refresh FutureBuilder
-    });
+    // Increment reading page index locally
+    int newReadingPageIndex = readingPageIndex + 1;
+
+    try {
+      // Retrieve the user's reading list from the database
+      DataSnapshot snapshot = await _database
+          .child('profile')
+          .child(user2!.uid)
+          .child('readingList')
+          .get();
+
+      if (snapshot.value != null) {
+        List<dynamic> readings = snapshot.value as List<dynamic>;
+
+        // Update progress for the current lesson
+        readings[widget.lesson.lessonNumber - 1]['progress'] = newReadingPageIndex;
+
+        // Save updated reading list back to the database
+        await _database.child('profile/${user2!.uid}/readingList').set(readings);
+
+        // Update state after async updates are done
+        setState(() {
+          readingPageIndex = newReadingPageIndex;
+          _readingListFuture = _updateReadingList();
+        });
+      }
+    } catch (e) {
+      print('Error updating reading progress: $e');
+    }
+
   }
 
   Future<void> prevReadingPage({String userAnswer = ""}) async {
-    setState(() {
-      readingPageIndex--;
-    });
-    DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('readingList').get();
-    List<dynamic> readings = snapshot.value as List<dynamic>;
-    readings[widget.lesson.lessonNumber - 1] = readingPageIndex;
-    await _database.child('profile/${user2?.uid}').update({
-      'readingList': readings,
-    });
-    //_controller.dispose();
-    setState(() {
-      _readingListFuture = _fetchReadingList();  // Refresh FutureBuilder
-    });
+    // Only decrement if readingPageIndex is greater than 0
+    if (readingPageIndex > 0) {
+      int newReadingPageIndex = readingPageIndex - 1;
+
+      try {
+        // Retrieve the user's reading list from the database
+        DataSnapshot snapshot = await _database
+            .child('profile')
+            .child(user2!.uid)
+            .child('readingList')
+            .get();
+
+        if (snapshot.value != null) {
+          List<dynamic> readings = snapshot.value as List<dynamic>;
+
+          // Update progress for the current lesson
+          readings[widget.lesson.lessonNumber - 1]['progress'] = newReadingPageIndex;
+
+          // Save updated reading list back to the database
+          await _database.child('profile/${user2!.uid}/readingList').set(readings);
+
+          // Update state after async updates are done
+          setState(() {
+            readingPageIndex = newReadingPageIndex;
+            _readingListFuture = _updateReadingList();
+          });
+        }
+      } catch (e) {
+        print("Error updating reading progress: $e");
+      }
+    } else {
+      print("Already at the first page. Can't go back further.");
+    }
   }
 
   Future<void> backToFirstPage() async {
