@@ -1,10 +1,16 @@
 // Class for Holding Question Data
 
 class Question {
-  const Question(this.context, this.question, this.photo, this.answerOptions, this.explanation);
+  Question({
+    required this.context,
+    required this.question,
+    required this.photo,
+    required this.answerOptions,
+    required this.explanation
+  });
 
   // final String title = ""; // Title for questions will always be empty, but parameter is needed to mix reading pages and questions pages
-  final String context;
+  String context;
   final String question;
   final List<String> answerOptions;
   final String photo;
@@ -16,11 +22,18 @@ class Question {
     shuffledAnswers.shuffle();
     return shuffledAnswers;
   }
-
 }
 
 class SingleAnswerQuestion extends Question {
-  const SingleAnswerQuestion(super.context, super.question, super.photo, super.answerOptions, super.explanation, this.correctAnswer,);
+  SingleAnswerQuestion({
+    required super.context,
+    required super.question,
+    required super.photo,
+    required super.answerOptions,
+    required super.explanation,
+    required this.correctAnswer,
+  });
+
 
   final String correctAnswer;
 
@@ -28,17 +41,18 @@ class SingleAnswerQuestion extends Question {
 
 class MultipleAnswersQuestion extends Question {
   // Not labeled as const so that correct Answers can be sorted
-  MultipleAnswersQuestion(super.context, super.question, super.photo, super.answerOptions, super.explanation, this.correctAnswers);
+  MultipleAnswersQuestion({
+    required super.context,
+    required super.question,
+    required super.photo,
+    required super.answerOptions,
+    required super.explanation,
+    required this.correctAnswers});
 
   List<String> correctAnswers;
-
-
-
 }
 
-// class TextFieldQuestion extends Question {
-//   const TextFieldQuestion(super.context, super.question, super.photo, super.answerOptions, this.correctAnswers);
-//
-//   final List<String> correctAnswers;
-//
-// }
+class TextFieldQuestion extends Question {
+  TextFieldQuestion({required super.context, required super.question, required super.photo, required super.answerOptions, required super.explanation});
+
+}

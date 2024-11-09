@@ -1,6 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz/components/quiz/quiz_questions/quiz0.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz2.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz3.dart';
@@ -11,14 +10,16 @@ import 'package:quiz/components/quiz/quiz_screen.dart';
 import 'package:quiz/components/result_screen.dart';
 import 'package:quiz/components/rewards/reward_screen.dart';
 
+import 'lesson/lesson.dart';
+
 class QuizResultScreen extends StatefulWidget {
   QuizResultScreen({
     super.key,
-    required this.lessonNumber,
+    required this.lesson,
     required this.activeScreen
   });
 
-  final int lessonNumber;
+  final Lesson lesson;
   String activeScreen;
 
   @override
@@ -32,12 +33,22 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   List<String> answers = [];
   int resultNumber = 0;
 
+  void recordAnswersQuiz0(String answer) {
+    setState(() {
+      answers.add(answer);
+      if (quiz0.length == answers.length) {
+        widget.activeScreen = 'result-screen';
+        resultNumber = widget.lesson.lessonNumber;
+      }
+    });
+  }
+
   void recordAnswersQuiz1(String answer) {
     setState(() {
       answers.add(answer);
       if (quiz1.length == answers.length) {
         widget.activeScreen = 'result-screen';
-        resultNumber = widget.lessonNumber;
+        resultNumber = widget.lesson.lessonNumber;
       }
     });
   }
@@ -104,18 +115,18 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   @override
   Widget build(BuildContext context) {
 
-    List<Function(String)> quizAnswers = [recordAnswersQuiz1, recordAnswersQuiz2, recordAnswersQuiz3, recordAnswersQuiz4, recordAnswersQuiz5, recordAnswersQuiz6];
+    List<Function(String)> quizAnswers = [recordAnswersQuiz0, recordAnswersQuiz1, recordAnswersQuiz2, recordAnswersQuiz3, recordAnswersQuiz4, recordAnswersQuiz5, recordAnswersQuiz6];
 
     Widget screen = const Center(
       child: Text('Open Blank Scaffold'),
     );
 
     if (widget.activeScreen == "quiz-screen") {
-      if (widget.lessonNumber > 6) {
-        screen = QuizScreen(onSelectAnswer: recordAnswersQuiz1, quizNumber: widget.lessonNumber);
+      if (widget.lesson.lessonNumber > 6) {
+        screen = QuizScreen(onSelectAnswer: recordAnswersQuiz1, quizNumber: widget.lesson.lessonNumber, quiz: widget.lesson.quiz);
       }
       else {
-        screen = QuizScreen(onSelectAnswer: quizAnswers[widget.lessonNumber - 1], quizNumber: widget.lessonNumber);
+        screen = QuizScreen(onSelectAnswer: quizAnswers[widget.lesson.lessonNumber], quizNumber: widget.lesson.lessonNumber, quiz: widget.lesson.quiz);
       }
     }
     else if (widget.activeScreen == "result-screen") {
@@ -127,7 +138,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       );
     }
     else if (widget.activeScreen == "reward-screen") {
-      screen = RewardScreen(lessonNumber: widget.lessonNumber, activityName: "quiz",);
+      screen = RewardScreen(lesson: widget.lesson, activityName: "quiz",);
     }
 
     return Scaffold(

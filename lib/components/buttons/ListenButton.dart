@@ -18,7 +18,7 @@ class ListenButton extends StatelessWidget {
       icon: FaIcon(
           FontAwesomeIcons.headphonesSimple,
           color: appColors.royalBlue,
-        size: 30,
+        size: 25,
       ),
       onPressed: () {
         // Open Menu
