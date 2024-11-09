@@ -94,5 +94,232 @@ var appropriateInteractionsPractice1 = [
     explanation: "Instagram allows users to have multiple accounts.",
     correctAnswer: "Yes",
   ),
-  //TODO: Left off on question 8
+  SingleAnswerQuestion(
+      context: "no",
+      question: "Are you able to see who made a Facebook page or group?",
+      photo: "no",
+      answerOptions: [
+        "Yes",
+        "No",
+        "Only if they choose to put that information on the group",
+      ],
+      explanation: "Facebook makes it so users can see what user created a group or page.",
+      correctAnswer: "Yes"
+  ),
+  SingleAnswerQuestion(
+      context: "no",
+      question: "Are you always able to see who made an Instagram account?",
+      photo: "no",
+      answerOptions: [
+        "Yes",
+        "No",
+        "Only if the creator chooses to put that information on the account"
+      ],
+      explanation: "Instagram doesn't say who created an account.",
+      correctAnswer: "Only if the creator chooses to put that information on the account"
+  ),
+  SingleAnswerQuestion(
+    //TODO: Question 10 -> Work on simplifying more
+      context: "You log on to Instagram and see the profile of one of your friends "
+          "on school. You would like to follow them and see their posts.",
+      question: "Would following their account be a social media norm?",
+      photo: "no",
+      answerOptions: [
+        "Yes, it is normal to follow people that you know in real life and that you want to follow on social media.",
+        "No, it is not normal to follow people on social media.",
+        "Yes, it is normal to follow everyone you know on social media.",
+        "No, it is not normal to follow classmates on social media.",
+      ],
+      explanation: "It is common to follow people that you know in real life.",
+      correctAnswer: "Yes, it is normal to follow people that you know in real life and that you want to follow on social media."
+  ),
+  MultipleAnswersQuestion(
+      context: "Your sister is new to Facebook. She really likes musicals and wants to discuss musicals with other people with similar interests.",
+      question: "How can she do that on Facebook? Choose all that apply.",
+      photo: "no",
+      answerOptions: [
+        "She can make a secondary personal account where she only posts about musicals.",
+        "She can join a Facebook group that is about musicals.",
+        "She can create a Facebook group that is about musicals for others to join.",
+        "She can follow a Facebook page that posts the times of upcoming musicals.",
+      ],
+      explanation: "Groups allow people with similar interests to interact on Facebook.",
+      correctAnswers: [
+        "She can join a Facebook group that is about musicals.",
+        "She can create a Facebook group that is about musicals for others to join.",
+      ],
+  ),
+  SingleAnswerQuestion(
+      context: "You are on Instagram and see an account that has a blue checkmark.",
+      question: "What does the blue checkmark mean?",
+      photo: "assets/images/verifiedSymbol.png",
+      answerOptions: [
+        "The account has been around for 10 years.",
+        "The account is a verified celebrity/influencer account.",
+        "The account belongs to someone you know.",
+        "The account belongs to a business.",
+      ],
+      explanation: "Instagram puts blue checkmarks on accounts that belong to celebrities and influencers.",
+      correctAnswer: "The account is a verified celebrity/influencer account.",
+  ),
+  SingleAnswerQuestion(
+      context: "One of your friends likes basketball, so they follow a basketball fan account on Instagram. ",
+      question: "What kind of account is this?",
+      photo: "no",
+      answerOptions: [
+        "Personal Account",
+        "Business Account",
+        "Alternate Personal Account (finista)",
+        "Topic/Interest Account",
+      ],
+      explanation: "The account is about a topic/interest and isn’t a personal account.",
+      correctAnswer: "Topic/Interest Account"
+  ),
+  SingleAnswerQuestion(
+      context: "You want to create a group on Facebook so that you can discuss your interests with people who have similar interests.",
+      question: "Will people be able to see that you made the group?",
+      photo: "no",
+      answerOptions: [
+        "Yes",
+        "No",
+        "Only if you have that setting turned on"
+      ],
+      explanation: "Facebook allows users to see whoever created a group or page.",
+      correctAnswer: "Yes"
+  ),
+  SingleAnswerQuestion(
+    // TODO: Original question 15 is worded funny -> How does this version sound
+      context: "You got a friend request on Facebook from someone that you have never met.",
+      question: "Is it normal to accept the friend request?",
+      photo: "no",
+      answerOptions: [
+        "Yes",
+        "No",
+      ],
+      explanation: "It is NOT normal to accept a friend request from someone you don't know.",
+      correctAnswer: "No"
+  ),
+  SingleAnswerQuestion(
+      context: "Your friend created a fan account on Instagram for a TV show that they like.",
+      question: "Will anyone be able to tell that your friend made the account?",
+      photo: "no",
+      answerOptions: [
+        "Yes. Your friend’s personal account will be associated with the fan account.",
+        "No. People will not be able to see that your friend made the account.",
+      ],
+      explanation: "Instagram accounts don’t say who created them.",
+      correctAnswer: "No. People will not be able to see that your friend made the account."
+  ),
+  SingleAnswerQuestion(
+      context: "no",
+      question: "What does it mean if someone sends you a Friend request on Facebook?",
+      photo: "no",
+      answerOptions: [
+        "They are asking to be your friend in real life.",
+        "They are asking to connect with you so that they can see your posts and you can see their posts on Facebook.",
+        "They are asking to chat online."
+      ],
+      explanation: "Facebook calls users that follow each other 'friends', but that is NOT the same as being friends in real life.",
+      correctAnswer: "They are asking to connect with you so that they can see your posts and you can see their posts on Facebook."
+  ),
+  MultipleAnswersQuestion(
+      context: "no",
+      question: "What can you do with a personal Facebook account? Check all that apply.",
+      photo: "no",
+      answerOptions: [
+        "You can share posts from other people",
+        "You can write posts for your Facebook friends to see.",
+        "You can make a website",
+        "You can make a secondary account",
+      ],
+      explanation: "Personal accounts allow you to post and for you to view posts from people you follow.",
+      correctAnswers: [
+        "You can share posts from other people",
+        "You can write posts for your Facebook friends to see."
+      ],
+  ),
+  SingleAnswerQuestion(
+      context: "no",
+      question: "What kind of account do you make when you first start Facebook?",
+      photo: "no",
+      answerOptions: [
+        "Group",
+        "Personal",
+        "Page"
+      ],
+      explanation: "When you first create an account with Facebook, it will only let you create a personal account.",
+      correctAnswer: "Personal"
+  ),
+  SingleAnswerQuestion(
+      context: "Henry wants to sell wristbands on Instagram.",
+      question: "What sort of account should he make?",
+      photo: "no",
+      answerOptions: [
+        "Alternate Personal Account (finista)",
+        "Personal Account",
+        "Topic/Interest Account",
+        "Business Account",
+      ],
+      explanation: "Henry is going to be promoting and selling products, so he should use an account that allows that.",
+      correctAnswer: "Business Account",
+  ),
+  SingleAnswerQuestion(
+      context: "no",
+      question: "Which social media site is it more common to post photos/videos on?",
+      photo: "no",
+      answerOptions: [
+        "Instagram",
+        "Facebook",
+      ],
+      explanation: "Instagram is primarily used for sharing your own non-text content.",
+      correctAnswer: "Instagram"
+  ),
+  SingleAnswerQuestion(
+      context: "no",
+      question: "On which social media site is it more common to repost things that other people posted?",
+      photo: "no",
+      answerOptions: [
+        "Instagram",
+        "Facebook",
+      ],
+      explanation: "It is more common to share other posts on Facebook than it is on Instagram.",
+      correctAnswer: "Facebook",
+  ),
+  SingleAnswerQuestion(
+      context: "no",
+      question: "Is it normal to follow a celebrity/influencer on Instagram?",
+      photo: "no",
+      answerOptions: [
+        "Yes",
+        "No",
+      ],
+      explanation: "It is normal to follow accounts that you are interested in on Instagram, even if you don’t know the person who made the account.",
+      correctAnswer: "Yes"
+  ),
+  SingleAnswerQuestion(
+      context: "Denise wants to be able to post announcements about neighborhood "
+          "activities on Facebook, but doesn't want to post them on her personal account.",
+      question: "What kind of account should she post them on?",
+      photo: "no",
+      answerOptions: [
+        "Page",
+        "Group",
+        "Personal"
+      ],
+      explanation: "Facebook pages are primarily used to share information like announcements.",
+      correctAnswer: "Page"
+  ),
+  SingleAnswerQuestion(
+      context: "no",
+      question: "question",
+      photo: "no",
+      answerOptions: [
+        "a",
+        "b",
+        "c"
+      ],
+      explanation: "explain",
+      correctAnswer: "a"
+  ),
+  //TODO: Left off on question 25
 ];
