@@ -134,6 +134,41 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     }
   }
 
+  // Asynchronous function to update reading list data
+  Future<int?> _updateReadingList() async {
+    //TODO: Doesn't update reading progress, but now you can move through readings
+
+    if (user2 != null) {
+      try {
+        DataSnapshot snapshot = await _database
+            .child('profile')
+            .child(user2!.uid)
+            .child('readingList')
+            .get();
+
+        if (snapshot.value != null) {
+          setState(() {
+            // Assuming snapshot.value is a List of reading objects
+            List<dynamic> readingList = snapshot.value as List<dynamic>;
+            readings = readingList;
+
+            // Assuming you want to access a specific reading object based on widget.readingNumber
+            if (widget.lesson.lessonNumber - 1 < readings.length) {
+              // Update the readings based on the newReadingPageIndex
+              readings[widget.lesson.lessonNumber - 1]['progress'] = readingPageIndex;
+            }
+          });
+        }
+        return readingPageIndex;
+      } catch (e) {
+        // Handle potential errors, like network issues
+        print('Error updating reading list: $e');
+      }
+    }
+  }
+
+
+
   Future<void> nextReadingPage({String userAnswer = ""}) async {
     setState(() {
       readingPageIndex++;
@@ -145,7 +180,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
       'readings': readings,
     });
     setState(() {
-      _readingListFuture = _fetchReadingList();  // Refresh FutureBuilder
+      _readingListFuture = _updateReadingList();  // Refresh FutureBuilder
     });
   }
 
