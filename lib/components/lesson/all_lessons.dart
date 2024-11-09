@@ -31,73 +31,80 @@ List<Lesson> allLessons = [
 ];
 
 Lesson tutorial = Lesson(
-  "Tutorial and Set up",
-  orangeDragon,
-  0,
-  0.5,
-  reading0,
-  quiz0,
-  tutorialPractice,
+  title: "Tutorial and Set up",
+  character: orangeDragon,
+  lessonNumber: 0,
+  progress: 0.5,
+  reading: reading0,
+  preQuiz: preQuiz0, //TODO: Currently only lesson with a different pre-quiz
+  quiz: quiz0,
+  practice: tutorialPractice,
 );
 
 Lesson socialMediaNorms = Lesson(
-  "SOCIAL MEDIA NORMS",
-    lockedCharacter,
-  1,
-  0.0,
-  reading1,
-  quiz1,
-  fakeProfilesPractice1,
+  title: "SOCIAL MEDIA NORMS",
+  character: lockedCharacter,
+  lessonNumber: 1,
+  progress: 0.0,
+  reading: reading1,
+  preQuiz: quiz1,
+  quiz: quiz1,
+  practice: fakeProfilesPractice1,
 );
 
 
 Lesson settings = Lesson(
-  "SETTINGS",
-  lockedCharacter,
-  2,
-  0.0,
-  reading2,
-  quiz2,
-  fakeProfilesPractice1,
+  title: "SETTINGS",
+  character: lockedCharacter,
+  lessonNumber: 2,
+  progress: 0.0,
+  reading: reading2,
+  preQuiz: quiz2,
+  quiz: quiz2,
+  practice: fakeProfilesPractice1,
 );
 
 Lesson fakeProfiles = Lesson(
-  "FAKE PROFILES",
-  lockedCharacter,
-  3,
-  0.0,
-  reading3,
-  quiz3,
-  fakeProfilesPractice1,
+  title: "FAKE PROFILES",
+  character: lockedCharacter,
+  lessonNumber: 3,
+  progress: 0.0,
+  reading: reading3,
+  preQuiz: quiz3,
+  quiz: quiz3,
+  practice: fakeProfilesPractice1,
 );
 
 Lesson socialTags = Lesson(
-  "SOCIAL TAGS",
-  lockedCharacter,
-  4,
-  0.0,
-  reading4,
-  quiz4,
-  fakeProfilesPractice1,
+  title: "SOCIAL TAGS",
+  character: lockedCharacter,
+  lessonNumber: 4,
+  progress: 0.0,
+  reading: reading4,
+  preQuiz: quiz4,
+  quiz: quiz4,
+  practice: fakeProfilesPractice1,
 );
 
 Lesson appropriateInteractions = Lesson(
   //"APPROPRIATE INTERACTIONS",
-  "INTERACTION ETIQUETTE", // Slightly shorter name for dashboard on home-screen
-  lockedCharacter,
-  5,
-  0.0,
-  reading5,
-  quiz5,
-  fakeProfilesPractice1,
+  title: "INTERACTION ETIQUETTE", // Slightly shorter name for dashboard on home-screen
+  character: lockedCharacter,
+  lessonNumber: 5,
+  progress: 0.0,
+  reading: reading5,
+  preQuiz: quiz5,
+  quiz: quiz5,
+  practice: fakeProfilesPractice1,
 );
 
 Lesson socialMediaVSReality = Lesson(
-  "SOCIAL MEDIA VS REALITY",
-  lockedCharacter,
-  6,
-  0.0,
-  reading6,
-  quiz6,
-  fakeProfilesPractice1,
+  title: "SOCIAL MEDIA VS REALITY",
+  character: lockedCharacter,
+  lessonNumber: 6,
+  progress: 0.0,
+  reading: reading6,
+  preQuiz: quiz6,
+  quiz: quiz6,
+  practice: fakeProfilesPractice1,
 );

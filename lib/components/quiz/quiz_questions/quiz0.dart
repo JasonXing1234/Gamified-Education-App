@@ -9,9 +9,7 @@ var preQuiz0 = [
         "your experience we're going to ask you questions",
     question: "First off, what is your name?",
     photo: "no",
-    answerOptions: [
-      "text-field"
-    ],
+    answerOptions: [ "text-field" ],
     explanation: "none",
   ),
   MultipleAnswersQuestion(
@@ -45,31 +43,29 @@ var preQuiz0 = [
 ];
 
 var quiz0 = [
-  SingleAnswerQuestion(
-    context: "Here's a sample quiz question. Choose option A for this question",
-    question: "What is the correct option for this sample quiz?",
-    photo: "no",
-    answerOptions: [
-      "A",
-      "B",
-      "C"
-    ],
-    explanation: "Option A is the correct answer for this quiz question.",
-    correctAnswer: "A",
+  TextFieldQuestion(
+      context: "Let's sign you up so you can save your progress!",
+      question: "What is your email address?",
+      photo: "no",
+      answerOptions: [ "text-field" ],
+      explanation: "none"
   ),
-
-  MultipleAnswersQuestion(
-    context: "Some questions have multiple answers. Select options B and C for this question",
-    question: "Which options are correct for this practice question?",
-    photo: "no",
-    answerOptions: [
-      "A",
-      "B",
-      "C",
-      "D",
-      "E",
-    ],
-    explanation: "Options B and C are correct for this practice question.",
-    correctAnswers: ["B", "C"],
+  TextFieldQuestion(
+      context: "no",
+      question: "Now choose a password",
+      photo: "no",
+      answerOptions: [ "text-field" ],
+      explanation: "none"
+  ),
+  SingleAnswerQuestion(
+      context: "email & password",  // TODO: Remove this question or insert email and password for confirmation
+      question: "Is that information correct?",
+      photo: "no",
+      answerOptions: [
+        "Yes",
+        "No"
+      ],
+      explanation: "no",
+      correctAnswer: "Yes",
   ),
 ];

@@ -95,6 +95,10 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
 
   // Asynchronous function to fetch reading list data
   Future<int?> _fetchReadingList() async {
+    //TODO: This function resets readingPageIndex so that readings can not move forward.
+    //TODO: It's called in nextReadingPage and that's everything gets reset
+    //TODO: How you distinguish going to last index vs updating progress -> Maybe a different function?
+
     if (user2 != null) {
       try {
         DataSnapshot snapshot = await _database
@@ -450,5 +454,3 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     );
   }
 }
-
-

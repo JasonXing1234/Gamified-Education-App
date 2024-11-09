@@ -3,7 +3,16 @@ import 'package:quiz/components/reading/reading_page.dart';
 import 'package:quiz/components/rewards/character.dart';
 
 class Lesson {
-  Lesson(this.title, this.character, this.lessonNumber, this.progress, this.reading, this.quiz, this.practice);
+  Lesson({
+    required this.title,
+    required this.character,
+    required this.lessonNumber,
+    required this.progress,
+    required this.reading,
+    required this.preQuiz,
+    required this.quiz,
+    required this.practice
+  });
 
   final String title;
   final Character character;
@@ -11,6 +20,7 @@ class Lesson {
   final double progress;
 
   final List<ReadingPage> reading;
+  final List<Question> preQuiz;
   final List<Question> quiz;
   final List<Question> practice; // TODO: Update these practices to have lots of practices?????
 
