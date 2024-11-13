@@ -1,6 +1,6 @@
 import 'package:quiz/components/question.dart';
 
-var appropriateInteractionsPractice1 = [
+var socialMediaNormsPractice = [
   SingleAnswerQuestion(
     context: "Your friend wants to make a second personal account on Facebook to post memes on. "
         "Is it ok for your friend to do that?",
@@ -310,16 +310,76 @@ var appropriateInteractionsPractice1 = [
       correctAnswer: "Page"
   ),
   SingleAnswerQuestion(
-      context: "no",
-      question: "question",
+    //TODO: Question 25: These are long answer options
+      context: "You made a post in a Facebook group and see that some people that you don’t know have commented on your post.",
+      question: "Is this normal?",
       photo: "no",
       answerOptions: [
-        "a",
-        "b",
-        "c"
+        "Yes. Facebook groups are interactive, so people often respond to posts and comments in groups, even to people they don’t know in person.",
+        "No. Facebook groups are meant to share announcements and updates, not to have conversations.",
+        "No. Facebook groups are interactive, but people usually only respond to others that they know in real life."
+      ],
+      explanation: "People can join Facebook groups to discuss common interests with others, even if they are strangers.",
+      correctAnswer: "Yes. Facebook groups are interactive, so people often respond to posts and comments in groups, even to people they don’t know in person."
+  ),
+  SingleAnswerQuestion(
+      context: "You see that someone who is not your Facebook friend has been responding to posts on your personal account.",
+      question: "Is this normal?",
+      photo: "no",
+      answerOptions: [
+        "Yes. Facebook is interactive, so it is normal for people to respond to personal posts from people that they do not know.",
+        "No. It is not normal for people to respond to personal posts unless they are Facebook friends.",
+        "No. It is not normal to comment on any posts on Facebook."
+      ],
+      explanation: "It is normal for people to comment on the personal posts of people they know.",
+      correctAnswer: "No. It is not normal for people to respond to personal posts unless they are Facebook friends."
+  ),
+  SingleAnswerQuestion(
+    //TODO: Question 27, on instagram there's a close friends list
+      context: "Alfredo wants to post pictures of his family on Instagram, but only wants to share them with his close friends.",
+      question: "What should he do?",
+      photo: "no",
+      answerOptions: [
+        "Post the photos on his personal account.",
+        "Post the photos on a secondary personal account that only his close friends can follow.",
+        "Post the photos on a topic/interest account.",
+        "Post the photos on a business account.",
       ],
       explanation: "explain",
-      correctAnswer: "a"
+      correctAnswer: "Post the photos on a secondary personal account that only his close friends can follow."
   ),
-  //TODO: Left off on question 25
+  SingleAnswerQuestion(
+      context: "no",
+      question: "What makes a business account different from a personal account?",
+      photo: "no",
+      answerOptions: [
+        "A personal account is for sharing photos with friends and family, while a business account is for selling products.",
+        "A business account is for sharing photos with friends and family, while a personal account is for selling products.",
+        "A personal account is for posting about interests, while a business account it for celebrities and influencers."
+      ],
+      explanation: " Personal accounts are to connect with family and friends and business accounts are to promote businesses.",
+      correctAnswer: "A personal account is for sharing photos with friends and family, while a business account is for selling products."
+  ),
+  SingleAnswerQuestion(
+      context: "no",
+      question: "Is it common to comment on a Facebook page?",
+      photo: "no",
+      answerOptions: [
+        "Yes",
+        "No",
+      ],
+      explanation: "Facebook pages are mostly for announcements and updates. They aren’t very interactive.",
+      correctAnswer: "No"
+  ),
+  SingleAnswerQuestion(
+      context: "no",
+      question: " Is it allowed to have several accounts on Instagram?",
+      photo: "no",
+      answerOptions: [
+        "Yes",
+        "No",
+      ],
+      explanation: "Instagram allows users to have multiple accounts. It is common.",
+      correctAnswer: "Yes"
+  ),
 ];
