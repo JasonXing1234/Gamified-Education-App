@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
+import 'SQLITE/sqliteHelper.dart';
 import 'models/UserModel.dart';
 import 'home_screen.dart';
 import 'models/quizModel.dart';
@@ -93,6 +94,8 @@ class _SignUpPageState extends State<SignUpPage> {
         email: _emailController.text,
         password: _passwordController.text,
       );
+      DatabaseHelper dbHelper = DatabaseHelper();
+      await dbHelper.insertUser(user.toJson());
       Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => const Home()),
       );

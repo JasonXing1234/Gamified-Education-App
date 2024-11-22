@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'SQLITE/sqliteHelper.dart';
 import 'SignIn.dart';
 import 'firebase_options.dart';
 import 'home_screen.dart';
@@ -11,6 +12,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform
   );
+  await DatabaseHelper().database;
   runApp(MyApp());
 }
 
