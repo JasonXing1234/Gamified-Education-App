@@ -6,25 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quiz/components/quiz_results_screen.dart';
 import 'package:quiz/components/lesson/lesson.dart';
-import 'package:quiz/components/lesson/all_lessons.dart';
-import 'package:quiz/components/reading/readings_screen.dart';
 import 'package:quiz/components/reading_results_screen.dart';
-import 'package:quiz/components/rewards/all_characters.dart';
 import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
 
-import '../../accessory.dart';
-import '../practice/practice_screen.dart';
 import '../practice_results_screen.dart';
 import '../rewards/character.dart';
 
 class LessonScreen extends StatefulWidget {
   const LessonScreen({
     super.key,
-    required this.lessonNumber,
+    required this.lesson,
   });
 
-  final int lessonNumber;
+  final Lesson lesson;
 
   // Unlocked features
   @override
@@ -171,30 +166,6 @@ class _LessonScreenState extends State<LessonScreen> {
   @override
   Widget build(BuildContext context) {
 
-    Lesson lesson;
-    if (widget.lessonNumber == socialMediaNorms.lessonNumber) {
-      lesson = socialMediaNorms;
-    }
-    else if (widget.lessonNumber == settings.lessonNumber) {
-      lesson = settings;
-    }
-    else if (widget.lessonNumber == fakeProfiles.lessonNumber) {
-      lesson = fakeProfiles;
-    }
-    else if (widget.lessonNumber == socialTags.lessonNumber) {
-      lesson = socialTags;
-    }
-    else if (widget.lessonNumber == appropriateInteractions.lessonNumber) {
-      lesson = appropriateInteractions;
-    }
-    else if (widget.lessonNumber == socialMediaVSReality.lessonNumber) {
-      lesson = socialMediaVSReality;
-    }
-    else {
-      lesson = Lesson("LESSON", lockedCharacter, 0);
-    }
-
-
     return PopScope(
       //TODO: Make this work
         onPopInvoked: (popDisposition) async {
@@ -210,7 +181,7 @@ class _LessonScreenState extends State<LessonScreen> {
           title: Padding(
             padding: const EdgeInsets.only(top: 20.0), // Adjust the top padding of title
             child: Text(
-              lesson.title,
+              widget.lesson.title,
               style: textStyles.heading1,
             ),
           ),
@@ -251,7 +222,7 @@ class _LessonScreenState extends State<LessonScreen> {
               ),
 
               // Row of image and stats
-              StatsNotebook(lesson: lesson, textStyles: textStyles),
+              StatsNotebook(lesson: widget.lesson, textStyles: textStyles),
 
               const SizedBox(height: 5,),
 
@@ -266,7 +237,7 @@ class _LessonScreenState extends State<LessonScreen> {
                         (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ReadingResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "reading-screen",)),
+                        MaterialPageRoute(builder: (context) => ReadingResultScreen(lesson: widget.lesson, activeScreen: "reading-screen",)),
                       );
                     },
                   ),
@@ -277,7 +248,7 @@ class _LessonScreenState extends State<LessonScreen> {
                         (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ReadingResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "reading-screen",)),
+                        MaterialPageRoute(builder: (context) => ReadingResultScreen(lesson: widget.lesson, activeScreen: "reading-screen",)),
                       );
                     },
                   ),
@@ -288,7 +259,7 @@ class _LessonScreenState extends State<LessonScreen> {
                         (){
                       Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => QuizResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "quiz-screen",))
+                          MaterialPageRoute(builder: (context) => QuizResultScreen(lesson: widget.lesson, activeScreen: "quiz-screen",))
                       );
                     },
                   ),
@@ -303,7 +274,7 @@ class _LessonScreenState extends State<LessonScreen> {
                     (){
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PracticeResultScreen(lessonNumber: widget.lessonNumber, activeScreen: "practice-screen",))
+                      MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: widget.lesson, activeScreen: "practice-screen",))
 
                     //MaterialPageRoute(builder: (context) => PracticeScreen(quizNumber: widget.lessonNumber, onSelectAnswer: (String answer) {  },))
                   );
@@ -326,10 +297,7 @@ class _LessonScreenState extends State<LessonScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: textStyles.mediumBodyText.fontSize,),
-
-                          // Icon( Icons.Tickets, color: appColors.yellow, size: textStyles.mediumBodyText.fontSize,),
-                          Text("Tickets: ${snapshot.data}", style: textStyles.mediumBodyText,),
-                          Text(snapshot.data.toString(), style: textStyles.mediumBodyText,),
+                          Text(" Tickets: ${snapshot.data}", style: textStyles.mediumBodyText,),
                         ],
                       );
                   } else {

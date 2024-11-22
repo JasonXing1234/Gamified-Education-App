@@ -15,11 +15,11 @@ import 'all_characters.dart';
 class RewardScreen extends StatefulWidget {
   const RewardScreen({
     super.key,
-    required this.lessonNumber,
+    required this.lesson,
     required this.activityName,
   });
 
-  final int lessonNumber;
+  final Lesson lesson;
   final String activityName;
 
   // Unlocked features
@@ -35,31 +35,31 @@ class _RewardScreenState extends State<RewardScreen> {
   @override
   Widget build(BuildContext context) {
 
-    Lesson lesson;
-    if (widget.lessonNumber == socialMediaNorms.lessonNumber) {
-      lesson = socialMediaNorms;
-    }
-    else if (widget.lessonNumber == settings.lessonNumber) {
-      lesson = settings;
-    }
-    else if (widget.lessonNumber == fakeProfiles.lessonNumber) {
-      lesson = fakeProfiles;
-    }
-    else if (widget.lessonNumber == socialTags.lessonNumber) {
-      lesson = socialTags;
-    }
-    else if (widget.lessonNumber == appropriateInteractions.lessonNumber) {
-      lesson = appropriateInteractions;
-    }
-    else if (widget.lessonNumber == socialMediaVSReality.lessonNumber) {
-      lesson = socialMediaVSReality;
-    }
-    else {
-      lesson = Lesson("LESSON", lockedCharacter, 0);
-    }
+    // Lesson lesson;
+    // if (widget.lessonNumber == socialMediaNorms.lessonNumber) {
+    //   lesson = socialMediaNorms;
+    // }
+    // else if (widget.lessonNumber == settings.lessonNumber) {
+    //   lesson = settings;
+    // }
+    // else if (widget.lessonNumber == fakeProfiles.lessonNumber) {
+    //   lesson = fakeProfiles;
+    // }
+    // else if (widget.lessonNumber == socialTags.lessonNumber) {
+    //   lesson = socialTags;
+    // }
+    // else if (widget.lessonNumber == appropriateInteractions.lessonNumber) {
+    //   lesson = appropriateInteractions;
+    // }
+    // else if (widget.lessonNumber == socialMediaVSReality.lessonNumber) {
+    //   lesson = socialMediaVSReality;
+    // }
+    // else {
+    //   lesson = tutorial;
+    // }
 
 
-    String rewardImage = lesson.getCurrentPhoto();
+    String rewardImage = widget.lesson.getCurrentPhoto();
 
 
     return Scaffold(
@@ -99,26 +99,23 @@ class _RewardScreenState extends State<RewardScreen> {
               ),
           ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: Container(
         color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: SizedBox(
+          height: 60,
           child: Row(
             children: [
               const Expanded(
                   child: ListenButton(),
               ),
-              const Expanded(
-                child: SpeedButton(),
-              ),
               Expanded(
-                child: NextButton(
-                  buttonText: "FINISH",
+                child: MultiPurposeButton(
                   onTap: () {
                     Navigator.of(context).pop();
                   },
                   disabled: false,
+                  buttonType: ButtonType.finish,
                 ),
               ),
             ],
@@ -134,7 +131,7 @@ class _RewardScreenState extends State<RewardScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Well done, you completed the ${capitalizeString(lesson.title)} ${capitalizeString(widget.activityName)}!",
+                "Well done, you completed the ${capitalizeString(widget.lesson.title)} ${capitalizeString(widget.activityName)}!",
                 style: textStyles.bodyText,
                 textAlign: TextAlign.center,),
 
@@ -153,7 +150,7 @@ class _RewardScreenState extends State<RewardScreen> {
               // TODO: Set up correct character reward: this just shows the current character name and image
               widget.activityName == "practice" ?
                 Text("1 Ticket", style: textStyles.heading1, textAlign: TextAlign.center,) :
-                Text("${capitalizeString(lesson.character.currentPhase.name)} ${lesson.character.name}", style: textStyles.bodyText, textAlign: TextAlign.center,),
+                Text("${capitalizeString(widget.lesson.character.currentPhase.name)} ${widget.lesson.character.name}", style: textStyles.bodyText, textAlign: TextAlign.center,),
             ],
           ),
         ),

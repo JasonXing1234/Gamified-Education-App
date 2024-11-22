@@ -1,16 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quiz/components/lesson/lesson_dashboard.dart';
 import 'package:quiz/components/lesson/lesson_screen.dart';
 import 'package:quiz/components/lesson/all_lessons.dart';
 
-
-
-import '../SignIn.dart';
 import '../styles/app_colors.dart';
 import '../styles/text_styles.dart';
+import 'components/menu/menu.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -106,64 +103,7 @@ class _HomeState extends State<Home> {
             height: 10,
           ),
 
-          // User Stats Box
-          // Padding(
-          //     padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-          //   child: Container(
-          //     padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 5),
-          //     decoration: BoxDecoration(
-          //       shape: BoxShape.rectangle,
-          //       border: Border.all(color: Colors.black, width: 3.0),
-          //       borderRadius: BorderRadius.circular(20.0),
-          //     ),
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.center,
-          //       children: [
-          //         Column(
-          //           mainAxisSize: MainAxisSize.min,
-          //           children: [
-          //             FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: 60,),
-          //             // Icon( Icons.stars, color: appColors.yellow, size: 60,),
-          //             Text("Tickets", style: textStyles.mediumBodyText,),
-          //             FutureBuilder<int?>(
-          //               future: _fetchReadingList(),
-          //               builder: (context, snapshot) {
-          //                 if (snapshot.connectionState == ConnectionState.waiting) {
-          //                   return const CircularProgressIndicator();
-          //                 } else if (snapshot.hasError) {
-          //                   return Text('Error: ${snapshot.error}');
-          //                 } else if (snapshot.hasData) {
-          //                   return Text(snapshot.data.toString(), style: textStyles.mediumBodyText,);
-          //                 } else {
-          //                   return Text("0", style: textStyles.mediumBodyText,);
-          //                 }
-          //               },
-          //             ),
-          //
-          //           ],
-          //         ),
-          //         const SizedBox(
-          //           width: 50,
-          //         ),
-          //         Column(
-          //           mainAxisSize: MainAxisSize.min,
-          //           children: [
-          //             Icon( Icons.menu_book_rounded, color: appColors.green, size: 60),
-          //             // TODO: Add logic to record the lessons (6) or activities (6*4) completed
-          //             Text(
-          //               "Lessons",
-          //               style: textStyles.mediumBodyText,
-          //             ),
-          //             Text("0/6", style: textStyles.mediumBodyText,),
-          //           ],
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-          // const SizedBox(
-          //   height: 20,
-          // ),
+
 
           // Current Activity and Lesson Shortcut
           Padding(
@@ -182,7 +122,7 @@ class _HomeState extends State<Home> {
                     crossAxisAlignment: CrossAxisAlignment.start, // Aligns children to the left
                     children: [
                       Text(
-                        "Current Lesson",
+                        "Next Activity",
                         textAlign: TextAlign.left,
                         style: textStyles.mediumBodyText,
                       ),
@@ -213,8 +153,8 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     child: Text(
-                      "PREP",
-                      style: textStyles.mediumBodyTextWhite,
+                      "POST-QUIZ",
+                      style: textStyles.smallBodyTextWhite,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -226,6 +166,18 @@ class _HomeState extends State<Home> {
             height: spacing,
           ),
 
+          // Tutorial Lesson
+          GestureDetector(
+            child: LessonDashboard(lesson: tutorial),
+            onTap: () {
+              // Navigate to the Tutorial Lesson
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LessonScreen(lesson: tutorial)),
+              );
+            },
+          ),
+
           // Social Media Norms Lesson
           GestureDetector(
             child: LessonDashboard(lesson: socialMediaNorms),
@@ -233,7 +185,7 @@ class _HomeState extends State<Home> {
               // Navigate to the Social Media Norms Lesson
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: socialMediaNorms.lessonNumber)),
+                MaterialPageRoute(builder: (context) => LessonScreen(lesson: socialMediaNorms)),
               );
             },
           ),
@@ -245,7 +197,7 @@ class _HomeState extends State<Home> {
               // Navigate to the Social Media Norms Lesson
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: settings.lessonNumber)),
+                MaterialPageRoute(builder: (context) => LessonScreen(lesson: settings)),
               );
             },
           ),
@@ -257,7 +209,7 @@ class _HomeState extends State<Home> {
               // Navigate to the Social Media Norms Lesson
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: fakeProfiles.lessonNumber)),
+                MaterialPageRoute(builder: (context) => LessonScreen(lesson: fakeProfiles)),
               );
             },
           ),
@@ -269,7 +221,7 @@ class _HomeState extends State<Home> {
               // Navigate to the Social Media Norms Lesson
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: socialTags.lessonNumber)),
+                MaterialPageRoute(builder: (context) => LessonScreen(lesson: socialTags)),
               );
             },
           ),
@@ -281,7 +233,7 @@ class _HomeState extends State<Home> {
               // Navigate to the Social Media Norms Lesson
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LessonScreen(lessonNumber: appropriateInteractions.lessonNumber)),
+                MaterialPageRoute(builder: (context) => LessonScreen(lesson: appropriateInteractions)),
               );
             },
           ),
@@ -293,121 +245,14 @@ class _HomeState extends State<Home> {
       ),
     );
 
-    // if (activeScreen == 'question-screen') {
-    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 1,);
-    // }
-    // else if (activeScreen == 'question-screen2') {
-    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 2,);
-    // }
-    // else if (activeScreen == 'question-screen3') {
-    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 3,);
-    // }
-    // else if (activeScreen == 'question-screen4') {
-    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 4,);
-    // }
-    // else if (activeScreen == 'question-screen5') {
-    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 5,);
-    // }
-    // else if (activeScreen == 'question-screen6') {
-    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 6,);
-    // }
-    // else if (activeScreen == 'question-screen7') {
-    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 7,);
-    // }
-    // else if (activeScreen == 'question-screen8') {
-    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 8,);
-    // }
-    // else if (activeScreen == 'question-screen9') {
-    //   screen = PracticeScreen(onSelectAnswer: recordAnswer, quizNumber: 9,);
-    // }
-    // else if (activeScreen == 'quiz-screen1') {
-    //   screen = QuizScreen(onSelectAnswer: recordAnswer1, quizNumber: 1,);
-    // }
-    // else if (activeScreen == 'quiz-screen2') {
-    //   screen = QuizScreen(onSelectAnswer: recordAnswer2, quizNumber: 2,);
-    // }
-    // else if (activeScreen == 'quiz-screen3') {
-    //   screen = QuizScreen(onSelectAnswer: recordAnswer3, quizNumber: 3,);
-    // }
-    // else if (activeScreen == 'quiz-screen4') {
-    //   screen = QuizScreen(onSelectAnswer: recordAnswer4, quizNumber: 4,);
-    // }
-    // else if (activeScreen == 'quiz-screen5') {
-    //   screen = QuizScreen(onSelectAnswer: recordAnswer5, quizNumber: 5,);
-    // }
-    // else if (activeScreen == 'quiz-screen6') {
-    //   screen = QuizScreen(onSelectAnswer: recordAnswer6, quizNumber: 6,);
-    // }
-    // else if (activeScreen == 'result-screen') {
-    //   screen = ResultScreen(
-    //     quizNumber: resultNumber,
-    //     userAnswers: answers,
-    //     endQuiz: returnHomeAndResetQuiz,
-    //   );
-    // }
-
     return Scaffold(
         key: _scaffoldKey,
-        endDrawer: Drawer(
-          child: SafeArea(
-            child: Column(
-              children: <Widget>[
-                const SizedBox(height: 40),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.email,
-                      color: appColors.royalBlue,
-                      size: 30,
-                    ),
-                    const SizedBox(width: 20),
-                    Text(
-                      "${FirebaseAuth.instance.currentUser?.email}",
-                      style: textStyles.bodyText,
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 40),
-
-                OutlinedButton.icon(
-                  onPressed: () async {
-                    await FirebaseAuth.instance.signOut();
-                    // Navigate back to the Sign-In page after signing out
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => SignInPage()),
-                    );
-                  },
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: appColors.royalBlue,
-                    foregroundColor: Colors.white,
-                  ),
-                  icon: const Icon(Icons.logout),
-                  label: const Text("Logout"),
-                ),
-
-                const SizedBox(height: 40),
-
-              ],
-            ),
-          ),
-        ),
+        endDrawer: MenuDrawer(),
 
         body: Container(
           width: double.infinity,
           decoration: const BoxDecoration(
             color: Colors.white,
-            // gradient: LinearGradient(
-            //   colors: [
-            //     Color(0x986BF567),
-            //     Colors.white,
-            //   ],
-            //   begin: Alignment.topCenter,
-            //   end: Alignment.bottomCenter,
-            // ),
           ),
           child: screen,
         ),

@@ -29,11 +29,14 @@ import '../text_box/text_box.dart';
 class PracticeScreen extends StatefulWidget {
   const PracticeScreen({
     super.key,
-    required this.onSelectAnswer, required this.quizNumber,
+    required this.onSelectAnswer,
+    required this.practice,
+
 
   });
   final void Function(String answer) onSelectAnswer;
-  final int quizNumber;
+  // final int quizNumber;
+  final List<Question> practice;
 
   @override
   State<PracticeScreen> createState() => _PracticeScreenState();
@@ -63,40 +66,8 @@ class _PracticeScreenState extends State<PracticeScreen> {
     super.initState();
     _scrollController.addListener(_onScrollEnd);
 
+    practiceQuestions = widget.practice;
 
-    // TODO: Update these practices to match lesson and pick random practice
-    if(widget.quizNumber == 1) {
-      practiceQuestions = fakeProfilesPractice1;
-      //practiceName = "PRACTICE: SOCIAL MEDIA NORMS";
-    }
-    else if(widget.quizNumber == 2) {
-      practiceQuestions = fakeProfilesPractice2;
-      //practiceName = "PRACTICE: SETTINGS";
-    }
-    else if(widget.quizNumber == 3) {
-      practiceQuestions = fakeProfilesPractice3;
-    }
-    else if(widget.quizNumber == 4) {
-      practiceQuestions = fakeProfilesPractice4;
-    }
-    else if(widget.quizNumber == 5) {
-      practiceQuestions = appropriateInteractionsPractice1;
-    }
-    else if(widget.quizNumber == 6) {
-      practiceQuestions = fakeProfilesPractice6;
-    }
-    else if(widget.quizNumber == 7) {
-      practiceQuestions = fakeProfilesPractice7;
-    }
-    else if(widget.quizNumber == 8) {
-      practiceQuestions = fakeProfilesPractice8;
-    }
-    else if(widget.quizNumber == 9) {
-      practiceQuestions = fakeProfilesPracticeAll;
-    }
-    else {
-      practiceQuestions = [];
-    }
   }
 
   void _onScrollEnd() {
@@ -150,9 +121,74 @@ class _PracticeScreenState extends State<PracticeScreen> {
       currentQuestion = practiceQuestions[questionIndex];
     }
     else {
-      currentQuestion = const Question("no", "none", "no", ["none"], "none",);
+      currentQuestion = Question(context: "no", question: "none", photo: "no", answerOptions: ["none"], explanation: "none");
     }
 
+
+    // Set up the correct button check, finish or next
+    Widget button;
+    if (tempAnswer == "") {
+      // User hasn't answered the question
+      button = MultiPurposeButton(
+        onTap: () {},
+        buttonType: ButtonType.check,
+        disabled: true,
+      );
+    }
+    else if (!checkedAnswer || !isCorrect) {
+      // User can now check answer
+      button = MultiPurposeButton(
+        onTap: () {
+          setState(() {
+            if(currentQuestion.correctAnswer == tempAnswer){
+              // Set correct and checked
+              // TODO: Find a way to lock the correct answer, so user doesn't accidently change answer
+              isCorrect = true;
+              checkedAnswer = true;
+            }
+            else{
+              isCorrect = false;
+              checkedAnswer = true;
+            }
+          });
+        },
+        buttonType: ButtonType.check,
+        disabled: false,
+      );
+    }
+    else if (isCorrect && questionIndex == practiceQuestions.length - 1) {
+      // Answer is correct and on last question, can finish the practice
+      button = MultiPurposeButton(
+        onTap: () {
+          setState(() {
+            recordTicket();
+            nextQuestion(tempAnswer);
+          });
+        },
+        buttonType: ButtonType.submit,
+        disabled: false,
+      );
+    }
+    else if (isCorrect) {
+      // Go to next question if correct
+      button = MultiPurposeButton(
+        onTap: () {
+          setState(() {
+            nextQuestion(currentQuestion.correctAnswer); // Protect user from accidentally changing answers
+            selectedIndex = 10;
+          });
+        },
+        buttonType: ButtonType.next,
+        disabled: false,
+      );
+    }
+    else {
+      button = MultiPurposeButton(
+        onTap: () {},
+        buttonType: ButtonType.next,
+        disabled: true,
+      );
+    }
 
     return Scaffold(
         appBar: AppBar(
@@ -193,51 +229,18 @@ class _PracticeScreenState extends State<PracticeScreen> {
             ),
 
           ),
-
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: Container(
           color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: SizedBox(
+            height: 60,
             child: Row(
               children: [
                 const Expanded(
                     child: ListenButton(),
                 ),
-                // const Expanded(
-                //   child: SpeedButton(),
-                // ),
-                Expanded(
-                  child: NextButton(
-                    buttonText: questionIndex == practiceQuestions.length -1 && isCorrect == true ? "FINISH" : isCorrect == false ? "CHECK" : "NEXT" ,
-                    onTap: () {
-                      setState(() {
-                        if (isCorrect && checkedAnswer && questionIndex == practiceQuestions.length - 1) {
-                          // End practice
-                          recordTicket();
-                          nextQuestion(tempAnswer);
-                        }
-                        else if (isCorrect && checkedAnswer) {
-                          // TODO: This may have unexpected behavior is user gets the right answer then changes answer to incorrect response
-                          // Move onto next question after correct and checked have been set
-                          nextQuestion(tempAnswer);
-                          selectedIndex = 10;
-                        }
-                        else if(currentQuestion.correctAnswer == tempAnswer){
-                          // Set correct and checked
-                          isCorrect = true;
-                          checkedAnswer = true;
-                        }
-                        else{
-                          isCorrect = false;
-                          checkedAnswer = true;
-                        }
-                      });
-                    },
-                    disabled: tempAnswer == "",
-                  ),
-                ),
+                Expanded(child: button,),
               ],
             ),
           ),
@@ -253,7 +256,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    currentQuestion.context == "no" ? SizedBox.shrink() : TextBox(currentText: currentQuestion.context,),
+                    currentQuestion.context == "no" ? SizedBox.shrink() : Text(currentQuestion.context, style: textStyles.mediumBodyText,),
                     currentQuestion.context == "no" ? SizedBox.shrink() : const SizedBox(height: 30,),
                     currentQuestion.photo == 'no' ? SizedBox.shrink() : Image.asset(currentQuestion.photo),
                     currentQuestion.photo == 'no' ? SizedBox.shrink() : const SizedBox(height: 30,),
