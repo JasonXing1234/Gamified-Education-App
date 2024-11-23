@@ -6,6 +6,7 @@ class Lesson {
   Lesson({
     required this.title,
     required this.character,
+    required this.characterName,
     required this.lessonNumber,
     required this.progress,
     required this.reading,
@@ -16,6 +17,8 @@ class Lesson {
 
   final String title;
   final Character character;
+  String characterName;
+
   final int lessonNumber;
   final double progress;
 
