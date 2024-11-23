@@ -40,46 +40,43 @@ class ResultScreen extends StatelessWidget {
     }
   }
 
-  List<Map<String, Object>> getSummaryData() {
+  Future<List<Map<String, Object>>> getSummaryData() async {
     final List<Map<String, Object>> summary = [];
 
     for (int i = 0; i < userAnswers.length; i++) {
-      // if multiple options create a string with all the options?
-
       String specialAnswers = "";
       if (quizNumber == 4) {
-        // Social Tags questions -> Multiple Answers Question
         List<String> correctAnswers = quiz4[i].correctAnswers;
-        String separator = "";
-
-        // Sort the correct answers and make a string to compare with user
         correctAnswers.sort();
-        for (var answer in correctAnswers) {
-          specialAnswers = specialAnswers + separator + answer;
-          separator = ", ";
-        }
+        specialAnswers = correctAnswers.join(", ");
       }
 
       summary.add({
         'index': i,
-        'question':
-          quizNumber == 0 ? quiz0[i].context :
-          quizNumber == 1 ? quiz1[i].question :
-          quizNumber == 2 ? quiz2[i].question :
-          quizNumber == 3 ? quiz3[i].context : // Fake Profiles Quiz
-          quizNumber == 4 ? quiz4[i].context : // Social Tags Quiz
-          quizNumber == 5 ? quiz5[i].question :
-          quizNumber == 6 ? quiz6[i].question :
-          fakeProfilesPractice1[i].answerOptions[0],
-        'correct_answer':
-            // TODO quizNumber == 0 ? quiz0[i].correctAnswer :
-            quizNumber == 1 ? quiz1[i].correctAnswer :
-            quizNumber == 2 ? quiz2[i].answerOptions[0] :
-            quizNumber == 3 ? quiz3[i].correctAnswer :
-            quizNumber == 4 ? specialAnswers :
-            quizNumber == 5 ? quiz5[i].correctAnswer :
-            quizNumber == 6 ? quiz6[i].answerOptions[0] :
-            fakeProfilesPractice1[i].answerOptions[0],
+        'question': quizNumber == 0
+            ? quiz0[i].context
+            : quizNumber == 1
+            ? quiz1[i].question
+            : quizNumber == 2
+            ? quiz2[i].question
+            : quizNumber == 3
+            ? quiz3[i].context
+            : quizNumber == 4
+            ? quiz4[i].context
+            : quizNumber == 5
+            ? quiz5[i].question
+            : quiz6[i].question,
+        'correct_answer': quizNumber == 1
+            ? quiz1[i].correctAnswer
+            : quizNumber == 2
+            ? quiz2[i].answerOptions[0]
+            : quizNumber == 3
+            ? quiz3[i].correctAnswer
+            : quizNumber == 4
+            ? specialAnswers
+            : quizNumber == 5
+            ? quiz5[i].correctAnswer
+            : quiz6[i].answerOptions[0],
         'user_answer': userAnswers[i],
       });
     }
@@ -88,111 +85,66 @@ class ResultScreen extends StatelessWidget {
         .where((element) => element['correct_answer'] == element['user_answer'])
         .length;
 
-    _updateField(numCorrectAnswers);
+    await _updateField(numCorrectAnswers);
 
     return summary;
   }
 
   @override
-  build(context) async {
-    final summary = getSummaryData();
-    int numTotalAnswers = fakeProfilesPractice1.length;
-    for(int i = 0; i < summary.length; i++) {
-      await _database.child('profile').child(user2!.uid).child('quizList')
-          .child((quizNumber - 1).toString())
-          .child('questions')
-          .child(i.toString())
-          .update({
-        'isCorrect': summary[i]['correct_answer'] == summary[i]['user_answer'] ? true : false,
-      });
-    }
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<Map<String, Object>>>(
+      future: getSummaryData(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text('Error: ${snapshot.error}'),
+          );
+        } else if (snapshot.hasData) {
+          final summary = snapshot.data!;
+          final int numTotalAnswers = fakeProfilesPractice1.length;
+          final int numCorrectAnswers = summary
+              .where((element) =>
+          element['correct_answer'] == element['user_answer'])
+              .length;
 
-    var quizName = "RESULTS";
-
-    if (quizNumber == 0){
-      numTotalAnswers = quiz0.length;
-      quizName = "TUTORIAL & SET UP";
-    }
-    if (quizNumber == 1){
-      numTotalAnswers = quiz1.length;
-      quizName = "SOCIAL MEDIA NORMS";
-    }
-    else if (quizNumber == 2){
-      numTotalAnswers = quiz2.length;
-      quizName = "SETTINGS";
-    }
-    else if (quizNumber == 3){
-      numTotalAnswers = quiz3.length;
-      quizName = "FAKE PROFILES";
-    }
-    else if (quizNumber == 4){
-      numTotalAnswers = quiz4.length;
-      quizName = "SOCIAL TAGS";
-    }
-    else if (quizNumber == 5){
-      numTotalAnswers = quiz5.length;
-      quizName = "APPROPRIATE INTERACTIONS";
-    }
-    else if (quizNumber == 6){
-      numTotalAnswers = quiz5.length;
-      quizName = "SOCIAL MEDIA VS REALITY";
-    }
-    final int numCorrectAnswers = summary
-        .where((element) => element['correct_answer'] == element['user_answer'])
-        .length;
-
-    return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            quizName,
-            style: textStyles.heading1,
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        floatingActionButton: Container(
-          color: Colors.white,
-          child: SizedBox(
-            height: 60,
-            child: Row(
-              children: [
-                const Expanded(
-                    child: ListenButton(),
-                ),
-                Expanded(
-                  child: MultiPurposeButton(
-                    onTap: endQuiz,
-                    disabled: false,
-                    buttonType: ButtonType.next,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-
-      body: SingleChildScrollView(
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(40),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "You answered $numCorrectAnswers of $numTotalAnswers questions correctly!",
+          return Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: Text(
+                "RESULTS",
                 style: textStyles.heading1,
-                textAlign: TextAlign.center,
               ),
-              const SizedBox(
-                height: 30,
+            ),
+            body: SingleChildScrollView(
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(40),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "You answered $numCorrectAnswers of $numTotalAnswers questions correctly!",
+                      style: textStyles.heading1,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 30),
+                    QuestionAnswers(summary),
+                    const SizedBox(height: 60),
+                  ],
+                ),
               ),
-              QuestionAnswers(summary),
-              const SizedBox(
-                height: 60,
-              ),
-            ],
-          ))
-      )
+            ),
+          );
+        } else {
+          return const Center(
+            child: Text("No data available."),
+          );
+        }
+      },
     );
   }
 }
