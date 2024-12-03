@@ -264,7 +264,7 @@ class _LessonScreenState extends State<LessonScreen> {
                 //mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 15,),
+                  const SizedBox(height: 25,),
 
                   // Dragon Type
                   Row (
@@ -291,6 +291,8 @@ class _LessonScreenState extends State<LessonScreen> {
                     ],
                   ),
 
+                  const SizedBox(height: 25,),
+
                   // Dragon Image
                   widget.lesson.getCurrentPhoto() == "no" ? const SizedBox.shrink() : Image.asset(widget.lesson.getCurrentPhoto()),
 
@@ -298,11 +300,11 @@ class _LessonScreenState extends State<LessonScreen> {
                   // Row of image and stats
                   //StatsNotebook(lesson: widget.lesson, textStyles: textStyles),
 
-                  const SizedBox(height: 5,),
+                  const SizedBox(height: 25,),
 
                   Text("Do an activity to help me grow", style: textStyles.mediumBodyText,),
 
-                  const SizedBox(height: 15,),
+                  const SizedBox(height: 25,),
 
                   // row of buttons for Pre-quiz, readings, post-quiz
                   Column(
@@ -320,7 +322,7 @@ class _LessonScreenState extends State<LessonScreen> {
                         },
                       ),
 
-                      const SizedBox(height: 15,),
+                      const SizedBox(height: 25,),
 
                       ActivityButton(
                         text: "READING",
@@ -333,7 +335,7 @@ class _LessonScreenState extends State<LessonScreen> {
                         },
                       ),
 
-                      const SizedBox(height: 15,),
+                      const SizedBox(height: 25,),
 
                       ActivityButton(
                         text: "POST-QUIZ",
@@ -348,7 +350,7 @@ class _LessonScreenState extends State<LessonScreen> {
                     ],
                   ),
 
-                  const SizedBox(height: 15,),
+                  const SizedBox(height: 25,),
 
                   // /TODO st up later with items
                   // ActivityButton(

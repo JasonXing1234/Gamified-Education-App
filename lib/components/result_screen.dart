@@ -119,6 +119,27 @@ class ResultScreen extends StatelessWidget {
                 style: textStyles.heading1,
               ),
             ),
+            floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+            floatingActionButton: Container(
+              color: Colors.white,
+              child: SizedBox(
+                height: 60,
+                child: Row(
+                  children: [
+                    const Expanded(
+                      child: ListenButton(),
+                    ),
+                    Expanded(
+                      child: MultiPurposeButton(
+                        onTap: endQuiz,
+                        disabled: false,
+                        buttonType: ButtonType.reward,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             body: SingleChildScrollView(
               child: Container(
                 width: double.infinity,

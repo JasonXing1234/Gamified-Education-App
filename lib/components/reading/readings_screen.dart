@@ -373,7 +373,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                       });
                     },
                     disabled: false,
-                    buttonType: readingPageIndex == readingPages.length -1 ? ButtonType.finish : ButtonType.next,
+                    buttonType: readingPageIndex == readingPages.length -1 ? ButtonType.reward : ButtonType.next,
                   ),
                 ),
               ],
