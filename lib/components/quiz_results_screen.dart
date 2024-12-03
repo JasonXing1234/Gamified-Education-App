@@ -39,6 +39,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       if (quiz0.length == answers.length) {
         widget.activeScreen = 'result-screen';
         resultNumber = widget.lesson.lessonNumber;
+        print('resultNumber is $resultNumber');
       }
     });
   }
@@ -130,10 +131,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       }
     }
     else if (widget.activeScreen == "result-screen") {
-
+      final int quizResult = resultNumber;
+      final List<String> userAnswersResolved = answers;
       screen = ResultScreen(
-        quizNumber: resultNumber,
-        userAnswers: answers,
+        quizNumber: quizResult,
+        userAnswers: userAnswersResolved,
         endQuiz: returnHome,
       );
     }
