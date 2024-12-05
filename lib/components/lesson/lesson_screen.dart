@@ -168,10 +168,10 @@ class _LessonScreenState extends State<LessonScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Edit Name"),
+          title: const Text("Edit Name"),
           content: TextField(
             controller: _controller,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: "Name",
               hintText: "Enter your name",
               border: OutlineInputBorder(),
@@ -182,7 +182,7 @@ class _LessonScreenState extends State<LessonScreen> {
               onPressed: () {
                 Navigator.of(context).pop(); // Close dialog
               },
-              child: Text("Cancel"),
+              child: const Text("Cancel"),
             ),
             ElevatedButton(
               onPressed: () {
@@ -191,7 +191,12 @@ class _LessonScreenState extends State<LessonScreen> {
                 });
                 Navigator.of(context).pop(); // Close dialog
               },
-              child: Text("Save"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: appColors.royalBlue, // Background color
+                foregroundColor: Colors.white, // Text color
+                elevation: 3, // Optional: button shadow
+              ),
+              child: const Text("Save"),
             ),
           ],
         );
