@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz/components/buttons/ListenButton.dart';
+import 'package:quiz/components/buttons/listen_button.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
 import 'package:quiz/components/reading/reading_page.dart';
 import 'package:quiz/components/progress_bar/progress_bar.dart';

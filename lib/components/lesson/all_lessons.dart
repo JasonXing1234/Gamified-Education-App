@@ -44,7 +44,7 @@ Lesson tutorial = Lesson(
 
 Lesson socialMediaNorms = Lesson(
   title: "SOCIAL MEDIA NORMS",
-  character: lockedCharacter,
+  character: orangeDragon,
   characterName: "Name",
   lessonNumber: 1,
   progress: 0.0,

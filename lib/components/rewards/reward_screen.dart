@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
 
-import '../buttons/ListenButton.dart';
+import '../buttons/listen_button.dart';
 import '../buttons/menu_button.dart';
 import '../buttons/next_button.dart';
 import '../buttons/speed_button.dart';

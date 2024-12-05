@@ -159,7 +159,7 @@ class _LessonScreenState extends State<LessonScreen> {
     }
   }
 
-  void _openEditNameDialog() {
+  void openEditNameDialog() {
 
 
     final TextEditingController _controller = TextEditingController(text: widget.lesson.characterName);
@@ -278,7 +278,7 @@ class _LessonScreenState extends State<LessonScreen> {
                       Text(widget.lesson.character.name, style: textStyles.bodyText,),
 
                       GestureDetector(
-                        onTap: _openEditNameDialog, // Opens the popup
+                        onTap: openEditNameDialog, // Opens the popup
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
