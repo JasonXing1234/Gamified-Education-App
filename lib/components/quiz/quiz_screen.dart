@@ -9,6 +9,7 @@ import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/components/question.dart';
 import 'package:quiz/styles/app_colors.dart';
 
+import '../../SQLITE/sqliteHelper.dart';
 import '../buttons/ListenButton.dart';
 import '../progress_bar/progress_bar.dart';
 import 'quiz_questions/quiz2.dart';
@@ -100,13 +101,30 @@ class _QuestionsScreenState extends State<QuizScreen> {
   }
 
   Future<void> recordingTimeStamp() async {
-    await _database.child('profile').child(user2!.uid).child('quizList')
-        .child(widget.quizNumber.toString())
-        .child('questions')
-        .child(questionIndex.toString())
-        .update({
-      'endTimeStamp': DateTime.now().toIso8601String(),
-    });
+    try {
+      // Firebase: Update the end timestamp
+      await _database
+          .child('profile')
+          .child(user2!.uid)
+          .child('quizList')
+          .child(widget.quizNumber.toString())
+          .child('questions')
+          .child(questionIndex.toString())
+          .update({
+        'endTimeStamp': DateTime.now().toIso8601String(),
+      });
+
+      // SQLite: Update the end timestamp
+      final DatabaseHelper _dbHelper = DatabaseHelper();
+      await _dbHelper.updateEndTimestamp(
+        questionIndex.toString(),
+        DateTime.now().toIso8601String(),
+      );
+
+      print('End timestamp updated successfully.');
+    } catch (e) {
+      print('Error recording timestamp: $e');
+    }
   }
 
 
@@ -115,32 +133,50 @@ class _QuestionsScreenState extends State<QuizScreen> {
 
     if (userId != null && questionIndex < quizQuestions.length - 1) {
       try {
-        await _database.child('profile').child(userId).child('quizList')
+        final DatabaseHelper _dbHelper = DatabaseHelper();
+        await _database
+            .child('profile')
+            .child(userId)
+            .child('quizList')
             .child((widget.quizNumber - 1).toString())
             .child('questions')
             .child(questionIndex.toString())
             .update({
           'endTimeStamp': DateTime.now().toIso8601String(),
         });
+        await _dbHelper.updateEndTimestamp(
+          questionIndex.toString(),
+          DateTime.now().toIso8601String(),
+        );
+
         if (questionIndex < quizQuestions.length - 1) {
-          await _database.child('profile').child(userId).child('quizList')
+          await _database
+              .child('profile')
+              .child(userId)
+              .child('quizList')
               .child(widget.quizNumber.toString())
               .child('questions')
               .child((questionIndex + 1).toString())
               .update({
             'beginTimeStamp': DateTime.now().toIso8601String(),
           });
+
+          await _dbHelper.updateBeginTimestamp(
+            (questionIndex + 1).toString(),
+            DateTime.now().toIso8601String(),
+          );
         }
       } catch (e) {
         print('Error updating timestamps: $e');
       }
     }
+
     setState(() {
       if (questionIndex < quizQuestions.length - 1) {
         questionIndex++;
       }
-      //_controller.dispose();
     });
+
     widget.onSelectAnswer(answer);
   }
 

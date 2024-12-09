@@ -10,6 +10,7 @@ import 'package:quiz/components/reading_results_screen.dart';
 import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
 
+import '../../SQLITE/sqliteHelper.dart';
 import '../practice_results_screen.dart';
 import '../rewards/character.dart';
 
@@ -95,34 +96,15 @@ class _LessonScreenState extends State<LessonScreen> {
         if (snapshot2.value != null) {
           return snapshot2.value as int;
         }
-      }
-      catch (e) {
-        // Handle potential errors, like network issues
-        print('Error fetching reading list: $e');
-      }
-    }
-  }
-
-  Future<List<dynamic>?> _fetchAccessories() async {
-    if (user2 != null) {
-      try {
-        DataSnapshot snapshot2 = await _database
-            .child('profile')
-            .child(user2!.uid)
-            .child('accessories')
-            .get();
-
-        if (snapshot2.value != null) {
-          return snapshot2.value as List<bool>;
-        }
-      }
-      catch (e) {
-        // Handle potential errors, like network issues
-        print('Error fetching reading list: $e');
+        final DatabaseHelper _dbHelper = DatabaseHelper();
+        return await _dbHelper.getNumTickets(user2!.uid);
+      } catch (e) {
+        print('Error fetching tickets: $e');
       }
     }
+    return null;
   }
-  // Asynchronous function to fetch reading list data
+
   Future<void> _fetchReadingList() async {
     if (user2 != null) {
       try {
@@ -136,6 +118,10 @@ class _LessonScreenState extends State<LessonScreen> {
           setState(() {
             readings = snapshot.value as List<dynamic>;
           });
+        } else {
+          final DatabaseHelper _dbHelper = DatabaseHelper();
+          readings = await _dbHelper.getReadingList(user2!.uid);
+          setState(() {});
         }
 
         DataSnapshot snapshot2 = await _database
@@ -148,11 +134,13 @@ class _LessonScreenState extends State<LessonScreen> {
           setState(() {
             purchased = snapshot2.value as List<dynamic>;
           });
+        } else {
+          final DatabaseHelper _dbHelper = DatabaseHelper();
+          purchased = await _dbHelper.getAccessories(user2!.uid);
+          setState(() {});
         }
-
       } catch (e) {
-        // Handle potential errors, like network issues
-        print('Error fetching reading list: $e');
+        print('Error fetching reading list or accessories: $e');
       }
     }
   }

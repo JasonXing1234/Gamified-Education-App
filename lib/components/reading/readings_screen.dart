@@ -7,6 +7,7 @@ import 'package:quiz/components/reading/reading_page.dart';
 import 'package:quiz/components/progress_bar/progress_bar.dart';
 
 
+import '../../SQLITE/sqliteHelper.dart';
 import '../../styles/app_colors.dart';
 import '../../styles/text_styles.dart';
 import '../buttons/next_button.dart';
@@ -44,7 +45,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
 
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
-
+  final DatabaseHelper _dbHelper = DatabaseHelper();
   final ScrollController _scrollController = ScrollController();
 
   final DatabaseReference _database = FirebaseDatabase.instance.ref();
@@ -130,6 +131,14 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     }
   }
 
+  Future<void> updateReadingProgress(String userId, int lessonNumber, int progress) async {
+    await _dbHelper.updateReadingProgress(userId, lessonNumber, progress);
+  }
+
+  Future<List<Map<String, dynamic>>> fetchReadingList(String userId) async {
+    return await _dbHelper.getReadingList(userId);
+  }
+
   // Asynchronous function to update reading list data
   Future<int?> _updateReadingList() async {
     if (user2 != null) {
@@ -175,7 +184,13 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
 
         // Save updated reading list back to the database
         await _database.child('profile/${user2!.uid}/readingList').set(readings);
-
+        final DatabaseHelper _dbHelper = DatabaseHelper();
+        // Update progress for the current lesson in SQLite
+        await _dbHelper.updateReadingProgress(
+          user2!.uid,
+          widget.lesson.lessonNumber,
+          newReadingPageIndex,
+        );
         // Update state after async updates are done
         setState(() {
           readingPageIndex = newReadingPageIndex;
@@ -203,18 +218,20 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
 
         if (snapshot.value != null) {
           List<dynamic> readings = snapshot.value as List<dynamic>;
-
-          // Update progress for the current lesson
           readings[widget.lesson.lessonNumber - 1]['progress'] = newReadingPageIndex;
-
-          // Save updated reading list back to the database
           await _database.child('profile/${user2!.uid}/readingList').set(readings);
-
-          // Update state after async updates are done
           setState(() {
             readingPageIndex = newReadingPageIndex;
             _readingListFuture = _updateReadingList();
           });
+          final DatabaseHelper _dbHelper = DatabaseHelper();
+          // Update progress for the current lesson in SQLite
+          await _dbHelper.updateReadingProgress(
+            user2!.uid,
+            widget.lesson.lessonNumber,
+            newReadingPageIndex,
+          );
+
         }
       } catch (e) {
         print("Error updating reading progress: $e");

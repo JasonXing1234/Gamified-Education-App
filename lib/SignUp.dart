@@ -58,7 +58,7 @@ class _SignUpPageState extends State<SignUpPage> {
     quizId: 'quiz$index',
     quizScore: 0,
     questions: List.generate(10, (questionIndex) => QuizQuestionModel(
-      questionId: 'questionIndex',
+      questionId: '$questionIndex',
       isCorrect: false,
       beginTimeStamp: DateTime.now(),
       endTimeStamp: DateTime.now().add(Duration(minutes: 1)),

@@ -6,6 +6,7 @@ import 'package:quiz/components/quiz/quiz_questions/quiz0.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/components/practice/practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
 
+import '../SQLITE/sqliteHelper.dart';
 import 'buttons/ListenButton.dart';
 import 'quiz/quiz_questions/quiz2.dart';
 import 'quiz/quiz_questions/quiz3.dart';
@@ -28,13 +29,17 @@ class ResultScreen extends StatelessWidget {
   Future<void> _updateField(int quizResult) async {
     try {
       DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('quizList').get();
-      List<dynamic> quizzes = snapshot.value as List<dynamic>;
-      quizzes[quizNumber - 1]['quizScore'] = quizResult;
+      if (snapshot.value != null) {
+        List<dynamic> quizzes = snapshot.value as List<dynamic>;
+        quizzes[quizNumber - 1]['quizScore'] = quizResult;
+        await _database.child('profile/${user2?.uid}').update({
+          'quizzes': quizzes,
+        });
+      }
+      final DatabaseHelper _dbHelper = DatabaseHelper();
+      await _dbHelper.updateQuizScore(user2!.uid, quizNumber, quizResult);
 
-      // Update the database with the modified quizzes list
-      await _database.child('profile/${user2?.uid}').update({
-        'quizzes': quizzes,
-      });
+      print('Quiz score updated successfully in Firebase and SQLite.');
     } catch (e) {
       print('Failed to update field: $e');
     }
