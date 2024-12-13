@@ -1,22 +1,27 @@
 
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:quiz/components/lesson/world.dart';
 
 import '../../styles/app_colors.dart';
 import '../../styles/text_styles.dart';
 import '../buttons/custom_icon_button.dart';
 import '../rewards/character.dart';
+import 'DecorateScreen.dart';
 import 'lesson.dart';
 
 
 class CompletedLessonScreen extends StatefulWidget {
-  const CompletedLessonScreen({
+  CompletedLessonScreen({
     super.key,
     required this.lesson,
   });
 
 
   final Lesson lesson;
+  World lessonWorld = World(background: "assets/backgrounds/ocean.png", itemLocations: {});
 
   // Unlocked features
   @override
@@ -29,7 +34,6 @@ class _CompletedLessonScreenState extends State<CompletedLessonScreen> {
   final AppColors appColors = const AppColors();
 
   void openEditNameDialog() {
-
 
     final TextEditingController _controller = TextEditingController(text: widget.lesson.characterName);
 
@@ -114,10 +118,18 @@ class _CompletedLessonScreenState extends State<CompletedLessonScreen> {
     );
   }
 
+  void _openDecoratorScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DecorateScreen(world: widget.lessonWorld, characterPath: widget.lesson.getCurrentPhoto(),),
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
@@ -163,15 +175,22 @@ class _CompletedLessonScreenState extends State<CompletedLessonScreen> {
       //Bottom Options
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
+          decoration: BoxDecoration(
+            color: Colors.white, // White background
+            borderRadius: BorderRadius.circular(0), // Optional: Rounds the corners
+          ),
         child: SizedBox(
           height: 100,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              CustomIconButton(icon: FontAwesomeIcons.dragon, label: "Phase", onPressed: _showOptionDialog,),
-              CustomIconButton(icon: FontAwesomeIcons.paintRoller, label: "Decorate", onPressed: (context) {  },),
-              CustomIconButton(icon: FontAwesomeIcons.share, label: "Share", onPressed: (context) {  },),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10, bottom: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CustomIconButton(icon: FontAwesomeIcons.dragon, label: "Phase", onPressed: _showOptionDialog,),
+                CustomIconButton(icon: FontAwesomeIcons.paintRoller, label: "Decorate", onPressed: _openDecoratorScreen,),
+                CustomIconButton(icon: FontAwesomeIcons.share, label: "Share", onPressed: (context) {  },),
+              ],
+            ),
           ),
         )
       ),
@@ -180,42 +199,49 @@ class _CompletedLessonScreenState extends State<CompletedLessonScreen> {
         child:
             Stack(
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 25,),
 
-                    // Dragon Type
-                    Row (
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(widget.lesson.character.name, style: textStyles.bodyText,),
+                Positioned.fill(
+                  child: Image.asset(widget.lessonWorld.background, fit: BoxFit.cover),
+                ),
 
-                        GestureDetector(
-                          onTap: openEditNameDialog, // Opens the popup
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                widget.lesson.characterName,
-                                style: textStyles.bodyText,
-                              ),
-                              const SizedBox(width: 15),
-
-                              FaIcon(FontAwesomeIcons.pen, color: appColors.grey, size: textStyles.smallBodyText.fontSize,),
-                            ],
-                          ),
-                        ),
-
-                      ],
+                // Dragon Type
+                Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white, // White background
                     ),
-                    const SizedBox(height: 25,),
-                  ],
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10, bottom: 20),
+                      child: Row (
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(widget.lesson.character.name, style: textStyles.bodyText,),
+
+                          GestureDetector(
+                            onTap: openEditNameDialog, // Opens the popup
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  widget.lesson.characterName,
+                                  style: textStyles.bodyText,
+                                ),
+                                const SizedBox(width: 15),
+
+                                FaIcon(FontAwesomeIcons.pen, color: appColors.grey, size: textStyles.smallBodyText.fontSize,),
+                              ],
+                            ),
+                          ),
+
+                        ],
+                      ),
+                    ),
                 ),
 
                 //Dragon Image
                 Center(
-                  child: widget.lesson.getCurrentPhoto() == "no" ? const SizedBox.shrink() : Image.asset(widget.lesson.getCurrentPhoto()),
+                  child:
+                      // Character
+                      widget.lesson.getCurrentPhoto() == "no" ? const SizedBox.shrink() : Image.asset(widget.lesson.getCurrentPhoto()),
                 )
               ],
             ),
