@@ -33,6 +33,7 @@ List<Lesson> allLessons = [
 Lesson tutorial = Lesson(
   title: "Tutorial and Set up",
   character: orangeDragon,
+  characterName: "Name",
   lessonNumber: 0,
   progress: 0.5,
   reading: reading0,
@@ -43,7 +44,8 @@ Lesson tutorial = Lesson(
 
 Lesson socialMediaNorms = Lesson(
   title: "SOCIAL MEDIA NORMS",
-  character: lockedCharacter,
+  character: orangeDragon,
+  characterName: "Name",
   lessonNumber: 1,
   progress: 0.0,
   reading: reading1,
@@ -56,6 +58,7 @@ Lesson socialMediaNorms = Lesson(
 Lesson settings = Lesson(
   title: "SETTINGS",
   character: lockedCharacter,
+  characterName: "Name",
   lessonNumber: 2,
   progress: 0.0,
   reading: reading2,
@@ -67,6 +70,7 @@ Lesson settings = Lesson(
 Lesson fakeProfiles = Lesson(
   title: "FAKE PROFILES",
   character: lockedCharacter,
+  characterName: "Name",
   lessonNumber: 3,
   progress: 0.0,
   reading: reading3,
@@ -78,6 +82,7 @@ Lesson fakeProfiles = Lesson(
 Lesson socialTags = Lesson(
   title: "SOCIAL TAGS",
   character: lockedCharacter,
+  characterName: "Name",
   lessonNumber: 4,
   progress: 0.0,
   reading: reading4,
@@ -90,6 +95,7 @@ Lesson appropriateInteractions = Lesson(
   //"APPROPRIATE INTERACTIONS",
   title: "INTERACTION ETIQUETTE", // Slightly shorter name for dashboard on home-screen
   character: lockedCharacter,
+  characterName: "Name",
   lessonNumber: 5,
   progress: 0.0,
   reading: reading5,
@@ -101,6 +107,7 @@ Lesson appropriateInteractions = Lesson(
 Lesson socialMediaVSReality = Lesson(
   title: "SOCIAL MEDIA VS REALITY",
   character: lockedCharacter,
+  characterName: "Name",
   lessonNumber: 6,
   progress: 0.0,
   reading: reading6,

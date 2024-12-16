@@ -77,6 +77,8 @@ flutter:
     - assets/lesson_images/fake_profiles_images/
     - assets/lesson_images/social_tags_images/
     - assets/character_images/
+    - assets/backgrounds/
+    - assets/items/
     - assets/character_images/orange_dragon/
     - assets/images/quiz-logo.png
   #   - images/a_dot_ham.jpeg

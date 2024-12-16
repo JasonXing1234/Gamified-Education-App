@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz/components/lesson/completed_lesson_screen.dart';
 import 'package:quiz/components/lesson/lesson_dashboard.dart';
 import 'package:quiz/components/lesson/lesson_screen.dart';
 import 'package:quiz/components/lesson/all_lessons.dart';
@@ -154,6 +155,71 @@ class _HomeState extends State<Home> {
                     ),
                     child: Text(
                       "POST-QUIZ",
+                      style: textStyles.smallBodyTextWhite,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            height: spacing,
+          ),
+
+
+          //TODO: Remove this Later
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                border: Border.all(color: Colors.black, width: 3.0),
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: Row(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center, // Vertical Alignment
+                    crossAxisAlignment: CrossAxisAlignment.start, // Aligns children to the left
+                    children: [
+                      Text(
+                        "TESTING",
+                        textAlign: TextAlign.left,
+                        style: textStyles.mediumBodyText,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Remove Later",
+                        textAlign: TextAlign.left,
+                        style: textStyles.caption,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    width: 25,
+                  ),
+                  ElevatedButton(
+                    onPressed: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CompletedLessonScreen(lesson: socialMediaNorms,)),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10), // Padding for text and border
+                      //fixedSize: const Size(150, 50),
+                      backgroundColor: appColors.royalBlue,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    child: Text(
+                      "Completed",
                       style: textStyles.smallBodyTextWhite,
                       textAlign: TextAlign.center,
                     ),

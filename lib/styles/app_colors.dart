@@ -6,7 +6,7 @@ class AppColors {
   final Color royalBlue = const Color(0xff2E83E8);
   final Color lightRoyalBlue = const Color(0xff70AAEE);
 
-  final Color grey = const Color(0xff878787);
+  final Color grey = const Color(0xffAAAAAA);
   final Color lightGrey = const Color(0xffE1E1E1);
 
   final Color green = const Color(0xff74A159);
