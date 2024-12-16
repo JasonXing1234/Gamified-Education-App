@@ -2,10 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
-import 'package:quiz/components/practice/practice_questions/appropriate_interaction_practice/appropriate_interaction_practice_1.dart';
+import 'package:quiz/components/practice/practice_questions/appropriate_interaction_practice/appropriate_interaction_practice.dart';
 import 'package:quiz/components/progress_bar/progress_bar.dart';
 
-import '../buttons/ListenButton.dart';
+import '../buttons/listen_button.dart';
 import '../question.dart';
 import 'practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
 import 'practice_questions/fake_profile_practice/fake_profiles_practice_2.dart';

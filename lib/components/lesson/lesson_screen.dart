@@ -37,6 +37,8 @@ class _LessonScreenState extends State<LessonScreen> {
   Future<int?>? numTickets;
   int? tempNumTickets;
 
+  // List<String> dragonNames = ["Name", "Name", "Name", "Name", "Name", "Name", "Name",];
+
   @override
   void initState() {
     super.initState();
@@ -157,6 +159,51 @@ class _LessonScreenState extends State<LessonScreen> {
     }
   }
 
+  void openEditNameDialog() {
+
+
+    final TextEditingController _controller = TextEditingController(text: widget.lesson.characterName);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Edit Name"),
+          content: TextField(
+            controller: _controller,
+            decoration: const InputDecoration(
+              labelText: "Name",
+              hintText: "Enter your name",
+              border: OutlineInputBorder(),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close dialog
+              },
+              child: const Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  widget.lesson.characterName = _controller.text; // Save the updated name
+                });
+                Navigator.of(context).pop(); // Close dialog
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: appColors.royalBlue, // Background color
+                foregroundColor: Colors.white, // Text color
+                elevation: 3, // Optional: button shadow
+              ),
+              child: const Text("Save"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   String getPhase(Lesson lesson, Phase phase) {
 
@@ -212,192 +259,235 @@ class _LessonScreenState extends State<LessonScreen> {
 
 
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-          child: Stack(
-            children: [ Column(
-            children: [
-              const SizedBox(
-                height: 15,
-              ),
 
-              // Row of image and stats
-              StatsNotebook(lesson: widget.lesson, textStyles: textStyles),
+        body: //Padding(
+          //padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+          Center(
 
-              const SizedBox(height: 5,),
-
-              // row of buttons for Pre-quiz, readings, post-quiz
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            child:// [
+              Column(
+                //mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  const SizedBox(height: 25,),
 
-                  ActivityButton(
-                    text: "PRE-QUIZ",
-                    onTap:
-                        (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ReadingResultScreen(lesson: widget.lesson, activeScreen: "reading-screen",)),
-                      );
-                    },
-                  ),
+                  // Dragon Type
+                  Row (
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(widget.lesson.character.name, style: textStyles.bodyText,),
 
-                  ActivityButton(
-                    text: "READING",
-                    onTap:
-                        (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ReadingResultScreen(lesson: widget.lesson, activeScreen: "reading-screen",)),
-                      );
-                    },
-                  ),
-
-                  ActivityButton(
-                    text: "POST-QUIZ",
-                    onTap:
-                        (){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => QuizResultScreen(lesson: widget.lesson, activeScreen: "quiz-screen",))
-                      );
-                    },
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 15,),
-
-              ActivityButton(
-                text: "PRACTICE & EARN TICKETS", // Drill is practice
-                onTap:
-                    (){
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: widget.lesson, activeScreen: "practice-screen",))
-
-                    //MaterialPageRoute(builder: (context) => PracticeScreen(quizNumber: widget.lessonNumber, onSelectAnswer: (String answer) {  },))
-                  );
-                },
-              ),
-
-              const SizedBox(height: 5,),
-
-              // Number of Tickets
-              FutureBuilder<int?>(
-                future: _fetchTickets(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else if (snapshot.hasData) {
-                    return
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: textStyles.mediumBodyText.fontSize,),
-                          Text(" Tickets: ${snapshot.data}", style: textStyles.mediumBodyText,),
-                        ],
-                      );
-                  } else {
-                    return Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: textStyles.heading1.fontSize,),
-                        // Icon( Icons.Tickets, color: appColors.yellow, size: textStyles.heading1.fontSize,),
-                        Text(" Tickets 0", style: textStyles.bodyText,),
-                      ],
-                    );
-
-
-                    //Text('No data available');
-                  }
-                },
-              ),
-
-              const SizedBox(
-                height: 20,
-              ),
-
-              // Scrollable Accessory List
-              SizedBox(
-                height: 350, // Set a fixed height for the GridView
-                width: 350,
-                child: GridView.extent(
-                  maxCrossAxisExtent: 100, // Max width of each tile
-                  mainAxisSpacing: 20, // Space between rows
-                  crossAxisSpacing: 20, // Space between columns
-                  children: List.generate(20, (index) {
-                    return buildGridItem(index);
-                  }),
-                ),
-              ),
-            ],
-          ),
-              if (selectedImageIndex != null)
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text(
-                          "Do you want to buy this item?",
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      GestureDetector(
+                        onTap: openEditNameDialog, // Opens the popup
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            ElevatedButton(
-                              onPressed: () async {
-                                int? tempInt = await _fetchTickets();
-                                if (tempInt! > 0) {
-                                  handleYes();
-                                }
-                                else{
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: const Text("You need 1 ticket to buy this item"),
-                                      action: SnackBarAction(
-                                        label: "UNDO",
-                                        onPressed: () {
-                                          // Do something to undo the change.
-                                        },
-                                      ),
-                                    ),
-                                  );
-                                }
-                                },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
-                                padding: const EdgeInsets.symmetric(horizontal: 40),
-                              ),
-                              child: const Text("Yes"),
+                            Text(
+                              widget.lesson.characterName,
+                              style: textStyles.bodyText,
                             ),
-                            ElevatedButton(
-                              onPressed: handleNo,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.red,
-                                padding: const EdgeInsets.symmetric(horizontal: 40),
-                              ),
-                              child: const Text("No"),
-                            ),
+                            SizedBox(width: 15),
+
+                            FaIcon(FontAwesomeIcons.pen, color: appColors.grey, size: textStyles.smallBodyText.fontSize,),
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+
+                    ],
                   ),
-                ),
-            ],
+
+                  const SizedBox(height: 25,),
+
+                  // Dragon Image
+                  widget.lesson.getCurrentPhoto() == "no" ? const SizedBox.shrink() : Image.asset(widget.lesson.getCurrentPhoto()),
+
+
+                  // Row of image and stats
+                  //StatsNotebook(lesson: widget.lesson, textStyles: textStyles),
+
+                  const SizedBox(height: 25,),
+
+                  Text("Do an activity to help me grow", style: textStyles.mediumBodyText,),
+
+                  const SizedBox(height: 25,),
+
+                  // row of buttons for Pre-quiz, readings, post-quiz
+                  Column(
+                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+
+                      ActivityButton(
+                        text: "PRE-QUIZ",
+                        onTap:
+                            (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ReadingResultScreen(lesson: widget.lesson, activeScreen: "reading-screen",)),
+                          );
+                        },
+                      ),
+
+                      const SizedBox(height: 25,),
+
+                      ActivityButton(
+                        text: "READING",
+                        onTap:
+                            (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ReadingResultScreen(lesson: widget.lesson, activeScreen: "reading-screen",)),
+                          );
+                        },
+                      ),
+
+                      const SizedBox(height: 25,),
+
+                      ActivityButton(
+                        text: "POST-QUIZ",
+                        onTap:
+                            (){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => QuizResultScreen(lesson: widget.lesson, activeScreen: "quiz-screen",))
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 25,),
+
+                  // /TODO st up later with items
+                  // ActivityButton(
+                  //   text: "PRACTICE & EARN TICKETS", // Drill is practice
+                  //   onTap:
+                  //       (){
+                  //     Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: widget.lesson, activeScreen: "practice-screen",))
+                  //
+                  //       //MaterialPageRoute(builder: (context) => PracticeScreen(quizNumber: widget.lessonNumber, onSelectAnswer: (String answer) {  },))
+                  //     );
+                  //   },
+                  // ),
+
+                  const SizedBox(height: 15,),
+
+                  // Number of Tickets
+                  // FutureBuilder<int?>(
+                  //   future: _fetchTickets(),
+                  //   builder: (context, snapshot) {
+                  //     if (snapshot.connectionState == ConnectionState.waiting) {
+                  //       return CircularProgressIndicator();
+                  //     } else if (snapshot.hasError) {
+                  //       return Text('Error: ${snapshot.error}');
+                  //     } else if (snapshot.hasData) {
+                  //       return
+                  //         Row(
+                  //           mainAxisSize: MainAxisSize.min,
+                  //           children: [
+                  //             FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: textStyles.mediumBodyText.fontSize,),
+                  //             Text(" Tickets: ${snapshot.data}", style: textStyles.mediumBodyText,),
+                  //           ],
+                  //         );
+                  //     } else {
+                  //       return Row(
+                  //         mainAxisSize: MainAxisSize.min,
+                  //         children: [
+                  //           FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: textStyles.heading1.fontSize,),
+                  //           // Icon( Icons.Tickets, color: appColors.yellow, size: textStyles.heading1.fontSize,),
+                  //           Text(" Tickets 0", style: textStyles.bodyText,),
+                  //         ],
+                  //       );
+                  //
+                  //
+                  //       //Text('No data available');
+                  //     }
+                  //   },
+                  // ),
+                  //
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
+                  //
+                  // // Scrollable Accessory List
+                  // SizedBox(
+                  //   height: 350, // Set a fixed height for the GridView
+                  //   width: 350,
+                  //   child: GridView.extent(
+                  //     maxCrossAxisExtent: 100, // Max width of each tile
+                  //     mainAxisSpacing: 20, // Space between rows
+                  //     crossAxisSpacing: 20, // Space between columns
+                  //     children: List.generate(20, (index) {
+                  //       return buildGridItem(index);
+                  //     }),
+                  //   ),
+                  // ),
+               ],
           ),
-        ),
-    ));
+              // if (selectedImageIndex != null)
+              //   Positioned(
+              //     bottom: 0,
+              //     left: 0,
+              //     right: 0,
+              //     child: Container(
+              //       color: Colors.white,
+              //       padding: const EdgeInsets.all(16),
+              //       child: Column(
+              //         mainAxisSize: MainAxisSize.min,
+              //         children: [
+              //           const Text(
+              //             "Do you want to buy this item?",
+              //             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              //           ),
+              //           const SizedBox(height: 10),
+              //           Row(
+              //             mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //             children: [
+              //               ElevatedButton(
+              //                 onPressed: () async {
+              //                   int? tempInt = await _fetchTickets();
+              //                   if (tempInt! > 0) {
+              //                     handleYes();
+              //                   }
+              //                   else{
+              //                     ScaffoldMessenger.of(context).showSnackBar(
+              //                       SnackBar(
+              //                         content: const Text("You need 1 ticket to buy this item"),
+              //                         action: SnackBarAction(
+              //                           label: "UNDO",
+              //                           onPressed: () {
+              //                             // Do something to undo the change.
+              //                           },
+              //                         ),
+              //                       ),
+              //                     );
+              //                   }
+              //                   },
+              //                 style: ElevatedButton.styleFrom(
+              //                   backgroundColor: Colors.green,
+              //                   padding: const EdgeInsets.symmetric(horizontal: 40),
+              //                 ),
+              //                 child: const Text("Yes"),
+              //               ),
+              //               ElevatedButton(
+              //                 onPressed: handleNo,
+              //                 style: ElevatedButton.styleFrom(
+              //                   backgroundColor: Colors.red,
+              //                   padding: const EdgeInsets.symmetric(horizontal: 40),
+              //                 ),
+              //                 child: const Text("No"),
+              //               ),
+              //             ],
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+            //],
+          )));
+        //),
+    //);//);
   }
 
   Widget buildGridItem(int index) {

@@ -9,6 +9,7 @@ enum ButtonType {
   check,
   submit,
   finish,
+  reward,
 }
 
 
@@ -18,7 +19,6 @@ class MultiPurposeButton extends StatelessWidget {
     super.key,
     required this.disabled,
     required this.onTap,
-    // this.buttonName = "NEXT",
     this.buttonType = ButtonType.next,
   });
 
@@ -70,6 +70,9 @@ class MultiPurposeButton extends StatelessWidget {
       }
       else if (buttonType == ButtonType.finish) {
         buttonText = "FINISH";
+      }
+      else if (buttonType == ButtonType.reward) {
+        buttonText = "REWARD";
       }
       else {
         buttonText = "BUTTON";

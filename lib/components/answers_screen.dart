@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../styles/app_colors.dart';
 import '../styles/text_styles.dart';
@@ -24,15 +25,19 @@ class QuestionAnswers extends StatelessWidget {
               children: [
                 Container(
                   margin: const EdgeInsets.only(right: 20),
-                  width: 40,
-                  height: 40,
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       color: isCorrect ? appColors.green : appColors.red,
                       borderRadius: BorderRadius.circular(20)),
                   child: Center(
-                    child: Text(
-                      ((item['index'] as int) + 1).toString(),
-                      style: textStyles.bodyTextWhite,
+                    child: Column(
+                      children: [
+                        Text(
+                          ((item['index'] as int) + 1).toString(),
+                          style: textStyles.bodyTextWhite,
+                        ),
+                        FaIcon(isCorrect ? FontAwesomeIcons.check : FontAwesomeIcons.xmark , color: Colors.white, size: textStyles.mediumBodyText.fontSize,)
+                      ],
                     ),
                   ),
                 ),
@@ -48,15 +53,15 @@ class QuestionAnswers extends StatelessWidget {
                         style: textStyles.mediumBodyText,
                       ),
                       Text(
-                        item['user_answer'] as String,
+                        "Your Response: ${item['user_answer'].toString()}",
                         style: textStyles.customBodyText(
                             isCorrect ? appColors.green : appColors.red,
                             fontSize
                         ),
                       ),
                       Text(
-                        item['correct_answer'] as String,
-                        style: textStyles.customBodyText(
+                          "Answer: ${item['correct_answer'].toString()}",
+                          style: textStyles.customBodyText(
                             appColors.green,
                             fontSize
                         ),

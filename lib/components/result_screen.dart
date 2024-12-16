@@ -6,7 +6,7 @@ import 'package:quiz/components/quiz/quiz_questions/quiz0.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/components/practice/practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
 
-import 'buttons/ListenButton.dart';
+import 'buttons/listen_button.dart';
 import 'quiz/quiz_questions/quiz2.dart';
 import 'quiz/quiz_questions/quiz3.dart';
 import 'quiz/quiz_questions/quiz4.dart';
@@ -117,6 +117,27 @@ class ResultScreen extends StatelessWidget {
               title: Text(
                 "RESULTS",
                 style: textStyles.heading1,
+              ),
+            ),
+            floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+            floatingActionButton: Container(
+              color: Colors.white,
+              child: SizedBox(
+                height: 60,
+                child: Row(
+                  children: [
+                    const Expanded(
+                      child: ListenButton(),
+                    ),
+                    Expanded(
+                      child: MultiPurposeButton(
+                        onTap: endQuiz,
+                        disabled: false,
+                        buttonType: ButtonType.reward,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             body: SingleChildScrollView(
