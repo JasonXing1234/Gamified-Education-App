@@ -107,65 +107,65 @@ class _HomeState extends State<Home> {
 
 
           // Current Activity and Lesson Shortcut
-          // Padding(
-          //     padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
-          //   child: Container(
-          //     padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
-          //     decoration: BoxDecoration(
-          //         shape: BoxShape.rectangle,
-          //         border: Border.all(color: Colors.black, width: 3.0),
-          //         borderRadius: BorderRadius.circular(20.0),
-          //     ),
-          //     child: Row(
-          //       children: [
-          //         Column(
-          //           mainAxisAlignment: MainAxisAlignment.center, // Vertical Alignment
-          //           crossAxisAlignment: CrossAxisAlignment.start, // Aligns children to the left
-          //           children: [
-          //             Text(
-          //               "Next Activity",
-          //               textAlign: TextAlign.left,
-          //               style: textStyles.mediumBodyText,
-          //             ),
-          //             const SizedBox(
-          //               height: 10,
-          //             ),
-          //             Text(
-          //               "Social Media Norms",
-          //               textAlign: TextAlign.left,
-          //               style: textStyles.caption,
-          //             ),
-          //           ],
-          //         ),
-          //         const SizedBox(
-          //           width: 25,
-          //         ),
-          //         ElevatedButton(
-          //           onPressed: (){
-          //             //TODO: Add code to update what is the next lesson for the user
-          //           },
-          //           style: ElevatedButton.styleFrom(
-          //             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10), // Padding for text and border
-          //             //fixedSize: const Size(150, 50),
-          //             backgroundColor: appColors.royalBlue,
-          //             foregroundColor: Colors.white,
-          //             shape: RoundedRectangleBorder(
-          //               borderRadius: BorderRadius.circular(15),
-          //             ),
-          //           ),
-          //           child: Text(
-          //             "POST-QUIZ",
-          //             style: textStyles.smallBodyTextWhite,
-          //             textAlign: TextAlign.center,
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-          // SizedBox(
-          //   height: spacing,
-          // ),
+          Padding(
+              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+              decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  border: Border.all(color: Colors.black, width: 3.0),
+                  borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: Row(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center, // Vertical Alignment
+                    crossAxisAlignment: CrossAxisAlignment.start, // Aligns children to the left
+                    children: [
+                      Text(
+                        "Next Activity",
+                        textAlign: TextAlign.left,
+                        style: textStyles.mediumBodyText,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Social Media Norms",
+                        textAlign: TextAlign.left,
+                        style: textStyles.caption,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    width: 25,
+                  ),
+                  ElevatedButton(
+                    onPressed: (){
+                      //TODO: Add code to update what is the next lesson for the user
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10), // Padding for text and border
+                      //fixedSize: const Size(150, 50),
+                      backgroundColor: appColors.royalBlue,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    child: Text(
+                      "POST-QUIZ",
+                      style: textStyles.smallBodyTextWhite,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            height: spacing,
+          ),
 
 
           //TODO: Remove this Later
