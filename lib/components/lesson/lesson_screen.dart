@@ -318,8 +318,9 @@ class _LessonScreenState extends State<LessonScreen> {
 
                       ActivityButton(
                         text: "PRE-QUIZ",
-                        onTap:
-                            (){
+                        isDisabled: true,
+                        onTap: (){
+                          // TODO: switch to pre-quiz later
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => ReadingResultScreen(lesson: widget.lesson, activeScreen: "reading-screen",)),
@@ -331,6 +332,7 @@ class _LessonScreenState extends State<LessonScreen> {
 
                       ActivityButton(
                         text: "READING",
+                        isDisabled: false,
                         onTap:
                             (){
                           Navigator.push(
@@ -344,6 +346,7 @@ class _LessonScreenState extends State<LessonScreen> {
 
                       ActivityButton(
                         text: "POST-QUIZ",
+                        isDisabled: false,
                         onTap:
                             (){
                           Navigator.push(
@@ -672,7 +675,10 @@ class ActivityButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onTap,
+    required this.isDisabled,
   });
+
+  bool isDisabled = false;
 
   final AppColors appColors = const AppColors();
   final AppTextStyles textStyles = AppTextStyles();
@@ -683,11 +689,11 @@ class ActivityButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onTap,
+      onPressed: isDisabled ? (){} : onTap,
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding for text and border
         //fixedSize: const Size(150, 50),
-        backgroundColor: appColors.royalBlue,
+        backgroundColor: isDisabled ? appColors.grey : appColors.royalBlue,
         foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),

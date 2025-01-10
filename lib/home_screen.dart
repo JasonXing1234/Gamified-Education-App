@@ -147,7 +147,7 @@ class _HomeState extends State<Home> {
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10), // Padding for text and border
                       //fixedSize: const Size(150, 50),
-                      backgroundColor: appColors.royalBlue,
+                      backgroundColor: appColors.grey, // TODO: Reset to blue when working
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
