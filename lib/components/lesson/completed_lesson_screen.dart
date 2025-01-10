@@ -136,120 +136,119 @@ class _CompletedLessonScreenState extends State<CompletedLessonScreen> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        toolbarHeight: 70,
-        title: Padding(
-          padding: const EdgeInsets.only(top: 20.0), // Adjust the top padding of title
-          child: Text(
-            widget.lesson.title,
-            style: textStyles.heading1,
-          ),
-        ),
-
-        // Return Home Button
-        leadingWidth: 60, // Gives space for the back button
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Padding(
-            padding: const EdgeInsets.only(left: 30, top: 20),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              //crossAxisAlignment: CrossAxisAlignment.center, // Aligns with the title vertically
-              children: [
-                Icon(
-                  Icons.arrow_back_ios,
-                  color: appColors.royalBlue,
-                  size: textStyles.heading1.fontSize,
-                ),
-              ],
+        appBar: AppBar(
+          centerTitle: true,
+          toolbarHeight: 70,
+          title: Padding(
+            padding: const EdgeInsets.only(top: 20.0), // Adjust the top padding of title
+            child: Text(
+              widget.lesson.title,
+              style: textStyles.heading1,
             ),
           ),
 
-        ),
-      ),
-
-      //Bottom Options
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
-          decoration: BoxDecoration(
-            color: Colors.white, // White background
-            borderRadius: BorderRadius.circular(0), // Optional: Rounds the corners
-          ),
-        child: SizedBox(
-          height: 100,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 10, bottom: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                CustomIconButton(icon: FontAwesomeIcons.dragon, label: "Phase", onPressed: _showOptionDialog,),
-                CustomIconButton(icon: FontAwesomeIcons.paintRoller, label: "Decorate", onPressed: _openDecoratorScreen,),
-                CustomIconButton(icon: FontAwesomeIcons.share, label: "Share", onPressed: (context) {  },),
-              ],
+          // Return Home Button
+          leadingWidth: 60, // Gives space for the back button
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30, top: 20),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                //crossAxisAlignment: CrossAxisAlignment.center, // Aligns with the title vertically
+                children: [
+                  Icon(
+                    Icons.arrow_back_ios,
+                    color: appColors.royalBlue,
+                    size: textStyles.heading1.fontSize,
+                  ),
+                ],
+              ),
             ),
+
           ),
-        )
-      ),
+        ),
 
-      body: Center(
-        child:
-            Stack(
-              children: [
-
-                Positioned.fill(
-                  child: Image.asset(widget.lessonWorld.background, fit: BoxFit.cover),
+        //Bottom Options
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: Container(
+            decoration: BoxDecoration(
+              color: Colors.white, // White background
+              borderRadius: BorderRadius.circular(0), // Optional: Rounds the corners
+            ),
+            child: SizedBox(
+              height: 100,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    CustomIconButton(icon: FontAwesomeIcons.dragon, label: "Phase", onPressed: _showOptionDialog,),
+                    CustomIconButton(icon: FontAwesomeIcons.paintRoller, label: "Decorate", onPressed: _openDecoratorScreen,),
+                    CustomIconButton(icon: FontAwesomeIcons.share, label: "Share", iconColor: appColors.grey, onPressed: (context) {  }),
+                  ],
                 ),
+              ),
+            )
+        ),
 
-                // Dragon Type
-                Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.white, // White background
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 10, bottom: 20),
-                      child: Row (
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(widget.lesson.character.name, style: textStyles.bodyText,),
+        body: Center(
+          child:
+          Stack(
+            children: [
 
-                          GestureDetector(
-                            onTap: openEditNameDialog, // Opens the popup
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  widget.lesson.characterName,
-                                  style: textStyles.bodyText,
-                                ),
-                                const SizedBox(width: 15),
+              Positioned.fill(
+                child: Image.asset(widget.lessonWorld.background, fit: BoxFit.cover),
+              ),
 
-                                FaIcon(FontAwesomeIcons.pen, color: appColors.grey, size: textStyles.smallBodyText.fontSize,),
-                              ],
+              // Dragon Type
+              Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white, // White background
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 20),
+                  child: Row (
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(widget.lesson.character.name, style: textStyles.bodyText,),
+
+                      GestureDetector(
+                        onTap: openEditNameDialog, // Opens the popup
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              widget.lesson.characterName,
+                              style: textStyles.bodyText,
                             ),
-                          ),
+                            const SizedBox(width: 15),
 
-                        ],
+                            FaIcon(FontAwesomeIcons.pen, color: appColors.grey, size: textStyles.smallBodyText.fontSize,),
+                          ],
+                        ),
                       ),
-                    ),
+
+                    ],
+                  ),
                 ),
+              ),
 
-                //Dragon Image
-                Center(
-                  child:
-                      // Character
-                      widget.lesson.getCurrentPhoto() == "no" ? const SizedBox.shrink() : Image.asset(widget.lesson.getCurrentPhoto()),
-                )
-              ],
-            ),
+              //Dragon Image
+              Center(
+                child:
+                // Character
+                widget.lesson.getCurrentPhoto() == "no" ? const SizedBox.shrink() : Image.asset(widget.lesson.getCurrentPhoto()),
+              )
+            ],
+          ),
 
-      )
+        )
     );
   }
 
 }
-
 

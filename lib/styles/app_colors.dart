@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  const AppColors();
+   const AppColors();
 
   final Color royalBlue = const Color(0xff2E83E8);
   final Color lightRoyalBlue = const Color(0xff70AAEE);

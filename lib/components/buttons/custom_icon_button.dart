@@ -11,14 +11,16 @@ class CustomIconButton extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.onPressed,
+    this.iconColor = const Color(0xff2E83E8), // This is the same as AppColors Royal blue
   });
 
   final IconData icon;
   final String label;
+  Color iconColor = const AppColors().royalBlue; // Why does this work here?
 
   final void Function(BuildContext) onPressed;
 
-  final AppColors appColors = const AppColors();
+  // final AppColors appColors = const AppColors();
   final AppTextStyles textStyles = AppTextStyles();
 
   @override
@@ -27,13 +29,13 @@ class CustomIconButton extends StatelessWidget {
       child: Column(
         children: [
           IconButton(
-            icon: FaIcon(icon, color: appColors.royalBlue, size: 25,),
+            icon: FaIcon(icon, color: iconColor, size: 25,),
             onPressed: () {
               // Action to perform when the button is pressed
               onPressed(context);
             },
           ),
-          Text(label, style: textStyles.customBodyText(appColors.royalBlue, 20),)
+          Text(label, style: textStyles.customBodyText(iconColor, 20),)
         ],
       ),
     );
