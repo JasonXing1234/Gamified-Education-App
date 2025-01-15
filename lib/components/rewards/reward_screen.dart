@@ -66,37 +66,34 @@ class _RewardScreenState extends State<RewardScreen> {
         appBar: AppBar(
           centerTitle: true,
           toolbarHeight: 70, // Increases the height of the AppBar
-          title: Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Text(
-              "Reward",
-              style: textStyles.heading1,
-            ),
+          title: Text(
+            "RESULTS",
+            style: textStyles.heading1,
           ),
           leadingWidth: 100, // Gives space for the back button
           leading: GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 30, top: 20),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Icon(
-                      Icons.arrow_back_ios,
-                      color: appColors.royalBlue,
-                      size: textStyles.heading1.fontSize,
-                    ),
-                    Text(
-                      "Exit",
-                      style: textStyles.customText(appColors.royalBlue, 20, FontWeight.normal),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30, top: 20),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.arrow_back_ios,
+                    color: appColors.royalBlue,
+                    size: textStyles.heading1.fontSize,
+                  ),
+                  Text(
+                    "Exit",
+                    style: textStyles.customText(appColors.royalBlue, 20, FontWeight.normal),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
               ),
+            ),
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

@@ -288,7 +288,7 @@ class _LessonScreenState extends State<LessonScreen> {
                             ),
                             SizedBox(width: 15),
 
-                            FaIcon(FontAwesomeIcons.pen, color: appColors.grey, size: textStyles.smallBodyText.fontSize,),
+                            FaIcon(FontAwesomeIcons.pencil, color: appColors.lightRoyalBlue, size: textStyles.smallBodyText.fontSize,),
                           ],
                         ),
                       ),

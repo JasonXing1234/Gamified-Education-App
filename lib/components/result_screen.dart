@@ -5,6 +5,7 @@ import 'package:quiz/components/answers_screen.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz0.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/components/practice/practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
+import 'package:quiz/styles/app_colors.dart';
 
 import 'buttons/listen_button.dart';
 import 'quiz/quiz_questions/quiz2.dart';
@@ -24,6 +25,7 @@ class ResultScreen extends StatelessWidget {
   User? user2 = FirebaseAuth.instance.currentUser;
 
   final AppTextStyles textStyles = AppTextStyles();
+  final AppColors appColors = const AppColors();
 
   Future<void> _updateField(int quizResult) async {
     try {
@@ -114,9 +116,35 @@ class ResultScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               centerTitle: true,
+              toolbarHeight: 70, // Increases the height of the AppBar
               title: Text(
                 "RESULTS",
                 style: textStyles.heading1,
+              ),
+              leadingWidth: 100, // Gives space for the back button
+              leading: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 30, top: 20),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.arrow_back_ios,
+                        color: appColors.royalBlue,
+                        size: textStyles.heading1.fontSize,
+                      ),
+                      Text(
+                        "Exit",
+                        style: textStyles.customText(appColors.royalBlue, 20, FontWeight.normal),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
             floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
