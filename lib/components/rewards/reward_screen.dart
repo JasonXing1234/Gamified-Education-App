@@ -135,19 +135,21 @@ class _RewardScreenState extends State<RewardScreen> {
               const SizedBox(height: 40,),
 
               Text(
-                "You Earned",
+                widget.activityName == "quiz" ? "${capitalizeString(widget.lesson.characterName)} is now an adult!" : "${capitalizeString(widget.lesson.characterName)} grew!",
                 style: textStyles.heading1,
                 textAlign: TextAlign.center,
               ),
 
               const SizedBox(height: 20,),
 
+              // Practices will now earn random accessories Edit later
+
               widget.activityName == "practice" ? FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: 100,) : Image.asset(rewardImage),
               
               // TODO: Set up correct character reward: this just shows the current character name and image
-              widget.activityName == "practice" ?
-                Text("1 Ticket", style: textStyles.heading1, textAlign: TextAlign.center,) :
-                Text("${capitalizeString(widget.lesson.character.currentPhase.name)} ${widget.lesson.character.name}", style: textStyles.bodyText, textAlign: TextAlign.center,),
+              //widget.activityName == "practice" ?
+                //Text("1 Ticket", style: textStyles.heading1, textAlign: TextAlign.center,) :
+                // Text("${capitalizeString(widget.lesson.character.currentPhase.name)} ${widget.lesson.character.name}", style: textStyles.bodyText, textAlign: TextAlign.center,),
             ],
           ),
         ),
