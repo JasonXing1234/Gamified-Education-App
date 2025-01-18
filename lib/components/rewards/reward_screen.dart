@@ -66,9 +66,12 @@ class _RewardScreenState extends State<RewardScreen> {
         appBar: AppBar(
           centerTitle: true,
           toolbarHeight: 70, // Increases the height of the AppBar
-          title: Text(
-            "RESULTS",
-            style: textStyles.heading1,
+          title: Padding(
+            padding: const EdgeInsets.only(top: 20.0), // Adjust the top padding of title
+            child: Text(
+              "REWARD",
+              style: textStyles.heading1,
+            ),
           ),
           leadingWidth: 100, // Gives space for the back button
           leading: GestureDetector(

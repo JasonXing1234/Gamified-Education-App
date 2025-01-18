@@ -31,7 +31,7 @@ List<Lesson> allLessons = [
 ];
 
 Lesson tutorial = Lesson(
-  title: "Tutorial and Set up",
+  title: "TUTORIAL & SET UP",
   character: orangeDragon,
   characterName: "Name",
   lessonNumber: 0,

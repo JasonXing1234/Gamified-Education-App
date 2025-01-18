@@ -42,7 +42,7 @@ class DecorateScreenState extends State<DecorateScreen> {
         title: Padding(
           padding: const EdgeInsets.only(top: 20.0), // Adjust the top padding of title
           child: Text(
-            "Decorate Page",
+            "DECORATE PAGE",
             style: textStyles.heading1,
           ),
         ),
