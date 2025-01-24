@@ -138,7 +138,7 @@ class _RewardScreenState extends State<RewardScreen> {
               const SizedBox(height: 40,),
 
               Text(
-                widget.activityName == "quiz" ? "${capitalizeString(widget.lesson.characterName)} is now an adult!" : "${capitalizeString(widget.lesson.characterName)} grew!",
+                widget.activityName == "practice" ? "Here's your new item!" : widget.activityName == "quiz" ? "${capitalizeString(widget.lesson.characterName)} is now an adult!" : "${capitalizeString(widget.lesson.characterName)} grew!",
                 style: textStyles.heading1,
                 textAlign: TextAlign.center,
               ),
