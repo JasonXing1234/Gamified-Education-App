@@ -105,68 +105,33 @@ class _HomeState extends State<Home> {
           ),
 
 
-
           // Current Activity and Lesson Shortcut
-          Padding(
-              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
-              decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  border: Border.all(color: Colors.black, width: 3.0),
-                  borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: Row(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center, // Vertical Alignment
-                    crossAxisAlignment: CrossAxisAlignment.start, // Aligns children to the left
-                    children: [
-                      Text(
-                        "Next Activity",
-                        textAlign: TextAlign.left,
-                        style: textStyles.mediumBodyText,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Social Media Norms",
-                        textAlign: TextAlign.left,
-                        style: textStyles.caption,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    width: 25,
-                  ),
-                  ElevatedButton(
-                    onPressed: (){
-                      //TODO: Add code to update what is the next lesson for the user
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10), // Padding for text and border
-                      //fixedSize: const Size(150, 50),
-                      backgroundColor: appColors.grey, // TODO: Reset to blue when working
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
-                    child: Text(
-                      "POST-QUIZ",
-                      style: textStyles.smallBodyTextWhite,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          ShortcutWidget(
+            textStyles: textStyles,
+            appColors: appColors,
+            buttonShortcut: (){}, //TODO: Add code to update what is the next lesson for the user
+            mainText: "Next Activity",
+            subtitle: "Social Media Norms",
+            buttonText: "READING", //TODO: replace with logic about what text should be
           ),
+
           SizedBox(
             height: spacing,
           ),
 
+          // Practice & Earn Items
+          ShortcutWidget(
+            textStyles: textStyles,
+            appColors: appColors,
+            buttonShortcut: (){}, //TODO: Add code open practice pop-up and link
+            mainText: "Earn Rewards",
+            subtitle: "For Your Dragons",
+            buttonText: "PRACTICE",
+          ),
+
+          SizedBox(
+            height: spacing,
+          ),
 
           //TODO: Remove this Later
           Padding(
@@ -323,5 +288,82 @@ class _HomeState extends State<Home> {
           child: screen,
         ),
       );
+  }
+}
+
+class ShortcutWidget extends StatelessWidget {
+  const ShortcutWidget({
+    super.key,
+    required this.textStyles,
+    required this.appColors,
+    required this.buttonShortcut,
+    required this.mainText,
+    required this.subtitle,
+    required this.buttonText,
+  });
+
+  final AppTextStyles textStyles;
+  final AppColors appColors;
+  final void Function() buttonShortcut;
+  final String mainText;
+  final String subtitle;
+  final String buttonText;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+        decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            border: Border.all(color: Colors.black, width: 3.0),
+            borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Row(
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center, // Vertical Alignment
+              crossAxisAlignment: CrossAxisAlignment.start, // Aligns children to the left
+              children: [
+                Text(
+                  mainText,
+                  textAlign: TextAlign.left,
+                  style: textStyles.mediumBodyText,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  subtitle,
+                  textAlign: TextAlign.left,
+                  style: textStyles.caption,
+                ),
+              ],
+            ),
+            const SizedBox(
+              width: 25,
+            ),
+            ElevatedButton(
+              onPressed: buttonShortcut,
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10), // Padding for text and border
+                //fixedSize: const Size(150, 50),
+                backgroundColor: appColors.grey, // TODO: Reset to blue when working
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+              child: Text(
+                buttonText,
+                style: textStyles.smallBodyTextWhite,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
