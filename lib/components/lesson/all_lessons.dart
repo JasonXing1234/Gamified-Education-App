@@ -3,6 +3,8 @@ import 'package:quiz/components/quiz/quiz_questions/quiz0.dart';
 import 'package:quiz/components/reading/readings/reading0.dart';
 
 import '../practice/practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
+import '../practice/practice_questions/settings_practice/settings_practice.dart';
+import '../practice/practice_questions/social_media_norms_practice/social_media_norms_practice.dart';
 import '../practice/practice_questions/tutorial_practice.dart';
 import '../quiz/quiz_questions/quiz1.dart';
 import '../quiz/quiz_questions/quiz2.dart';
@@ -51,7 +53,7 @@ Lesson socialMediaNorms = Lesson(
   reading: reading1,
   preQuiz: quiz1,
   quiz: quiz1,
-  practice: fakeProfilesPractice1,
+  practice: socialMediaNormsPractice,
 );
 
 
@@ -64,7 +66,7 @@ Lesson settings = Lesson(
   reading: reading2,
   preQuiz: quiz2,
   quiz: quiz2,
-  practice: fakeProfilesPractice1,
+  practice: settingsPractice,
 );
 
 Lesson fakeProfiles = Lesson(

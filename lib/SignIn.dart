@@ -39,23 +39,27 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Learn Social Media Skills")),
+      appBar: AppBar(
+          centerTitle: true,
+          toolbarHeight: 70, // Increases the height of the AppBar
+          title: const Text("Learn Social Media Skills")
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(child:  Center(child: Column(
           children: [
+
+            const SizedBox(height: 15),
+
             Image.asset(
-              'assets/images/img_1.png', // Path to your image
-              width: 300, // Set the width of the image
-              height: 300, // Set the height of the image
+              'assets/images/apple.png', // Path to your image
+              width: 200, // Set the width of the image
+              height: 200, // Set the height of the image
               fit: BoxFit.cover, // How the image should be inscribed into the space
             ),
-            const SizedBox(height: 30),
-            // Text(
-            //   "EMAIL",
-            //   style: textStyles.heading1,
-            // ),
-            // const SizedBox(height: 10),
+
+            const SizedBox(height: 75),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,

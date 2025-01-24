@@ -103,11 +103,13 @@ The user will complete a pre-quiz before reading and a post-quiz after reading. 
 
 ![Image 3](Lesson11.png)
 
-When answering the quiz questions the user is required to provide an answer before moving on to the next question. The last question will have a submit button indicating the end of the quiz.
+When answering the quiz questions the user is required to provide an answer before moving on to the next question. 
+The arrow button in the bottom right corner is how the user will move to the next question. It will be disabled is the user has not selected an answer.
+The last question will have a submit button instead of an arrow indicating the end of the quiz.
 
 
-![Image 3](Quiz01.png) | ![Image 3](Quiz02.png) | ![Image 3](Quiz03.png) | ![Image 3](Quiz04.png) |
-|----------------------|----------------------------|----------------------------|----------------------------| 
+| ![Image 3](Quiz01.png) | ![Image 3](Quiz02.png) | ![Image 3](Quiz03.png) | ![Image 3](Quiz04.png) |
+|------------------------|------------------------|------------------------|------------------------| 
 
 A result screen will be displayed giving the user a summary of the correct and incorrect questions and quiz score.
 
@@ -134,20 +136,22 @@ When the user selects the practice button a pop-up menu with all the available i
 
 Once an item is selected a new pop-up will display to ask the user to pick a lesson to practice. After a lesson is selected the practice will begin. Practices will follow a similar format as the quizzes, except the user is required to get every question correct.
 
-![Image 3](Practice03.png) | ![Image 3](Practice04.png) | 
+| ![Image 3](Practice03.png) | ![Image 3](Practice04.png) | 
 |----------------------------|----------------------------|
 
 If the user's answer is incorrect he or she is required to try again until the answer is correct. After getting a correct answer the user may continue to the next question.
 
-![Image 3](Practice05.png) |![Image 3](Practice06.png) |
-|----------------------|----------------------------|
+| ![Image 3](Practice05.png) | ![Image 3](Practice06.png) |
+|----------------------------|----------------------------|
 
 On the last question of the practice the button to continue will say submit to indicate the end of the practice and a reward screen will be shown.
 
-![Image 3](Practice07.png) | ![Image 3](Practice08.png) |
-----------------------------|----------------------------|
+| ![Image 3](Practice07.png) | ![Image 3](Practice08.png) |
+|----------------------------|----------------------------|
 
 
 ## App Customizations
 
 ... TBD ...
+
+Font, color theme

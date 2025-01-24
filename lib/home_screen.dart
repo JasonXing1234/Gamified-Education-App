@@ -113,6 +113,7 @@ class _HomeState extends State<Home> {
             mainText: "Next Activity",
             subtitle: "Social Media Norms",
             buttonText: "READING", //TODO: replace with logic about what text should be
+            isDisabled: true,
           ),
 
           SizedBox(
@@ -127,72 +128,28 @@ class _HomeState extends State<Home> {
             mainText: "Earn Rewards",
             subtitle: "For Your Dragons",
             buttonText: "PRACTICE",
+            isDisabled: true,
           ),
 
           SizedBox(
             height: spacing,
           ),
 
-          //TODO: Remove this Later
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
-              decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                border: Border.all(color: Colors.black, width: 3.0),
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: Row(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center, // Vertical Alignment
-                    crossAxisAlignment: CrossAxisAlignment.start, // Aligns children to the left
-                    children: [
-                      Text(
-                        "TESTING",
-                        textAlign: TextAlign.left,
-                        style: textStyles.mediumBodyText,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Remove Later",
-                        textAlign: TextAlign.left,
-                        style: textStyles.caption,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    width: 25,
-                  ),
-                  ElevatedButton(
-                    onPressed: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => CompletedLessonScreen(lesson: socialMediaNorms,)),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10), // Padding for text and border
-                      //fixedSize: const Size(150, 50),
-                      backgroundColor: appColors.royalBlue,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
-                    child: Text(
-                      "Completed",
-                      style: textStyles.smallBodyTextWhite,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          ShortcutWidget(
+              textStyles: textStyles,
+              appColors: appColors,
+              buttonShortcut: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CompletedLessonScreen(lesson: socialMediaNorms,)),
+                );
+              },
+              mainText: "TESTING",
+              subtitle: "Remove later",
+              buttonText: "COMPLETED",
+              isDisabled: false
           ),
+
           SizedBox(
             height: spacing,
           ),
@@ -300,6 +257,7 @@ class ShortcutWidget extends StatelessWidget {
     required this.mainText,
     required this.subtitle,
     required this.buttonText,
+    required this.isDisabled,
   });
 
   final AppTextStyles textStyles;
@@ -308,6 +266,7 @@ class ShortcutWidget extends StatelessWidget {
   final String mainText;
   final String subtitle;
   final String buttonText;
+  final bool isDisabled;
 
   @override
   Widget build(BuildContext context) {
@@ -345,11 +304,11 @@ class ShortcutWidget extends StatelessWidget {
               width: 25,
             ),
             ElevatedButton(
-              onPressed: buttonShortcut,
+              onPressed: isDisabled ? (){} : buttonShortcut,
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10), // Padding for text and border
                 //fixedSize: const Size(150, 50),
-                backgroundColor: appColors.grey, // TODO: Reset to blue when working
+                backgroundColor: isDisabled ? appColors.grey : appColors.royalBlue,
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
