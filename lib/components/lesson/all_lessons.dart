@@ -2,7 +2,10 @@
 import 'package:quiz/components/quiz/quiz_questions/quiz0.dart';
 import 'package:quiz/components/reading/readings/reading0.dart';
 
+import '../practice/practice_questions/appropriate_interaction_practice/appropriate_interaction_practice.dart';
 import '../practice/practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
+import '../practice/practice_questions/settings_practice/settings_practice.dart';
+import '../practice/practice_questions/social_media_norms_practice/social_media_norms_practice.dart';
 import '../practice/practice_questions/tutorial_practice.dart';
 import '../quiz/quiz_questions/quiz1.dart';
 import '../quiz/quiz_questions/quiz2.dart';
@@ -16,7 +19,7 @@ import '../reading/readings/reading3.dart';
 import '../reading/readings/reading4.dart';
 import '../reading/readings/reading5.dart';
 import '../reading/readings/reading6.dart';
-import '../rewards/all_characters.dart';
+import '../rewards/all_animals.dart';
 import 'lesson.dart';
 
 
@@ -31,10 +34,11 @@ List<Lesson> allLessons = [
 ];
 
 Lesson tutorial = Lesson(
-  title: "Tutorial and Set up",
-  character: orangeDragon,
+  title: "TUTORIAL & SET UP",
+  animal: orangeDragon,
+  animalName: "Name",
   lessonNumber: 0,
-  progress: 0.5,
+  progress: 0.0,
   reading: reading0,
   preQuiz: preQuiz0, //TODO: Currently only lesson with a different pre-quiz
   quiz: quiz0,
@@ -43,30 +47,33 @@ Lesson tutorial = Lesson(
 
 Lesson socialMediaNorms = Lesson(
   title: "SOCIAL MEDIA NORMS",
-  character: lockedCharacter,
+  animal: greenDragon,
+  animalName: "Name",
   lessonNumber: 1,
   progress: 0.0,
   reading: reading1,
   preQuiz: quiz1,
   quiz: quiz1,
-  practice: fakeProfilesPractice1,
+  practice: socialMediaNormsPractice,
 );
 
 
 Lesson settings = Lesson(
   title: "SETTINGS",
-  character: lockedCharacter,
+  animal: iceDragon,
+  animalName: "Name",
   lessonNumber: 2,
   progress: 0.0,
   reading: reading2,
   preQuiz: quiz2,
   quiz: quiz2,
-  practice: fakeProfilesPractice1,
+  practice: settingsPractice,
 );
 
 Lesson fakeProfiles = Lesson(
   title: "FAKE PROFILES",
-  character: lockedCharacter,
+  animal: twoHeadedDragon,
+  animalName: "Name",
   lessonNumber: 3,
   progress: 0.0,
   reading: reading3,
@@ -77,7 +84,8 @@ Lesson fakeProfiles = Lesson(
 
 Lesson socialTags = Lesson(
   title: "SOCIAL TAGS",
-  character: lockedCharacter,
+  animal: stoneDragon,
+  animalName: "Name",
   lessonNumber: 4,
   progress: 0.0,
   reading: reading4,
@@ -89,18 +97,20 @@ Lesson socialTags = Lesson(
 Lesson appropriateInteractions = Lesson(
   //"APPROPRIATE INTERACTIONS",
   title: "INTERACTION ETIQUETTE", // Slightly shorter name for dashboard on home-screen
-  character: lockedCharacter,
+  animal: waterDragon,
+  animalName: "Name",
   lessonNumber: 5,
   progress: 0.0,
   reading: reading5,
   preQuiz: quiz5,
   quiz: quiz5,
-  practice: fakeProfilesPractice1,
+  practice: appropriateInteractionsPractice1,
 );
 
 Lesson socialMediaVSReality = Lesson(
   title: "SOCIAL MEDIA VS REALITY",
-  character: lockedCharacter,
+  animal: questionAnimal,
+  animalName: "Name",
   lessonNumber: 6,
   progress: 0.0,
   reading: reading6,

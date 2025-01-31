@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz/components/buttons/ListenButton.dart';
+import 'package:quiz/components/buttons/listen_button.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
 import 'package:quiz/components/reading/reading_page.dart';
 import 'package:quiz/components/progress_bar/progress_bar.dart';
@@ -167,6 +167,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
   Future<void> nextReadingPage({String userAnswer = ""}) async {
     // Increment reading page index locally
     int newReadingPageIndex = readingPageIndex + 1;
+    print("DEBUG: Reading Page Index  ${newReadingPageIndex}");
 
     try {
       // Retrieve the user's reading list from the database
@@ -178,9 +179,11 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
 
       if (snapshot.value != null) {
         List<dynamic> readings = snapshot.value as List<dynamic>;
+        print("DEBUG: Sanpshot is not null readings = ${readings}");
 
         // Update progress for the current lesson
         readings[widget.lesson.lessonNumber - 1]['progress'] = newReadingPageIndex;
+
 
         // Save updated reading list back to the database
         await _database.child('profile/${user2!.uid}/readingList').set(readings);
@@ -197,6 +200,14 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
           _readingListFuture = _updateReadingList();
         });
       }
+
+      // Update state after async updates are done
+      // TODO: Fixed reading so it advances, doesn't save the reading spot though
+      setState(() {
+        readingPageIndex = newReadingPageIndex;
+        _readingListFuture = _updateReadingList();
+      });
+
     } catch (e) {
       print('Error updating reading progress: $e');
     }
@@ -233,6 +244,14 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
           );
 
         }
+
+        // Update state after async updates are done
+        setState(() {
+          readingPageIndex = newReadingPageIndex;
+          _readingListFuture = _updateReadingList();
+        });
+
+
       } catch (e) {
         print("Error updating reading progress: $e");
       }
@@ -390,7 +409,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                       });
                     },
                     disabled: false,
-                    buttonType: readingPageIndex == readingPages.length -1 ? ButtonType.finish : ButtonType.next,
+                    buttonType: readingPageIndex == readingPages.length -1 ? ButtonType.reward : ButtonType.next,
                   ),
                 ),
               ],

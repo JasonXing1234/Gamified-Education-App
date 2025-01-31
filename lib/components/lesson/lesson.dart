@@ -1,11 +1,12 @@
 import 'package:quiz/components/question.dart';
 import 'package:quiz/components/reading/reading_page.dart';
-import 'package:quiz/components/rewards/character.dart';
+import 'package:quiz/components/rewards/animal.dart';
 
 class Lesson {
   Lesson({
     required this.title,
-    required this.character,
+    required this.animal,
+    required this.animalName,
     required this.lessonNumber,
     required this.progress,
     required this.reading,
@@ -15,7 +16,9 @@ class Lesson {
   });
 
   final String title;
-  final Character character;
+  final Animal animal;
+  String animalName;
+
   final int lessonNumber;
   final double progress;
 
@@ -26,7 +29,7 @@ class Lesson {
 
   String getCurrentPhoto() {
 
-    String? photo = character.photos[character.currentPhase];
+    String? photo = animal.photos[animal.currentPhase];
 
     if (photo != null) {
       return photo;

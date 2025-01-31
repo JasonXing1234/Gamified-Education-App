@@ -8,9 +8,9 @@ import 'package:quiz/components/quiz/quiz_questions/quiz0.dart';
 import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/components/question.dart';
 import 'package:quiz/styles/app_colors.dart';
-
 import '../../SQLITE/sqliteHelper.dart';
 import '../buttons/ListenButton.dart';
+import '../buttons/listen_button.dart';
 import '../progress_bar/progress_bar.dart';
 import 'quiz_questions/quiz2.dart';
 import 'quiz_questions/quiz3.dart';
@@ -326,10 +326,10 @@ class _QuestionsScreenState extends State<QuizScreen> {
                       ...currentQuestion.answerOptions.asMap().entries.map(
                             (answer) => Container(
                           width: double.infinity, // Makes each button take full width
-                          padding: const EdgeInsets.symmetric(vertical: 5), // Add padding if needed
+                          padding: const EdgeInsets.symmetric(vertical: 10), // Add padding if needed
                           child: AnswerButton(
                             color: selectedIndex == answer.key ? appColors.orange : appColors.royalBlue,
-                            borderThickness: selectedIndex == answer.key ? 6.0 : 3.0,
+                            borderThickness: selectedIndex == answer.key ? 7.0 : 3.0,
                             answerText: answer.value,
                             onTap: () {
                               setState(() {
@@ -350,7 +350,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
                               padding: const EdgeInsets.symmetric(vertical: 5),
                               child: AnswerButton(
                                 color: selectedAnswers.contains(answer.value) ? appColors.orange : appColors.royalBlue,
-                                borderThickness: selectedAnswers.contains(answer.value) ? 6.0 : 3.0,
+                                borderThickness: selectedAnswers.contains(answer.value) ? 7.0 : 3.0,
                                 answerText: answer.value,
                                 onTap: () {
                                   setState(() {

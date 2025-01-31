@@ -12,7 +12,7 @@ import 'package:quiz/styles/text_styles.dart';
 
 import '../../SQLITE/sqliteHelper.dart';
 import '../practice_results_screen.dart';
-import '../rewards/character.dart';
+import '../rewards/animal.dart';
 
 class LessonScreen extends StatefulWidget {
   const LessonScreen({
@@ -37,6 +37,8 @@ class _LessonScreenState extends State<LessonScreen> {
   int startingPageIndex = 0;
   Future<int?>? numTickets;
   int? tempNumTickets;
+
+  // List<String> dragonNames = ["Name", "Name", "Name", "Name", "Name", "Name", "Name",];
 
   @override
   void initState() {
@@ -145,10 +147,55 @@ class _LessonScreenState extends State<LessonScreen> {
     }
   }
 
+  void openEditNameDialog() {
+
+
+    final TextEditingController _controller = TextEditingController(text: widget.lesson.animalName);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Edit Name"),
+          content: TextField(
+            controller: _controller,
+            decoration: const InputDecoration(
+              labelText: "Name",
+              hintText: "Enter your name",
+              border: OutlineInputBorder(),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close dialog
+              },
+              child: const Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  widget.lesson.animalName = _controller.text; // Save the updated name
+                });
+                Navigator.of(context).pop(); // Close dialog
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: appColors.royalBlue, // Background color
+                foregroundColor: Colors.white, // Text color
+                elevation: 3, // Optional: button shadow
+              ),
+              child: const Text("Save"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   String getPhase(Lesson lesson, Phase phase) {
 
-    return lesson.character.photos[phase] ?? "assets/images/lock.png";
+    return lesson.animal.photos[phase] ?? "assets/images/lock.png";
   }
 
   @override
@@ -200,192 +247,238 @@ class _LessonScreenState extends State<LessonScreen> {
 
 
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-          child: Stack(
-            children: [ Column(
-            children: [
-              const SizedBox(
-                height: 15,
-              ),
 
-              // Row of image and stats
-              StatsNotebook(lesson: widget.lesson, textStyles: textStyles),
+        body: //Padding(
+          //padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+          Center(
 
-              const SizedBox(height: 5,),
-
-              // row of buttons for Pre-quiz, readings, post-quiz
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            child:// [
+              Column(
+                //mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  const SizedBox(height: 25,),
 
-                  ActivityButton(
-                    text: "PRE-QUIZ",
-                    onTap:
-                        (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ReadingResultScreen(lesson: widget.lesson, activeScreen: "reading-screen",)),
-                      );
-                    },
+                  // Dragon Type
+                  Row (
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(widget.lesson.animal.name, style: textStyles.bodyText,),
+
+                      GestureDetector(
+                        onTap: openEditNameDialog, // Opens the popup
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              widget.lesson.animalName,
+                              style: textStyles.bodyText,
+                            ),
+                            SizedBox(width: 15),
+
+                            FaIcon(FontAwesomeIcons.pencil, color: appColors.lightRoyalBlue, size: textStyles.smallBodyText.fontSize,),
+                          ],
+                        ),
+                      ),
+
+                    ],
                   ),
 
-                  ActivityButton(
-                    text: "READING",
-                    onTap:
-                        (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ReadingResultScreen(lesson: widget.lesson, activeScreen: "reading-screen",)),
-                      );
-                    },
+                  const SizedBox(height: 25,),
+
+                  // Dragon Image
+                  widget.lesson.getCurrentPhoto() == "no" ? const SizedBox.shrink() : Image.asset(widget.lesson.getCurrentPhoto()),
+
+
+                  // Row of image and stats
+                  //StatsNotebook(lesson: widget.lesson, textStyles: textStyles),
+
+                  const SizedBox(height: 25,),
+
+                  Text("Do an activity to help me grow", style: textStyles.mediumBodyText,),
+
+                  const SizedBox(height: 25,),
+
+                  // row of buttons for Pre-quiz, readings, post-quiz
+                  Column(
+                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+
+                      ActivityButton(
+                        text: "PRE-QUIZ",
+                        isDisabled: true,
+                        onTap: (){
+                          // TODO: switch to pre-quiz later
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ReadingResultScreen(lesson: widget.lesson, activeScreen: "reading-screen",)),
+                          );
+                        },
+                      ),
+
+                      const SizedBox(height: 25,),
+
+                      ActivityButton(
+                        text: "READING",
+                        isDisabled: false,
+                        onTap:
+                            (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ReadingResultScreen(lesson: widget.lesson, activeScreen: "reading-screen",)),
+                          );
+                        },
+                      ),
+
+                      const SizedBox(height: 25,),
+
+                      ActivityButton(
+                        text: "POST-QUIZ",
+                        isDisabled: false,
+                        onTap:
+                            (){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => QuizResultScreen(lesson: widget.lesson, activeScreen: "quiz-screen",))
+                          );
+                        },
+                      ),
+                    ],
                   ),
 
+                  const SizedBox(height: 25,),
+
+                  //TODO st up later with items
                   ActivityButton(
-                    text: "POST-QUIZ",
+                    text: "PRACTICE & EARN TICKETS", // Drill is practice
                     onTap:
                         (){
                       Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => QuizResultScreen(lesson: widget.lesson, activeScreen: "quiz-screen",))
+                          MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: widget.lesson, activeScreen: "practice-screen",))
+
+                        //MaterialPageRoute(builder: (context) => PracticeScreen(quizNumber: widget.lessonNumber, onSelectAnswer: (String answer) {  },))
                       );
-                    },
+                    }, isDisabled: false,
                   ),
-                ],
-              ),
 
-              const SizedBox(height: 15,),
+                  const SizedBox(height: 15,),
 
-              ActivityButton(
-                text: "PRACTICE & EARN TICKETS", // Drill is practice
-                onTap:
-                    (){
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: widget.lesson, activeScreen: "practice-screen",))
-
-                    //MaterialPageRoute(builder: (context) => PracticeScreen(quizNumber: widget.lessonNumber, onSelectAnswer: (String answer) {  },))
-                  );
-                },
-              ),
-
-              const SizedBox(height: 5,),
-
-              // Number of Tickets
-              FutureBuilder<int?>(
-                future: _fetchTickets(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else if (snapshot.hasData) {
-                    return
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: textStyles.mediumBodyText.fontSize,),
-                          Text(" Tickets: ${snapshot.data}", style: textStyles.mediumBodyText,),
-                        ],
-                      );
-                  } else {
-                    return Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: textStyles.heading1.fontSize,),
-                        // Icon( Icons.Tickets, color: appColors.yellow, size: textStyles.heading1.fontSize,),
-                        Text(" Tickets 0", style: textStyles.bodyText,),
-                      ],
-                    );
-
-
-                    //Text('No data available');
-                  }
-                },
-              ),
-
-              const SizedBox(
-                height: 20,
-              ),
-
-              // Scrollable Accessory List
-              SizedBox(
-                height: 350, // Set a fixed height for the GridView
-                width: 350,
-                child: GridView.extent(
-                  maxCrossAxisExtent: 100, // Max width of each tile
-                  mainAxisSpacing: 20, // Space between rows
-                  crossAxisSpacing: 20, // Space between columns
-                  children: List.generate(20, (index) {
-                    return buildGridItem(index);
-                  }),
-                ),
-              ),
-            ],
+                  // Number of Tickets
+                  // FutureBuilder<int?>(
+                  //   future: _fetchTickets(),
+                  //   builder: (context, snapshot) {
+                  //     if (snapshot.connectionState == ConnectionState.waiting) {
+                  //       return CircularProgressIndicator();
+                  //     } else if (snapshot.hasError) {
+                  //       return Text('Error: ${snapshot.error}');
+                  //     } else if (snapshot.hasData) {
+                  //       return
+                  //         Row(
+                  //           mainAxisSize: MainAxisSize.min,
+                  //           children: [
+                  //             FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: textStyles.mediumBodyText.fontSize,),
+                  //             Text(" Tickets: ${snapshot.data}", style: textStyles.mediumBodyText,),
+                  //           ],
+                  //         );
+                  //     } else {
+                  //       return Row(
+                  //         mainAxisSize: MainAxisSize.min,
+                  //         children: [
+                  //           FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: textStyles.heading1.fontSize,),
+                  //           // Icon( Icons.Tickets, color: appColors.yellow, size: textStyles.heading1.fontSize,),
+                  //           Text(" Tickets 0", style: textStyles.bodyText,),
+                  //         ],
+                  //       );
+                  //
+                  //
+                  //       //Text('No data available');
+                  //     }
+                  //   },
+                  // ),
+                  //
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
+                  //
+                  // // Scrollable Accessory List
+                  // SizedBox(
+                  //   height: 350, // Set a fixed height for the GridView
+                  //   width: 350,
+                  //   child: GridView.extent(
+                  //     maxCrossAxisExtent: 100, // Max width of each tile
+                  //     mainAxisSpacing: 20, // Space between rows
+                  //     crossAxisSpacing: 20, // Space between columns
+                  //     children: List.generate(20, (index) {
+                  //       return buildGridItem(index);
+                  //     }),
+                  //   ),
+                  // ),
+               ],
           ),
-              if (selectedImageIndex != null)
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text(
-                          "Do you want to buy this item?",
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () async {
-                                int? tempInt = await _fetchTickets();
-                                if (tempInt! > 0) {
-                                  handleYes();
-                                }
-                                else{
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: const Text("You need 1 ticket to buy this item"),
-                                      action: SnackBarAction(
-                                        label: "UNDO",
-                                        onPressed: () {
-                                          // Do something to undo the change.
-                                        },
-                                      ),
-                                    ),
-                                  );
-                                }
-                                },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
-                                padding: const EdgeInsets.symmetric(horizontal: 40),
-                              ),
-                              child: const Text("Yes"),
-                            ),
-                            ElevatedButton(
-                              onPressed: handleNo,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.red,
-                                padding: const EdgeInsets.symmetric(horizontal: 40),
-                              ),
-                              child: const Text("No"),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-            ],
-          ),
-        ),
-    ));
+              // if (selectedImageIndex != null)
+              //   Positioned(
+              //     bottom: 0,
+              //     left: 0,
+              //     right: 0,
+              //     child: Container(
+              //       color: Colors.white,
+              //       padding: const EdgeInsets.all(16),
+              //       child: Column(
+              //         mainAxisSize: MainAxisSize.min,
+              //         children: [
+              //           const Text(
+              //             "Do you want to buy this item?",
+              //             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              //           ),
+              //           const SizedBox(height: 10),
+              //           Row(
+              //             mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //             children: [
+              //               ElevatedButton(
+              //                 onPressed: () async {
+              //                   int? tempInt = await _fetchTickets();
+              //                   if (tempInt! > 0) {
+              //                     handleYes();
+              //                   }
+              //                   else{
+              //                     ScaffoldMessenger.of(context).showSnackBar(
+              //                       SnackBar(
+              //                         content: const Text("You need 1 ticket to buy this item"),
+              //                         action: SnackBarAction(
+              //                           label: "UNDO",
+              //                           onPressed: () {
+              //                             // Do something to undo the change.
+              //                           },
+              //                         ),
+              //                       ),
+              //                     );
+              //                   }
+              //                   },
+              //                 style: ElevatedButton.styleFrom(
+              //                   backgroundColor: Colors.green,
+              //                   padding: const EdgeInsets.symmetric(horizontal: 40),
+              //                 ),
+              //                 child: const Text("Yes"),
+              //               ),
+              //               ElevatedButton(
+              //                 onPressed: handleNo,
+              //                 style: ElevatedButton.styleFrom(
+              //                   backgroundColor: Colors.red,
+              //                   padding: const EdgeInsets.symmetric(horizontal: 40),
+              //                 ),
+              //                 child: const Text("No"),
+              //               ),
+              //             ],
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+            //],
+          )));
+        //),
+    //);//);
   }
 
   Widget buildGridItem(int index) {
@@ -397,7 +490,7 @@ class _LessonScreenState extends State<LessonScreen> {
       },
       child: Stack(
         children: [
-          ImageBox(imageName: "assets/character_images/sunglasses.png", isLocked: !purchased[index], isSelected: false,),
+          ImageBox(imageName: "assets/animal_images/sunglasses.png", isLocked: !purchased[index], isSelected: false,),
           // if (purchased[index])
           //   Positioned.fill(
           //     child: Container(
@@ -433,7 +526,7 @@ class StatsNotebook extends StatelessWidget {
       width: 375,
       height: 200,
       child: GridView.extent(
-        maxCrossAxisExtent: 300, // Max width of character and notebook
+        maxCrossAxisExtent: 300, // Max width of animal and notebook
         mainAxisSpacing: 1, // Space between rows
         crossAxisSpacing: 1, // Space between columns
         children: [
@@ -449,13 +542,13 @@ class StatsNotebook extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 10,),
-                          Text(lesson.character.name, style: textStyles.caption,),
+                          Text(lesson.animal.name, style: textStyles.caption,),
                           const SizedBox(height: 5,),
-                          Text("Phase: ${lesson.character.currentPhase.name}", style: textStyles.caption,),
+                          Text("Phase: ${lesson.animal.currentPhase.name}", style: textStyles.caption,),
                           const SizedBox(height: 5,),
-                          Text("Weight: ${lesson.character.stats[lesson.character.currentPhase]?["weight"]}", style: textStyles.caption,),
+                          Text("Weight: ${lesson.animal.stats[lesson.animal.currentPhase]?["weight"]}", style: textStyles.caption,),
                           const SizedBox(height: 5,),
-                          Text("Height: ${lesson.character.stats[lesson.character.currentPhase]?["height"]}", style: textStyles.caption,),
+                          Text("Height: ${lesson.animal.stats[lesson.animal.currentPhase]?["height"]}", style: textStyles.caption,),
                         ],
                       ),
                     ),
@@ -570,7 +663,10 @@ class ActivityButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onTap,
+    required this.isDisabled,
   });
+
+  bool isDisabled = false;
 
   final AppColors appColors = const AppColors();
   final AppTextStyles textStyles = AppTextStyles();
@@ -581,11 +677,11 @@ class ActivityButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onTap,
+      onPressed: isDisabled ? (){} : onTap,
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding for text and border
         //fixedSize: const Size(150, 50),
-        backgroundColor: appColors.royalBlue,
+        backgroundColor: isDisabled ? appColors.grey : appColors.royalBlue,
         foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),

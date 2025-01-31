@@ -4,7 +4,7 @@ import '../../question.dart';
 
 var quiz1 = [
   SingleAnswerQuestion(
-    context: "If you wanted to, would it be appropriate to have more than one account on Instagram?",
+    context: "no",
     question: "Is it appropriate to have more than one account on Instagram?",
     photo: "no",
     answerOptions: [
