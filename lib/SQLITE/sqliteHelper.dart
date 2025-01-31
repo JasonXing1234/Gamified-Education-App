@@ -2,6 +2,10 @@ import 'dart:convert';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../models/UserModel.dart';
+import '../models/quizModel.dart';
+import '../models/quizQuestionModel.dart';
+
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
   static Database? _database;
@@ -77,16 +81,6 @@ class DatabaseHelper {
     print('Database schema created successfully.');
   }
 
-  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    if (oldVersion < 2) {
-      print('Upgrading database from version $oldVersion to $newVersion...');
-      await db.execute("ALTER TABLE UserModel ADD COLUMN quizList TEXT");
-      await db.execute("ALTER TABLE UserModel ADD COLUMN readingList TEXT");
-      await db.execute("ALTER TABLE UserModel ADD COLUMN accessories TEXT");
-      await db.execute("ALTER TABLE UserModel ADD COLUMN ifEachModuleComplete TEXT");
-      print('Database upgraded successfully.');
-    }
-  }
 
   Future<int> insertUser(Map<String, dynamic> userData) async {
     try {
@@ -220,15 +214,67 @@ class DatabaseHelper {
     }
   }
 
-  Future<int> updateEndTimestamp(String questionId, String endTimeStamp) async {
+  Future<int> updateEndTimestamp(String userId, String questionId, String endTimeStamp) async {
     try {
       final db = await database;
-      int result = await db.update(
-        'QuizQuestionModel',
-        {'endTimeStamp': endTimeStamp},
-        where: 'questionId = ?',
-        whereArgs: [questionId],
+
+      List<Map<String, dynamic>> userRecords = await db.query(
+        'UserModel',
+        where: 'userId = ?',
+        whereArgs: [userId],
       );
+
+      if (userRecords.isEmpty) {
+        print('User not found.');
+        return -1;
+      }
+
+      UserModel user = UserModel.fromJson(userRecords.first);
+
+      QuizModel? targetQuiz;
+      for (QuizModel quiz in user.quizList ?? []) {
+        if (quiz.questions.any((q) => q.questionId == questionId)) {
+          targetQuiz = quiz;
+          break;
+        }
+      }
+
+      if (targetQuiz == null) {
+        print('Quiz containing the question not found.');
+        return -1;
+      }
+
+      List<QuizQuestionModel> updatedQuestions = targetQuiz.questions.map((q) {
+        if (q.questionId == questionId) {
+          return QuizQuestionModel(
+            questionId: q.questionId,
+            isCorrect: q.isCorrect,
+            beginTimeStamp: q.beginTimeStamp,
+            endTimeStamp: DateTime.parse(endTimeStamp),
+          );
+        }
+        return q;
+      }).toList();
+
+      QuizModel updatedQuiz = QuizModel(
+        quizId: targetQuiz.quizId,
+        quizScore: targetQuiz.quizScore,
+        questions: updatedQuestions,
+      );
+
+      List<QuizModel> updatedQuizList = user.quizList!.map((quiz) {
+        return quiz.quizId == updatedQuiz.quizId ? updatedQuiz : quiz;
+      }).toList();
+
+      user.quizList = updatedQuizList;
+
+      int result = await db.update(
+        'UserModel',
+        {'quizList': jsonEncode(user.quizList!.map((e) => e.toJson()).toList())},
+        where: 'userId = ?',
+        whereArgs: [userId],
+      );
+
       print('End timestamp updated successfully.');
       return result;
     } catch (e) {
@@ -237,15 +283,87 @@ class DatabaseHelper {
     }
   }
 
-  Future<int> updateBeginTimestamp(String questionId, String beginTimeStamp) async {
+  Future<int> updateBeginTimestamp(String userId, String questionId, String beginTimeStamp) async {
     try {
       final db = await database;
-      int result = await db.update(
-        'QuizQuestionModel',
-        {'beginTimeStamp': beginTimeStamp},
-        where: 'questionId = ?',
-        whereArgs: [questionId],
+
+      List<Map<String, dynamic>> userRecords = await db.query(
+        'UserModel',
+        where: 'userId = ?',
+        whereArgs: [userId],
       );
+
+      if (userRecords.isEmpty) {
+        print('User not found.');
+        return -1;
+      }
+
+      print('Retrieved user record: ${userRecords.first}');
+
+      UserModel user;
+      try {
+        user = UserModel.fromJson(userRecords.first);
+      } catch (e) {
+        print('Error in UserModel.fromJson: $e');
+        return -1;
+      }
+
+      print('Parsed UserModel:');
+      print('Email: ${user.email}');
+      print('UserId: ${user.userId}');
+      print('DeviceToken: ${user.deviceToken}');
+      print('ProfilePic: ${user.profilePic}');
+      print('BannerImage: ${user.bannerImage}');
+      print('NumTickets: ${user.numTickets}');
+      print('QuizList: ${user.quizList}');
+      print('ReadingList: ${user.readingList}');
+      print('Accessories: ${user.accessories}');
+      print('IfEachModuleComplete: ${user.ifEachModuleComplete}');
+
+      QuizModel? targetQuiz;
+      for (QuizModel quiz in user.quizList ?? []) {
+        if (quiz.questions.any((q) => q.questionId == questionId)) {
+          targetQuiz = quiz;
+          break;
+        }
+      }
+
+      if (targetQuiz == null) {
+        print('Quiz containing the question not found.');
+        return -1;
+      }
+
+      List<QuizQuestionModel> updatedQuestions = targetQuiz.questions.map((q) {
+        if (q.questionId == questionId) {
+          return QuizQuestionModel(
+            questionId: q.questionId,
+            isCorrect: q.isCorrect,
+            beginTimeStamp: DateTime.parse(beginTimeStamp),
+            endTimeStamp: q.endTimeStamp,
+          );
+        }
+        return q;
+      }).toList();
+
+      QuizModel updatedQuiz = QuizModel(
+        quizId: targetQuiz.quizId,
+        quizScore: targetQuiz.quizScore,
+        questions: updatedQuestions,
+      );
+
+      List<QuizModel> updatedQuizList = user.quizList!.map((quiz) {
+        return quiz.quizId == updatedQuiz.quizId ? updatedQuiz : quiz;
+      }).toList();
+
+      user.quizList = updatedQuizList;
+
+      int result = await db.update(
+        'UserModel',
+        {'quizList': jsonEncode(user.quizList!.map((e) => e.toJson()).toList())},
+        where: 'userId = ?',
+        whereArgs: [userId],
+      );
+
       print('Begin timestamp updated successfully.');
       return result;
     } catch (e) {
@@ -254,6 +372,7 @@ class DatabaseHelper {
     }
   }
 
+
   Future<void> checkDatabaseSchema() async {
     try {
       final db = await database;
@@ -261,6 +380,17 @@ class DatabaseHelper {
       print('Database tables: $result');
     } catch (e) {
       print('Error fetching database schema: $e');
+    }
+  }
+
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      print('Upgrading database from version $oldVersion to $newVersion...');
+      await db.execute("ALTER TABLE UserModel ADD COLUMN quizList TEXT");
+      await db.execute("ALTER TABLE UserModel ADD COLUMN readingList TEXT");
+      await db.execute("ALTER TABLE UserModel ADD COLUMN accessories TEXT");
+      await db.execute("ALTER TABLE UserModel ADD COLUMN ifEachModuleComplete TEXT");
+      print('Database upgraded successfully.');
     }
   }
 }

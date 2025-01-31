@@ -117,6 +117,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
       // SQLite: Update the end timestamp
       final DatabaseHelper _dbHelper = DatabaseHelper();
       await _dbHelper.updateEndTimestamp(
+          user2!.uid,
         questionIndex.toString(),
         DateTime.now().toIso8601String(),
       );
@@ -145,6 +146,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
           'endTimeStamp': DateTime.now().toIso8601String(),
         });
         await _dbHelper.updateEndTimestamp(
+          user2!.uid,
           questionIndex.toString(),
           DateTime.now().toIso8601String(),
         );
@@ -162,6 +164,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
           });
 
           await _dbHelper.updateBeginTimestamp(
+            user2!.uid,
             (questionIndex + 1).toString(),
             DateTime.now().toIso8601String(),
           );

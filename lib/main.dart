@@ -13,6 +13,7 @@ Future<void> main() async {
       options: DefaultFirebaseOptions.currentPlatform
   );
   await DatabaseHelper().database;
+
   runApp(MyApp());
 }
 

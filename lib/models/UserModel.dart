@@ -1,8 +1,9 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:quiz/models/quizModel.dart';
 import 'package:quiz/models/readingModel.dart';
 
-// ignore: must_be_immutable
 class UserModel extends Equatable {
   String? key;
   String? email;
@@ -45,28 +46,47 @@ class UserModel extends Equatable {
     userName = map['userName'];
     numTickets = map['numTickets'];
     if (map['quizList'] != null) {
-      quizList = <QuizModel>[];
-      map['quizList'].forEach((value) {
-        quizList!.add(QuizModel.fromJson(Map<String, dynamic>.from(value)));
-      });
+      if (map['quizList'] is String && (map['quizList'] as String).isNotEmpty) {
+        try {
+          List<dynamic> decodedList = jsonDecode(map['quizList']);
+          quizList = decodedList.map((e) => QuizModel.fromJson(Map<String, dynamic>.from(e))).toList();
+        } catch (e) {
+          print('Error decoding quizList: $e');
+          quizList = [];
+        }
+      } else if (map['quizList'] is List) {
+        quizList = (map['quizList'] as List)
+            .map((e) => QuizModel.fromJson(Map<String, dynamic>.from(e)))
+            .toList();
+      }
     }
+
     if (map['accessories'] != null) {
-      accessories = <bool>[];
-      map['accessories'].forEach((value) {
-        accessories!.add(value);
-      });
+      accessories = (map['accessories'] is String)
+          ? List<bool>.from(jsonDecode(map['accessories']))
+          : List<bool>.from(map['accessories']);
     }
+
     if (map['ifEachModuleComplete'] != null) {
-      ifEachModuleComplete = <bool>[];
-      map['ifEachModuleComplete'].forEach((value) {
-        ifEachModuleComplete!.add(value);
-      });
+      ifEachModuleComplete = (map['ifEachModuleComplete'] is String)
+          ? List<bool>.from(jsonDecode(map['ifEachModuleComplete']))
+          : List<bool>.from(map['ifEachModuleComplete']);
     }
+
     if (map['readingList'] != null) {
-      readingList = <readingModel>[];
-      map['readingList'].forEach((value) {
-        readingList!.add(readingModel.fromJson(Map<String, dynamic>.from(value)));
-      });
+      if (map['readingList'] is String && (map['readingList'] as String).isNotEmpty) {
+        try {
+          List<dynamic> decodedList = jsonDecode(map['readingList']);
+          readingList = decodedList.map((e) => readingModel.fromJson(Map<String, dynamic>.from(e))).toList();
+        } catch (e) {
+          print('Error decoding readingList: $e');
+          readingList = [];
+        }
+      } else if (map['readingList'] is List) {
+        readingList = (map['readingList'] as List)
+            .map((e) => readingModel.fromJson(Map<String, dynamic>.from(e)))
+            .toList();
+      }
     }
   }
   toJson() {
