@@ -78,10 +78,15 @@ flutter:
     - assets/lesson_images/settings_images/
     - assets/lesson_images/fake_profiles_images/
     - assets/lesson_images/social_tags_images/
-    - assets/character_images/
+    - assets/animal_images/
     - assets/backgrounds/
     - assets/items/
-    - assets/character_images/orange_dragon/
+    - assets/animal_images/green_dragon/
+    - assets/animal_images/ice_dragon/
+    - assets/animal_images/orange_dragon/
+    - assets/animal_images/stone_dragon/
+    - assets/animal_images/two_headed_dragon/
+    - assets/animal_images/water_dragon/
     - assets/images/quiz-logo.png
   #   - images/a_dot_ham.jpeg
 

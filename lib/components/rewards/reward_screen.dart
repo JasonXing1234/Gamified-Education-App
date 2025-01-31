@@ -5,12 +5,9 @@ import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
 
 import '../buttons/listen_button.dart';
-import '../buttons/menu_button.dart';
 import '../buttons/next_button.dart';
-import '../buttons/speed_button.dart';
-import '../lesson/all_lessons.dart';
 import '../lesson/lesson.dart';
-import 'all_characters.dart';
+import 'animal.dart';
 
 class RewardScreen extends StatefulWidget {
   const RewardScreen({
@@ -35,31 +32,16 @@ class _RewardScreenState extends State<RewardScreen> {
   @override
   Widget build(BuildContext context) {
 
-    // Lesson lesson;
-    // if (widget.lessonNumber == socialMediaNorms.lessonNumber) {
-    //   lesson = socialMediaNorms;
-    // }
-    // else if (widget.lessonNumber == settings.lessonNumber) {
-    //   lesson = settings;
-    // }
-    // else if (widget.lessonNumber == fakeProfiles.lessonNumber) {
-    //   lesson = fakeProfiles;
-    // }
-    // else if (widget.lessonNumber == socialTags.lessonNumber) {
-    //   lesson = socialTags;
-    // }
-    // else if (widget.lessonNumber == appropriateInteractions.lessonNumber) {
-    //   lesson = appropriateInteractions;
-    // }
-    // else if (widget.lessonNumber == socialMediaVSReality.lessonNumber) {
-    //   lesson = socialMediaVSReality;
-    // }
-    // else {
-    //   lesson = tutorial;
-    // }
-
-
-    String rewardImage = widget.lesson.getCurrentPhoto();
+    String? rewardImage;
+    if (widget.activityName == "practice") {
+      rewardImage = "assets/images/question_mark.png";
+    }
+    else if (widget.activityName == "quiz" && widget.lesson.animal.photos[Phase.adult] != null) {
+      rewardImage = widget.lesson.animal.photos[Phase.adult];
+    }
+    else {
+      rewardImage = "assets/images/lock.png";
+    }
 
 
     return Scaffold(
@@ -67,36 +49,36 @@ class _RewardScreenState extends State<RewardScreen> {
           centerTitle: true,
           toolbarHeight: 70, // Increases the height of the AppBar
           title: Padding(
-            padding: const EdgeInsets.only(top: 20),
+            padding: const EdgeInsets.only(top: 20.0), // Adjust the top padding of title
             child: Text(
-              "Reward",
+              "REWARD",
               style: textStyles.heading1,
             ),
           ),
           leadingWidth: 100, // Gives space for the back button
           leading: GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 30, top: 20),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Icon(
-                      Icons.arrow_back_ios,
-                      color: appColors.royalBlue,
-                      size: textStyles.heading1.fontSize,
-                    ),
-                    Text(
-                      "Exit",
-                      style: textStyles.customText(appColors.royalBlue, 20, FontWeight.normal),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30, top: 20),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.arrow_back_ios,
+                    color: appColors.royalBlue,
+                    size: textStyles.heading1.fontSize,
+                  ),
+                  Text(
+                    "Exit",
+                    style: textStyles.customText(appColors.royalBlue, 20, FontWeight.normal),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
               ),
+            ),
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -138,19 +120,21 @@ class _RewardScreenState extends State<RewardScreen> {
               const SizedBox(height: 40,),
 
               Text(
-                "You Earned",
+                widget.activityName == "practice" ? "Here's your new item!" : widget.activityName == "quiz" ? "${capitalizeString(widget.lesson.animalName)} is now an adult!" : "${capitalizeString(widget.lesson.animalName)} grew!",
                 style: textStyles.heading1,
                 textAlign: TextAlign.center,
               ),
 
               const SizedBox(height: 20,),
 
-              widget.activityName == "practice" ? FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: 100,) : Image.asset(rewardImage),
+              // Practices will now earn random accessories Edit later
+
+              widget.activityName == "practice" ? FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: 100,) : Image.asset(rewardImage!),
               
-              // TODO: Set up correct character reward: this just shows the current character name and image
-              widget.activityName == "practice" ?
-                Text("1 Ticket", style: textStyles.heading1, textAlign: TextAlign.center,) :
-                Text("${capitalizeString(widget.lesson.character.currentPhase.name)} ${widget.lesson.character.name}", style: textStyles.bodyText, textAlign: TextAlign.center,),
+              // TODO: Set up correct animal reward: this just shows the current animal name and image
+              //widget.activityName == "practice" ?
+                //Text("1 Ticket", style: textStyles.heading1, textAlign: TextAlign.center,) :
+                // Text("${capitalizeString(widget.lesson.animal.currentPhase.name)} ${widget.lesson.animal.name}", style: textStyles.bodyText, textAlign: TextAlign.center,),
             ],
           ),
         ),
