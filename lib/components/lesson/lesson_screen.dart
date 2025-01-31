@@ -11,7 +11,7 @@ import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
 
 import '../practice_results_screen.dart';
-import '../rewards/character.dart';
+import '../rewards/animal.dart';
 
 class LessonScreen extends StatefulWidget {
   const LessonScreen({
@@ -162,7 +162,7 @@ class _LessonScreenState extends State<LessonScreen> {
   void openEditNameDialog() {
 
 
-    final TextEditingController _controller = TextEditingController(text: widget.lesson.characterName);
+    final TextEditingController _controller = TextEditingController(text: widget.lesson.animalName);
 
     showDialog(
       context: context,
@@ -187,7 +187,7 @@ class _LessonScreenState extends State<LessonScreen> {
             ElevatedButton(
               onPressed: () {
                 setState(() {
-                  widget.lesson.characterName = _controller.text; // Save the updated name
+                  widget.lesson.animalName = _controller.text; // Save the updated name
                 });
                 Navigator.of(context).pop(); // Close dialog
               },
@@ -207,7 +207,7 @@ class _LessonScreenState extends State<LessonScreen> {
 
   String getPhase(Lesson lesson, Phase phase) {
 
-    return lesson.character.photos[phase] ?? "assets/images/lock.png";
+    return lesson.animal.photos[phase] ?? "assets/images/lock.png";
   }
 
   @override
@@ -275,7 +275,7 @@ class _LessonScreenState extends State<LessonScreen> {
                   Row (
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text(widget.lesson.character.name, style: textStyles.bodyText,),
+                      Text(widget.lesson.animal.name, style: textStyles.bodyText,),
 
                       GestureDetector(
                         onTap: openEditNameDialog, // Opens the popup
@@ -283,7 +283,7 @@ class _LessonScreenState extends State<LessonScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              widget.lesson.characterName,
+                              widget.lesson.animalName,
                               style: textStyles.bodyText,
                             ),
                             SizedBox(width: 15),
@@ -502,7 +502,7 @@ class _LessonScreenState extends State<LessonScreen> {
       },
       child: Stack(
         children: [
-          ImageBox(imageName: "assets/character_images/sunglasses.png", isLocked: !purchased[index], isSelected: false,),
+          ImageBox(imageName: "assets/animal_images/sunglasses.png", isLocked: !purchased[index], isSelected: false,),
           // if (purchased[index])
           //   Positioned.fill(
           //     child: Container(
@@ -538,7 +538,7 @@ class StatsNotebook extends StatelessWidget {
       width: 375,
       height: 200,
       child: GridView.extent(
-        maxCrossAxisExtent: 300, // Max width of character and notebook
+        maxCrossAxisExtent: 300, // Max width of animal and notebook
         mainAxisSpacing: 1, // Space between rows
         crossAxisSpacing: 1, // Space between columns
         children: [
@@ -554,13 +554,13 @@ class StatsNotebook extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 10,),
-                          Text(lesson.character.name, style: textStyles.caption,),
+                          Text(lesson.animal.name, style: textStyles.caption,),
                           const SizedBox(height: 5,),
-                          Text("Phase: ${lesson.character.currentPhase.name}", style: textStyles.caption,),
+                          Text("Phase: ${lesson.animal.currentPhase.name}", style: textStyles.caption,),
                           const SizedBox(height: 5,),
-                          Text("Weight: ${lesson.character.stats[lesson.character.currentPhase]?["weight"]}", style: textStyles.caption,),
+                          Text("Weight: ${lesson.animal.stats[lesson.animal.currentPhase]?["weight"]}", style: textStyles.caption,),
                           const SizedBox(height: 5,),
-                          Text("Height: ${lesson.character.stats[lesson.character.currentPhase]?["height"]}", style: textStyles.caption,),
+                          Text("Height: ${lesson.animal.stats[lesson.animal.currentPhase]?["height"]}", style: textStyles.caption,),
                         ],
                       ),
                     ),

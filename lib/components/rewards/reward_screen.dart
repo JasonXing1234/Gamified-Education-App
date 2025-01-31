@@ -5,12 +5,8 @@ import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
 
 import '../buttons/listen_button.dart';
-import '../buttons/menu_button.dart';
 import '../buttons/next_button.dart';
-import '../buttons/speed_button.dart';
-import '../lesson/all_lessons.dart';
 import '../lesson/lesson.dart';
-import 'all_characters.dart';
 
 class RewardScreen extends StatefulWidget {
   const RewardScreen({
@@ -138,7 +134,7 @@ class _RewardScreenState extends State<RewardScreen> {
               const SizedBox(height: 40,),
 
               Text(
-                widget.activityName == "practice" ? "Here's your new item!" : widget.activityName == "quiz" ? "${capitalizeString(widget.lesson.characterName)} is now an adult!" : "${capitalizeString(widget.lesson.characterName)} grew!",
+                widget.activityName == "practice" ? "Here's your new item!" : widget.activityName == "quiz" ? "${capitalizeString(widget.lesson.animalName)} is now an adult!" : "${capitalizeString(widget.lesson.animalName)} grew!",
                 style: textStyles.heading1,
                 textAlign: TextAlign.center,
               ),
@@ -149,10 +145,10 @@ class _RewardScreenState extends State<RewardScreen> {
 
               widget.activityName == "practice" ? FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: 100,) : Image.asset(rewardImage),
               
-              // TODO: Set up correct character reward: this just shows the current character name and image
+              // TODO: Set up correct animal reward: this just shows the current animal name and image
               //widget.activityName == "practice" ?
                 //Text("1 Ticket", style: textStyles.heading1, textAlign: TextAlign.center,) :
-                // Text("${capitalizeString(widget.lesson.character.currentPhase.name)} ${widget.lesson.character.name}", style: textStyles.bodyText, textAlign: TextAlign.center,),
+                // Text("${capitalizeString(widget.lesson.animal.currentPhase.name)} ${widget.lesson.animal.name}", style: textStyles.bodyText, textAlign: TextAlign.center,),
             ],
           ),
         ),

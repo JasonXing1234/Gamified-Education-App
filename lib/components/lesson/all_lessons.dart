@@ -18,7 +18,7 @@ import '../reading/readings/reading3.dart';
 import '../reading/readings/reading4.dart';
 import '../reading/readings/reading5.dart';
 import '../reading/readings/reading6.dart';
-import '../rewards/all_characters.dart';
+import '../rewards/all_animals.dart';
 import 'lesson.dart';
 
 
@@ -34,10 +34,10 @@ List<Lesson> allLessons = [
 
 Lesson tutorial = Lesson(
   title: "TUTORIAL & SET UP",
-  character: orangeDragon,
-  characterName: "Name",
+  animal: orangeDragon,
+  animalName: "Name",
   lessonNumber: 0,
-  progress: 0.5,
+  progress: 0.0,
   reading: reading0,
   preQuiz: preQuiz0, //TODO: Currently only lesson with a different pre-quiz
   quiz: quiz0,
@@ -46,8 +46,8 @@ Lesson tutorial = Lesson(
 
 Lesson socialMediaNorms = Lesson(
   title: "SOCIAL MEDIA NORMS",
-  character: orangeDragon,
-  characterName: "Name",
+  animal: greenDragon,
+  animalName: "Name",
   lessonNumber: 1,
   progress: 0.0,
   reading: reading1,
@@ -59,8 +59,8 @@ Lesson socialMediaNorms = Lesson(
 
 Lesson settings = Lesson(
   title: "SETTINGS",
-  character: lockedCharacter,
-  characterName: "Name",
+  animal: iceDragon,
+  animalName: "Name",
   lessonNumber: 2,
   progress: 0.0,
   reading: reading2,
@@ -71,8 +71,8 @@ Lesson settings = Lesson(
 
 Lesson fakeProfiles = Lesson(
   title: "FAKE PROFILES",
-  character: lockedCharacter,
-  characterName: "Name",
+  animal: twoHeadedDragon,
+  animalName: "Name",
   lessonNumber: 3,
   progress: 0.0,
   reading: reading3,
@@ -83,8 +83,8 @@ Lesson fakeProfiles = Lesson(
 
 Lesson socialTags = Lesson(
   title: "SOCIAL TAGS",
-  character: lockedCharacter,
-  characterName: "Name",
+  animal: stoneDragon,
+  animalName: "Name",
   lessonNumber: 4,
   progress: 0.0,
   reading: reading4,
@@ -96,8 +96,8 @@ Lesson socialTags = Lesson(
 Lesson appropriateInteractions = Lesson(
   //"APPROPRIATE INTERACTIONS",
   title: "INTERACTION ETIQUETTE", // Slightly shorter name for dashboard on home-screen
-  character: lockedCharacter,
-  characterName: "Name",
+  animal: waterDragon,
+  animalName: "Name",
   lessonNumber: 5,
   progress: 0.0,
   reading: reading5,
@@ -108,8 +108,8 @@ Lesson appropriateInteractions = Lesson(
 
 Lesson socialMediaVSReality = Lesson(
   title: "SOCIAL MEDIA VS REALITY",
-  character: lockedCharacter,
-  characterName: "Name",
+  animal: lockedanimal,
+  animalName: "Name",
   lessonNumber: 6,
   progress: 0.0,
   reading: reading6,

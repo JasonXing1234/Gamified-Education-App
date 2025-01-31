@@ -5,10 +5,11 @@ enum Phase {
   baby,
   egg,
   unknown,
+  locked,
 }
 
-class Character {
-  Character(this.name, this.stats, this.photos, this.currentPhase);
+class Animal {
+  Animal(this.name, this.stats, this.photos, this.currentPhase);
 
   final String name;
   final Map<Phase, Map<String, String>> stats;

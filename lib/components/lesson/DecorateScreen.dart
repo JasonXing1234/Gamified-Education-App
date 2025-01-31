@@ -6,11 +6,11 @@ import '../../styles/text_styles.dart';
 
 class DecorateScreen extends StatefulWidget {
 
-  DecorateScreen({super.key, required this.world, required this.characterPath});
+  DecorateScreen({super.key, required this.world, required this.animalPath});
 
   //final String backdrop;
   World world;
-  final String characterPath;
+  final String animalPath;
 
   @override
   DecorateScreenState createState() => DecorateScreenState();
@@ -82,9 +82,9 @@ class DecorateScreenState extends State<DecorateScreen> {
             child: Image.asset(widget.world.background, fit: BoxFit.cover),
           ),
 
-          // Dragon Character
+          // Dragon animal
           Center(
-            child: Image.asset(widget.characterPath),
+            child: Image.asset(widget.animalPath),
           ),
 
           // DragTarget to capture stickers dropped onto the canvas

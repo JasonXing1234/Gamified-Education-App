@@ -8,7 +8,7 @@ import 'package:quiz/components/lesson/world.dart';
 import '../../styles/app_colors.dart';
 import '../../styles/text_styles.dart';
 import '../buttons/custom_icon_button.dart';
-import '../rewards/character.dart';
+import '../rewards/animal.dart';
 import 'DecorateScreen.dart';
 import 'lesson.dart';
 
@@ -35,7 +35,7 @@ class _CompletedLessonScreenState extends State<CompletedLessonScreen> {
 
   void openEditNameDialog() {
 
-    final TextEditingController _controller = TextEditingController(text: widget.lesson.characterName);
+    final TextEditingController _controller = TextEditingController(text: widget.lesson.animalName);
 
     showDialog(
       context: context,
@@ -60,7 +60,7 @@ class _CompletedLessonScreenState extends State<CompletedLessonScreen> {
             ElevatedButton(
               onPressed: () {
                 setState(() {
-                  widget.lesson.characterName = _controller.text; // Save the updated name
+                  widget.lesson.animalName = _controller.text; // Save the updated name
                 });
                 Navigator.of(context).pop(); // Close dialog
               },
@@ -89,7 +89,7 @@ class _CompletedLessonScreenState extends State<CompletedLessonScreen> {
               onPressed: () {
                 Navigator.pop(context);
                 setState(() {
-                  widget.lesson.character.currentPhase = Phase.baby;
+                  widget.lesson.animal.currentPhase = Phase.baby;
                 });
               },
               child: const Text("Baby"),
@@ -98,7 +98,7 @@ class _CompletedLessonScreenState extends State<CompletedLessonScreen> {
               onPressed: () {
                 Navigator.pop(context);
                 setState(() {
-                  widget.lesson.character.currentPhase = Phase.teen;
+                  widget.lesson.animal.currentPhase = Phase.teen;
                 });
               },
               child: const Text("Teen"),
@@ -107,7 +107,7 @@ class _CompletedLessonScreenState extends State<CompletedLessonScreen> {
               onPressed: () {
                 Navigator.pop(context);
                 setState(() {
-                  widget.lesson.character.currentPhase = Phase.adult;
+                  widget.lesson.animal.currentPhase = Phase.adult;
                 });
               },
               child: const Text("Adult"),
@@ -122,7 +122,7 @@ class _CompletedLessonScreenState extends State<CompletedLessonScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => DecorateScreen(world: widget.lessonWorld, characterPath: widget.lesson.getCurrentPhoto(),),
+        builder: (context) => DecorateScreen(world: widget.lessonWorld, animalPath: widget.lesson.getCurrentPhoto(),),
       ),
     );
   }
@@ -214,7 +214,7 @@ class _CompletedLessonScreenState extends State<CompletedLessonScreen> {
                   child: Row (
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text(widget.lesson.character.name, style: textStyles.bodyText,),
+                      Text(widget.lesson.animal.name, style: textStyles.bodyText,),
 
                       GestureDetector(
                         onTap: openEditNameDialog, // Opens the popup
@@ -222,7 +222,7 @@ class _CompletedLessonScreenState extends State<CompletedLessonScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              widget.lesson.characterName,
+                              widget.lesson.animalName,
                               style: textStyles.bodyText,
                             ),
                             const SizedBox(width: 15),
@@ -240,7 +240,7 @@ class _CompletedLessonScreenState extends State<CompletedLessonScreen> {
               //Dragon Image
               Center(
                 child:
-                // Character
+                // animal
                 widget.lesson.getCurrentPhoto() == "no" ? const SizedBox.shrink() : Image.asset(widget.lesson.getCurrentPhoto()),
               )
             ],
