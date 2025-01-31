@@ -1,26 +1,7 @@
 import 'animal.dart';
 
 
-final Animal lockedanimal = Animal(
-  "Locked",
-  {
-    Phase.adult: {"weight": "unknown", "height" : "unknown"},
-    Phase.teen: {"weight": "unknown", "height" : "unknown"},
-    Phase.baby: {"weight": "unknown", "height" : "unknown"},
-    Phase.egg: {"weight": "unknown", "height" : "unknown"},
-    Phase.unknown: {"weight": "unknown", "height" : "unknown"},
-  },
-  {
-    Phase.adult: "assets/images/lock.png",
-    Phase.teen: "assets/images/lock.png",
-    Phase.baby: "assets/images/lock.png",
-    Phase.egg: "assets/images/lock.png",
-    Phase.unknown: "assets/images/lock.png",
-  },
-  Phase.unknown,
-);
-
-final Animal questionanimal = Animal(
+final Animal questionAnimal = Animal(
   "Unknown",
   {
     Phase.adult: {"weight": "unknown", "height" : "unknown"},

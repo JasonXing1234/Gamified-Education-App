@@ -2,6 +2,7 @@
 import 'package:quiz/components/quiz/quiz_questions/quiz0.dart';
 import 'package:quiz/components/reading/readings/reading0.dart';
 
+import '../practice/practice_questions/appropriate_interaction_practice/appropriate_interaction_practice.dart';
 import '../practice/practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
 import '../practice/practice_questions/settings_practice/settings_practice.dart';
 import '../practice/practice_questions/social_media_norms_practice/social_media_norms_practice.dart';
@@ -103,12 +104,12 @@ Lesson appropriateInteractions = Lesson(
   reading: reading5,
   preQuiz: quiz5,
   quiz: quiz5,
-  practice: fakeProfilesPractice1,
+  practice: appropriateInteractionsPractice1,
 );
 
 Lesson socialMediaVSReality = Lesson(
   title: "SOCIAL MEDIA VS REALITY",
-  animal: lockedanimal,
+  animal: questionAnimal,
   animalName: "Name",
   lessonNumber: 6,
   progress: 0.0,

@@ -9,6 +9,7 @@ import 'package:quiz/components/lesson/all_lessons.dart';
 import '../styles/app_colors.dart';
 import '../styles/text_styles.dart';
 import 'components/menu/menu.dart';
+import 'components/practice_results_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -60,6 +61,68 @@ class _HomeState extends State<Home> {
     }
   }
 
+  // Function to show the dialog
+  void _showOptionDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: const Text('Select a lesson to practice'),
+          children: <Widget>[
+            SimpleDialogOption(
+              child: const Text("Tutorial & Set Up"),
+              onPressed: () {
+                Navigator.pop(context);
+                setState(() {
+                  //TODO: Fill in code
+                });
+              },
+            ),
+            SimpleDialogOption(
+              child: const Text("Social Media Norms"),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: socialMediaNorms, activeScreen: "practice-screen",))
+                );
+              },
+            ),
+            SimpleDialogOption(
+              child: const Text("Settings"),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: settings, activeScreen: "practice-screen",))
+                );
+              },
+            ),
+            SimpleDialogOption(
+              child: const Text("Social Tags"),
+              onPressed: () {
+                Navigator.pop(context);
+                setState(() {
+                  //TODO: Fill in code
+                });
+              },
+            ),SimpleDialogOption(
+              child: const Text("Interaction Etiquette"),
+              onPressed: () {
+                Navigator.pop(context);
+                //todo: broken????
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: appropriateInteractions, activeScreen: "practice-screen",))
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(context) {
     Widget screen = SingleChildScrollView(
@@ -109,7 +172,7 @@ class _HomeState extends State<Home> {
           ShortcutWidget(
             textStyles: textStyles,
             appColors: appColors,
-            buttonShortcut: (){}, //TODO: Add code to update what is the next lesson for the user
+            buttonShortcut: (context){}, //TODO: Add code to update what is the next lesson for the user
             mainText: "Next Activity",
             subtitle: "Social Media Norms",
             buttonText: "READING", //TODO: replace with logic about what text should be
@@ -124,11 +187,13 @@ class _HomeState extends State<Home> {
           ShortcutWidget(
             textStyles: textStyles,
             appColors: appColors,
-            buttonShortcut: (){}, //TODO: Add code open practice pop-up and link
+            buttonShortcut: (context) {
+              _showOptionDialog(context!);
+            },
             mainText: "Earn Rewards",
             subtitle: "For Your Dragons",
             buttonText: "PRACTICE",
-            isDisabled: true,
+            isDisabled: false,
           ),
 
           SizedBox(
@@ -138,11 +203,13 @@ class _HomeState extends State<Home> {
           ShortcutWidget(
               textStyles: textStyles,
               appColors: appColors,
-              buttonShortcut: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CompletedLessonScreen(lesson: socialMediaNorms,)),
-                );
+              buttonShortcut: (context) {  // Accepts context
+                if (context != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CompletedLessonScreen(lesson: socialMediaNorms)),
+                  );
+                }
               },
               mainText: "TESTING",
               subtitle: "Remove later",
@@ -262,7 +329,7 @@ class ShortcutWidget extends StatelessWidget {
 
   final AppTextStyles textStyles;
   final AppColors appColors;
-  final void Function() buttonShortcut;
+  final void Function(BuildContext?) buttonShortcut;
   final String mainText;
   final String subtitle;
   final String buttonText;
@@ -304,7 +371,7 @@ class ShortcutWidget extends StatelessWidget {
               width: 25,
             ),
             ElevatedButton(
-              onPressed: isDisabled ? (){} : buttonShortcut,
+              onPressed: isDisabled ? (){} : () => buttonShortcut(context), //Needs to be a function that calls a function so we can pass in build context
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10), // Padding for text and border
                 //fixedSize: const Size(150, 50),
