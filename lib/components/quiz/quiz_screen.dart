@@ -9,7 +9,6 @@ import 'package:quiz/components/quiz/quiz_questions/quiz1.dart';
 import 'package:quiz/components/question.dart';
 import 'package:quiz/styles/app_colors.dart';
 import '../../SQLITE/sqliteHelper.dart';
-import '../buttons/ListenButton.dart';
 import '../buttons/listen_button.dart';
 import '../progress_bar/progress_bar.dart';
 import 'quiz_questions/quiz2.dart';
