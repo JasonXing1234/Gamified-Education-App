@@ -22,7 +22,7 @@ const reading0 = [
       "Each lesson has 3 activities that you'll complete: pre-quiz, reading, and a post-quiz",
       "When you complete each activity your pet/creature for the lesson will grow.",
     ],
-    "assets/character_images/orange_dragon/orange_dragon_baby.png",
+    "assets/animal_images/orange_dragon/orange_dragon_baby.png",
     //TODO: Enable multiple photos?
   ),
   ReadingPage(

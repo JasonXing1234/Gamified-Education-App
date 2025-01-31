@@ -2,39 +2,27 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/components/buttons/answer_button.dart';
-import 'package:quiz/components/practice/practice_questions/appropriate_interaction_practice/appropriate_interaction_practice.dart';
 import 'package:quiz/components/progress_bar/progress_bar.dart';
 
 import '../buttons/listen_button.dart';
 import '../question.dart';
-import 'practice_questions/fake_profile_practice/fake_profiles_practice_1.dart';
-import 'practice_questions/fake_profile_practice/fake_profiles_practice_2.dart';
-import 'practice_questions/fake_profile_practice/fake_profiles_practice_3.dart';
-import 'practice_questions/fake_profile_practice/fake_profiles_practice_4.dart';
-import 'practice_questions/fake_profile_practice/fake_profiles_practice_5.dart';
-import 'practice_questions/fake_profile_practice/fake_profiles_practice_6.dart';
-import 'practice_questions/fake_profile_practice/fake_profiles_practice_7.dart';
-import 'practice_questions/fake_profile_practice/fake_profiles_practice_8.dart';
-import 'practice_questions/fake_profile_practice/fake_profiles_practice_all.dart';
 
 import '../../styles/app_colors.dart';
 import '../../styles/text_styles.dart';
 
-import '../buttons/menu_button.dart';
 import '../buttons/next_button.dart';
-import '../buttons/speed_button.dart';
 import '../text_box/text_box.dart';
 
 
 class PracticeScreen extends StatefulWidget {
   const PracticeScreen({
     super.key,
-    required this.onSelectAnswer,
+    required this.onDone,
     required this.practice,
 
 
   });
-  final void Function(String answer) onSelectAnswer;
+  final void Function() onDone;
   // final int quizNumber;
   final List<Question> practice;
 
@@ -90,17 +78,17 @@ class _PracticeScreenState extends State<PracticeScreen> {
     }
   }
 
-  Future<void> recordTicket() async {
-    if (questionIndex == practiceQuestions.length - 1) {
-      DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('numTickets').get();
-      int numTickets = snapshot.value as int;
-      await _database.child('profile/${user2?.uid}').update({
-        'numTickets': numTickets+1,
-      });
-    }
-  }
+  // Future<void> recordTicket() async {
+  //   if (questionIndex == practiceQuestions.length - 1) {
+  //     DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('numTickets').get();
+  //     int numTickets = snapshot.value as int;
+  //     await _database.child('profile/${user2?.uid}').update({
+  //       'numTickets': numTickets+1,
+  //     });
+  //   }
+  // }
 
-  Future<void> nextQuestion(String answer) async {
+  Future<void> nextQuestion() async {
     setState(() {
       checkedAnswer = false;
       isCorrect = false;
@@ -110,7 +98,11 @@ class _PracticeScreenState extends State<PracticeScreen> {
         questionIndex++;
       }
     });
-    widget.onSelectAnswer(answer);
+    if (questionIndex >= practiceQuestions.length - 1) {
+      // If the Practice is done then call the onDone method
+      widget.onDone();
+    }
+    
   }
 
   @override
@@ -123,7 +115,6 @@ class _PracticeScreenState extends State<PracticeScreen> {
     else {
       currentQuestion = Question(context: "no", question: "none", photo: "no", answerOptions: ["none"], explanation: "none");
     }
-
 
     // Set up the correct button check, finish or next
     Widget button;
@@ -142,7 +133,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
           setState(() {
             if(currentQuestion.correctAnswer == tempAnswer){
               // Set correct and checked
-              // TODO: Find a way to lock the correct answer, so user doesn't accidently change answer
+              // TODO: Find a way to lock the correct answer, so user doesn't accidentally change answer
               isCorrect = true;
               checkedAnswer = true;
             }
@@ -161,8 +152,8 @@ class _PracticeScreenState extends State<PracticeScreen> {
       button = MultiPurposeButton(
         onTap: () {
           setState(() {
-            recordTicket();
-            nextQuestion(tempAnswer);
+            // recordTicket();
+            nextQuestion();
           });
         },
         buttonType: ButtonType.submit,
@@ -174,7 +165,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
       button = MultiPurposeButton(
         onTap: () {
           setState(() {
-            nextQuestion(currentQuestion.correctAnswer); // Protect user from accidentally changing answers
+            nextQuestion(); // Protect user from accidentally changing answers
             selectedIndex = 10;
           });
         },
@@ -212,7 +203,6 @@ class _PracticeScreenState extends State<PracticeScreen> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
-                //crossAxisAlignment: CrossAxisAlignment.center, // Aligns with the title vertically
                 children: [
                   Icon(
                     Icons.arrow_back_ios,
@@ -282,7 +272,6 @@ class _PracticeScreenState extends State<PracticeScreen> {
                               tempAnswer = answer.value;
                             });
                           },
-                          // textAlign: TextAlign.center, // Centers the text within the button
                         ),
                       ),
                     ),
@@ -298,7 +287,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
                     ) : SizedBox.shrink(),
 
                     isCorrect == true && checkedAnswer == true ? Text(
-                      'Correct!',
+                      "Correct!\n${currentQuestion.explanation}",
                       textAlign: TextAlign.left,
                       style: textStyles.customBodyText(appColors.green, 24),
                     ) : SizedBox.shrink(),

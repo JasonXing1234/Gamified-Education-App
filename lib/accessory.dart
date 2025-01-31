@@ -26,7 +26,7 @@ class _PictureWithPromptState extends State<PictureWithPrompt> {
           },
           child: Stack(
             children: [
-              Image.asset("assets/character_images/sunglasses.png"),
+              Image.asset("assets/animal_images/sunglasses.png"),
               if (isItemBought)
                 Container(
                   color: Colors.black.withOpacity(0.4),
