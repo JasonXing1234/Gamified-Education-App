@@ -9,7 +9,12 @@ enum Phase {
 }
 
 class Animal {
-  Animal(this.name, this.stats, this.photos, this.currentPhase);
+  Animal({
+    required this.name,
+    required this.stats,
+    required this.photos,
+    required this.currentPhase
+  });
 
   final String name;
   final Map<Phase, Map<String, String>> stats;

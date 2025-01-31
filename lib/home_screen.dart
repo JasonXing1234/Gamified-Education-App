@@ -99,14 +99,28 @@ class _HomeState extends State<Home> {
               },
             ),
             SimpleDialogOption(
+              child: const Text("Fake Profiles"),
+              onPressed: () {
+                Navigator.pop(context);
+                //todo: broken????
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: fakeProfiles, activeScreen: "practice-screen",))
+                );
+              },
+            ),
+            SimpleDialogOption(
               child: const Text("Social Tags"),
               onPressed: () {
                 Navigator.pop(context);
-                setState(() {
-                  //TODO: Fill in code
-                });
+                //todo: broken????
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: fakeProfiles, activeScreen: "practice-screen",))
+                );
               },
-            ),SimpleDialogOption(
+            ),
+            SimpleDialogOption(
               child: const Text("Interaction Etiquette"),
               onPressed: () {
                 Navigator.pop(context);

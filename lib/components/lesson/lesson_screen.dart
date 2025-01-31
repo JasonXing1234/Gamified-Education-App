@@ -360,19 +360,19 @@ class _LessonScreenState extends State<LessonScreen> {
 
                   const SizedBox(height: 25,),
 
-                  // /TODO st up later with items
-                  // ActivityButton(
-                  //   text: "PRACTICE & EARN TICKETS", // Drill is practice
-                  //   onTap:
-                  //       (){
-                  //     Navigator.push(
-                  //         context,
-                  //         MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: widget.lesson, activeScreen: "practice-screen",))
-                  //
-                  //       //MaterialPageRoute(builder: (context) => PracticeScreen(quizNumber: widget.lessonNumber, onSelectAnswer: (String answer) {  },))
-                  //     );
-                  //   }, isDisabled: false,
-                  // ),
+                  //TODO st up later with items
+                  ActivityButton(
+                    text: "PRACTICE & EARN TICKETS", // Drill is practice
+                    onTap:
+                        (){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: widget.lesson, activeScreen: "practice-screen",))
+
+                        //MaterialPageRoute(builder: (context) => PracticeScreen(quizNumber: widget.lessonNumber, onSelectAnswer: (String answer) {  },))
+                      );
+                    }, isDisabled: false,
+                  ),
 
                   const SizedBox(height: 15,),
 

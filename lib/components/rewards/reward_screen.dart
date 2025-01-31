@@ -7,6 +7,7 @@ import 'package:quiz/styles/text_styles.dart';
 import '../buttons/listen_button.dart';
 import '../buttons/next_button.dart';
 import '../lesson/lesson.dart';
+import 'animal.dart';
 
 class RewardScreen extends StatefulWidget {
   const RewardScreen({
@@ -31,31 +32,16 @@ class _RewardScreenState extends State<RewardScreen> {
   @override
   Widget build(BuildContext context) {
 
-    // Lesson lesson;
-    // if (widget.lessonNumber == socialMediaNorms.lessonNumber) {
-    //   lesson = socialMediaNorms;
-    // }
-    // else if (widget.lessonNumber == settings.lessonNumber) {
-    //   lesson = settings;
-    // }
-    // else if (widget.lessonNumber == fakeProfiles.lessonNumber) {
-    //   lesson = fakeProfiles;
-    // }
-    // else if (widget.lessonNumber == socialTags.lessonNumber) {
-    //   lesson = socialTags;
-    // }
-    // else if (widget.lessonNumber == appropriateInteractions.lessonNumber) {
-    //   lesson = appropriateInteractions;
-    // }
-    // else if (widget.lessonNumber == socialMediaVSReality.lessonNumber) {
-    //   lesson = socialMediaVSReality;
-    // }
-    // else {
-    //   lesson = tutorial;
-    // }
-
-
-    String rewardImage = widget.lesson.getCurrentPhoto();
+    String? rewardImage;
+    if (widget.activityName == "practice") {
+      rewardImage = "assets/images/question_mark.png";
+    }
+    else if (widget.activityName == "quiz" && widget.lesson.animal.photos[Phase.adult] != null) {
+      rewardImage = widget.lesson.animal.photos[Phase.adult];
+    }
+    else {
+      rewardImage = "assets/images/lock.png";
+    }
 
 
     return Scaffold(
@@ -143,7 +129,7 @@ class _RewardScreenState extends State<RewardScreen> {
 
               // Practices will now earn random accessories Edit later
 
-              widget.activityName == "practice" ? FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: 100,) : Image.asset(rewardImage),
+              widget.activityName == "practice" ? FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: 100,) : Image.asset(rewardImage!),
               
               // TODO: Set up correct animal reward: this just shows the current animal name and image
               //widget.activityName == "practice" ?
