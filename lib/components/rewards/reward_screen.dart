@@ -131,7 +131,7 @@ class _RewardScreenState extends State<RewardScreen> {
 
               widget.activityName == "practice" ? FaIcon(FontAwesomeIcons.ticket, color: appColors.yellow, size: 100,) : Image.asset(rewardImage!),
               
-              // TODO: Set up correct animal reward: this just shows the current animal name and image
+              // TODO: Set up correct item reward: this just shows the current animal name and image
               //widget.activityName == "practice" ?
                 //Text("1 Ticket", style: textStyles.heading1, textAlign: TextAlign.center,) :
                 // Text("${capitalizeString(widget.lesson.animal.currentPhase.name)} ${widget.lesson.animal.name}", style: textStyles.bodyText, textAlign: TextAlign.center,),

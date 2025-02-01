@@ -3,8 +3,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/components/lesson/completed_lesson_screen.dart';
 import 'package:quiz/components/lesson/lesson_dashboard.dart';
-import 'package:quiz/components/lesson/lesson_screen.dart';
 import 'package:quiz/components/lesson/all_lessons.dart';
+import 'package:quiz/components/lesson/lesson_screen.dart';
 
 import '../styles/app_colors.dart';
 import '../styles/text_styles.dart';
@@ -102,7 +102,6 @@ class _HomeState extends State<Home> {
               child: const Text("Fake Profiles"),
               onPressed: () {
                 Navigator.pop(context);
-                //todo: broken????
                 Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: fakeProfiles, activeScreen: "practice-screen",))
@@ -113,7 +112,6 @@ class _HomeState extends State<Home> {
               child: const Text("Social Tags"),
               onPressed: () {
                 Navigator.pop(context);
-                //todo: broken????
                 Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: fakeProfiles, activeScreen: "practice-screen",))
