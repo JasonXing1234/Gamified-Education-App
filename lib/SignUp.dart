@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
 import 'SQLITE/sqliteHelper.dart';
@@ -127,15 +128,44 @@ class _SignUpPageState extends State<SignUpPage> {
                 // ),
                 // const SizedBox(height: 10),
 
+                const SizedBox(height: 30),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.email,
-                      color: appColors.royalBlue,
-                      size: 40,
+                    FaIcon(FontAwesomeIcons.solidUser, color: appColors.royalBlue, size: 35,),
+                    const SizedBox(width: 20,),
+                    SizedBox(
+                      width: 280,
+                      height: 75,
+                      child: TextField(
+                        textAlign: TextAlign.center,
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          hintText: "Name",
+                          contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border
+                            borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border when focused
+                            borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners when focused
+                          ),
+                        ),
+                      ),
                     ),
+                  ],
+                ),
+
+                const SizedBox(height: 30),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    FaIcon(FontAwesomeIcons.solidEnvelope, color: appColors.royalBlue, size: 35,),
                     const SizedBox(width: 20,),
                     SizedBox(
                       width: 280,
@@ -166,11 +196,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.lock,
-                      color: appColors.royalBlue,
-                      size: 40,
-                    ),
+                    FaIcon(FontAwesomeIcons.key, color: appColors.royalBlue, size: 35,),
                     const SizedBox(width: 20,),
                     SizedBox(
                       width: 280,
@@ -202,11 +228,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.lock,
-                      color: appColors.royalBlue,
-                      size: 40,
-                    ),
+                    FaIcon(FontAwesomeIcons.key, color: appColors.royalBlue, size: 35,),
+
                     const SizedBox(width: 20,),
 
                     // TODO: Set up logic for confirm password for signing up

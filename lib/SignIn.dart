@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'SignUp.dart';
 import 'home_screen.dart';
@@ -64,11 +65,7 @@ class _SignInPageState extends State<SignInPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.email,
-                  color: appColors.royalBlue,
-                  size: 40,
-                ),
+                FaIcon(FontAwesomeIcons.solidEnvelope, color: appColors.royalBlue, size: 35,),
                 const SizedBox(width: 20,),
                 SizedBox(
                   width: 280,
@@ -105,11 +102,7 @@ class _SignInPageState extends State<SignInPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.lock,
-                  color: appColors.royalBlue,
-                  size: 40,
-                ),
+                FaIcon(FontAwesomeIcons.key, color: appColors.royalBlue, size: 35,),
                 const SizedBox(width: 20,),
                 SizedBox(
                   width: 280,
