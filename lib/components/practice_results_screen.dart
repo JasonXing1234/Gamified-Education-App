@@ -16,8 +16,7 @@ class PracticeResultScreen extends StatefulWidget {
   String activeScreen;
 
   @override
-  State<StatefulWidget> createState() =>
-      _PracticeResultScreenState();
+  State<StatefulWidget> createState() => _PracticeResultScreenState();
 
 }
 
