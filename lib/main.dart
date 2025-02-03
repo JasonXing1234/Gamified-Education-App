@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'SQLITE/sqliteHelper.dart';
-import 'SignIn.dart';
+import 'user_authorization/SignIn.dart';
 import 'firebase_options.dart';
 import 'home_screen.dart';
 

@@ -5,12 +5,13 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
-import 'SQLITE/sqliteHelper.dart';
-import 'models/UserModel.dart';
-import 'home_screen.dart';
-import 'models/quizModel.dart';
-import 'models/quizQuestionModel.dart';
-import 'models/readingModel.dart';
+import 'package:quiz/user_authorization/password_field.dart';
+import '../SQLITE/sqliteHelper.dart';
+import '../models/UserModel.dart';
+import '../home_screen.dart';
+import '../models/quizModel.dart';
+import '../models/quizQuestionModel.dart';
+import '../models/readingModel.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -20,7 +21,6 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
 
   final DatabaseReference databaseRef = FirebaseDatabase.instance.ref();
   User? user2 = FirebaseAuth.instance.currentUser;
@@ -140,11 +140,12 @@ class _SignUpPageState extends State<SignUpPage> {
                       width: 280,
                       height: 75,
                       child: TextField(
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.start,
                         controller: _emailController,
                         decoration: InputDecoration(
                           hintText: "Name",
-                          contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
+                          hintStyle: TextStyle(color: appColors.grey),
+                          contentPadding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border
                             borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners
@@ -171,11 +172,12 @@ class _SignUpPageState extends State<SignUpPage> {
                       width: 280,
                       height: 75,
                       child: TextField(
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.start,
                         controller: _emailController,
                         decoration: InputDecoration(
                           hintText: "Email",
-                          contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
+                          hintStyle: TextStyle(color: appColors.grey),
+                          contentPadding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border
                             borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners
@@ -192,70 +194,9 @@ class _SignUpPageState extends State<SignUpPage> {
 
                 const SizedBox(height: 30),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    FaIcon(FontAwesomeIcons.key, color: appColors.royalBlue, size: 35,),
-                    const SizedBox(width: 20,),
-                    SizedBox(
-                      width: 280,
-                      height: 75,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        controller: _passwordController,
-                        decoration: InputDecoration(
-                          hintText: "Password",
-                          contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border
-                            borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border when focused
-                            borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners when focused
-                          ),
-                        ),
-                        obscureText: true,
-                      ),
-                    ),
-                  ],
-                ),
+                PasswordField(controller: _passwordController),
 
                 const SizedBox(height: 30),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    FaIcon(FontAwesomeIcons.key, color: appColors.royalBlue, size: 35,),
-
-                    const SizedBox(width: 20,),
-
-                    // TODO: Set up logic for confirm password for signing up
-                    SizedBox(
-                      width: 280,
-                      height: 75,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        controller: _confirmPasswordController,
-                        decoration: InputDecoration(
-                          hintText: "Confirm Password here",
-                          contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border
-                            borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border when focused
-                            borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners when focused
-                          ),
-                        ),
-                        obscureText: true,
-                      ),
-                    ),
-                  ],
-                ),
 
                 const SizedBox(height: 50),
                 ElevatedButton(
