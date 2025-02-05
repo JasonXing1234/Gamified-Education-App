@@ -70,7 +70,7 @@ class _HomeState extends State<Home> {
           title: const Text('Select a lesson to practice'),
           children: <Widget>[
             SimpleDialogOption(
-              child: const Text("Tutorial & Set Up"),
+              child: const Text("Random Questions"),
               onPressed: () {
                 Navigator.pop(context);
                 setState(() {
