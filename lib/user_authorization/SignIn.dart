@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'SignUp.dart';
-import 'home_screen.dart';
+import '../home_screen.dart';
 import '../SQLITE/sqliteHelper.dart';
 import '../models/UserModel.dart';
 import '../styles/app_colors.dart';

@@ -4,12 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
-import 'SQLITE/sqliteHelper.dart';
-import 'models/UserModel.dart';
-import 'home_screen.dart';
-import 'models/quizModel.dart';
-import 'models/quizQuestionModel.dart';
-import 'models/readingModel.dart';
+import '../SQLITE/sqliteHelper.dart';
+import '../models/UserModel.dart';
+import '../home_screen.dart';
+import '../models/quizModel.dart';
+import '../models/quizQuestionModel.dart';
+import '../models/readingModel.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
