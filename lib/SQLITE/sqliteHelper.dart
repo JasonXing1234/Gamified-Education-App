@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -82,7 +83,7 @@ class DatabaseHelper {
   }
 
 
-  Future<int> insertUser(Map<String, dynamic> userData) async {
+  Future<int> insertUser(Map<String, dynamic> userData, String password) async {
     try {
       final db = await database;
 
@@ -90,6 +91,9 @@ class DatabaseHelper {
       userData['readingList'] = jsonEncode(userData['readingList']);
       userData['accessories'] = jsonEncode(userData['accessories']);
       userData['ifEachModuleComplete'] = jsonEncode(userData['ifEachModuleComplete']);
+
+      // Add password field to user data
+      userData['password'] = password;
 
       int result = await db.insert(
         'UserModel',
@@ -101,6 +105,31 @@ class DatabaseHelper {
       return result;
     } catch (e) {
       print('Error inserting user into SQLite: $e');
+      return -1;
+    }
+  }
+
+  Future<int> updateDisplayName(String userId, String displayName) async {
+    try {
+      final db = await database;
+
+      int result = await db.update(
+        'UserModel',
+        {'userName': displayName},
+        where: 'userId = ?',
+        whereArgs: [userId],
+      );
+
+      print('Display name updated successfully in SQLite.');
+
+      // Update Firebase user profile as well
+      final DatabaseReference firebaseRef = FirebaseDatabase.instance.ref();
+      await firebaseRef.child('profile').child(userId).update({'userName': displayName});
+
+      print('Display name updated successfully in Firebase.');
+      return result;
+    } catch (e) {
+      print('Error updating display name: $e');
       return -1;
     }
   }
@@ -124,6 +153,40 @@ class DatabaseHelper {
       return null;
     } catch (e) {
       print('Error fetching user from SQLite: $e');
+      return null;
+    }
+  }
+
+  Future<Map<String, dynamic>?> getUserByEmailAndPassword(String email, String password) async {
+    try {
+      final db = await database;
+      final List<Map<String, dynamic>> maps = await db.query(
+        'UserModel',
+        where: 'email = ? AND password = ?',
+        whereArgs: [email, password],
+      );
+
+      if (maps.isNotEmpty) {
+        return maps.first;
+      }
+      return null;
+    } catch (e) {
+      print('Error fetching user from SQLite: $e');
+      return null;
+    }
+  }
+
+  Future<Map<String, dynamic>?> fetchUserFromFirebase(String userId) async {
+    try {
+      final DatabaseReference ref = FirebaseDatabase.instance.ref();
+      DataSnapshot snapshot = await ref.child('profile').child(userId).get();
+
+      if (snapshot.exists) {
+        return Map<String, dynamic>.from(snapshot.value as Map);
+      }
+      return null;
+    } catch (e) {
+      print('Error fetching user from Firebase: $e');
       return null;
     }
   }

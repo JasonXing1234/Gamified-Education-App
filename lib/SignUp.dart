@@ -20,39 +20,13 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _userNameController = TextEditingController();
 
   final DatabaseReference databaseRef = FirebaseDatabase.instance.ref();
   User? user2 = FirebaseAuth.instance.currentUser;
 
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
-
-  List<QuizModel> quizzes = List.generate(6, (index) {
-    return QuizModel(
-      quizId: 'quiz${index + 1}',
-      quizScore: 0,
-      questions: List.generate(3, (questionIndex) {
-        return QuizQuestionModel(
-          questionId: '${index + 1}_$questionIndex',
-          isCorrect: false,
-          beginTimeStamp: DateTime.now(),
-          endTimeStamp: DateTime.now().add(Duration(minutes: 1)),
-        );
-      }),
-    );
-  });
-
-  List<readingModel> readings = List.generate(6, (index) {
-    return readingModel(
-      readingID: 'reading${index + 1}',
-      progress: 0,
-    );
-  });
-
-  List<readingModel> initialReadings = List.generate(6, (index) => readingModel(
-    readingID: 'reading_$index',
-    progress: 0,
-  ));
 
   List<QuizModel> initialQuizzes = List.generate(6, (index) => QuizModel(
     quizId: 'quiz$index',
@@ -65,42 +39,47 @@ class _SignUpPageState extends State<SignUpPage> {
     )),
   ));
 
+  List<readingModel> initialReadings = List.generate(6, (index) => readingModel(
+    readingID: 'reading_$index',
+    progress: 0,
+  ));
+
   Future<void> _signUp() async {
     try {
       var result = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
       );
+
       UserModel user = UserModel(
         userId: result.user!.uid,
         email: _emailController.text.toLowerCase(),
         profilePic: null,
+        userName: _userNameController.text.trim(), // Store display name
         deviceToken: await FirebaseMessaging.instance.getToken(),
         readingList: initialReadings,
         quizList: initialQuizzes,
         accessories: List<bool>.filled(20, false),
         numTickets: 0,
-          ifEachModuleComplete: List<bool>.filled(6, false),
+        ifEachModuleComplete: List<bool>.filled(6, false),
       );
-      print('Failed to update field: prior');
-      try{
+
+      // Save user details to Firebase Realtime Database
+      try {
         databaseRef.child('profile').child(user.userId!).set(user.toJson());
       } catch (e) {
-        print('Error: $e');
-        // Show error message
+        print('Error saving user to Firebase: $e');
       }
-      print('Failed to update field: after');
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
+
+      // Save user details to SQLite including password
       DatabaseHelper dbHelper = DatabaseHelper();
-      await dbHelper.insertUser(user.toJson());
+      await dbHelper.insertUser(user.toJson(), _passwordController.text);
+
       Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => const Home()),
       );
     } catch (e) {
-      print('Error: $e');
+      print('Error signing up: $e');
     }
   }
 
@@ -111,158 +90,86 @@ class _SignUpPageState extends State<SignUpPage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: [
-                // Image.asset(
-                //   'assets/images/img_1.png', // Path to your image
-                //   width: 300, // Set the width of the image
-                //   height: 300, // Set the height of the image
-                //   fit: BoxFit.cover, // How the image should be inscribed into the space
-                // ),
-                const SizedBox(height: 30),
-                // Text(
-                //   "EMAIL",
-                //   style: textStyles.heading1,
-                // ),
-                // const SizedBox(height: 10),
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.email,
-                      color: appColors.royalBlue,
-                      size: 40,
-                    ),
-                    const SizedBox(width: 20,),
-                    SizedBox(
-                      width: 280,
-                      height: 75,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        controller: _emailController,
-                        decoration: InputDecoration(
-                          hintText: "Email",
-                          contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border
-                            borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border when focused
-                            borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners when focused
-                          ),
-                        ),
+              // User Name Input
+              Row(
+                children: [
+                  Icon(Icons.person, color: appColors.royalBlue, size: 40),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: TextField(
+                      controller: _userNameController,
+                      decoration: InputDecoration(
+                        hintText: "DisplayName",
                       ),
                     ),
-                  ],
-                ),
-
-                const SizedBox(height: 30),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.lock,
-                      color: appColors.royalBlue,
-                      size: 40,
-                    ),
-                    const SizedBox(width: 20,),
-                    SizedBox(
-                      width: 280,
-                      height: 75,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        controller: _passwordController,
-                        decoration: InputDecoration(
-                          hintText: "Password",
-                          contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border
-                            borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border when focused
-                            borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners when focused
-                          ),
-                        ),
-                        obscureText: true,
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 30),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.lock,
-                      color: appColors.royalBlue,
-                      size: 40,
-                    ),
-                    const SizedBox(width: 20,),
-
-                    // TODO: Set up logic for confirm password for signing up
-                    SizedBox(
-                      width: 280,
-                      height: 75,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        controller: _confirmPasswordController,
-                        decoration: InputDecoration(
-                          hintText: "Confirm Password here",
-                          contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border
-                            borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(width: 3, color: appColors.grey), // Thick border when focused
-                            borderRadius: const BorderRadius.all(Radius.circular(15.0)), // Rounded corners when focused
-                          ),
-                        ),
-                        obscureText: true,
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 50),
-                ElevatedButton(
-                  onPressed: _signUp,
-                  style: ElevatedButton.styleFrom(
-                      textStyle: const TextStyle(
-                        fontSize: 20, // Set the font size
-                        color: Colors.white, // Set the text color
-                      ),
-                    minimumSize: const Size(350, 60), // Width: 150, Height: 50
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15), // Set the border radius
-                    ),
-                    backgroundColor: appColors.royalBlue,
                   ),
-                  child: Text(
-                    "Sign Up",
-                    style: textStyles.mediumBodyTextWhite,
+                ],
+              ),
+
+              const SizedBox(height: 20),
+
+              // Email Input
+              Row(
+                children: [
+                  Icon(Icons.email, color: appColors.royalBlue, size: 40),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: TextField(
+                      controller: _emailController,
+                      decoration: InputDecoration(hintText: "Email"),
+                    ),
                   ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('Already have an account? Sign In'),
-                ),
-              ],
-        ),
+                ],
+              ),
+
+              const SizedBox(height: 20),
+
+              // Password Input
+              Row(
+                children: [
+                  Icon(Icons.lock, color: appColors.royalBlue, size: 40),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: TextField(
+                      controller: _passwordController,
+                      decoration: InputDecoration(hintText: "Password"),
+                      obscureText: true,
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 20),
+
+              // Confirm Password Input
+              Row(
+                children: [
+                  Icon(Icons.lock, color: appColors.royalBlue, size: 40),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: TextField(
+                      controller: _confirmPasswordController,
+                      decoration: InputDecoration(hintText: "Confirm Password"),
+                      obscureText: true,
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 40),
+
+              ElevatedButton(
+                onPressed: _signUp,
+                child: Text("Sign Up"),
+              ),
+            ],
+          ),
         ),
       ),
-      ));
+    );
   }
 }
