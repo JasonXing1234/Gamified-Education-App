@@ -74,7 +74,6 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     }
   }
 
-  /// **Step 1: Fetch User from SQLite & Fetch Readings**
   Future<void> _initializeUserAndFetchReadings() async {
     user = await _dbHelper.getLoggedInUser();
     if (user != null) {
@@ -83,7 +82,6 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     }
   }
 
-  /// **Step 2: Fetch Reading List from SQLite**
   Future<int?> _fetchReadingList() async {
     if (user != null) {
       try {
@@ -111,7 +109,6 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     return null;
   }
 
-  /// **Step 3: Update Firebase & SQLite for Current Task**
   Future<void> updateCurrentTask() async {
     if (user == null) return;
     String newTask = "reading${widget.lesson.lessonNumber}";
@@ -127,13 +124,11 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     }
   }
 
-  /// **Step 4: Update Reading Progress in Firebase & SQLite**
   Future<void> updateReadingProgress(int lessonNumber, int progress) async {
     if (user == null) return;
     await _dbHelper.updateReadingProgress(user!.userId!, lessonNumber, progress);
   }
 
-  /// **Step 5: Update `ifEachModuleComplete` in Firebase & SQLite**
   Future<void> updateIfEachModuleComplete() async {
     if (user == null) return;
     String userId = user!.userId!;
@@ -165,7 +160,6 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     }
   }
 
-  /// **Step 6: Handle Next Page Navigation & Completion**
   Future<void> nextReadingPage({String userAnswer = ""}) async {
     if (user == null) return;
 
@@ -206,7 +200,6 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     }
   }
 
-  /// **Step 7: Handle End of Lesson**
   Future<void> completeLesson() async {
     await updateCurrentTask();
     await updateIfEachModuleComplete();
