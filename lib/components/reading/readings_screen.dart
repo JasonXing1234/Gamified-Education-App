@@ -8,6 +8,8 @@ import 'package:quiz/components/progress_bar/progress_bar.dart';
 
 
 import '../../SQLITE/sqliteHelper.dart';
+import '../../models/UserModel.dart';
+import '../../models/readingModel.dart';
 import '../../styles/app_colors.dart';
 import '../../styles/text_styles.dart';
 import '../buttons/next_button.dart';
@@ -52,206 +54,197 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
   User? user2 = FirebaseAuth.instance.currentUser;
   List<dynamic> readings = [1,1,1,1,1,1];
   Future<int?>? _readingListFuture;
+  UserModel? user;
 
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScrollEnd);
-    _readingListFuture = _fetchReadingList();
+    _initializeUserAndFetchReadings();
   }
 
   void _onScrollEnd() {
-    // TODO: this is not scrolling all the way to the top.
-    // Maybe because of the set up the height constant, but then the real height changes with more text boxes something?
-    // the Quiz screen reset scroll is working fine?
-
-
     if (!_scrollController.position.isScrollingNotifier.value) {
-      // Get the current scroll offset
       double offset = _scrollController.offset;
-
-      // Define the height of each "screen"
       double screenHeight = MediaQuery.of(context).size.height;
-
-      double totalHeight = offset + screenHeight - 40;  // Subtract padding
-
-
-      // Find the nearest "screen" to snap to
+      double totalHeight = offset + screenHeight - 40;
       int targetPage = (totalHeight / screenHeight).round();
-
-      // Snap to the exact position of the nearest page
       double targetOffset = targetPage * screenHeight;
-
-      // Scroll to that "screen"
       _scrollController.jumpTo(targetOffset);
-
-      // _scrollController.animateTo(
-      //   0,
-      //   duration: const Duration(milliseconds: 300),
-      //   curve: Curves.easeInOut,
-      // );
     }
   }
 
+  /// **Step 1: Fetch User from SQLite & Fetch Readings**
+  Future<void> _initializeUserAndFetchReadings() async {
+    user = await _dbHelper.getLoggedInUser();
+    if (user != null) {
+      _readingListFuture = _fetchReadingList();
+      setState(() {});
+    }
+  }
 
-  // Asynchronous function to fetch reading list data
+  /// **Step 2: Fetch Reading List from SQLite**
   Future<int?> _fetchReadingList() async {
-    if (user2 != null) {
+    if (user != null) {
       try {
-        DataSnapshot snapshot = await _database
-            .child('profile')
-            .child(user2!.uid)
-            .child('readingList')
-            .get();
+        List<readingModel> readingListData =
+        await _dbHelper.getReadingList(user!.userId!);
 
-        if (snapshot.value != null) {
+        if (readingListData.isNotEmpty) {
+          List<readingModel> readings = readingListData
+              .map((e) => readingModel.fromJson(e as Map<String, dynamic>))
+              .toList();
           setState(() {
-            // Assuming snapshot.value is a List of reading objects
-            List<dynamic> readingList = snapshot.value as List<dynamic>;
-            readings = readingList;
-
-            // Assuming you want to access a specific reading object based on widget.readingNumber
             if (widget.lesson.lessonNumber - 1 < readings.length) {
-              // Update the readingPageIndex based on the fetched reading object
-              readingPageIndex = readings[widget.lesson.lessonNumber - 1]['progress']; // Access progress
+              readingPageIndex =
+                  readings[widget.lesson.lessonNumber - 1].progress;
             } else {
-              readingPageIndex = 0; // Default or reset if index is out of bounds
+              readingPageIndex = 0;
             }
           });
-          // setState(() {
-          //   readings = snapshot.value as List<dynamic>;
-          //   readingPageIndex = readings[widget.lesson.lessonNumber - 1];
-          // });
         }
         return readingPageIndex;
       } catch (e) {
-        // Handle potential errors, like network issues
-        print('Error fetching reading list: $e');
-      }
-    }
-  }
-
-  Future<void> updateReadingProgress(String userId, int lessonNumber, int progress) async {
-    await _dbHelper.updateReadingProgress(userId, lessonNumber, progress);
-  }
-
-  Future<List<Map<String, dynamic>>> fetchReadingList(String userId) async {
-    return await _dbHelper.getReadingList(userId);
-  }
-
-  // Asynchronous function to update reading list data
-  Future<int?> _updateReadingList() async {
-    if (user2 != null) {
-      try {
-        DataSnapshot snapshot = await _database
-            .child('profile')
-            .child(user2!.uid)
-            .child('readingList')
-            .get();
-
-        if (snapshot.value != null) {
-          List<dynamic> readingList = snapshot.value as List<dynamic>;
-
-          setState(() {
-            readings = readingList;
-          });
-        }
-        return readingPageIndex;
-      } catch (e) {
-        print('Error updating reading list: $e');
+        print('Error fetching reading list from SQLite: $e');
       }
     }
     return null;
   }
 
-  Future<void> nextReadingPage({String userAnswer = ""}) async {
-    // Increment reading page index locally
-    int newReadingPageIndex = readingPageIndex + 1;
-    print("DEBUG: Reading Page Index  ${newReadingPageIndex}");
+  /// **Step 3: Update Firebase & SQLite for Current Task**
+  Future<void> updateCurrentTask() async {
+    if (user == null) return;
+    String newTask = "reading${widget.lesson.lessonNumber}";
 
     try {
-      // Retrieve the user's reading list from the database
+      await _database.child('profile').child(user!.userId!).update({
+        'currentTask': newTask,
+      });
+      await _dbHelper.updateCurrentTask(user!.userId!, newTask);
+      print('Current task updated to: $newTask');
+    } catch (e) {
+      print('Error updating current task: $e');
+    }
+  }
+
+  /// **Step 4: Update Reading Progress in Firebase & SQLite**
+  Future<void> updateReadingProgress(int lessonNumber, int progress) async {
+    if (user == null) return;
+    await _dbHelper.updateReadingProgress(user!.userId!, lessonNumber, progress);
+  }
+
+  /// **Step 5: Update `ifEachModuleComplete` in Firebase & SQLite**
+  Future<void> updateIfEachModuleComplete() async {
+    if (user == null) return;
+    String userId = user!.userId!;
+    int moduleIndex = widget.lesson.lessonNumber - 1;
+
+    try {
       DataSnapshot snapshot = await _database
           .child('profile')
-          .child(user2!.uid)
-          .child('readingList')
+          .child(userId)
+          .child('ifEachModuleComplete')
           .get();
 
       if (snapshot.value != null) {
-        List<dynamic> readings = snapshot.value as List<dynamic>;
-        print("DEBUG: Sanpshot is not null readings = ${readings}");
+        List<dynamic> moduleCompletion = snapshot.value as List<dynamic>;
+        if (moduleIndex >= 0 && moduleIndex < moduleCompletion.length) {
+          moduleCompletion[moduleIndex][0] = true;
+          await _database.child('profile').child(userId).update({
+            'ifEachModuleComplete': moduleCompletion,
+          });
+          print('Firebase: ifEachModuleComplete updated.');
+        } else {
+          print('Firebase: Invalid module index.');
+        }
+      }
+      await _dbHelper.updateIfEachModuleComplete(userId, widget.lesson.lessonNumber);
+      print('SQLite: ifEachModuleComplete updated.');
+    } catch (e) {
+      print('Error updating ifEachModuleComplete: $e');
+    }
+  }
 
-        // Update progress for the current lesson
-        readings[widget.lesson.lessonNumber - 1]['progress'] = newReadingPageIndex;
+  /// **Step 6: Handle Next Page Navigation & Completion**
+  Future<void> nextReadingPage({String userAnswer = ""}) async {
+    if (user == null) return;
 
+    int newReadingPageIndex = readingPageIndex + 1;
 
-        // Save updated reading list back to the database
-        await _database.child('profile/${user2!.uid}/readingList').set(readings);
-        final DatabaseHelper _dbHelper = DatabaseHelper();
-        // Update progress for the current lesson in SQLite
+    try {
+      // Fetch the reading list from SQLite
+      List<readingModel> readings = await _dbHelper.getReadingList(user!.userId!);
+
+      if (readings.isNotEmpty) {
+        // Find the correct lesson and update progress
+        for (int i = 0; i < readings.length; i++) {
+          if (readings[i].readingID == 'reading_${widget.lesson.lessonNumber}') {
+            readings[i].progress = newReadingPageIndex;
+            break;
+          }
+        }
+
+        // Update the progress in SQLite
         await _dbHelper.updateReadingProgress(
-          user2!.uid,
+          user!.userId!,
           widget.lesson.lessonNumber,
           newReadingPageIndex,
         );
-        // Update state after async updates are done
+
+        // Update UI state
         setState(() {
           readingPageIndex = newReadingPageIndex;
-          _readingListFuture = _updateReadingList();
+          _readingListFuture = _fetchReadingList(); // Fetch updated list
         });
+
+        print('Reading progress updated successfully in SQLite.');
+      } else {
+        print('Error: Reading list is empty.');
       }
-
-      // Update state after async updates are done
-      // TODO: Fixed reading so it advances, doesn't save the reading spot though
-      setState(() {
-        readingPageIndex = newReadingPageIndex;
-        _readingListFuture = _updateReadingList();
-      });
-
     } catch (e) {
-      print('Error updating reading progress: $e');
+      print('Error updating reading progress in SQLite: $e');
     }
+  }
 
+  /// **Step 7: Handle End of Lesson**
+  Future<void> completeLesson() async {
+    await updateCurrentTask();
+    await updateIfEachModuleComplete();
+    widget.openRewardPage();
   }
 
   Future<void> prevReadingPage({String userAnswer = ""}) async {
-    // Only decrement if readingPageIndex is greater than 0
-    if (readingPageIndex > 0) {
+    if (readingPageIndex > 0 && user != null) {
       int newReadingPageIndex = readingPageIndex - 1;
 
       try {
-        // Retrieve the user's reading list from the database
-        DataSnapshot snapshot = await _database
-            .child('profile')
-            .child(user2!.uid)
-            .child('readingList')
-            .get();
+        List<readingModel> readingListData =
+        await _dbHelper.getReadingList(user!.userId!);
 
-        if (snapshot.value != null) {
-          List<dynamic> readings = snapshot.value as List<dynamic>;
-          readings[widget.lesson.lessonNumber - 1]['progress'] = newReadingPageIndex;
-          await _database.child('profile/${user2!.uid}/readingList').set(readings);
-          setState(() {
-            readingPageIndex = newReadingPageIndex;
-            _readingListFuture = _updateReadingList();
-          });
-          final DatabaseHelper _dbHelper = DatabaseHelper();
-          // Update progress for the current lesson in SQLite
+        if (readingListData.isNotEmpty) {
+          List<readingModel> readings = readingListData
+              .map((e) => readingModel.fromJson(e as Map<String, dynamic>))
+              .toList();
+
+          readings[widget.lesson.lessonNumber - 1].progress = newReadingPageIndex;
+
+          await _database
+              .child('profile')
+              .child(user!.userId!)
+              .child('readingList')
+              .set(readings.map((r) => r.toJson()).toList());
+
           await _dbHelper.updateReadingProgress(
-            user2!.uid,
+            user!.userId!,
             widget.lesson.lessonNumber,
             newReadingPageIndex,
           );
 
+          setState(() {
+            readingPageIndex = newReadingPageIndex;
+            _readingListFuture = _fetchReadingList();
+          });
         }
-
-        // Update state after async updates are done
-        setState(() {
-          readingPageIndex = newReadingPageIndex;
-          _readingListFuture = _updateReadingList();
-        });
-
-
       } catch (e) {
         print("Error updating reading progress: $e");
       }
@@ -266,6 +259,17 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     readings[widget.lesson.lessonNumber - 1]['progress'] = 0;
     await _database.child('profile/${user2?.uid}').update({
       'readingList': readings,
+    });
+    await _dbHelper.updateReadingProgress(
+      user!.userId!,
+      widget.lesson.lessonNumber,
+      0,
+    );
+
+    // Update UI state
+    setState(() {
+      readingPageIndex = 0;
+      _readingListFuture = _fetchReadingList();
     });
   }
 
@@ -363,49 +367,35 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                 ),
                 Expanded(
                   child: MultiPurposeButton(
-                    onTap: () {
+                    onTap: () async {
+                      if (readingPageIndex == readingPages.length - 1) { // Zero indexing
+                        // Already on last page, reset to first page
+                        await backToFirstPage();
+                        await updateCurrentTask();
+                        await updateIfEachModuleComplete();
+                        widget.openRewardPage();
+                      } else {
+                        if (currentReadingPage is ReadingQuestion) {
+                          if (currentReadingPage.correctAnswer == selectedAnswerValue) {
+                            // Correct answer
+                            isCorrect = true;
+                            await nextReadingPage(userAnswer: selectedAnswerValue);
+                          } else {
+                            isCorrect = false;
+                          }
+                          selectedAnswerIndex = 10;
+                          selectedAnswerValue = "";
+                        } else if (currentReadingPage is ReadingMultipleAnswersQuestion) {
+                          if (currentReadingPage.answerOptions[0] == "textField") {
+                            await nextReadingPage(userAnswer: _controller.text);
+                          }
+                        } else {
+                          await nextReadingPage();
+                        }
+                      }
                       setState(() {
-                        if (readingPageIndex == readingPages.length -1) { // Zero indexing
-                          // Already on last page, reset to first page
-                          backToFirstPage();
-
-                          // Open the rewards page
-                          widget.openRewardPage();
-
-                        }
-                        else {
-                          if (currentReadingPage is ReadingQuestion) {
-
-                            if (currentReadingPage.correctAnswer == selectedAnswerValue) {
-                              // Correct :)
-                              isCorrect = true;
-                              nextReadingPage(userAnswer: selectedAnswerValue);
-
-                            }
-                            else {
-                              isCorrect = false;
-                            }
-
-                            // Reset
-                            selectedAnswerIndex = 10;
-                            selectedAnswerValue = "";
-
-                          }
-                          else if (currentReadingPage is ReadingMultipleAnswersQuestion) {
-                            if (currentReadingPage.answerOptions[0] == "textField") {
-                              // Add a controller text to get access to the answer
-                              nextReadingPage(userAnswer: _controller.text);
-                            }
-                          }
-                          else {
-                            nextReadingPage();
-                          }
-                        }
-
-                        // Clear Answers for next question
                         selectedAnswerIndex = 10;
                         selectedAnswers = [];
-
                       });
                     },
                     disabled: false,
@@ -424,6 +414,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                 return Center(child: Text('Error: ${snapshot.error}'));
               }
               else {
+                int pageIndex = snapshot.data ?? 0;
                 return Stack(
                   children: [
                     SingleChildScrollView(
@@ -541,7 +532,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                       color: Colors.white,
-                      child: ProgressBar(pageIndex: snapshot.data!, pageList: readingPages),
+                      child: ProgressBar(pageIndex: pageIndex, pageList: readingPages),
                     )
                   ],
                 );}})

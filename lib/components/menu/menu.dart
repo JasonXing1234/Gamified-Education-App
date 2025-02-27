@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../SQLITE/sqliteHelper.dart';
 import '../../user_authorization/SignIn.dart';
 import '../../styles/app_colors.dart';
 import '../../styles/text_styles.dart';
@@ -40,8 +41,11 @@ class MenuDrawer extends StatelessWidget {
 
             OutlinedButton.icon(
               onPressed: () async {
-                await FirebaseAuth.instance.signOut();
-                // Navigate back to the Sign-In page after signing out
+                final DatabaseHelper _dbHelper = DatabaseHelper();
+                // Update the logged-in status to 0 (logged out) in SQLite
+                await _dbHelper.logoutUser();
+
+                // Navigate to SignInPage
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => SignInPage()),
                 );

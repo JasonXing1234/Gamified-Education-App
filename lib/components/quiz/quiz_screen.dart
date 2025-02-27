@@ -11,12 +11,6 @@ import 'package:quiz/styles/app_colors.dart';
 import '../../SQLITE/sqliteHelper.dart';
 import '../buttons/listen_button.dart';
 import '../progress_bar/progress_bar.dart';
-import 'quiz_questions/quiz2.dart';
-import 'quiz_questions/quiz3.dart';
-import 'quiz_questions/quiz4.dart';
-import 'quiz_questions/quiz5.dart';
-import 'quiz_questions/quiz6.dart';
-
 import '../buttons/next_button.dart';
 import '../text_box/text_box.dart';
 
@@ -48,6 +42,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
 
   User? user2 = FirebaseAuth.instance.currentUser;
   final DatabaseReference _database = FirebaseDatabase.instance.ref();
+  final DatabaseHelper _dbHelper = DatabaseHelper();
 
   //For multiple answer options
   List<String> selectedAnswers = [];
@@ -59,15 +54,33 @@ class _QuestionsScreenState extends State<QuizScreen> {
 
   List<Question> quizQuestions = [];
   String quizName = "QUIZ";
+  int _attemptId = -1;
 
 
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScrollEnd);
-    recordingTimeStamp();
-
     quizQuestions = widget.quiz;
+    _initializeAttempt(); // Initialize attempt and store ID
+  }
+
+  // Insert a new quiz attempt in SQLite and store the attempt ID
+  Future<void> _initializeAttempt() async {
+    if (user2 == null) return;
+
+    try {
+      final DatabaseHelper _dbHelper = DatabaseHelper();
+      _attemptId = await _dbHelper.insertQuizAttempt(
+          user2!.uid,
+          widget.quizNumber.toString(),
+          0 // Initial score
+      );
+
+      print('New attempt initialized with ID: $_attemptId');
+    } catch (e) {
+      print('Error initializing attempt: $e');
+    }
   }
 
   void _onScrollEnd() {
@@ -100,13 +113,15 @@ class _QuestionsScreenState extends State<QuizScreen> {
   }
 
   Future<void> recordingTimeStamp() async {
+    if (_attemptId == -1 || user2 == null) return;
+
     try {
-      // Firebase: Update the end timestamp
+      // Firebase: Update the end timestamp for the specific attempt
       await _database
           .child('profile')
           .child(user2!.uid)
-          .child('quizList')
-          .child(widget.quizNumber.toString())
+          .child('QuizAttempts')  // Store attempts separately
+          .child(_attemptId.toString())  // Use attemptId instead of quizList
           .child('questions')
           .child(questionIndex.toString())
           .update({
@@ -116,9 +131,10 @@ class _QuestionsScreenState extends State<QuizScreen> {
       // SQLite: Update the end timestamp
       final DatabaseHelper _dbHelper = DatabaseHelper();
       await _dbHelper.updateEndTimestamp(
-          user2!.uid,
+        user2!.uid,
         questionIndex.toString(),
         DateTime.now().toIso8601String(),
+        _attemptId, // Use global attempt ID
       );
 
       print('End timestamp updated successfully.');
@@ -127,35 +143,73 @@ class _QuestionsScreenState extends State<QuizScreen> {
     }
   }
 
+  Future<void> updateIfEachModuleCompleteForQuiz() async {
+    String userId = user2!.uid;
+    int moduleIndex = widget.quizNumber - 1; // Get correct module list index
+
+    try {
+      DataSnapshot snapshot = await _database
+          .child('profile')
+          .child(userId)
+          .child('ifEachModuleComplete')
+          .get();
+
+      if (snapshot.value != null) {
+        List<dynamic> moduleCompletion = snapshot.value as List<dynamic>;
+        if (moduleIndex >= 0 && moduleIndex < moduleCompletion.length) {
+          moduleCompletion[moduleIndex][1] = true;
+
+          await _database.child('profile').child(userId).update({
+            'ifEachModuleComplete': moduleCompletion,
+          });
+
+          print('Firebase: ifEachModuleComplete updated successfully for quiz.');
+        } else {
+          print('Firebase: Invalid module index.');
+        }
+      }
+      await _dbHelper.updateIfEachModuleCompleteForQuiz(userId, widget.quizNumber);
+
+      print('SQLite: ifEachModuleComplete updated successfully for quiz.');
+    } catch (e) {
+      print('Error updating ifEachModuleComplete for quiz: $e');
+    }
+  }
 
   Future<void> nextQuestion(String answer) async {
-    final userId = user2?.uid;
+    if (_attemptId == -1 || user2 == null) return;
 
+    final userId = user2?.uid;
     if (userId != null && questionIndex < quizQuestions.length - 1) {
       try {
         final DatabaseHelper _dbHelper = DatabaseHelper();
+
+        // Firebase: Update the end timestamp for the current question
         await _database
             .child('profile')
             .child(userId)
-            .child('quizList')
-            .child((widget.quizNumber - 1).toString())
+            .child('QuizAttempts')  // Store per attempt
+            .child(_attemptId.toString())
             .child('questions')
             .child(questionIndex.toString())
             .update({
           'endTimeStamp': DateTime.now().toIso8601String(),
         });
+
         await _dbHelper.updateEndTimestamp(
           user2!.uid,
           questionIndex.toString(),
           DateTime.now().toIso8601String(),
+          _attemptId, // Use global attempt ID
         );
 
         if (questionIndex < quizQuestions.length - 1) {
+          // Firebase: Update the begin timestamp for the next question
           await _database
               .child('profile')
               .child(userId)
-              .child('quizList')
-              .child(widget.quizNumber.toString())
+              .child('QuizAttempts')
+              .child(_attemptId.toString())
               .child('questions')
               .child((questionIndex + 1).toString())
               .update({
@@ -166,7 +220,11 @@ class _QuestionsScreenState extends State<QuizScreen> {
             user2!.uid,
             (questionIndex + 1).toString(),
             DateTime.now().toIso8601String(),
+            _attemptId, // Use global attempt ID
           );
+        }
+        else{
+          await updateIfEachModuleCompleteForQuiz();
         }
       } catch (e) {
         print('Error updating timestamps: $e');

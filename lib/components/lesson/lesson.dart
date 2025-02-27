@@ -20,7 +20,7 @@ class Lesson {
   String animalName;
 
   final int lessonNumber;
-  final double progress;
+  double progress;
 
   final List<ReadingPage> reading;
   final List<Question> preQuiz;

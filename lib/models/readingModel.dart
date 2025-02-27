@@ -17,7 +17,7 @@ class readingModel {
 
   factory readingModel.fromJson(Map<String, dynamic> json) {
     return readingModel(
-      readingID: json['readingID'] as String,
+      readingID: json['bookId'] as String,
       progress: json['progress'] as int,
     );
   }

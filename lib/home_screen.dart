@@ -8,8 +8,12 @@ import 'package:quiz/components/lesson/lesson_screen.dart';
 
 import '../styles/app_colors.dart';
 import '../styles/text_styles.dart';
+import 'SQLITE/sqliteHelper.dart';
+import 'components/lesson/lesson.dart';
 import 'components/menu/menu.dart';
 import 'components/practice_results_screen.dart';
+import 'components/quiz_results_screen.dart';
+import 'components/reading_results_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -27,10 +31,12 @@ class _HomeState extends State<Home> {
   Future<int?>? numTickets;
   final DatabaseReference _database = FirebaseDatabase.instance.ref();
   User? user2;
-
+  final DatabaseHelper _dbHelper = DatabaseHelper();
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
-
+  Map<String, int>? nextTask;
+  String buttonText = "Next Task";
+  bool isDisabled = true;
   final double spacing = 30;
 
   @override
@@ -39,6 +45,7 @@ class _HomeState extends State<Home> {
     user2 = FirebaseAuth.instance.currentUser;
     // Fetch readings once the widget is initialized
     numTickets = _fetchReadingList();
+    fetchAndSetModuleProgress();
   }
 
   Future<int?> _fetchReadingList() async {
@@ -55,10 +62,20 @@ class _HomeState extends State<Home> {
         }
 
       } catch (e) {
-        // Handle potential errors, like network issues
         print('Error fetching reading list: $e');
       }
     }
+  }
+
+  Future<void> fetchAndSetModuleProgress() async {
+    String userId = user2!.uid;
+    Map<int, double> progressData = await _dbHelper.getModuleProgress(userId);
+
+    setState(() {
+      for (var lesson in allLessons) {
+        lesson.progress = progressData[lesson.lessonNumber] ?? 0.0;
+      }
+    });
   }
 
   // Function to show the dialog
@@ -84,7 +101,7 @@ class _HomeState extends State<Home> {
                 Navigator.pop(context);
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: socialMediaNorms, activeScreen: "practice-screen",))
+                    MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: socialMediaNorms, activeScreen: "practice-screen", practiceNumber: 1,))
                 );
               },
             ),
@@ -94,7 +111,7 @@ class _HomeState extends State<Home> {
                 Navigator.pop(context);
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: settings, activeScreen: "practice-screen",))
+                    MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: settings, activeScreen: "practice-screen", practiceNumber: 2,))
                 );
               },
             ),
@@ -104,7 +121,7 @@ class _HomeState extends State<Home> {
                 Navigator.pop(context);
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: fakeProfiles, activeScreen: "practice-screen",))
+                    MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: fakeProfiles, activeScreen: "practice-screen", practiceNumber: 3,))
                 );
               },
             ),
@@ -114,7 +131,7 @@ class _HomeState extends State<Home> {
                 Navigator.pop(context);
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: fakeProfiles, activeScreen: "practice-screen",))
+                    MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: fakeProfiles, activeScreen: "practice-screen", practiceNumber: 4,))
                 );
               },
             ),
@@ -125,7 +142,7 @@ class _HomeState extends State<Home> {
                 //todo: broken????
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: appropriateInteractions, activeScreen: "practice-screen",))
+                    MaterialPageRoute(builder: (context) => PracticeResultScreen(lesson: appropriateInteractions, activeScreen: "practice-screen", practiceNumber: 5,))
                 );
               },
             ),
@@ -134,6 +151,54 @@ class _HomeState extends State<Home> {
       },
     );
   }
+
+  Future<void> fetchNextTask() async {
+    final task = await _dbHelper.getNextIncompleteTask("user123");
+
+    if (task != null) {
+      setState(() {
+        int moduleIndex = task['moduleIndex']!;
+        int taskIndex = task['taskIndex']!;
+        String taskType = taskIndex == 0 ? "Reading" : "Quiz";
+
+        buttonText = "$taskType ${moduleIndex + 1}";
+        isDisabled = false;
+        nextTask = task;
+      });
+    } else {
+      setState(() {
+        buttonText = "All Tasks Complete!";
+        isDisabled = true;
+      });
+    }
+  }
+
+  void _handleButtonPress(BuildContext context) {
+    if (nextTask == null) return;
+
+    int moduleIndex = nextTask!['moduleIndex']!;
+    int taskIndex = nextTask!['taskIndex']!;
+    Lesson selectedLesson = allLessons[moduleIndex];
+
+    if (taskIndex == 0) {
+      // Navigate to Reading
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ReadingResultScreen(lesson: selectedLesson, activeScreen: "reading-screen"),
+        ),
+      );
+    } else {
+      // Navigate to Quiz
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => QuizResultScreen(lesson: selectedLesson, activeScreen: "quiz-screen"),
+        ),
+      );
+    }
+  }
+
 
   @override
   Widget build(context) {
@@ -185,10 +250,12 @@ class _HomeState extends State<Home> {
           ShortcutWidget(
             textStyles: textStyles,
             appColors: appColors,
-            buttonShortcut: (context){}, //TODO: Add code to update what is the next lesson for the user
+            buttonShortcut: (context){
+              _handleButtonPress(context!);
+            }, //TODO: Add code to update what is the next lesson for the user
             mainText: "Next Activity",
             subtitle: "Social Media Norms",
-            buttonText: "READING", //TODO: replace with logic about what text should be
+            buttonText: buttonText, //TODO: replace with logic about what text should be
             isDisabled: true,
           ),
 

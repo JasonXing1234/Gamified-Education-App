@@ -1,22 +1,19 @@
-import 'package:quiz/models/quizQuestionModel.dart';
+import 'package:quiz/models/quizAttemptModel.dart';
 
 class QuizModel {
   final String quizId;
-  final int quizScore;
-  final List<QuizQuestionModel> questions;
+  final List<QuizAttemptModel> attempts; // Multiple attempts for each quiz
 
   QuizModel({
     required this.quizId,
-    required this.quizScore,
-    required this.questions,
+    required this.attempts,
   });
 
   factory QuizModel.fromJson(Map<String, dynamic> json) {
     return QuizModel(
       quizId: json['quizId'],
-      quizScore: json['quizScore'],
-      questions: (json['questions'] as List)
-          .map((e) => QuizQuestionModel.fromJson(e))
+      attempts: (json['attempts'] as List)
+          .map((e) => QuizAttemptModel.fromJson(e))
           .toList(),
     );
   }
@@ -24,8 +21,7 @@ class QuizModel {
   Map<String, dynamic> toJson() {
     return {
       'quizId': quizId,
-      'quizScore': quizScore,
-      'questions': questions.map((q) => q.toJson()).toList(),
+      'attempts': attempts.map((a) => a.toJson()).toList(),
     };
   }
 }

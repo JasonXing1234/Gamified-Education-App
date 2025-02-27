@@ -9,11 +9,13 @@ class PracticeResultScreen extends StatefulWidget {
   PracticeResultScreen({
     super.key,
     required this.lesson,
-    required this.activeScreen
+    required this.activeScreen,
+    required this.practiceNumber
   });
 
   final Lesson lesson;
   String activeScreen;
+  int practiceNumber;
 
   @override
   State<StatefulWidget> createState() => _PracticeResultScreenState();
@@ -39,7 +41,7 @@ class _PracticeResultScreenState extends State<PracticeResultScreen> {
     // TODO: Update these practices to pick random practices from the lesson
 
     if (widget.activeScreen == "practice-screen") {
-      screen = PracticeScreen(onDone: switchToRewardScreen, practice: widget.lesson.practice,);
+      screen = PracticeScreen(onDone: switchToRewardScreen, practice: widget.lesson.practice, practiceNumber: widget.practiceNumber,);
     }
     else if (widget.activeScreen == "reward-screen") {
       screen = RewardScreen(lesson: widget.lesson, activityName: "practice",);

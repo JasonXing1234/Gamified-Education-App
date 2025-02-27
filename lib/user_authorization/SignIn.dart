@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import '../models/UserModel.dart';
 import 'SignUp.dart';
 import '../home_screen.dart';
 import '../SQLITE/sqliteHelper.dart';
-import '../models/UserModel.dart';
+import 'dart:io';
 import '../styles/app_colors.dart';
 import '../styles/text_styles.dart';
 
@@ -23,12 +24,7 @@ class _SignInPageState extends State<SignInPage> {
 
   Future<void> _signIn() async {
     bool isOnline = await _checkInternetConnection();
-
-    if (isOnline) {
-      await _signInWithFirebase();
-    } else {
-      await _signInWithSQLite();
-    }
+    await _signInWithSQLite();
   }
 
   /// Check Internet Connection
@@ -36,54 +32,49 @@ class _SignInPageState extends State<SignInPage> {
     var connectivityResult = await Connectivity().checkConnectivity();
 
     // If there's no connection type detected, return false immediately
-    if (connectivityResult == ConnectivityResult.none) {
+    if (connectivityResult[0] == ConnectivityResult.none) {
       return false;
     }
-
-    // Try making a real internet request
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      return result.isNotEmpty && result.first.rawAddress.isNotEmpty;
-    } catch (e) {
-      return false; // No actual internet access
-    }
+    return true;
   }
 
-  /// Firebase Sign-In (When Online)
-  Future<void> _signInWithFirebase() async {
-    try {
-      UserCredential result = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
-
-      String userId = result.user!.uid;
-
-      var userSnapshot = await _dbHelper.fetchUserFromFirebase(userId);
-      if (userSnapshot != null) {
-        // Store/update user data in SQLite
-        await _dbHelper.insertUser(userSnapshot, _passwordController.text);
-        print("SQLite updated with Firebase data.");
-      }
-
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => Home()),
-      );
-    } catch (e) {
-      print('Firebase Sign-In Error: $e');
-      _showErrorDialog("Invalid email or password.");
-    }
-  }
+  // /// Firebase Sign-In (When Online)
+  // Future<void> _signInWithFirebase() async {
+  //   try {
+  //     UserCredential result = await FirebaseAuth.instance.signInWithEmailAndPassword(
+  //       email: _emailController.text,
+  //       password: _passwordController.text,
+  //     );
+  //
+  //     String userId = result.user!.uid;
+  //
+  //     var userSnapshot = await _dbHelper.fetchUserFromFirebase(userId);
+  //     if (userSnapshot != null) {
+  //       // Store/update user data in SQLite
+  //       await _dbHelper.insertUser(userSnapshot, _passwordController.text);
+  //       print("SQLite updated with Firebase data.");
+  //     }
+  //
+  //     Navigator.of(context).push(
+  //       MaterialPageRoute(builder: (context) => Home()),
+  //     );
+  //   } catch (e) {
+  //     print('Firebase Sign-In Error: $e');
+  //     _showErrorDialog("Invalid email or password.");
+  //   }
+  // }
 
   /// SQLite Sign-In (When Offline)
   Future<void> _signInWithSQLite() async {
     try {
+      UserModel? localUser = await _dbHelper.getLoggedInUser();
       Map<String, dynamic>? userData = await _dbHelper.getUserByEmailAndPassword(
         _emailController.text,
         _passwordController.text,
       );
 
       if (userData != null) {
+        await _dbHelper.loginUser(localUser!.userId!);
         Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => Home()),
         );

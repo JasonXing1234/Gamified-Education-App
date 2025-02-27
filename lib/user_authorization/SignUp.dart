@@ -5,8 +5,12 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
 import '../SQLITE/sqliteHelper.dart';
+import '../models/PracticeAttemptModel.dart';
+import '../models/PracticeModel.dart';
+import '../models/PracticeQuestionModel.dart';
 import '../models/UserModel.dart';
 import '../home_screen.dart';
+import '../models/quizAttemptModel.dart';
 import '../models/quizModel.dart';
 import '../models/quizQuestionModel.dart';
 import '../models/readingModel.dart';
@@ -28,14 +32,35 @@ class _SignUpPageState extends State<SignUpPage> {
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
 
-  List<QuizModel> initialQuizzes = List.generate(6, (index) => QuizModel(
-    quizId: 'quiz$index',
-    quizScore: 0,
-    questions: List.generate(10, (questionIndex) => QuizQuestionModel(
-      questionId: '$questionIndex',
-      isCorrect: false,
-      beginTimeStamp: DateTime.now(),
-      endTimeStamp: DateTime.now().add(Duration(minutes: 1)),
+  List<QuizModel> initialQuizzes = List.generate(6, (quizIndex) => QuizModel(
+    quizId: 'quiz$quizIndex',
+    attempts: List.generate(1, (attemptIndex) => QuizAttemptModel(
+      attemptId: attemptIndex + 1, // Unique attempt ID
+      quizId: 'quiz$quizIndex',
+      quizScore: 0, // Score for this specific attempt
+      attemptTimestamp: DateTime.now(),
+      questions: List.generate(10, (questionIndex) => QuizQuestionModel(
+        questionId: 'quiz$quizIndex-$attemptIndex-$questionIndex',
+        isCorrect: false,
+        beginTimeStamp: DateTime.now(),
+        endTimeStamp: DateTime.now().add(Duration(minutes: 1)),
+      )),
+    )),
+  ));
+
+  List<PracticeModel> initialPractices = List.generate(6, (practiceIndex) => PracticeModel(
+    practiceId: 'practice$practiceIndex',
+    attempts: List.generate(1, (attemptIndex) => PracticeAttemptModel(
+      attemptId: attemptIndex + 1,
+      questions: List.generate(10, (questionIndex) => PracticeQuestionModel(
+        questionId: 'practice$practiceIndex-$attemptIndex-$questionIndex',
+        isCorrect: false,
+        beginTimeStamp: DateTime.now(),
+        endTimeStamp: DateTime.now().add(Duration(minutes: 1)),
+        attemptCount: 0, // Number of attempts for this question
+        incorrectAnswers: [], // Stores incorrect answers
+        timeTaken: 0, // Time taken per question
+      )),
     )),
   ));
 
@@ -59,9 +84,11 @@ class _SignUpPageState extends State<SignUpPage> {
         deviceToken: await FirebaseMessaging.instance.getToken(),
         readingList: initialReadings,
         quizList: initialQuizzes,
+        practiceList: initialPractices,
         accessories: List<bool>.filled(20, false),
         numTickets: 0,
-        ifEachModuleComplete: List<bool>.filled(6, false),
+        ifEachModuleComplete: List.generate(6, (_) => List<bool>.filled(5, false)),
+        currentTask: "Introduction Module",
       );
 
       // Save user details to Firebase Realtime Database
@@ -71,9 +98,9 @@ class _SignUpPageState extends State<SignUpPage> {
         print('Error saving user to Firebase: $e');
       }
 
-      // Save user details to SQLite including password
       DatabaseHelper dbHelper = DatabaseHelper();
       await dbHelper.insertUser(user.toJson(), _passwordController.text);
+      await dbHelper.loginUser(result.user!.uid!);
 
       Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => const Home()),
@@ -82,6 +109,7 @@ class _SignUpPageState extends State<SignUpPage> {
       print('Error signing up: $e');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
