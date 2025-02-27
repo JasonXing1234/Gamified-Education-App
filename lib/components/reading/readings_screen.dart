@@ -87,22 +87,22 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
   Future<int?> _fetchReadingList() async {
     if (user != null) {
       try {
-        List<readingModel> readingListData =
-        await _dbHelper.getReadingList(user!.userId!);
+        List<readingModel> readingListData = await _dbHelper.getReadingList(user!.userId!);
+
+        print("Fetched reading list: $readingListData"); // Debug print
 
         if (readingListData.isNotEmpty) {
-          List<readingModel> readings = readingListData
-              .map((e) => readingModel.fromJson(e as Map<String, dynamic>))
-              .toList();
           setState(() {
-            if (widget.lesson.lessonNumber - 1 < readings.length) {
-              readingPageIndex =
-                  readings[widget.lesson.lessonNumber - 1].progress;
+            if (widget.lesson.lessonNumber - 1 < readingListData.length) {
+              readingPageIndex = readingListData[widget.lesson.lessonNumber].progress;
             } else {
               readingPageIndex = 0;
             }
           });
         }
+
+        print("ReadingPageIndex set to: $readingPageIndex"); // Debug print
+
         return readingPageIndex;
       } catch (e) {
         print('Error fetching reading list from SQLite: $e');
