@@ -14,6 +14,7 @@ import 'components/menu/menu.dart';
 import 'components/practice_results_screen.dart';
 import 'components/quiz_results_screen.dart';
 import 'components/reading_results_screen.dart';
+import 'models/UserModel.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -30,7 +31,6 @@ class _HomeState extends State<Home> {
   int resultNumber = 0;
   Future<int?>? numTickets;
   final DatabaseReference _database = FirebaseDatabase.instance.ref();
-  User? user2;
   final DatabaseHelper _dbHelper = DatabaseHelper();
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
@@ -38,22 +38,33 @@ class _HomeState extends State<Home> {
   String buttonText = "Next Task";
   bool isDisabled = true;
   final double spacing = 30;
+  UserModel? user;
+  List<List<bool>> isEachModuleComplete = [];
 
   @override
   void initState() {
     super.initState();
-    user2 = FirebaseAuth.instance.currentUser;
     // Fetch readings once the widget is initialized
     numTickets = _fetchReadingList();
-    fetchAndSetModuleProgress();
+    _initializeHome();
+  }
+
+  Future<void> _initializeHome() async {
+    await _initializeUser(); // Ensure user is set before initializing the attempt
+    await fetchAndSetModuleProgress(); // Now user will not be null
+    await fetchModuleCompletionStatus();
+  }
+
+  Future<void> _initializeUser() async {
+    user = await _dbHelper.getLoggedInUser();
   }
 
   Future<int?> _fetchReadingList() async {
-    if (user2 != null) {
+    if (user != null) {
       try {
         DataSnapshot snapshot = await _database
             .child('profile')
-            .child(user2!.uid)
+            .child(user!.userId!)
             .child('numTickets')
             .get();
 
@@ -67,8 +78,21 @@ class _HomeState extends State<Home> {
     }
   }
 
+  Future<List<List<bool>>> fetchModuleCompletionStatus() async {
+    if (user == null) return [];
+
+    List<List<bool>> fetchedData = await _dbHelper.getModuleCompletionStatus(user!.userId!);
+
+    setState(() {
+      isEachModuleComplete = fetchedData;
+    });
+
+    return fetchedData;
+  }
+
+
   Future<void> fetchAndSetModuleProgress() async {
-    String userId = user2!.uid;
+    String userId = user!.userId!;
     Map<int, double> progressData = await _dbHelper.getModuleProgress(userId);
 
     setState(() {
@@ -199,200 +223,186 @@ class _HomeState extends State<Home> {
     }
   }
 
-
   @override
-  Widget build(context) {
-    Widget screen = SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(
-            height: 50,
-          ),
-
-          // Start Quiz
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              const SizedBox(
-                width: 35,
-              ),
-              Text(
-                user2?.displayName ?? "Name", // If user2 exists use display name, if null use default "name"
-                style: textStyles.bodyText,
-              ),
-
-              const Spacer(),
-              IconButton(
-                onPressed: () {
-                  _scaffoldKey.currentState?.openEndDrawer();
-                },
-                icon: Icon(
-                    Icons.menu,
-                  size: 35,
-                  color: appColors.royalBlue
-                ),
-              ),
-
-              const SizedBox(
-                width: 35,
-              ),
-            ],
-          ),
-
-
-          const SizedBox(
-            height: 10,
-          ),
-
-
-          // Current Activity and Lesson Shortcut
-          ShortcutWidget(
-            textStyles: textStyles,
-            appColors: appColors,
-            buttonShortcut: (context){
-              _handleButtonPress(context!);
-            }, //TODO: Add code to update what is the next lesson for the user
-            mainText: "Next Activity",
-            subtitle: "Social Media Norms",
-            buttonText: buttonText, //TODO: replace with logic about what text should be
-            isDisabled: true,
-          ),
-
-          SizedBox(
-            height: spacing,
-          ),
-
-          // Practice & Earn Items
-          ShortcutWidget(
-            textStyles: textStyles,
-            appColors: appColors,
-            buttonShortcut: (context) {
-              _showOptionDialog(context!);
-            },
-            mainText: "Earn Rewards",
-            subtitle: "For Your Dragons",
-            buttonText: "PRACTICE",
-            isDisabled: false,
-          ),
-
-          SizedBox(
-            height: spacing,
-          ),
-
-          ShortcutWidget(
-              textStyles: textStyles,
-              appColors: appColors,
-              buttonShortcut: (context) {  // Accepts context
-                if (context != null) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => CompletedLessonScreen(lesson: socialMediaNorms)),
-                  );
-                }
-              },
-              mainText: "TESTING",
-              subtitle: "Remove later",
-              buttonText: "COMPLETED",
-              isDisabled: false
-          ),
-
-          SizedBox(
-            height: spacing,
-          ),
-
-          // Tutorial Lesson
-          GestureDetector(
-            child: LessonDashboard(lesson: tutorial),
-            onTap: () {
-              // Navigate to the Tutorial Lesson
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LessonScreen(lesson: tutorial)),
-              );
-            },
-          ),
-
-          // Social Media Norms Lesson
-          GestureDetector(
-            child: LessonDashboard(lesson: socialMediaNorms),
-            onTap: () {
-              // Navigate to the Social Media Norms Lesson
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LessonScreen(lesson: socialMediaNorms)),
-              );
-            },
-          ),
-
-          // Settings Lesson
-          GestureDetector(
-            child: LessonDashboard(lesson: settings),
-            onTap: () {
-              // Navigate to the Social Media Norms Lesson
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LessonScreen(lesson: settings)),
-              );
-            },
-          ),
-
-          // Fake Profile Lesson
-          GestureDetector(
-            child: LessonDashboard(lesson: fakeProfiles),
-            onTap: () {
-              // Navigate to the Social Media Norms Lesson
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LessonScreen(lesson: fakeProfiles)),
-              );
-            },
-          ),
-
-          // Social Tags Lesson
-          GestureDetector(
-            child: LessonDashboard(lesson: socialTags),
-            onTap: () {
-              // Navigate to the Social Media Norms Lesson
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LessonScreen(lesson: socialTags)),
-              );
-            },
-          ),
-
-          // Social Tags Lesson
-          GestureDetector(
-            child: LessonDashboard(lesson: appropriateInteractions),
-            onTap: () {
-              // Navigate to the Social Media Norms Lesson
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LessonScreen(lesson: appropriateInteractions)),
-              );
-            },
-          ),
-
-          SizedBox(
-            height: spacing,
-          ),
-        ],
-      ),
-    );
-
+  Widget build(BuildContext context) {
     return Scaffold(
-        key: _scaffoldKey,
-        endDrawer: MenuDrawer(),
+      key: _scaffoldKey,
+      endDrawer: MenuDrawer(),
+      body: Container(
+        width: double.infinity,
+        decoration: const BoxDecoration(color: Colors.white),
+        child: RefreshIndicator(
+    onRefresh: () async {
+    print("🔄 Refreshing module completion status...");
+    await fetchModuleCompletionStatus(); // Re-fetch the module status
+    await fetchAndSetModuleProgress(); // Optional: Refresh progress too
+    setState(() {}); // Force UI rebuild
+    },
+    child:
+        FutureBuilder<List<List<bool>>>(
+          future: fetchModuleCompletionStatus(), // Fetch progress dynamically
+          builder: (context, AsyncSnapshot<List<List<bool>>> snapshot) {
+            if (snapshot.hasError) {
+              return Center(child: Text("Error: ${snapshot.error}"));
+            }
+            if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-        body: Container(
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-          ),
-          child: screen,
+            List<List<bool>> fetchedModuleCompletion = snapshot.data!;
+
+            return SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 50),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const SizedBox(width: 35),
+                      Text(
+                        user?.userName ?? "Name",
+                        style: textStyles.bodyText,
+                      ),
+                      const Spacer(),
+                      IconButton(
+                        onPressed: () {
+                          _scaffoldKey.currentState?.openEndDrawer();
+                        },
+                        icon: Icon(Icons.menu, size: 35, color: appColors.royalBlue),
+                      ),
+                      const SizedBox(width: 35),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+
+                  ShortcutWidget(
+                    textStyles: textStyles,
+                    appColors: appColors,
+                    buttonShortcut: (context) {
+                      _handleButtonPress(context!);
+                    },
+                    mainText: "Next Activity",
+                    subtitle: "Social Media Norms",
+                    buttonText: buttonText,
+                    isDisabled: false,
+                  ),
+
+                  SizedBox(height: spacing),
+
+                  ShortcutWidget(
+                    textStyles: textStyles,
+                    appColors: appColors,
+                    buttonShortcut: (context) {
+                      _showOptionDialog(context!);
+                    },
+                    mainText: "Earn Rewards",
+                    subtitle: "For Your Dragons",
+                    buttonText: "PRACTICE",
+                    isDisabled: false,
+                  ),
+
+                  SizedBox(height: spacing),
+
+                  GestureDetector(
+                    child: LessonDashboard(
+                      lesson: tutorial,
+                      lessonNumber: 1,
+                      ifEachModuleComplete: fetchedModuleCompletion,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LessonScreen(lesson: tutorial)),
+                      );
+                    },
+                  ),
+
+                  GestureDetector(
+                    child: LessonDashboard(
+                      lesson: socialMediaNorms,
+                      lessonNumber: 2,
+                      ifEachModuleComplete: fetchedModuleCompletion,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LessonScreen(lesson: socialMediaNorms)),
+                      );
+                    },
+                  ),
+
+                  GestureDetector(
+                    child: LessonDashboard(
+                      lesson: settings,
+                      lessonNumber: 3,
+                      ifEachModuleComplete: fetchedModuleCompletion,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LessonScreen(lesson: settings)),
+                      );
+                    },
+                  ),
+
+                  GestureDetector(
+                    child: LessonDashboard(
+                      lesson: fakeProfiles,
+                      lessonNumber: 4,
+                      ifEachModuleComplete: fetchedModuleCompletion,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LessonScreen(lesson: fakeProfiles)),
+                      );
+                    },
+                  ),
+
+                  GestureDetector(
+                    child: LessonDashboard(
+                      lesson: socialTags,
+                      lessonNumber: 5,
+                      ifEachModuleComplete: fetchedModuleCompletion,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LessonScreen(lesson: socialTags)),
+                      );
+                    },
+                  ),
+
+                  GestureDetector(
+                    child: LessonDashboard(
+                      lesson: appropriateInteractions,
+                      lessonNumber: 6,
+                      ifEachModuleComplete: fetchedModuleCompletion,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LessonScreen(lesson: appropriateInteractions)),
+                      );
+                    },
+                  ),
+
+                  SizedBox(height: spacing),
+                ],
+              ),
+            );
+          },
         ),
-      );
+      ),
+  ));
   }
+
+
+
+
+
+
 }
 
 class ShortcutWidget extends StatelessWidget {

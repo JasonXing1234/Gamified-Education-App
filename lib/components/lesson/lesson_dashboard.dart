@@ -8,52 +8,78 @@ import 'package:quiz/styles/text_styles.dart';
 import '../rewards/animal.dart';
 
 class LessonDashboard extends StatefulWidget {
-  const LessonDashboard({super.key, required this.lesson});
+  const LessonDashboard({
+    super.key,
+    required this.lesson,
+    required this.lessonNumber,
+    required this.ifEachModuleComplete, // Add ifEachModuleComplete list
+  });
 
   final Lesson lesson;
+  final int lessonNumber;
+  final List<List<bool>> ifEachModuleComplete; // Nested list for module progress
 
   @override
   State<LessonDashboard> createState() => _LessonDashboardState();
 }
 
 class _LessonDashboardState extends State<LessonDashboard> {
-
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = AppColors();
 
   @override
+  void initState() {
+    super.initState();
+    _checkAndUnlockLesson();
+  }
+
+  void _checkAndUnlockLesson() {
+    if (widget.lessonNumber != 1 && widget.lessonNumber - 1 < widget.ifEachModuleComplete.length) {
+      List<bool> moduleProgress = widget.ifEachModuleComplete[widget.lessonNumber - 2];
+
+      if (moduleProgress.length > 1 && moduleProgress[0] && moduleProgress[1]) {
+        setState(() {
+          if (widget.lesson.animal.currentPhase == Phase.locked) {
+            widget.lesson.animal.currentPhase = Phase.unknown;
+          }
+        });
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    bool isUnlocked = widget.lesson.animal.currentPhase != Phase.locked;
+    double progress = isUnlocked ? widget.lesson.progress : 0.0;
+
     return Stack(
       children: [
         Center(
           child: Container(
             width: 350,
             height: 300,
-            //padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
             decoration: BoxDecoration(
-              color: widget.lesson.animal.currentPhase == Phase.locked ? appColors.grey : appColors.lightGrey,
+              color: isUnlocked ? appColors.lightGrey : appColors.grey,
               shape: BoxShape.rectangle,
-              // border: Border.all(color: Colors.black, width: 3.0),
               borderRadius: BorderRadius.circular(20.0),
             ),
           ),
         ),
-
         Center(
           child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 0),
                 child: Text(
-                    widget.lesson.title,
-                    style: textStyles.customText(Colors.black, 24, FontWeight.bold)//textStyles.bodyText,
+                  widget.lesson.title,
+                  style: textStyles.customText(Colors.black, 24, FontWeight.bold),
                 ),
               ),
               Stack(
                 children: [
                   Center(
-                    child: SemiCircleProgressBar(progress: widget.lesson.animal.currentPhase == Phase.locked ? 0.0 : widget.lesson.progress), // 75% progress,
+                    child: SemiCircleProgressBar(progress: progress), // Update based on unlock condition
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 35, horizontal: 0),
@@ -64,7 +90,6 @@ class _LessonDashboardState extends State<LessonDashboard> {
                       ),
                     ),
                   ),
-
                 ],
               ),
             ],

@@ -14,11 +14,11 @@ class LessonScreen extends StatefulWidget {
   final Lesson lesson;
 
   @override
-  State<StatefulWidget> createState() => _LessonScreennState();
+  State<StatefulWidget> createState() => _LessonScreenState();
 
 }
 
-class _LessonScreennState extends State<LessonScreen> {
+class _LessonScreenState extends State<LessonScreen> {
   @override
   Widget build(BuildContext context) {
 

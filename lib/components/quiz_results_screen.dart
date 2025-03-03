@@ -10,6 +10,8 @@ import 'package:quiz/components/quiz/quiz_screen.dart';
 import 'package:quiz/components/result_screen.dart';
 import 'package:quiz/components/rewards/reward_screen.dart';
 
+import '../SQLITE/sqliteHelper.dart';
+import '../models/UserModel.dart';
 import 'lesson/lesson.dart';
 
 class QuizResultScreen extends StatefulWidget {
@@ -32,6 +34,18 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
   List<String> answers = [];
   int resultNumber = 0;
+  UserModel? user;
+  final DatabaseHelper _dbHelper = DatabaseHelper();
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeUser();
+  }
+
+  Future<void> _initializeUser() async {
+    user = await _dbHelper.getLoggedInUser();
+  }
 
   void recordAnswersQuiz0(String answer) {
     setState(() {
@@ -136,7 +150,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       screen = ResultScreen(
         quizNumber: quizResult,
         userAnswers: userAnswersResolved,
-        endQuiz: returnHome,
+        endQuiz: returnHome, user: user!,
       );
     }
     else if (widget.activeScreen == "reward-screen") {

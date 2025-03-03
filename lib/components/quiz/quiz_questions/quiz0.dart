@@ -62,8 +62,8 @@ var quiz0 = [
       question: "Is that information correct?",
       photo: "no",
       answerOptions: [
-        "Yes",
-        "No"
+        "True",
+        "False"
       ],
       explanation: "no",
       correctAnswer: "Yes",

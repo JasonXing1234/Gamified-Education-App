@@ -3,7 +3,7 @@ import 'quizQuestionModel.dart';
 class QuizAttemptModel {
   final int? attemptId; // Unique ID for each attempt
   final String quizId;
-  late final int quizScore;
+  int quizScore;
   final DateTime attemptTimestamp;
   final List<QuizQuestionModel> questions; // Questions for this attempt
 

@@ -34,18 +34,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   List<QuizModel> initialQuizzes = List.generate(6, (quizIndex) => QuizModel(
     quizId: 'quiz$quizIndex',
-    attempts: List.generate(1, (attemptIndex) => QuizAttemptModel(
-      attemptId: attemptIndex + 1, // Unique attempt ID
-      quizId: 'quiz$quizIndex',
-      quizScore: 0, // Score for this specific attempt
-      attemptTimestamp: DateTime.now(),
-      questions: List.generate(10, (questionIndex) => QuizQuestionModel(
-        questionId: 'quiz$quizIndex-$attemptIndex-$questionIndex',
-        isCorrect: false,
-        beginTimeStamp: DateTime.now(),
-        endTimeStamp: DateTime.now().add(Duration(minutes: 1)),
-      )),
-    )),
+    attempts: []
   ));
 
   List<PracticeModel> initialPractices = List.generate(6, (practiceIndex) => PracticeModel(

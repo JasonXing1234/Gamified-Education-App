@@ -132,7 +132,7 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
   Future<void> updateIfEachModuleComplete() async {
     if (user == null) return;
     String userId = user!.userId!;
-    int moduleIndex = widget.lesson.lessonNumber - 1;
+    int moduleIndex = widget.lesson.lessonNumber;
 
     try {
       DataSnapshot snapshot = await _database
@@ -166,11 +166,9 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
     int newReadingPageIndex = readingPageIndex + 1;
 
     try {
-      // Fetch the reading list from SQLite
       List<readingModel> readings = await _dbHelper.getReadingList(user!.userId!);
 
       if (readings.isNotEmpty) {
-        // Find the correct lesson and update progress
         for (int i = 0; i < readings.length; i++) {
           if (readings[i].readingID == 'reading_${widget.lesson.lessonNumber}') {
             readings[i].progress = newReadingPageIndex;
@@ -178,27 +176,53 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
           }
         }
 
-        // Update the progress in SQLite
         await _dbHelper.updateReadingProgress(
           user!.userId!,
           widget.lesson.lessonNumber,
           newReadingPageIndex,
         );
 
-        // Update UI state
-        setState(() {
-          readingPageIndex = newReadingPageIndex;
-          _readingListFuture = _fetchReadingList(); // Fetch updated list
-        });
-
         print('Reading progress updated successfully in SQLite.');
       } else {
         print('Error: Reading list is empty.');
+        return;
       }
+
+      final DatabaseReference readingListRef = _database
+          .child('profile')
+          .child(user!.userId!)
+          .child('readingList');
+
+      DataSnapshot snapshot = await readingListRef.get();
+
+      if (snapshot.value != null) {
+        List<Map<String, dynamic>> firebaseReadings = (snapshot.value as List<dynamic>)
+            .map((e) => Map<String, dynamic>.from(e))
+            .toList();
+
+        for (int i = 0; i < firebaseReadings.length; i++) {
+          if (firebaseReadings[i]['bookId'] == 'reading_${widget.lesson.lessonNumber}') {
+            firebaseReadings[i]['progress'] = newReadingPageIndex;
+            break;
+          }
+        }
+
+        await readingListRef.set(firebaseReadings);
+        print('Reading progress updated successfully in Firebase.');
+      } else {
+        print('Error: Reading list not found in Firebase.');
+      }
+
+      setState(() {
+        readingPageIndex = newReadingPageIndex;
+        _readingListFuture = _fetchReadingList(); // Fetch updated list
+      });
+
     } catch (e) {
-      print('Error updating reading progress in SQLite: $e');
+      print('Error updating reading progress: $e');
     }
   }
+
 
   Future<void> completeLesson() async {
     await updateCurrentTask();
@@ -247,10 +271,10 @@ class _ReadingsScreenState extends State<ReadingsScreen> {
   }
 
   Future<void> backToFirstPage() async {
-    DataSnapshot snapshot = await _database.child('profile').child(user2!.uid).child('readingList').get();
+    DataSnapshot snapshot = await _database.child('profile').child(user!.userId!).child('readingList').get();
     List<dynamic> readings = snapshot.value as List<dynamic>;
-    readings[widget.lesson.lessonNumber - 1]['progress'] = 0;
-    await _database.child('profile/${user2?.uid}').update({
+    readings[widget.lesson.lessonNumber]['progress'] = 0;
+    await _database.child('profile/${user!.userId}').update({
       'readingList': readings,
     });
     await _dbHelper.updateReadingProgress(
