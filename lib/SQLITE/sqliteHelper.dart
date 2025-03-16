@@ -5,6 +5,7 @@ import 'package:sqflite/sqflite.dart';
 
 import '../models/PracticeAttemptModel.dart';
 import '../models/PracticeModel.dart';
+import '../models/PracticeQuestionModel.dart';
 import '../models/UserModel.dart';
 import '../models/quizAttemptModel.dart';
 import '../models/quizModel.dart';
@@ -52,6 +53,7 @@ class DatabaseHelper {
         numTickets INTEGER,
         totalTimeSpent INTEGER DEFAULT 0,
         quizList TEXT,
+        preQuizList TEXT,
         readingList TEXT,
         practiceList TEXT,
         accessories TEXT,
@@ -75,6 +77,7 @@ class DatabaseHelper {
       final db = await database;
 
       userData['quizList'] = jsonEncode(userData['quizList']);
+      userData['preQuizList'] = jsonEncode(userData['preQuizList']);
       userData['readingList'] = jsonEncode(userData['readingList']);
       userData['practiceList'] = jsonEncode(userData['practiceList']);
       userData['accessories'] = jsonEncode(userData['accessories']);
@@ -235,6 +238,103 @@ class DatabaseHelper {
     }
   }
 
+  Future<int> insertPreQuizAttempt(String userId, String quizNumber, int quizScore) async {
+    try {
+      final db = await database;
+
+      // Ensure quizId is correctly formatted
+      String quizId = quizNumber;
+
+      // Get user data
+      List<Map<String, dynamic>> userData = await db.query(
+        'UserModel',
+        where: 'userId = ?',
+        whereArgs: [userId],
+      );
+
+      if (userData.isEmpty) {
+        print('User not found');
+        return -1;
+      }
+
+      UserModel user = UserModel.fromJson(userData.first);
+
+      // Work with a copy of the quiz list
+      List<QuizModel> updatedQuizList = List.from(user.preQuizList ?? []);
+
+      // Find the quiz in the list
+      int quizIndex = updatedQuizList.indexWhere((q) => q.quizId == quizId);
+
+      // Initialize first question for a new attempt
+      List<QuizQuestionModel> initializedQuestions = List.generate(
+        1,
+            (index) => QuizQuestionModel(
+          questionId: '$quizId-question$index',
+          isCorrect: false,
+          userAnswer: '',
+          beginTimeStamp: DateTime.now(),
+          endTimeStamp: DateTime.now().add(Duration(minutes: 1)), // Placeholder time
+        ),
+      );
+
+      if (quizIndex == -1) {
+        // If quiz not found, create a new one with the new attempt
+        updatedQuizList.add(
+          QuizModel(
+            quizId: quizId,
+            attempts: [
+              QuizAttemptModel(
+                attemptId: 1, // First attempt
+                quizId: quizId,
+                quizScore: quizScore,
+                attemptTimestamp: DateTime.now(),
+                questions: initializedQuestions,
+              ),
+            ],
+          ),
+        );
+      } else {
+        // If quiz exists, modify the existing quiz object
+        QuizModel existingQuiz = updatedQuizList[quizIndex];
+
+        List<QuizAttemptModel> updatedAttempts = List.from(existingQuiz.attempts)
+          ..add(
+            QuizAttemptModel(
+              attemptId: existingQuiz.attempts.length + 1, // Increment attempt ID
+              quizId: quizId,
+              quizScore: quizScore,
+              attemptTimestamp: DateTime.now(),
+              questions: initializedQuestions,
+            ),
+          );
+
+        // Replace the modified quiz object in the list
+        updatedQuizList[quizIndex] = QuizModel(
+          quizId: existingQuiz.quizId,
+          attempts: updatedAttempts, // Properly nesting the attempts inside the quiz
+        );
+      }
+
+      // Update the user model in the database with the modified quiz list
+      await db.update(
+        'UserModel',
+        {'preQuizList': jsonEncode(updatedQuizList.map((e) => e.toJson()).toList())},
+        where: 'userId = ?',
+        whereArgs: [userId],
+      );
+
+      print('New quiz attempt inserted successfully with initialized questions.');
+      return updatedQuizList
+          .firstWhere((quiz) => quiz.quizId == quizId)
+          .attempts
+          .length;
+    } catch (e) {
+      print('Error inserting quiz attempt: $e');
+      return -1;
+    }
+  }
+
+
   Future<int> insertQuizQuestion(String userId, int attemptId, int quizNumber, int questionIndex) async {
     try {
       final db = await database;
@@ -318,6 +418,172 @@ class DatabaseHelper {
     }
   }
 
+  Future<int> insertQuizQuestionPreQuiz(String userId, int attemptId, int quizNumber, int questionIndex) async {
+    try {
+      final db = await database;
+
+      // Create new quiz question model
+      QuizQuestionModel newQuestion = QuizQuestionModel(
+        questionId: 'quiz$quizNumber-question$questionIndex',
+        isCorrect: false,
+        userAnswer: '',
+        beginTimeStamp: DateTime.now(),
+        endTimeStamp: DateTime.now().add(Duration(minutes: 1)), // Placeholder time
+      );
+
+      // Fetch user data
+      List<Map<String, dynamic>> userData = await db.query(
+        'UserModel',
+        where: 'userId = ?',
+        whereArgs: [userId],
+      );
+
+      if (userData.isEmpty) {
+        print('User not found');
+        return -1;
+      }
+
+      UserModel user = UserModel.fromJson(userData.first);
+
+      // Work with a copy of the quiz list
+      List<QuizModel> updatedQuizList = List.from(user.quizList ?? []);
+
+      // Find the quiz
+      int quizIndex = updatedQuizList.indexWhere((q) => q.quizId == 'quiz$quizNumber');
+
+      if (quizIndex == -1) {
+        print('Quiz not found');
+        return -1;
+      }
+
+      // Find the attempt
+      QuizModel existingQuiz = updatedQuizList[quizIndex];
+      int attemptIndex = existingQuiz.attempts.indexWhere((a) => a.attemptId == attemptId);
+
+      if (attemptIndex == -1) {
+        print('Attempt not found');
+        return -1;
+      }
+
+      // Add the new question to the attempt
+      List<QuizAttemptModel> updatedAttempts = List.from(existingQuiz.attempts);
+      List<QuizQuestionModel> updatedQuestions = List.from(updatedAttempts[attemptIndex].questions)
+        ..add(newQuestion);
+
+      // Update attempt with new question list
+      updatedAttempts[attemptIndex] = QuizAttemptModel(
+        attemptId: updatedAttempts[attemptIndex].attemptId,
+        quizId: updatedAttempts[attemptIndex].quizId,
+        quizScore: updatedAttempts[attemptIndex].quizScore,
+        attemptTimestamp: updatedAttempts[attemptIndex].attemptTimestamp,
+        questions: updatedQuestions,
+      );
+
+      // Update quiz with new attempt list
+      updatedQuizList[quizIndex] = QuizModel(
+        quizId: existingQuiz.quizId,
+        attempts: updatedAttempts,
+      );
+
+      // Update SQLite
+      await db.update(
+        'UserModel',
+        {'quizList': jsonEncode(updatedQuizList.map((e) => e.toJson()).toList())},
+        where: 'userId = ?',
+        whereArgs: [userId],
+      );
+
+      print('New quiz question inserted successfully');
+      return updatedQuestions.length;
+    } catch (e) {
+      print('Error inserting quiz question: $e');
+      return -1;
+    }
+  }
+
+  Future<int> insertPreQuizQuestion(String userId, int attemptId, int quizNumber, int questionIndex) async {
+    try {
+      final db = await database;
+
+      // Create new quiz question model
+      QuizQuestionModel newQuestion = QuizQuestionModel(
+        questionId: 'quiz$quizNumber-question$questionIndex',
+        isCorrect: false,
+        userAnswer: '',
+        beginTimeStamp: DateTime.now(),
+        endTimeStamp: DateTime.now().add(Duration(minutes: 1)), // Placeholder time
+      );
+
+      // Fetch user data
+      List<Map<String, dynamic>> userData = await db.query(
+        'UserModel',
+        where: 'userId = ?',
+        whereArgs: [userId],
+      );
+
+      if (userData.isEmpty) {
+        print('User not found');
+        return -1;
+      }
+
+      UserModel user = UserModel.fromJson(userData.first);
+
+      // Work with a copy of the quiz list
+      List<QuizModel> updatedQuizList = List.from(user.preQuizList ?? []);
+
+      // Find the quiz
+      int quizIndex = updatedQuizList.indexWhere((q) => q.quizId == 'quiz$quizNumber');
+
+      if (quizIndex == -1) {
+        print('Quiz not found');
+        return -1;
+      }
+
+      // Find the attempt
+      QuizModel existingQuiz = updatedQuizList[quizIndex];
+      int attemptIndex = existingQuiz.attempts.indexWhere((a) => a.attemptId == attemptId);
+
+      if (attemptIndex == -1) {
+        print('Attempt not found');
+        return -1;
+      }
+
+      // Add the new question to the attempt
+      List<QuizAttemptModel> updatedAttempts = List.from(existingQuiz.attempts);
+      List<QuizQuestionModel> updatedQuestions = List.from(updatedAttempts[attemptIndex].questions)
+        ..add(newQuestion);
+
+      // Update attempt with new question list
+      updatedAttempts[attemptIndex] = QuizAttemptModel(
+        attemptId: updatedAttempts[attemptIndex].attemptId,
+        quizId: updatedAttempts[attemptIndex].quizId,
+        quizScore: updatedAttempts[attemptIndex].quizScore,
+        attemptTimestamp: updatedAttempts[attemptIndex].attemptTimestamp,
+        questions: updatedQuestions,
+      );
+
+      // Update quiz with new attempt list
+      updatedQuizList[quizIndex] = QuizModel(
+        quizId: existingQuiz.quizId,
+        attempts: updatedAttempts,
+      );
+
+      // Update SQLite
+      await db.update(
+        'UserModel',
+        {'preQuizList': jsonEncode(updatedQuizList.map((e) => e.toJson()).toList())},
+        where: 'userId = ?',
+        whereArgs: [userId],
+      );
+
+      print('New quiz question inserted successfully');
+      return updatedQuestions.length;
+    } catch (e) {
+      print('Error inserting quiz question: $e');
+      return -1;
+    }
+  }
+
 
   Future<int> insertPracticeAttempt(String userId, String practiceId, int practiceScore) async {
     try {
@@ -337,28 +603,71 @@ class DatabaseHelper {
 
       UserModel user = UserModel.fromJson(userData.first);
 
-      // Find practice
-      PracticeModel? practice = user.practiceList?.firstWhere(
-              (p) => p.practiceId == practiceId,
-          orElse: () => PracticeModel(practiceId: practiceId, attempts: []));
+      // Work with a copy of the practice list
+      List<PracticeModel> updatedPracticeList = List.from(user.practiceList ?? []);
 
-      if (practice != null) {
-        practice.attempts.add(PracticeAttemptModel(
-          attemptId: practice.attempts.length + 1,
-          questions: [],
-        ));
+      // Find the practice in the list
+      int practiceIndex = updatedPracticeList.indexWhere((p) => p.practiceId == practiceId);
+
+      // Initialize first question for a new attempt
+      List<PracticeQuestionModel> initializedQuestions = List.generate(
+        1,
+            (index) => PracticeQuestionModel(
+          questionId: '$practiceId-question$index',
+          isCorrect: false,
+          beginTimeStamp: DateTime.now(),
+          endTimeStamp: DateTime.now().add(Duration(minutes: 1)), // Placeholder
+          attemptCount: 1,
+          timeTaken: 0,
+          incorrectAnswers: [],
+        ),
+      );
+
+      if (practiceIndex == -1) {
+        // If practice not found, create a new one with the new attempt
+        updatedPracticeList.add(
+          PracticeModel(
+            practiceId: practiceId,
+            attempts: [
+              PracticeAttemptModel(
+                attemptId: 1, // First attempt
+                questions: initializedQuestions,
+              ),
+            ],
+          ),
+        );
+      } else {
+        // If practice exists, modify the existing practice object
+        PracticeModel existingPractice = updatedPracticeList[practiceIndex];
+
+        List<PracticeAttemptModel> updatedAttempts = List.from(existingPractice.attempts)
+          ..add(
+            PracticeAttemptModel(
+              attemptId: existingPractice.attempts.length + 1, // Increment attempt ID
+              questions: initializedQuestions,
+            ),
+          );
+
+        // Replace the modified practice object in the list
+        updatedPracticeList[practiceIndex] = PracticeModel(
+          practiceId: existingPractice.practiceId,
+          attempts: updatedAttempts, // Properly nesting the attempts inside the practice
+        );
       }
 
-      // Update user in DB
+      // Update the user model in the database with the modified practice list
       await db.update(
         'UserModel',
-        {'practiceList': jsonEncode(user.practiceList?.map((e) => e.toJson()).toList())},
+        {'practiceList': jsonEncode(updatedPracticeList.map((e) => e.toJson()).toList())},
         where: 'userId = ?',
         whereArgs: [userId],
       );
 
-      print('New practice attempt inserted successfully');
-      return practice!.attempts.length;
+      print('New practice attempt inserted successfully with initialized questions.');
+      return updatedPracticeList
+          .firstWhere((practice) => practice.practiceId == practiceId)
+          .attempts
+          .length;
     } catch (e) {
       print('Error inserting practice attempt: $e');
       return -1;
@@ -578,6 +887,60 @@ class DatabaseHelper {
     }
   }
 
+  Future<int> updatePreQuizScore(String userId, int quizNumber, int quizResult) async {
+    try {
+      final db = await database;
+
+      // Fetch user data
+      List<Map<String, dynamic>> userData = await db.query(
+        'UserModel',
+        where: 'userId = ?',
+        whereArgs: [userId],
+      );
+
+      if (userData.isEmpty) {
+        print('User not found');
+        return -1;
+      }
+
+      UserModel user = UserModel.fromJson(userData.first);
+
+      // Find quiz and update score
+      QuizModel? quiz = user.preQuizList?.firstWhere(
+              (q) => q.quizId == 'quiz$quizNumber',
+          orElse: () => QuizModel(quizId: 'quiz$quizNumber', attempts: []));
+
+      if (quiz != null) {
+        // Update latest attempt or add a new attempt
+        if (quiz.attempts.isNotEmpty) {
+          quiz.attempts.last.quizScore = quizResult;
+        } else {
+          quiz.attempts.add(QuizAttemptModel(
+            attemptId: quiz.attempts.length + 1,
+            quizId: 'quiz$quizNumber',
+            quizScore: quizResult,
+            attemptTimestamp: DateTime.now(),
+            questions: [],
+          ));
+        }
+      }
+
+      // Update user data in SQLite
+      int result = await db.update(
+        'UserModel',
+        {'preQuizList': jsonEncode(user.preQuizList?.map((e) => e.toJson()).toList())},
+        where: 'userId = ?',
+        whereArgs: [userId],
+      );
+
+      print('Quiz score updated successfully.');
+      return result;
+    } catch (e) {
+      print('Error updating quiz score: $e');
+      return -1;
+    }
+  }
+
   Future<int> updateIsCorrect(String userId, int quizNumber, int questionIndex, bool isCorrect) async {
     try {
       final db = await database;
@@ -764,6 +1127,70 @@ class DatabaseHelper {
     }
   }
 
+  Future<int> updateBeginTimestampPreQuiz(String userId, String questionId, String beginTimeStamp) async {
+    try {
+      final db = await database;
+
+      // Fetch user data from UserModel
+      List<Map<String, dynamic>> userData = await db.query(
+        'UserModel',
+        where: 'userId = ?',
+        whereArgs: [userId],
+      );
+
+      if (userData.isEmpty) {
+        print('User not found.');
+        return -1;
+      }
+
+      UserModel user = UserModel.fromJson(userData.first);
+
+      QuizModel? quiz = user.preQuizList?.lastWhere(
+            (quiz) => quiz.attempts.isNotEmpty,
+        orElse: () => QuizModel(quizId: 'unknown', attempts: []),
+      );
+
+      if (quiz == null || quiz.attempts.isEmpty) {
+        print('No matching quiz attempt found.');
+        return -1;
+      }
+
+      QuizAttemptModel latestAttempt = quiz.attempts.last;
+      int questionIndex = latestAttempt.questions.indexWhere((q) => q.questionId == questionId);
+
+      if (questionIndex == -1) {
+        print('No matching question found.');
+        return -1;
+      }
+
+      // Create a new question object with updated begin timestamp
+      QuizQuestionModel updatedQuestion = QuizQuestionModel(
+        questionId: latestAttempt.questions[questionIndex].questionId,
+        isCorrect: latestAttempt.questions[questionIndex].isCorrect,
+        beginTimeStamp: DateTime.parse(beginTimeStamp), // Updated timestamp
+        endTimeStamp: latestAttempt.questions[questionIndex].endTimeStamp,
+        userAnswer: latestAttempt.questions[questionIndex].userAnswer,
+      );
+
+      // Replace the old question with the updated question
+      latestAttempt.questions[questionIndex] = updatedQuestion;
+
+      // Save updated data back to SQLite
+      await db.update(
+        'UserModel',
+        {'preQuizList': jsonEncode(user.preQuizList?.map((e) => e.toJson()).toList())},
+        where: 'userId = ?',
+        whereArgs: [userId],
+      );
+
+      print('Begin timestamp updated successfully for latest attempt.');
+      return 1;
+    } catch (e) {
+      print('Error updating begin timestamp: $e');
+      return -1;
+    }
+  }
+
   Future<int> updateEndTimestamp(String userId, String questionId, String endTimeStamp) async {
     try {
       final db = await database;
@@ -832,11 +1259,71 @@ class DatabaseHelper {
     }
   }
 
+  Future<int> updateEndTimestampPreQuiz(String userId, String questionId, String endTimeStamp) async {
+    try {
+      final db = await database;
+      List<Map<String, dynamic>> userData = await db.query(
+        'UserModel',
+        where: 'userId = ?',
+        whereArgs: [userId],
+      );
+
+      if (userData.isEmpty) {
+        print('User not found.');
+        return -1;
+      }
+
+      UserModel user = UserModel.fromJson(userData.first);
+
+      QuizModel? quiz = user.preQuizList?.lastWhere(
+            (quiz) => quiz.attempts.isNotEmpty,
+        orElse: () => QuizModel(quizId: 'unknown', attempts: []),
+      );
+
+      if (quiz == null || quiz.attempts.isEmpty) {
+        print('No matching quiz attempt found.');
+        return -1;
+      }
+
+      QuizAttemptModel latestAttempt = quiz.attempts.last;
+      int questionIndex = latestAttempt.questions.indexWhere((q) => q.questionId == questionId);
+
+      if (questionIndex == -1) {
+        print('No matching question found.');
+        return -1;
+      }
+
+      QuizQuestionModel updatedQuestion = QuizQuestionModel(
+        questionId: latestAttempt.questions[questionIndex].questionId,
+        isCorrect: latestAttempt.questions[questionIndex].isCorrect,
+        beginTimeStamp: latestAttempt.questions[questionIndex].beginTimeStamp,
+        endTimeStamp: DateTime.parse(endTimeStamp),
+        userAnswer: latestAttempt.questions[questionIndex].userAnswer,
+      );
+
+      // Replace the old question with the updated question
+      latestAttempt.questions[questionIndex] = updatedQuestion;
+
+      // Save updated data back to SQLite
+      await db.update(
+        'UserModel',
+        {'preQuizList': jsonEncode(user.preQuizList?.map((e) => e.toJson()).toList())},
+        where: 'userId = ?',
+        whereArgs: [userId],
+      );
+
+      print('End timestamp updated successfully for latest attempt.');
+      return 1;
+    } catch (e) {
+      print('Error updating end timestamp: $e');
+      return -1;
+    }
+  }
+
   Future<void> updateUserAnswerSQLite(String userId, int quizNumber, String questionId, String userAnswer) async {
     try {
       final db = await database;
 
-      // Fetch user data
       List<Map<String, dynamic>> userData = await db.query(
         'UserModel',
         where: 'userId = ?',
@@ -849,9 +1336,56 @@ class DatabaseHelper {
       }
 
       UserModel user = UserModel.fromJson(userData.first);
-
-      // Find the quiz with the latest attempt
       QuizModel? quiz = user.quizList?.firstWhere(
+            (q) => q.quizId == 'quiz$quizNumber',
+        orElse: () => QuizModel(quizId: 'quiz$quizNumber', attempts: []),
+      );
+
+      if (quiz != null && quiz.attempts.isNotEmpty) {
+        QuizAttemptModel latestAttempt = quiz.attempts.last;
+        int questionIndex = latestAttempt.questions.indexWhere((q) => q.questionId == questionId);
+
+        if (questionIndex != -1) {
+          QuizQuestionModel updatedQuestion = QuizQuestionModel(
+            questionId: latestAttempt.questions[questionIndex].questionId,
+            isCorrect: latestAttempt.questions[questionIndex].isCorrect, // Keep existing correctness
+            beginTimeStamp: latestAttempt.questions[questionIndex].beginTimeStamp,
+            endTimeStamp: latestAttempt.questions[questionIndex].endTimeStamp,
+            userAnswer: userAnswer,
+          );
+
+          latestAttempt.questions[questionIndex] = updatedQuestion;
+          await db.update(
+            'UserModel',
+            {'quizList': jsonEncode(user.quizList?.map((e) => e.toJson()).toList())},
+            where: 'userId = ?',
+            whereArgs: [userId],
+          );
+
+          print('User answer updated successfully in SQLite.');
+        }
+      }
+    } catch (e) {
+      print('Error updating user answer in SQLite: $e');
+    }
+  }
+
+  Future<void> updateUserAnswerSQLitePrequiz(String userId, int quizNumber, String questionId, String userAnswer) async {
+    try {
+      final db = await database;
+      List<Map<String, dynamic>> userData = await db.query(
+        'UserModel',
+        where: 'userId = ?',
+        whereArgs: [userId],
+      );
+
+      if (userData.isEmpty) {
+        print('User not found');
+        return;
+      }
+
+      UserModel user = UserModel.fromJson(userData.first);
+      QuizModel? quiz = user.preQuizList?.firstWhere(
             (q) => q.quizId == 'quiz$quizNumber',
         orElse: () => QuizModel(quizId: 'quiz$quizNumber', attempts: []),
       );
@@ -878,7 +1412,7 @@ class DatabaseHelper {
           // Update the user model in SQLite
           await db.update(
             'UserModel',
-            {'quizList': jsonEncode(user.quizList?.map((e) => e.toJson()).toList())},
+            {'preQuizList': jsonEncode(user.preQuizList?.map((e) => e.toJson()).toList())},
             where: 'userId = ?',
             whereArgs: [userId],
           );
@@ -890,6 +1424,7 @@ class DatabaseHelper {
       print('Error updating user answer in SQLite: $e');
     }
   }
+
 
 
 
@@ -997,7 +1532,7 @@ class DatabaseHelper {
     }
   }
 
-  Future<int> updateIfEachModuleCompleteForQuiz(String userId, int quizNumber) async {
+  Future<int> updateIfEachModuleCompleteForQuiz(String userId, int quizNumber, bool isPrequiz) async {
     try {
       final db = await database;
       List<Map<String, dynamic>> userRecords = await db.query(
@@ -1018,7 +1553,12 @@ class DatabaseHelper {
         print('Invalid module index: $moduleIndex');
         return -1;
       }
-      moduleCompletion[moduleIndex][1] = true;
+      if (isPrequiz) {
+        moduleCompletion[moduleIndex][2] = true;
+      }
+      else{
+        moduleCompletion[moduleIndex][1] = true;
+      }
       int result = await db.update(
         'UserModel',
         {'ifEachModuleComplete': jsonEncode(moduleCompletion)},
@@ -1054,7 +1594,7 @@ class DatabaseHelper {
       Map<int, double> moduleProgress = {};
       for (int i = 0; i < moduleCompletion.length; i++) {
         int completedTasks = moduleCompletion[i].where((task) => task).length;
-        moduleProgress[i] = (completedTasks/2).toDouble();
+        moduleProgress[i] = (completedTasks/3).toDouble();
       }
 
       print('Module progress fetched successfully: $moduleProgress');

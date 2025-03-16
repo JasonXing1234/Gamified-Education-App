@@ -7,6 +7,8 @@ import 'user_authorization/SignIn.dart';
 import 'firebase_options.dart';
 import 'home_screen.dart';
 
+final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -22,6 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: AuthCheck(),
+      navigatorObservers: [routeObserver],
     );
   }
 }

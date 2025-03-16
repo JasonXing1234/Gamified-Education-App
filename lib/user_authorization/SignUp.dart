@@ -32,6 +32,11 @@ class _SignUpPageState extends State<SignUpPage> {
   final AppTextStyles textStyles = AppTextStyles();
   final AppColors appColors = const AppColors();
 
+  List<QuizModel> initialPreQuizzes = List.generate(6, (quizIndex) => QuizModel(
+      quizId: 'preQuiz$quizIndex',
+      attempts: []
+  ));
+
   List<QuizModel> initialQuizzes = List.generate(6, (quizIndex) => QuizModel(
     quizId: 'quiz$quizIndex',
     attempts: []
@@ -39,18 +44,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   List<PracticeModel> initialPractices = List.generate(6, (practiceIndex) => PracticeModel(
     practiceId: 'practice$practiceIndex',
-    attempts: List.generate(1, (attemptIndex) => PracticeAttemptModel(
-      attemptId: attemptIndex + 1,
-      questions: List.generate(10, (questionIndex) => PracticeQuestionModel(
-        questionId: 'practice$practiceIndex-$attemptIndex-$questionIndex',
-        isCorrect: false,
-        beginTimeStamp: DateTime.now(),
-        endTimeStamp: DateTime.now().add(Duration(minutes: 1)),
-        attemptCount: 0, // Number of attempts for this question
-        incorrectAnswers: [], // Stores incorrect answers
-        timeTaken: 0, // Time taken per question
-      )),
-    )),
+    attempts: []
   ));
 
   List<readingModel> initialReadings = List.generate(6, (index) => readingModel(
@@ -72,6 +66,7 @@ class _SignUpPageState extends State<SignUpPage> {
         userName: _userNameController.text.trim(), // Store display name
         deviceToken: await FirebaseMessaging.instance.getToken(),
         readingList: initialReadings,
+        preQuizList: initialPreQuizzes,
         quizList: initialQuizzes,
         practiceList: initialPractices,
         accessories: List<bool>.filled(20, false),

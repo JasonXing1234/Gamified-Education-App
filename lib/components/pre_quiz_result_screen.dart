@@ -17,8 +17,8 @@ import 'quiz/quiz_questions/quiz6.dart';
 import '../styles/text_styles.dart';
 import 'buttons/next_button.dart';
 
-class ResultScreen extends StatelessWidget {
-  ResultScreen({super.key, required this.userAnswers, required this.endQuiz, required this.quizNumber, required this.user});
+class PreResult extends StatelessWidget {
+  PreResult({super.key, required this.userAnswers, required this.endQuiz, required this.quizNumber, required this.user});
   final List<String> userAnswers;
   final void Function() endQuiz;
   final int quizNumber;
@@ -35,7 +35,7 @@ class ResultScreen extends StatelessWidget {
       final DatabaseReference quizAttemptsRef = _database
           .child('profile')
           .child(user2!.uid)
-          .child('quizList')
+          .child('preQuizList')
           .child((quizNumber - 1).toString()) // Access the correct quiz
           .child('attempts');
 
@@ -160,7 +160,7 @@ class ResultScreen extends StatelessWidget {
           print('Firebase: Invalid module index.');
         }
       }
-      await _dbHelper.updateIfEachModuleCompleteForQuiz(userId, quizNumber, false);
+      await _dbHelper.updateIfEachModuleCompleteForQuiz(userId, quizNumber, true);
 
       print('SQLite: ifEachModuleComplete updated successfully for quiz.');
     } catch (e) {

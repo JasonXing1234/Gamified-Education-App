@@ -14,6 +14,7 @@ import 'components/menu/menu.dart';
 import 'components/practice_results_screen.dart';
 import 'components/quiz_results_screen.dart';
 import 'components/reading_results_screen.dart';
+import 'main.dart';
 import 'models/UserModel.dart';
 
 class Home extends StatefulWidget {
@@ -25,7 +26,7 @@ class Home extends StatefulWidget {
   }
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with RouteAware {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String activeScreen = 'start-screen';
   int resultNumber = 0;
@@ -44,14 +45,32 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    // Fetch readings once the widget is initialized
     numTickets = _fetchReadingList();
     _initializeHome();
   }
 
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context)! as PageRoute);
+  }
+
+  @override
+  void didPopNext() {
+    fetchAndSetModuleProgress();
+    fetchModuleCompletionStatus();
+    setState(() {});
+  }
+
   Future<void> _initializeHome() async {
-    await _initializeUser(); // Ensure user is set before initializing the attempt
-    await fetchAndSetModuleProgress(); // Now user will not be null
+    await _initializeUser();
+    await fetchAndSetModuleProgress();
     await fetchModuleCompletionStatus();
   }
 
@@ -233,7 +252,7 @@ class _HomeState extends State<Home> {
         decoration: const BoxDecoration(color: Colors.white),
         child: RefreshIndicator(
     onRefresh: () async {
-    print("🔄 Refreshing module completion status...");
+    print("Refreshing module completion status...");
     await fetchModuleCompletionStatus(); // Re-fetch the module status
     await fetchAndSetModuleProgress(); // Optional: Refresh progress too
     setState(() {}); // Force UI rebuild
@@ -397,12 +416,6 @@ class _HomeState extends State<Home> {
       ),
   ));
   }
-
-
-
-
-
-
 }
 
 class ShortcutWidget extends StatelessWidget {

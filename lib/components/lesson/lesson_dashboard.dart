@@ -33,11 +33,19 @@ class _LessonDashboardState extends State<LessonDashboard> {
     _checkAndUnlockLesson();
   }
 
+  @override
+  void didUpdateWidget(covariant LessonDashboard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Check if the module progress has changed.
+    if (widget.ifEachModuleComplete != oldWidget.ifEachModuleComplete) {
+      _checkAndUnlockLesson();
+    }
+  }
+
   void _checkAndUnlockLesson() {
     if (widget.lessonNumber != 1 && widget.lessonNumber - 1 < widget.ifEachModuleComplete.length) {
       List<bool> moduleProgress = widget.ifEachModuleComplete[widget.lessonNumber - 2];
-
-      if (moduleProgress.length > 1 && moduleProgress[0] && moduleProgress[1]) {
+      if (moduleProgress.length > 1 && moduleProgress[0] && moduleProgress[1] && moduleProgress[1]) {
         setState(() {
           if (widget.lesson.animal.currentPhase == Phase.locked) {
             widget.lesson.animal.currentPhase = Phase.unknown;
@@ -70,7 +78,7 @@ class _LessonDashboardState extends State<LessonDashboard> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 0),
+                padding: const EdgeInsets.symmetric(vertical: 40),
                 child: Text(
                   widget.lesson.title,
                   style: textStyles.customText(Colors.black, 24, FontWeight.bold),
@@ -79,10 +87,10 @@ class _LessonDashboardState extends State<LessonDashboard> {
               Stack(
                 children: [
                   Center(
-                    child: SemiCircleProgressBar(progress: progress), // Update based on unlock condition
+                    child: SemiCircleProgressBar(progress: progress),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 35, horizontal: 0),
+                    padding: const EdgeInsets.symmetric(vertical: 35),
                     child: Center(
                       child: Image.asset(
                         widget.lesson.getCurrentPhoto(),

@@ -15,6 +15,7 @@ class UserModel extends Equatable {
   int? numTickets;
   int? totalTimeSpent; // Tracks total time spent in the app
   List<QuizModel>? quizList;
+  List<QuizModel>? preQuizList;
   List<PracticeModel>? practiceList; // List for practice attempts
   List<readingModel>? readingList;
   List<bool>? accessories;
@@ -30,6 +31,7 @@ class UserModel extends Equatable {
     this.bannerImage,
     this.key,
     this.userName,
+    this.preQuizList,
     this.quizList,
     this.practiceList,
     this.readingList,
@@ -56,6 +58,22 @@ class UserModel extends Equatable {
     currentTask = map['currentTask'];
     totalTimeSpent = map['totalTimeSpent'] ?? 0; // Default to 0 if not present
     isLoggedIn = (map['isLoggedIn'] == 1);
+
+    if (map['preQuizList'] != null) {
+      if (map['preQuizList'] is String && (map['preQuizList'] as String).isNotEmpty) {
+        try {
+          List<dynamic> decodedList = jsonDecode(map['preQuizList']);
+          quizList = decodedList.map((e) => QuizModel.fromJson(Map<String, dynamic>.from(e))).toList();
+        } catch (e) {
+          print('Error decoding quizList: $e');
+          quizList = [];
+        }
+      } else if (map['preQuizList'] is List) {
+        quizList = (map['preQuizList'] as List)
+            .map((e) => QuizModel.fromJson(Map<String, dynamic>.from(e)))
+            .toList();
+      }
+    }
 
     if (map['quizList'] != null) {
       if (map['quizList'] is String && (map['quizList'] as String).isNotEmpty) {
@@ -88,6 +106,7 @@ class UserModel extends Equatable {
             .toList();
       }
     }
+
 
     if (map['accessories'] != null) {
       accessories = (map['accessories'] is String)
@@ -130,15 +149,16 @@ class UserModel extends Equatable {
       "deviceToken": deviceToken,
       'profilePic': profilePic,
       'bannerImage': bannerImage,
+      'preQuizList': preQuizList?.map((e) => e.toJson()).toList(),
       'quizList': quizList?.map((e) => e.toJson()).toList(),
-      'practiceList': practiceList?.map((e) => e.toJson()).toList(), // Include practiceList
+      'practiceList': practiceList?.map((e) => e.toJson()).toList(),
       'userName': userName,
       'numTickets': numTickets,
       'readingList': readingList?.map((e) => e.toJson()).toList(),
       'accessories': accessories,
       'ifEachModuleComplete': ifEachModuleComplete,
       'currentTask': currentTask,
-      'totalTimeSpent': totalTimeSpent, // Include total time in JSON
+      'totalTimeSpent': totalTimeSpent,
       'isLoggedIn': isLoggedIn! ? 1 : 0,
     };
   }
@@ -154,12 +174,13 @@ class UserModel extends Equatable {
     bannerImage,
     numTickets,
     quizList,
-    practiceList, // Added practiceList
+    preQuizList,
+    practiceList,
     readingList,
     accessories,
     ifEachModuleComplete,
     currentTask,
-    totalTimeSpent, // Include in Equatable props
+    totalTimeSpent,
     isLoggedIn,
   ];
 }

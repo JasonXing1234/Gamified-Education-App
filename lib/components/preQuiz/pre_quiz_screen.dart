@@ -17,8 +17,8 @@ import '../text_box/text_box.dart';
 
 import 'package:quiz/styles/text_styles.dart';
 
-class QuizScreen extends StatefulWidget {
-  const QuizScreen({
+class PreQuizScreen extends StatefulWidget {
+  const PreQuizScreen({
     super.key,
     required this.onSelectAnswer,
     required this.quizNumber,
@@ -31,10 +31,10 @@ class QuizScreen extends StatefulWidget {
 
 
   @override
-  State<QuizScreen> createState() => _QuestionsScreenState();
+  State<PreQuizScreen> createState() => _QuestionsScreenState();
 }
 
-class _QuestionsScreenState extends State<QuizScreen> {
+class _QuestionsScreenState extends State<PreQuizScreen> {
   int questionIndex = 0;
   TextEditingController _controller = TextEditingController();
   String tempAnswer = "";
@@ -81,9 +81,9 @@ class _QuestionsScreenState extends State<QuizScreen> {
 
     try {
       final DatabaseHelper _dbHelper = DatabaseHelper();
-      _attemptId = await _dbHelper.insertQuizAttempt(
+      _attemptId = await _dbHelper.insertPreQuizAttempt(
           user!.userId!,
-          "quiz" + widget.quizNumber.toString(),
+          "preQuiz" + widget.quizNumber.toString(),
           0 // Initial score
       );
       insertQuizAttemptFirebase(user!.userId!, widget.quizNumber);
@@ -128,7 +128,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
       final DatabaseReference attemptsRef = _database
           .child('profile')
           .child(userId)
-          .child('quizList')
+          .child('preQuizList')
           .child(quizIndex.toString())
           .child('attempts');
       DataSnapshot snapshot = await attemptsRef.get();
@@ -161,10 +161,10 @@ class _QuestionsScreenState extends State<QuizScreen> {
       await _database
           .child('profile')
           .child(user!.userId!)
-          .child('quizList')
+          .child('preQuizList')
           .child((widget.quizNumber).toString())
           .child('attempts')  // Store attempts separately
-          .child(_attemptId.toString())  // Use attemptId instead of quizList
+          .child(_attemptId.toString())  // Use attemptId instead of preQuizList
           .child('questions')
           .child(questionIndex.toString())
           .update({
@@ -198,7 +198,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
           await _database
               .child('profile')
               .child(userId)
-              .child('quizList')
+              .child('preQuizList')
               .child((widget.quizNumber).toString())
               .child('attempts')
               .child(_attemptId.toString())
@@ -215,7 +215,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
         await _database
             .child('profile')
             .child(userId)
-            .child('quizList')
+            .child('preQuizList')
             .child((widget.quizNumber).toString())
             .child('attempts')
             .child(_attemptId.toString())
@@ -225,27 +225,25 @@ class _QuestionsScreenState extends State<QuizScreen> {
           'endTimeStamp': DateTime.now().toIso8601String(),
         });
 
-        await _dbHelper.updateEndTimestamp(
+        await _dbHelper.updateEndTimestampPreQuiz(
           user!.userId!,
           tempString1,
           DateTime.now().toIso8601String(),
         );
 
         if (questionIndex != 0 || questionIndex < quizQuestions.length - 1) {
-          // **Insert a new question into SQLite before updating timestamps**
-          await _dbHelper.insertQuizQuestion(
+          await _dbHelper.insertQuizQuestionPreQuiz(
             user!.userId!,
             _attemptId,
             widget.quizNumber,
             questionIndex + 1, // Next question index
           );
 
-          // Firebase: Update the begin timestamp for the next question
           String tempString2 = 'quiz' + widget.quizNumber.toString() + '-' + 'question' + (questionIndex + 1).toString();
           await _database
               .child('profile')
               .child(userId)
-              .child('quizList')
+              .child('preQuizList')
               .child((widget.quizNumber).toString())
               .child('attempts')
               .child(_attemptId.toString())
@@ -279,15 +277,14 @@ class _QuestionsScreenState extends State<QuizScreen> {
   Future<void> updateUserAnswerFirebase(
       String userId, int quizNumber, String questionId, String userAnswer) async {
     try {
-      final DatabaseReference quizListRef = _database
+      final DatabaseReference preQuizListRef = _database
           .child('profile')
           .child(userId)
-          .child('quizList')
+          .child('preQuizList')
           .child(quizNumber.toString())
           .child('attempts');
 
-      // Fetch all attempts for this quiz
-      DataSnapshot snapshot = await quizListRef.get();
+      DataSnapshot snapshot = await preQuizListRef.get();
       if (snapshot.value == null) {
         print('No attempts found for quiz.');
         return;
@@ -295,25 +292,21 @@ class _QuestionsScreenState extends State<QuizScreen> {
 
       int latestAttemptId;
       if (snapshot.value is Map<dynamic, dynamic>) {
-        // When Firebase stores attempts as a Map
         Map<dynamic, dynamic> attemptsMap = snapshot.value as Map<dynamic, dynamic>;
         List<int> attemptIds = attemptsMap.keys.map((e) => int.tryParse(e.toString()) ?? 0).toList();
         attemptIds.sort();
         latestAttemptId = attemptIds.isNotEmpty ? attemptIds.last : 1;
       } else if (snapshot.value is List<dynamic>) {
-        // When Firebase stores attempts as a List
         List<dynamic> attemptsList = snapshot.value as List<dynamic>;
-        latestAttemptId = attemptsList.length - 1; // Last attempt index
+        latestAttemptId = attemptsList.length - 1;
       } else {
         latestAttemptId = 1;
       }
 
-      DatabaseReference questionRef = quizListRef
+      DatabaseReference questionRef = preQuizListRef
           .child(latestAttemptId.toString())
           .child('questions')
           .child(questionId);
-
-      // Update `userAnswer`
       await questionRef.update({'userAnswer': userAnswer});
 
       print('User answer updated successfully in Firebase.');
@@ -384,7 +377,7 @@ class _QuestionsScreenState extends State<QuizScreen> {
 
             // **First update the user answer asynchronously**
             await updateUserAnswerFirebase(userId, widget.quizNumber, questionId, userAnswer);
-            await _dbHelper.updateUserAnswerSQLite(userId, widget.quizNumber, questionId, userAnswer);
+            await _dbHelper.updateUserAnswerSQLitePrequiz(userId, widget.quizNumber, questionId, userAnswer);
           }
 
           // **Then update UI inside setState**

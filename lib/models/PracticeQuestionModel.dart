@@ -20,13 +20,19 @@ class PracticeQuestionModel {
 
   factory PracticeQuestionModel.fromJson(Map<String, dynamic> json) {
     return PracticeQuestionModel(
-      questionId: json['questionId'],
-      isCorrect: json['isCorrect'],
-      beginTimeStamp: DateTime.parse(json['beginTimeStamp']),
-      endTimeStamp: DateTime.parse(json['endTimeStamp']),
-      attemptCount: json['attemptAcount'],
-      timeTaken: json['timeTaken'],
-        incorrectAnswers: json['incorrectAnswers'],
+      questionId: json['questionId'] ?? 'unknown',
+      isCorrect: json['isCorrect'] ?? false,
+      beginTimeStamp: json['beginTimeStamp'] != null
+          ? DateTime.parse(json['beginTimeStamp'])
+          : DateTime.now(),
+      endTimeStamp: json['endTimeStamp'] != null
+          ? DateTime.parse(json['endTimeStamp'])
+          : DateTime.now(),
+      attemptCount: json['attemptAcount'] ?? 0,
+      timeTaken: json['timeTaken'] ?? 0,
+      incorrectAnswers: (json['incorrectAnswers'] != null && json['incorrectAnswers'] is List)
+          ? List<String>.from(json['incorrectAnswers'])
+          : [],
     );
   }
 

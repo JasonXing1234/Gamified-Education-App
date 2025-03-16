@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:quiz/components/preQuiz/pre_quiz_screen.dart';
 import 'package:quiz/components/quiz_results_screen.dart';
 import 'package:quiz/components/lesson/lesson.dart';
 import 'package:quiz/components/reading_results_screen.dart';
@@ -11,6 +12,7 @@ import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
 
 import '../../SQLITE/sqliteHelper.dart';
+import '../pre_quiz_intro_screen.dart';
 import '../rewards/animal.dart';
 
 class InProgressLessonScreen extends StatefulWidget {
@@ -304,12 +306,12 @@ class _InProgressLessonScreenState extends State<InProgressLessonScreen> {
 
                       ActivityButton(
                         text: "PRE-QUIZ",
-                        isDisabled: true,
+                        isDisabled: false,
                         onTap: (){
                           // TODO: switch to pre-quiz later
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => ReadingResultScreen(lesson: widget.lesson, activeScreen: "reading-screen",)),
+                            MaterialPageRoute(builder: (context) => PreQuizResultScreen(lesson: widget.lesson, activeScreen: "quiz-screen")),
                           );
                         },
                       ),

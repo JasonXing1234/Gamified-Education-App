@@ -11,10 +11,13 @@ class PracticeAttemptModel {
 
   factory PracticeAttemptModel.fromJson(Map<String, dynamic> json) {
     return PracticeAttemptModel(
-      attemptId: json['attemptId'],
-      questions: (json['questions'] as List)
-          .map((e) => PracticeQuestionModel.fromJson(e))
-          .toList(),
+      attemptId: json['attemptId'] ?? 0,
+      questions: (json['questions'] != null && json['questions'] is List)
+          ? (json['questions'] as List)
+          .where((e) => e != null)
+          .map((e) => PracticeQuestionModel.fromJson(Map<String, dynamic>.from(e)))
+          .toList()
+          : [],
     );
   }
 

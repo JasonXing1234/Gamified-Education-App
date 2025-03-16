@@ -10,6 +10,7 @@ import '../../styles/app_colors.dart';
 import '../../styles/text_styles.dart';
 import '../buttons/next_button.dart';
 import '../text_box/text_box.dart';
+import '../../models/UserModel.dart';
 
 class PracticeScreen extends StatefulWidget {
   const PracticeScreen({
@@ -45,6 +46,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
   List<Question> practiceQuestions = [];
   var practiceName = "PRACTICE";
   int _attemptId = -1;
+  UserModel? user;
 
   @override
   void initState() {
@@ -52,6 +54,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
     _scrollController.addListener(_onScrollEnd);
     practiceQuestions = widget.practice;
     startTime = DateTime.now();
+    _initializePractice();
   }
 
   void _onScrollEnd() {
@@ -67,14 +70,23 @@ class _PracticeScreenState extends State<PracticeScreen> {
     }
   }
 
+  Future<void> _initializePractice() async {
+    await _initializeUser();
+    await _initializePracticeAttempt();
+  }
+
+  Future<void> _initializeUser() async {
+    user = await _dbHelper.getLoggedInUser();
+  }
+
   Future<void> _initializePracticeAttempt() async {
-    if (user2 == null) return;
+    if (user == null) return;
 
     try {
       final DatabaseHelper _dbHelper = DatabaseHelper();
       _attemptId = await _dbHelper.insertPracticeAttempt(
-          user2!.uid,
-          widget.practiceNumber.toString(),
+          user!.userId!,
+          'practice' + widget.practiceNumber.toString(),
           0 // Initial score
       );
 
@@ -85,7 +97,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
   }
 
   Future<void> recordPracticeAttempt() async {
-    final userId = user2?.uid;
+    final userId = user?.userId!;
     if (userId != null) {
       final endTime = DateTime.now();
       final timeTaken = endTime.difference(startTime).inSeconds;
@@ -104,7 +116,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
   }
 
   Future<void> updateTotalTimeSpent() async {
-    final userId = user2?.uid;
+    final userId = user?.userId!;
     if (userId != null) {
       int totalPracticeTime = await _dbHelper.getTotalPracticeTime(userId);
       await _database.child('profile/$userId').update({
@@ -114,9 +126,9 @@ class _PracticeScreenState extends State<PracticeScreen> {
   }
 
   Future<void> nextQuestion() async {
-    if (_attemptId == -1 || user2 == null) return;
+    if (_attemptId == -1 || user == null) return;
 
-    final userId = user2?.uid;
+    final userId = user!.userId!;
     if (userId != null && questionIndex < practiceQuestions.length - 1) {
       try {
         final DatabaseHelper _dbHelper = DatabaseHelper();
@@ -137,7 +149,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
         });
 
         await _dbHelper.updateEndTimestampForPractice(
-          user2!.uid,
+          user!.userId!,
           questionIndex.toString(),
           DateTime.now().toIso8601String(),
           _attemptId,
@@ -161,7 +173,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
 
           // SQLite: Update the begin timestamp for the next question
           await _dbHelper.updateBeginTimestampForPractice(
-            user2!.uid,
+            user!.userId!,
             (questionIndex + 1).toString(),
             DateTime.now().toIso8601String(),
             _attemptId, // Use global attempt ID
