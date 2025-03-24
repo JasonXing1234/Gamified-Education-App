@@ -13,15 +13,17 @@ class UserModel extends Equatable {
   String? profilePic;
   String? bannerImage;
   int? numTickets;
-  int? totalTimeSpent; // Tracks total time spent in the app
+  int? totalTimeSpent;
   List<QuizModel>? quizList;
   List<QuizModel>? preQuizList;
-  List<PracticeModel>? practiceList; // List for practice attempts
+  List<PracticeModel>? practiceList;
   List<readingModel>? readingList;
   List<bool>? accessories;
   List<List<bool>>? ifEachModuleComplete;
   String? currentTask;
   bool? isLoggedIn;
+  List<Map<String, dynamic>>? decorateStickers;
+  List<String>? availableStickers;
 
   UserModel({
     this.email,
@@ -41,12 +43,13 @@ class UserModel extends Equatable {
     this.currentTask,
     this.totalTimeSpent = 0,
     this.isLoggedIn = false,
+    this.decorateStickers,
+    this.availableStickers
   });
 
   UserModel.fromJson(Map<dynamic, dynamic>? map) {
-    if (map == null) {
-      return;
-    }
+    if (map == null) return;
+
     email = map['email'];
     userId = map['userId'];
     deviceToken = map['deviceToken'];
@@ -56,30 +59,34 @@ class UserModel extends Equatable {
     userName = map['userName'];
     numTickets = map['numTickets'];
     currentTask = map['currentTask'];
-    totalTimeSpent = map['totalTimeSpent'] ?? 0; // Default to 0 if not present
+    totalTimeSpent = map['totalTimeSpent'] ?? 0;
     isLoggedIn = (map['isLoggedIn'] == 1);
-
     if (map['preQuizList'] != null) {
       if (map['preQuizList'] is String && (map['preQuizList'] as String).isNotEmpty) {
         try {
           List<dynamic> decodedList = jsonDecode(map['preQuizList']);
-          quizList = decodedList.map((e) => QuizModel.fromJson(Map<String, dynamic>.from(e))).toList();
+          preQuizList = decodedList
+              .map((e) => QuizModel.fromJson(Map<String, dynamic>.from(e)))
+              .toList();
         } catch (e) {
-          print('Error decoding quizList: $e');
-          quizList = [];
+          print('Error decoding preQuizList: $e');
+          preQuizList = [];
         }
       } else if (map['preQuizList'] is List) {
-        quizList = (map['preQuizList'] as List)
+        preQuizList = (map['preQuizList'] as List)
             .map((e) => QuizModel.fromJson(Map<String, dynamic>.from(e)))
             .toList();
       }
     }
 
+    // QuizList
     if (map['quizList'] != null) {
       if (map['quizList'] is String && (map['quizList'] as String).isNotEmpty) {
         try {
           List<dynamic> decodedList = jsonDecode(map['quizList']);
-          quizList = decodedList.map((e) => QuizModel.fromJson(Map<String, dynamic>.from(e))).toList();
+          quizList = decodedList
+              .map((e) => QuizModel.fromJson(Map<String, dynamic>.from(e)))
+              .toList();
         } catch (e) {
           print('Error decoding quizList: $e');
           quizList = [];
@@ -91,11 +98,14 @@ class UserModel extends Equatable {
       }
     }
 
+    // PracticeList
     if (map['practiceList'] != null) {
       if (map['practiceList'] is String && (map['practiceList'] as String).isNotEmpty) {
         try {
           List<dynamic> decodedList = jsonDecode(map['practiceList']);
-          practiceList = decodedList.map((e) => PracticeModel.fromJson(Map<String, dynamic>.from(e))).toList();
+          practiceList = decodedList
+              .map((e) => PracticeModel.fromJson(Map<String, dynamic>.from(e)))
+              .toList();
         } catch (e) {
           print('Error decoding practiceList: $e');
           practiceList = [];
@@ -107,13 +117,14 @@ class UserModel extends Equatable {
       }
     }
 
-
+    // Accessories
     if (map['accessories'] != null) {
       accessories = (map['accessories'] is String)
           ? List<bool>.from(jsonDecode(map['accessories']))
           : List<bool>.from(map['accessories']);
     }
 
+    // IfEachModuleComplete
     if (map['ifEachModuleComplete'] != null) {
       ifEachModuleComplete = (map['ifEachModuleComplete'] is String)
           ? (jsonDecode(map['ifEachModuleComplete']) as List)
@@ -124,11 +135,14 @@ class UserModel extends Equatable {
           .toList();
     }
 
+    // ReadingList
     if (map['readingList'] != null) {
       if (map['readingList'] is String && (map['readingList'] as String).isNotEmpty) {
         try {
           List<dynamic> decodedList = jsonDecode(map['readingList']);
-          readingList = decodedList.map((e) => readingModel.fromJson(Map<String, dynamic>.from(e))).toList();
+          readingList = decodedList
+              .map((e) => readingModel.fromJson(Map<String, dynamic>.from(e)))
+              .toList();
         } catch (e) {
           print('Error decoding readingList: $e');
           readingList = [];
@@ -137,6 +151,35 @@ class UserModel extends Equatable {
         readingList = (map['readingList'] as List)
             .map((e) => readingModel.fromJson(Map<String, dynamic>.from(e)))
             .toList();
+      }
+    }
+    if (map['decorateStickers'] != null) {
+      if (map['decorateStickers'] is String && (map['decorateStickers'] as String).isNotEmpty) {
+        try {
+          List<dynamic> decodedList = jsonDecode(map['decorateStickers']);
+          decorateStickers = decodedList
+              .map((e) => Map<String, dynamic>.from(e))
+              .toList();
+        } catch (e) {
+          print('Error decoding decorateStickers: $e');
+          decorateStickers = [];
+        }
+      } else if (map['decorateStickers'] is List) {
+        decorateStickers = (map['decorateStickers'] as List)
+            .map((e) => Map<String, dynamic>.from(e))
+            .toList();
+      }
+    }
+    if (map['availableStickers'] != null) {
+      if (map['availableStickers'] is String && (map['availableStickers'] as String).isNotEmpty) {
+        try {
+          availableStickers = List<String>.from(jsonDecode(map['availableStickers']));
+        } catch (e) {
+          print('Error decoding availableStickers: $e');
+          availableStickers = [];
+        }
+      } else if (map['availableStickers'] is List) {
+        availableStickers = List<String>.from(map['availableStickers']);
       }
     }
   }
@@ -159,7 +202,13 @@ class UserModel extends Equatable {
       'ifEachModuleComplete': ifEachModuleComplete,
       'currentTask': currentTask,
       'totalTimeSpent': totalTimeSpent,
-      'isLoggedIn': isLoggedIn! ? 1 : 0,
+      'isLoggedIn': isLoggedIn == true ? 1 : 0,
+      'decorateStickers': decorateStickers != null
+          ? jsonEncode(decorateStickers)
+          : null,
+      'availableStickers': availableStickers != null
+          ? jsonEncode(availableStickers)
+          : null,
     };
   }
 
@@ -182,5 +231,6 @@ class UserModel extends Equatable {
     currentTask,
     totalTimeSpent,
     isLoggedIn,
+    decorateStickers,
   ];
 }

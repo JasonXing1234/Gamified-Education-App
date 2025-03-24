@@ -12,6 +12,7 @@ import 'package:quiz/styles/app_colors.dart';
 import 'package:quiz/styles/text_styles.dart';
 
 import '../../SQLITE/sqliteHelper.dart';
+import '../../models/UserModel.dart';
 import '../pre_quiz_intro_screen.dart';
 import '../rewards/animal.dart';
 
@@ -38,17 +39,21 @@ class _InProgressLessonScreenState extends State<InProgressLessonScreen> {
   int startingPageIndex = 0;
   Future<int?>? numTickets;
   int? tempNumTickets;
-
+  UserModel? user;
+  final DatabaseHelper _dbHelper = DatabaseHelper();
   // List<String> dragonNames = ["Name", "Name", "Name", "Name", "Name", "Name", "Name",];
 
   @override
   void initState() {
     super.initState();
-    user2 = FirebaseAuth.instance.currentUser;
+    _initializeUser();
 
     _fetchReadingList();
-    // Fetch readings once the widget is initialized
     numTickets = _fetchTickets();
+  }
+
+  Future<void> _initializeUser() async {
+    user = await _dbHelper.getLoggedInUser();
   }
 
   void popScopeFuntion() {numTickets = _fetchTickets();}
@@ -69,7 +74,7 @@ class _InProgressLessonScreenState extends State<InProgressLessonScreen> {
       tempNumTickets = tempNumTickets! - 1;
     });
     try {
-      await _database.child('profile/${user2?.uid}').update({
+      await _database.child('profile/${user?.userId}').update({
         'accessories': purchased,
         'numTickets': tempNumTickets!
       });
@@ -88,11 +93,11 @@ class _InProgressLessonScreenState extends State<InProgressLessonScreen> {
   }
 
   Future<int?> _fetchTickets() async {
-    if (user2 != null) {
+    if (user != null) {
       try {
         DataSnapshot snapshot2 = await _database
             .child('profile')
-            .child(user2!.uid)
+            .child(user!.userId!)
             .child('numTickets')
             .get();
 
@@ -100,7 +105,7 @@ class _InProgressLessonScreenState extends State<InProgressLessonScreen> {
           return snapshot2.value as int;
         }
         final DatabaseHelper _dbHelper = DatabaseHelper();
-        return await _dbHelper.getNumTickets(user2!.uid);
+        return await _dbHelper.getNumTickets(user!.userId!);
       } catch (e) {
         print('Error fetching tickets: $e');
       }
@@ -109,11 +114,11 @@ class _InProgressLessonScreenState extends State<InProgressLessonScreen> {
   }
 
   Future<void> _fetchReadingList() async {
-    if (user2 != null) {
+    if (user != null) {
       try {
         DataSnapshot snapshot = await _database
             .child('profile')
-            .child(user2!.uid)
+            .child(user!.userId!)
             .child('readingList')
             .get();
 
@@ -123,13 +128,13 @@ class _InProgressLessonScreenState extends State<InProgressLessonScreen> {
           });
         } else {
           final DatabaseHelper _dbHelper = DatabaseHelper();
-          readings = await _dbHelper.getReadingList(user2!.uid);
+          readings = await _dbHelper.getReadingList(user!.userId!);
           setState(() {});
         }
 
         DataSnapshot snapshot2 = await _database
             .child('profile')
-            .child(user2!.uid)
+            .child(user!.userId!)
             .child('accessories')
             .get();
 
@@ -139,7 +144,7 @@ class _InProgressLessonScreenState extends State<InProgressLessonScreen> {
           });
         } else {
           final DatabaseHelper _dbHelper = DatabaseHelper();
-          purchased = await _dbHelper.getAccessories(user2!.uid);
+          purchased = await _dbHelper.getAccessories(user!.userId!);
           setState(() {});
         }
       } catch (e) {

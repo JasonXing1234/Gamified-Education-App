@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -60,6 +61,7 @@ class DatabaseHelper {
         ifEachModuleComplete TEXT,
         currentTask TEXT,
         password TEXT,
+        decorateStickers TEXT,
         isLoggedIn INTEGER DEFAULT 0
       )
     ''');
@@ -1778,5 +1780,38 @@ class DatabaseHelper {
       return -1;
     }
   }
+
+  Future<int> updateStickerData(String userId, List<Map<String, dynamic>> stickerData) async {
+    try {
+      final db = await database;
+
+      List<Map<String, dynamic>> serializableStickerData = stickerData.map((sticker) {
+        return {
+          'id': sticker['id'],
+          'path': sticker['path'],
+          'offset': {
+            'dx': (sticker['offset'] as Offset).dx,
+            'dy': (sticker['offset'] as Offset).dy,
+          },
+        };
+      }).toList();
+
+      String jsonData = jsonEncode(serializableStickerData);
+
+      int result = await db.update(
+        'UserModel',
+        {'decorateStickers': jsonData},
+        where: 'userId = ?',
+        whereArgs: [userId],
+      );
+
+      print('Sticker data updated successfully for user $userId');
+      return result;
+    } catch (e) {
+      print('Error updating sticker data: $e');
+      return -1;
+    }
+  }
+
 
 }

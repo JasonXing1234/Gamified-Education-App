@@ -52,6 +52,15 @@ class _SignUpPageState extends State<SignUpPage> {
     progress: 0,
   ));
 
+  List<Map<String, dynamic>> initialGameData = List.generate(6, (moduleIndex) {
+    return {
+      'module': moduleIndex,
+      'unlocked': false,
+      'animalStage': 'child', // Starting stage
+      'accessories': [] // Initially empty list of accessories applied to the animal
+    };
+  });
+
   Future<void> _signUp() async {
     try {
       var result = await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -73,6 +82,7 @@ class _SignUpPageState extends State<SignUpPage> {
         numTickets: 0,
         ifEachModuleComplete: List.generate(6, (_) => List<bool>.filled(5, false)),
         currentTask: "Introduction Module",
+        decorateStickers: [],
       );
 
       // Save user details to Firebase Realtime Database

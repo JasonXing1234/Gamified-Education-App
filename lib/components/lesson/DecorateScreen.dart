@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/components/lesson/world.dart';
 
+import '../../SQLITE/sqliteHelper.dart';
+import '../../models/UserModel.dart';
 import '../../styles/app_colors.dart';
 import '../../styles/text_styles.dart';
 
@@ -32,6 +34,31 @@ class DecorateScreenState extends State<DecorateScreen> {
 
   // A Map to track which sticker is being dragged
   Map<int, Map<String, dynamic>> draggedStickers = {};
+  final DatabaseHelper dbHelper = DatabaseHelper();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadStickersFromDB();
+  }
+
+  Future<void> _loadStickersFromDB() async {
+    UserModel? currentUser = await dbHelper.getLoggedInUser();
+    if (currentUser != null && currentUser.decorateStickers != null) {
+      setState(() {
+        stickerData = currentUser.decorateStickers!;
+      });
+    }
+  }
+
+  Future<void> _onBackPressed() async {
+    UserModel? currentUser = await dbHelper.getLoggedInUser();
+    if (currentUser != null) {
+      await dbHelper.updateStickerData(currentUser.userId!, stickerData);
+    }
+    Navigator.pop(context);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +77,8 @@ class DecorateScreenState extends State<DecorateScreen> {
         // Back Button
         leadingWidth: 60, // Gives space for the back button
         leading: GestureDetector(
-          onTap: () {
+          onTap: () async {
+            await _onBackPressed();
             Navigator.pop(context);
           },
           child: Padding(
@@ -113,9 +141,13 @@ class DecorateScreenState extends State<DecorateScreen> {
                 return Stack(
                   children: [
                     ...stickerData.map((sticker) {
+                      Offset offset = Offset(
+                        (sticker['offset']['dx'] as num).toDouble(),
+                        (sticker['offset']['dy'] as num).toDouble(),
+                      );
                       return Positioned(
-                        left: sticker['offset'].dx,
-                        top: sticker['offset'].dy,
+                        left: offset.dx,
+                        top: offset.dy,
                         child: Draggable<Map<String, dynamic>>(
                           data: {
                             'path': sticker['path'],
