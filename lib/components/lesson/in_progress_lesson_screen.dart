@@ -42,11 +42,17 @@ class _InProgressLessonScreenState extends State<InProgressLessonScreen> {
   UserModel? user;
   final DatabaseHelper _dbHelper = DatabaseHelper();
   // List<String> dragonNames = ["Name", "Name", "Name", "Name", "Name", "Name", "Name",];
+  List<List<bool>> ifEachModuleComplete = [];
+  bool isPreQuizEnabled = false;
+  bool isReadingEnabled = false;
+  bool isPostQuizEnabled = false;
 
   @override
   void initState() {
     super.initState();
-    _initializeUser();
+    _initializeUser().then((_) {
+      _setLessonTaskStates();
+    });
 
     _fetchReadingList();
     numTickets = _fetchTickets();
@@ -54,6 +60,26 @@ class _InProgressLessonScreenState extends State<InProgressLessonScreen> {
 
   Future<void> _initializeUser() async {
     user = await _dbHelper.getLoggedInUser();
+  }
+
+  Future<void> _setLessonTaskStates() async {
+    if (user == null) return;
+
+    Map<int, double> progress = await _dbHelper.getModuleProgress(user!.userId!);
+    List<List<bool>>? moduleStatus = user?.ifEachModuleComplete;
+
+    if (moduleStatus == null || moduleStatus.length <= widget.lesson.lessonNumber - 1) return;
+
+    List<bool> currentModuleStatus = moduleStatus[widget.lesson.lessonNumber - 1];
+    bool readingDone = currentModuleStatus[0];
+    bool postQuizDone = currentModuleStatus[1];
+    bool preQuizDone = currentModuleStatus[2];
+
+    setState(() {
+      isPreQuizEnabled = !readingDone;
+      isReadingEnabled = preQuizDone;
+      isPostQuizEnabled = readingDone;
+    });
   }
 
   void popScopeFuntion() {numTickets = _fetchTickets();}
@@ -311,7 +337,7 @@ class _InProgressLessonScreenState extends State<InProgressLessonScreen> {
 
                       ActivityButton(
                         text: "PRE-QUIZ",
-                        isDisabled: false,
+                        isDisabled: !isPreQuizEnabled,
                         onTap: (){
                           // TODO: switch to pre-quiz later
                           Navigator.push(
@@ -325,7 +351,7 @@ class _InProgressLessonScreenState extends State<InProgressLessonScreen> {
 
                       ActivityButton(
                         text: "READING",
-                        isDisabled: false,
+                        isDisabled: !isReadingEnabled,
                         onTap:
                             (){
                           Navigator.push(
@@ -339,7 +365,7 @@ class _InProgressLessonScreenState extends State<InProgressLessonScreen> {
 
                       ActivityButton(
                         text: "POST-QUIZ",
-                        isDisabled: false,
+                        isDisabled: !isPostQuizEnabled,
                         onTap:
                             (){
                           Navigator.push(
